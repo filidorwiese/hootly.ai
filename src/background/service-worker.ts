@@ -22,10 +22,15 @@ chrome.runtime.onMessage.addListener((message: BackgroundMessage, sender, sendRe
 
 // Handle keyboard command
 chrome.commands.onCommand.addListener((command) => {
+  console.log('[FireClaude Background] Command received:', command);
   if (command === 'toggle-dialog') {
     chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
+      console.log('[FireClaude Background] Active tab:', tabs[0]);
       if (tabs[0]?.id) {
-        chrome.tabs.sendMessage(tabs[0].id, { type: 'toggleDialog' });
+        console.log('[FireClaude Background] Sending message to tab:', tabs[0].id);
+        chrome.tabs.sendMessage(tabs[0].id, { type: 'toggleDialog' })
+          .then(() => console.log('[FireClaude Background] Message sent successfully'))
+          .catch((err) => console.error('[FireClaude Background] Error sending message:', err));
       }
     });
   }
@@ -132,4 +137,9 @@ function sendToTab(tabId: number, message: ContentMessage) {
   });
 }
 
-console.log('FireClaude background service worker initialized');
+console.log('[FireClaude Background] Service worker initialized');
+
+// Test that commands API is available
+chrome.commands.getAll((commands) => {
+  console.log('[FireClaude Background] Registered commands:', commands);
+});

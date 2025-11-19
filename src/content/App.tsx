@@ -5,9 +5,13 @@ const App: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
 
   useEffect(() => {
+    console.log('[FireClaude] App component mounted');
+
     // Listen for toggle message
     const handleMessage = (event: MessageEvent) => {
+      console.log('[FireClaude] Window message received:', event.data);
       if (event.data.type === 'fireclaude-toggle') {
+        console.log('[FireClaude] Toggling dialog, current state:', isOpen);
         setIsOpen((prev) => !prev);
       }
     };
