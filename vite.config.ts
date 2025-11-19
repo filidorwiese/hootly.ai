@@ -10,9 +10,12 @@ export default defineConfig({
       name: 'copy-files',
       closeBundle() {
         mkdirSync('dist', { recursive: true });
+        mkdirSync('dist/icons', { recursive: true });
         copyFileSync('manifest.json', 'dist/manifest.json');
         // Move settings.html to root of dist
         copyFileSync('dist/src/settings/index.html', 'dist/settings.html');
+        // Copy icons
+        copyFileSync('public/icons/icon.svg', 'dist/icons/icon.svg');
       },
     },
   ],
