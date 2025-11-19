@@ -11,6 +11,7 @@ export default defineConfig({
       closeBundle() {
         mkdirSync('dist', { recursive: true });
         copyFileSync('manifest.json', 'dist/manifest.json');
+        copyFileSync('public/background.html', 'dist/background.html');
         // Move settings.html to root of dist
         const settingsPath = 'dist/src/settings/index.html';
         const settingsAltPath = 'dist/settings.html';
