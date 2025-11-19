@@ -1,410 +1,402 @@
-# FireClaude - Product Requirements Document
+# FireClaude - Remaining Implementation
 
-## Overview
-Firefox browser extension for interacting with Claude AI directly from any webpage via keyboard-activated overlay dialog.
+## Status: Phase 1-3 Complete ✅
 
-## Tech Stack
-- **Build**: Vite + TypeScript + React
-- **Styling**: @emotion/css (CSS-in-JS)
-- **Testing**: Vitest (unit tests)
-- **API**: @anthropic-ai/sdk
-- **Markdown**: marked + highlight.js
-- **State**: React Context + localStorage
-- **Drag/Resize**: react-draggable + react-resizable
+### What's Working
+- Foundation: Vite build, types, storage, message passing
+- Core UI: Draggable/resizable dialog, auto-expanding input, context toggle
+- API Integration: Streaming responses, markdown rendering, context extraction
 
-## Architecture
+### What's Left
+Phases 4-6 below
 
-### Extension Components
-1. **Content Script** (`src/content/`)
-   - Injected into all pages
-   - Renders React dialog overlay
-   - Extracts page context
-   - Handles keyboard shortcuts
-   - Isolated CSS (emotion runtime)
+---
 
-2. **Background Service Worker** (`src/background/`)
-   - Handles Anthropic API calls (bypasses CORS)
-   - Manages streaming responses
-   - Relays messages between content script and API
-   - Stores API key securely
+## Phase 4: Conversation Features
 
-3. **Settings Page** (`src/settings/`)
-   - Standalone HTML page
-   - Configure API key, model, behavior
-   - Accessible via browser toolbar icon
+### Goal
+Full conversation history management with persistent storage and visual thread display.
 
-### Message Passing Architecture
+### Tasks
+
+#### 4.1 Conversation History Storage
+**Files**: `src/shared/storage.ts`, `src/shared/types.ts`
+
+- Already have `Conversation` and `Message` types defined
+- Already have basic storage methods (`saveConversation`, `getConversations`)
+- Need to integrate into Dialog component properly
+- Apply conversation depth setting (include last 1/3/5/all messages in API calls)
+
+**Implementation**:
+1. Update `Dialog.tsx` to load/save current conversation
+2. Create new conversation on "New conversation" button
+3. Apply `settings.conversationDepth` when building message history for API
+4. Auto-generate conversation titles from first prompt
+
+#### 4.2 History UI Component
+**File**: `src/content/components/History.tsx` (new)
+
+Create sidebar/modal with:
+- List of past conversations (title + date)
+- Search input (filter by content)
+- Click to load conversation
+- Delete button per conversation
+- "Clear all" button with confirmation
+- Export button (markdown/JSON)
+
+**UI Design**:
 ```
-Content Script → Background Worker → Anthropic API
-     ↓                   ↓                 ↓
-  UI Events         API Calls         Streaming
-     ↑                   ↑                 ↑
-  Render ← Message Relay ← SSE Stream
-```
-
-### Storage Schema
-```typescript
-// API Settings
-interface Settings {
-  apiKey: string;
-  model: 'claude-3-5-sonnet' | 'claude-3-opus' | 'claude-3-haiku';
-  maxTokens: number;
-  temperature: number;
-  theme: 'light' | 'dark' | 'system';
-  fontSize: number;
-  shortcut: string;
-  autoClose: boolean;
-  defaultContext: 'none' | 'full' | 'selection';
-  contextMaxLength: number;
-  includeScripts: boolean;
-  includeStyles: boolean;
-  includeAltText: boolean;
-  systemPrompt?: string;
-  conversationDepth: 1 | 3 | 5 | 999;
-  retentionDays: number;
-}
-
-// Conversation Storage
-interface Conversation {
-  id: string;
-  title: string; // First prompt truncated
-  createdAt: number;
-  updatedAt: number;
-  messages: Message[];
-}
-
-interface Message {
-  role: 'user' | 'assistant';
-  content: string;
-  timestamp: number;
-  context?: PageContext;
-}
-
-interface PageContext {
-  url: string;
-  title: string;
-  selection?: string;
-  fullPage?: string;
-  metadata?: {
-    description?: string;
-    keywords?: string;
-  };
-}
+┌─────────────────────────┐
+│ 📜 History    [New] [×] │
+├─────────────────────────┤
+│ [🔍 Search...]          │
+├─────────────────────────┤
+│ ▸ How to center div     │
+│   2 hours ago           │
+├─────────────────────────┤
+│ ▸ Explain React hooks   │
+│   Yesterday             │
+├─────────────────────────┤
+│ ...                     │
+├─────────────────────────┤
+│ [Export All] [Clear]    │
+└─────────────────────────┘
 ```
 
-## Implementation Phases
+**Integration**:
+- Add 📜 button to Dialog header
+- Toggle history panel (slide in from right)
+- Load conversation → populate Dialog state
 
-### Phase 1: Foundation
-**Goal**: Extension loads, responds to keyboard shortcut, basic infra works
+#### 4.3 Visual Conversation Thread
+**File**: `src/content/components/Response.tsx`
 
-**Tasks**:
-1. Init Vite project with React-TS template
-2. Configure `vite.config.ts` for multi-entry build:
-   - `src/content/index.tsx` → `dist/content.js`
-   - `src/background/service-worker.ts` → `dist/background.js`
-   - `src/settings/index.html` → `dist/settings.html`
-3. Create `manifest.json` (v3):
-   - Permissions: `storage`, `activeTab`, `scripting`
-   - Content script injection
-   - Background service worker
-   - Keyboard command `Alt+W`
-   - Browser action (settings icon)
-4. Setup @emotion/css + basic styling
-5. Setup Vitest config
-6. Create message passing skeleton:
-   - `chrome.runtime.sendMessage()` from content
-   - `chrome.runtime.onMessage` in background
-7. Storage wrapper (`src/shared/storage.ts`)
+Update to show full conversation thread instead of just latest response:
 
-**Validation**:
-- Load unpacked extension in Firefox
-- Alt+W triggers content script
-- Console logs show message passing works
+```
+┌────────────────────────────┐
+│ 👤 User: How do I...       │
+│    [with context badge]    │
+├────────────────────────────┤
+│ 🤖 Claude: You can...      │
+│    [markdown rendered]     │
+├────────────────────────────┤
+│ 👤 User: Follow-up...      │
+├────────────────────────────┤
+│ 🤖 Claude: [streaming...]  │
+└────────────────────────────┘
+```
 
-### Phase 2: Core UI
-**Goal**: Dialog appears, accepts input, closes properly
+**Changes**:
+- Accept `messages: Message[]` prop instead of single `content`
+- Render list of message pairs
+- Show context badge when message has context
+- Copy button per assistant message
+- Auto-scroll to bottom on new message
 
-**Tasks**:
-1. **Dialog Component** (`src/content/components/Dialog.tsx`):
-   - 800×400px fixed div with high z-index
-   - Semi-transparent backdrop
-   - Draggable via react-draggable
-   - Resizable via react-resizable (min 400×200, max 1200×800)
-   - Position persistence (localStorage: last x,y)
-   - Esc key listener → close
-   - Click backdrop → close
+#### 4.4 New Conversation Button
+**File**: `src/content/components/Dialog.tsx`
 
-2. **InputArea Component** (`src/content/components/InputArea.tsx`):
-   - Textarea with auto-expand (2-6 lines)
-   - onKeyDown: Enter = submit, Shift+Enter = newline
-   - Character count → estimate tokens (chars/3.5)
-   - Clear button
-   - Submit button (disabled while loading)
+Add button to header:
+- Saves current conversation if not empty
+- Resets state (clear messages, response, input)
+- Creates new conversation ID
+- Confirmation if current has unsaved input
 
-3. **ContextToggle Component** (`src/content/components/ContextToggle.tsx`):
-   - 🌐 button with active/inactive state
-   - Check `window.getSelection()` on dialog open
-   - If selection exists: show "Selection mode (N chars)"
-   - Else: use full-page toggle state
-   - Preview button → modal with context preview
-   - Metadata toggles (title, URL, description)
-
-**Validation**:
-- Dialog opens at last position
-- Drag and resize work
-- Input expands properly
-- Context toggle shows correct state
-
-### Phase 3: API Integration
-**Goal**: Send prompts to Claude, stream responses, render markdown
-
-**Tasks**:
-1. **Background API Handler** (`src/background/service-worker.ts`):
-   - Install @anthropic-ai/sdk
-   - Listen for `sendPrompt` message
-   - Call `client.messages.stream()`
-   - Relay stream chunks via `chrome.tabs.sendMessage()`
-   - Handle errors (auth, rate limit, network)
-   - Support cancel via AbortController
-
-2. **Response Component** (`src/content/components/Response.tsx`):
-   - Scrollable container
-   - Accumulate streamed text
-   - Parse markdown with marked.js
-   - Syntax highlight with highlight.js
-   - Copy button (copies raw markdown)
-   - Loading indicator
-   - Cancel button
-
-3. **Context Extraction** (`src/shared/utils.ts`):
-   - `extractPageText()`: document.body.innerText
-   - `extractSelection()`: window.getSelection().toString()
-   - `extractMetadata()`: title, URL, meta tags
-   - Apply max length limit
-
-**Validation**:
-- Prompt + context sent to API
-- Response streams in real-time
-- Markdown renders correctly (headers, code blocks, lists)
-- Copy button works
-- Cancel stops stream
-
-### Phase 4: Conversation Features
-**Goal**: Multi-turn conversations, history, export
-
-**Tasks**:
-1. **Conversation Context** (`src/content/context/ConversationContext.tsx`):
-   - Current conversation state
-   - Add user/assistant messages
-   - Include last N messages in API calls (configurable depth)
-   - New conversation button → reset
-
-2. **History Component** (`src/content/components/History.tsx`):
-   - 📜 button opens sidebar/modal
-   - List past conversations (title, date)
-   - Search/filter by text
-   - Click to load conversation
-   - Delete button per conversation
-   - Export button (markdown/JSON)
-   - Clear all button
-
-3. **Storage Management** (`src/shared/storage.ts`):
-   - Save conversation after each exchange
-   - Load conversations list
-   - Apply retention period (delete old)
-   - Export formatters (markdown/JSON)
-
-**Validation**:
-- Multi-turn context works
-- History persists across sessions
+### Validation
+- Start conversation → close dialog → reopen → history persists
+- Multi-turn works with configurable depth
 - Search filters correctly
-- Export produces valid files
-- Retention period deletes old conversations
+- Export produces valid markdown/JSON
+- Loading conversation populates dialog
 
-### Phase 5: Settings Page
-**Goal**: User can configure all options
+---
 
-**Tasks**:
-1. **Settings UI** (`src/settings/Settings.tsx`):
-   - Tabbed interface: API / Behavior / Context
+## Phase 5: Complete Settings Page
 
-2. **API Tab**:
-   - API key input (type=password, show/hide toggle)
-   - Model dropdown (sonnet/opus/haiku)
-   - Max tokens slider (1k-100k, logarithmic)
-   - Temperature slider (0-1, 0.1 steps)
-   - Test connection button
+### Goal
+Full-featured settings page with all configuration options.
 
-3. **Behavior Tab**:
-   - Keyboard shortcut picker
-   - Default context mode radio
-   - Auto-close toggle
-   - Theme radio (light/dark/system)
-   - Font size slider (12-20px)
-   - Conversation depth selector (1/3/5/all)
+### Current State
+Basic settings page exists at `src/settings/index.html` with minimal fields.
 
-4. **Context Tab**:
-   - Max context length input
-   - Checkboxes: include scripts/styles/alt-text
-   - System prompt textarea
-   - Retention period input (days)
+### Tasks
 
-5. **Settings Persistence**:
-   - Save on change (debounced)
-   - Load on mount
-   - Apply theme immediately
+#### 5.1 Expand Settings UI
+**File**: `src/settings/index.html` + new `src/settings/Settings.tsx`
 
-**Validation**:
+Convert to React app for better UX.
+
+**Tabs**:
+1. **API** (mostly done)
+   - API key input ✅
+   - Model selection ✅
+   - Max tokens ✅
+   - Temperature ✅
+   - Add: Test connection button with feedback
+
+2. **Behavior** (new)
+   - Keyboard shortcut picker (via `chrome.commands` API)
+   - Default context mode: none/full/selection (radio)
+   - Auto-close after copy (checkbox)
+   - Theme: light/dark/system (radio)
+   - Font size: 12-20px (slider with preview)
+   - Conversation depth: 1/3/5/all (dropdown)
+
+3. **Context** (new)
+   - Max context length: 10k-200k chars (input)
+   - Include scripts (checkbox)
+   - Include styles (checkbox)
+   - Include image alt text (checkbox)
+   - Custom system prompt (textarea with character count)
+
+4. **Storage** (new)
+   - Retention period: 7/30/90/365 days (dropdown)
+   - Clear old conversations now (button)
+   - Storage usage indicator
+   - Export all conversations (button)
+   - Import conversations (file upload)
+
+#### 5.2 Settings Persistence
+**File**: `src/shared/storage.ts`
+
+All settings already persist via `Storage.saveSettings()`. Just need to wire up new fields.
+
+#### 5.3 Live Preview
+Show real-time preview of:
+- Theme changes
+- Font size changes
+- System prompt example
+
+#### 5.4 Reset to Defaults
+Button to restore all settings to `DEFAULT_SETTINGS`.
+
+### Validation
 - All settings save and load correctly
-- Settings affect extension behavior
-- Theme applies immediately
-- API test connection works
+- Theme applies to both dialog and settings page
+- Custom shortcut works
+- System prompt appears in API calls
+- Retention period deletes old conversations
+- Export/import works without data loss
 
-### Phase 6: Polish & QoL
-**Goal**: Smooth UX, no rough edges
+---
 
-**Tasks**:
-1. **Visual Polish**:
-   - Fade-in/out animations for dialog (150ms)
-   - Toast notifications (copy success, errors)
-   - Loading spinner with progress indication
-   - Syntax theme selector (match popular editors)
-   - Responsive adjustments for small viewports
+## Phase 6: Polish & Quality of Life
 
-2. **Keyboard Navigation**:
-   - Tab order through UI
-   - Shortcuts: Ctrl+K = clear, Ctrl+N = new conversation
-   - Focus management (input on open)
+### Goal
+Production-ready UX with smooth animations and edge case handling.
 
-3. **Error Handling**:
-   - User-friendly error messages
-   - Retry button for transient failures
-   - Offline detection
-   - Invalid API key guidance
+### Tasks
 
-4. **Right-Click Menu**:
-   - "Ask Claude about selection" context menu
-   - Pre-fills dialog with selection
-   - Opens dialog if closed
+#### 6.1 Animations
+**File**: `src/content/components/Dialog.tsx`
 
-5. **Testing**:
-   - Unit tests for utils (token counting, extraction)
-   - Component tests for key flows
-   - Manual testing checklist
+Add CSS transitions:
+- Fade-in backdrop (150ms)
+- Scale-in dialog (200ms with ease-out)
+- Slide-in history panel (250ms)
+- Smooth resize (no animation, just smooth dragging)
 
-**Validation**:
-- No console errors
-- Smooth animations
-- Good error states
-- Right-click menu works
-- Keyboard nav complete
+**Implementation**:
+```css
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
 
-## Architectural Decisions
+@keyframes scaleIn {
+  from { opacity: 0; transform: scale(0.95); }
+  to { opacity: 1; transform: scale(1); }
+}
+```
 
-### 1. Token Counting: Character Estimation
-- **Decision**: Use `chars / 3.5` instead of tiktoken-js
-- **Reasoning**: tiktoken-js adds ~1MB; users need rough estimate, not exact count
-- **Risk**: Underestimation → unexpected truncation
-- **Mitigation**: Conservative estimate + warning at 80% of limit
+#### 6.2 Toast Notifications
+**File**: `src/content/components/Toast.tsx` (new)
 
-### 2. Drag Library: react-draggable
-- **Decision**: Use react-draggable (14KB gzipped)
-- **Reasoning**: Mature, handles edge cases (touch, constraints). Cost justified.
-- **Alternative Rejected**: Custom implementation (bug-prone, time sink)
+Simple toast system:
+- Copy success: "Response copied!"
+- Error: "API error: [message]"
+- Settings saved: "Settings updated"
+- Position: top-right, auto-dismiss after 3s
 
-### 3. Selection Mode Precedence
-- **Decision**: Selection always overrides full-page toggle
-- **Reasoning**: Selected text = explicit user intent
-- **UX**: Clear visual showing "Selection mode (3 paragraphs)"
-- **Mitigation**: Allow clearing selection without closing dialog
+**Component**:
+```tsx
+<Toast
+  message="Response copied!"
+  type="success"
+  onDismiss={() => {}}
+/>
+```
 
-### 4. Conversation Branching
-- **Decision**: Defer to future (cut from v1)
-- **Reasoning**: Complex (tree structure, UI visualization), niche use case
-- **Alternative**: Linear threads cover 90% of use cases
-- **Future**: Can add later without breaking storage migration
+Use React context or simple state management.
 
-### 5. Claude.ai Sync
-- **Decision**: Cut entirely
-- **Reasoning**: Requires OAuth flow (2-3 days), unclear API availability
-- **Alternative**: Export to JSON/markdown covers "save my work" need
-- **Future**: Premium feature if Anthropic exposes sync API
+#### 6.3 Keyboard Navigation
+**Files**: All components
 
-### 6. Right-Click Menu
-- **Decision**: Include in Phase 6
-- **Reasoning**: Trivial implementation (5 lines manifest), high UX value
-- **No downside**: Natural extension of existing flow
+Ensure full keyboard access:
+- Tab through all interactive elements
+- Focus visible on all buttons/inputs
+- Keyboard shortcuts:
+  - `Ctrl+K`: Clear input
+  - `Ctrl+N`: New conversation
+  - `Ctrl+H`: Toggle history
+  - `Ctrl+/`: Show keyboard shortcuts help
 
-## Technical Challenges
+Add shortcuts help modal triggered by `?` or `Ctrl+/`.
 
-### 1. Vite Multi-Entry Build
-**Challenge**: Extensions need separate bundles without code-splitting
-**Solution**:
-```typescript
-// vite.config.ts
-export default {
-  build: {
-    rollupOptions: {
-      input: {
-        content: 'src/content/index.tsx',
-        background: 'src/background/service-worker.ts',
-        settings: 'src/settings/index.html'
-      },
-      output: {
-        entryFileNames: '[name].js',
-        chunkFileNames: '[name].js' // Disable code-splitting
-      }
-    }
+#### 6.4 Loading States
+**File**: `src/content/components/Response.tsx`
+
+Improve loading indicator:
+- Show estimated time if >5s
+- Pulse animation during streaming
+- Cancel button (wire up `cancelStream` message)
+- Progress indicator if possible
+
+#### 6.5 Error Recovery
+**Files**: `src/content/components/Dialog.tsx`, `src/background/service-worker.ts`
+
+Handle edge cases:
+- Network offline → show clear message + retry
+- Rate limit → show countdown timer
+- Invalid API key → link to settings
+- Context too large → offer to truncate
+- Empty response → "No response received"
+
+Add retry logic with exponential backoff.
+
+#### 6.6 Right-Click Context Menu
+**Files**: `manifest.json`, `src/background/service-worker.ts`
+
+Add context menu on text selection:
+```json
+{
+  "permissions": ["contextMenus"],
+  "background": {
+    "service_worker": "background.js"
   }
 }
 ```
 
-### 2. Content Script CSS Isolation
-**Challenge**: Page styles bleeding into dialog
-**Solution**:
-- @emotion generates unique class names
-- High z-index (9999)
-- CSS reset on dialog root
-- Alternative: Shadow DOM (but React incompatibility)
+**Background**:
+```ts
+chrome.contextMenus.create({
+  id: 'ask-claude',
+  title: 'Ask Claude about "%s"',
+  contexts: ['selection']
+});
 
-### 3. Streaming with Background Worker
-**Challenge**: SSE streams don't cross message boundaries
-**Solution**:
-- Background worker accumulates chunks
-- Sends incremental updates via postMessage
-- Content script reconstructs stream
-- Cancel via message + AbortController reference
+chrome.contextMenus.onClicked.addListener((info, tab) => {
+  // Send message to content script
+  // Open dialog with selection pre-filled
+});
+```
 
-### 4. Firefox vs Chrome Compatibility
-**Challenge**: `chrome.*` API vs `browser.*` API
-**Solution**:
-- Use `chrome.*` (Firefox supports as alias)
-- Manifest v3 required for both
-- Test in both browsers before release
+#### 6.7 Responsive Design
+**File**: `src/content/components/Dialog.tsx`
 
-## Success Metrics
-- Extension loads without errors
-- Dialog responds in <100ms to shortcut
-- API latency <2s for first token
-- No memory leaks after 50 conversations
-- Bundle size <500KB gzipped
-- Works on 95% of websites (edge cases: canvas-based sites)
+Handle small viewports:
+- Min size: 400×200
+- On small screens (<768px wide): use 90vw width
+- Stack history panel below on mobile
+- Touch-friendly hit targets (44×44px minimum)
 
-## Out of Scope (Future Enhancements)
-- Conversation branching
-- Claude.ai account sync
-- Multi-language support
-- Voice input
-- Image context (screenshots)
-- Quick action templates
-- Mobile extension (if Firefox for Android supports)
+#### 6.8 Syntax Theme Selection
+**File**: `src/settings/Settings.tsx`, `src/content/components/Response.tsx`
 
-## Timeline Estimate
-- **Phase 1**: 0.5 days
-- **Phase 2**: 1 day
-- **Phase 3**: 1.5 days
-- **Phase 4**: 1 day
-- **Phase 5**: 1 day
-- **Phase 6**: 0.5-1 day
+Allow choosing highlight.js theme:
+- GitHub (current default)
+- VS Code Dark
+- Monokai
+- Tomorrow Night
 
-**Total**: 5-6 days focused work
+Load dynamically based on setting.
+
+#### 6.9 Pin/Unpin Dialog
+**File**: `src/content/components/Dialog.tsx`
+
+Add 📌 button to header:
+- When pinned: dialog stays open while browsing
+- When unpinned: closes on backdrop click
+- Persist pin state
+
+### Validation
+- No console errors
+- Smooth 60fps animations
+- All keyboard shortcuts work
+- Toasts appear/dismiss correctly
+- Right-click menu functions
+- Works on mobile viewport
+- Retry logic handles network issues
+- Pin/unpin persists
+
+---
+
+## Implementation Order
+
+Recommended sequence:
+1. **Phase 4.2-4.3**: Visual history first (shows immediate value)
+2. **Phase 4.1**: Wire up persistence
+3. **Phase 4.4**: New conversation flow
+4. **Phase 5**: Settings (can be done in parallel)
+5. **Phase 6**: Polish incrementally
+
+## Testing Checklist
+
+### Phase 4
+- [ ] Create 5+ conversations
+- [ ] Search finds correct results
+- [ ] Export produces valid files
+- [ ] Import restores correctly
+- [ ] Conversation depth setting works
+- [ ] History persists across browser restarts
+- [ ] Delete removes from storage
+
+### Phase 5
+- [ ] All settings save/load
+- [ ] Theme changes apply immediately
+- [ ] Custom shortcut works
+- [ ] Retention deletes old conversations
+- [ ] Storage usage accurate
+
+### Phase 6
+- [ ] Animations smooth on low-end device
+- [ ] Toasts don't stack or overlap
+- [ ] All keyboard shortcuts work
+- [ ] Right-click menu functions
+- [ ] Retry logic handles failures
+- [ ] Works in Firefox mobile (if supported)
+
+## Known Limitations
+
+### Current Bundle Size
+`content.js` is 1.2MB (395KB gzipped) due to:
+- highlight.js includes all languages
+- React + React-DOM
+- marked parser
+
+**Optimization opportunities**:
+- Import only common highlight.js languages
+- Use Preact instead of React (3KB vs 40KB)
+- Code-split markdown parser (load on demand)
+- Use lighter markdown parser
+
+### Browser Compatibility
+- Built for Firefox only (manifest v3)
+- Chrome support requires testing (minimal changes expected)
+- Safari requires conversion to Safari extension format
+
+### Performance
+- Large pages (>100k chars) may slow context extraction
+- Highlight.js can be slow on very large code blocks
+- Consider web worker for heavy processing
+
+## Future Enhancements (Beyond Phase 6)
+
+- **Templates**: Save favorite prompts
+- **Multi-language**: i18n support
+- **Voice input**: Speech-to-text
+- **Image context**: Screenshot analysis
+- **Collaboration**: Share conversations
+- **Plugins**: Custom tools/functions
+- **Mobile**: Firefox for Android support
