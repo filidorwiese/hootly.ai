@@ -17,8 +17,8 @@
   "content_scripts": [
     {
       "matches": ["<all_urls>"],
-      "js": ["storage.js", "content.js"],
-      "css": ["content.css"],
+      "js": ["content.js"],
+      "css": ["fireclaude.css"],
       "run_at": "document_idle"
     }
   ],

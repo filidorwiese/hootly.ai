@@ -5,7 +5,8 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "tsc && vite build && node scripts/generate-icons.js",
+    "build": "tsc && npm run build:scripts && vite build && node scripts/generate-icons.js",
+    "build:scripts": "BUILD_ENTRY=src/content/index.tsx BUILD_OUTPUT=content.js vite build --mode lib && BUILD_ENTRY=src/background/service-worker.ts BUILD_OUTPUT=background.js vite build --mode lib",
     "preview": "vite preview",
     "test": "vitest"
   },
