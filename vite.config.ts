@@ -29,21 +29,15 @@ export default defineConfig({
         content: resolve(__dirname, 'src/content/index.tsx'),
         background: resolve(__dirname, 'src/background/service-worker.ts'),
         settings: resolve(__dirname, 'src/settings/index.html'),
-        'settings-script': resolve(__dirname, 'src/settings/settings.ts'),
       },
       output: {
-        entryFileNames: (chunkInfo) => {
-          // Map settings-script to settings.js
-          if (chunkInfo.name === 'settings-script') {
-            return 'settings.js';
-          }
-          return '[name].js';
-        },
+        entryFileNames: '[name].js',
         chunkFileNames: '[name].js',
         assetFileNames: '[name].[ext]',
       },
     },
     outDir: 'dist',
     emptyOutDir: true,
+    target: 'es2015',
   },
 });
