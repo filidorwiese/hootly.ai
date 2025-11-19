@@ -12,8 +12,7 @@
     "<all_urls>"
   ],
   "background": {
-    "scripts": ["background.js"],
-    "type": "module"
+    "scripts": ["background.js"]
   },
   "content_scripts": [
     {

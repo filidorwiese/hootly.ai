@@ -1,7 +1,7 @@
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
 import { resolve } from 'path';
-import { copyFileSync, mkdirSync } from 'fs';
+import { copyFileSync, mkdirSync, existsSync } from 'fs';
 
 export default defineConfig({
   plugins: [
@@ -12,7 +12,13 @@ export default defineConfig({
         mkdirSync('dist', { recursive: true });
         copyFileSync('manifest.json', 'dist/manifest.json');
         // Move settings.html to root of dist
-        copyFileSync('dist/src/settings/index.html', 'dist/settings.html');
+        const settingsPath = 'dist/src/settings/index.html';
+        const settingsAltPath = 'dist/settings.html';
+        if (existsSync(settingsPath)) {
+          copyFileSync(settingsPath, settingsAltPath);
+        } else if (existsSync('dist/index.html')) {
+          copyFileSync('dist/index.html', settingsAltPath);
+        }
       },
     },
   ],
