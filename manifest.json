@@ -29,7 +29,7 @@
   "commands": {
     "toggle-dialog": {
       "suggested_key": {
-        "default": "Alt+W"
+        "default": "Alt+C"
       },
       "description": "Toggle FireClaude dialog"
     }
