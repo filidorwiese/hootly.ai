@@ -2,7 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { Rnd } from 'react-rnd';
 import { css } from '@emotion/css';
 import { Storage } from '../../shared/storage';
-import type { DialogPosition } from '../../shared/types';
+import type { DialogPosition, Message, ContentMessage } from '../../shared/types';
+import { buildPageContext } from '../../shared/utils';
 import InputArea from './InputArea';
 import Response from './Response';
 import ContextToggle from './ContextToggle';
@@ -19,6 +20,8 @@ const Dialog: React.FC<DialogProps> = ({ isOpen, onClose }) => {
   const [contextEnabled, setContextEnabled] = useState(false);
   const [response, setResponse] = useState('');
   const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const [conversationHistory, setConversationHistory] = useState<Message[]>([]);
 
   // Load saved position on mount
   useEffect(() => {
@@ -55,16 +58,75 @@ const Dialog: React.FC<DialogProps> = ({ isOpen, onClose }) => {
     Storage.saveDialogPosition(newPos);
   };
 
-  const handleSubmit = () => {
+  // Listen for streaming responses from background
+  useEffect(() => {
+    const handleMessage = (message: ContentMessage) => {
+      if (message.type === 'streamChunk') {
+        setResponse((prev) => prev + message.payload.content);
+      } else if (message.type === 'streamEnd') {
+        setIsLoading(false);
+        // Save completed exchange to history
+        const assistantMessage: Message = {
+          role: 'assistant',
+          content: response,
+          timestamp: Date.now(),
+        };
+        setConversationHistory((prev) => [...prev, assistantMessage]);
+      } else if (message.type === 'streamError') {
+        setIsLoading(false);
+        setError(message.payload.error);
+      }
+    };
+
+    chrome.runtime.onMessage.addListener(handleMessage);
+    return () => chrome.runtime.onMessage.removeListener(handleMessage);
+  }, [response]);
+
+  const handleSubmit = async () => {
     if (!inputValue.trim() || isLoading) return;
 
-    // @TODO: Implement API call via background worker
     setIsLoading(true);
-    setResponse('API integration coming in Phase 3...');
+    setError(null);
+    setResponse('');
 
-    setTimeout(() => {
+    try {
+      const settings = await Storage.getSettings();
+
+      // Build context if enabled
+      const context = contextEnabled
+        ? buildPageContext({
+            includeScripts: settings.includeScripts,
+            includeStyles: settings.includeStyles,
+            includeAltText: settings.includeAltText,
+            maxLength: settings.contextMaxLength,
+          })
+        : undefined;
+
+      // Add user message to history
+      const userMessage: Message = {
+        role: 'user',
+        content: inputValue,
+        timestamp: Date.now(),
+        context,
+      };
+
+      setConversationHistory((prev) => [...prev, userMessage]);
+      setInputValue('');
+
+      // Send to background worker
+      await chrome.runtime.sendMessage({
+        type: 'sendPrompt',
+        payload: {
+          prompt: inputValue,
+          context,
+          conversationHistory,
+          settings,
+        },
+      });
+    } catch (err) {
       setIsLoading(false);
-    }, 1000);
+      setError(err instanceof Error ? err.message : 'Failed to send message');
+    }
   };
 
   if (!isOpen) return null;
@@ -99,7 +161,7 @@ const Dialog: React.FC<DialogProps> = ({ isOpen, onClose }) => {
         {/* Content */}
         <div className={contentWrapperStyles}>
           {/* Response Area */}
-          <Response content={response} isLoading={isLoading} />
+          <Response content={response} isLoading={isLoading} error={error} />
 
           {/* Input Area */}
           <div className={inputSectionStyles}>

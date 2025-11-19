@@ -1,5 +1,6 @@
 import { createRoot } from 'react-dom/client';
 import App from './App';
+import 'highlight.js/styles/github.css';
 
 // Create container for React app
 const container = document.createElement('div');
