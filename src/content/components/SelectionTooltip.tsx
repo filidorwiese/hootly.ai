@@ -41,7 +41,7 @@ const SelectionTooltip: React.FC<SelectionTooltipProps> = ({ onOpenWithSelection
 
   return (
     <div className={tooltipStyles} onClick={onOpenWithSelection}>
-      <span className={iconStyles}>🔥</span>
+      <img src={chrome.runtime.getURL('icons/icon-48.png')} alt="" className={iconStyles} />
       <span>Press <strong>{shortcut}</strong> to chat with selection</span>
     </div>
   );
@@ -95,9 +95,9 @@ const tooltipStyles = css`
 `;
 
 const iconStyles = css`
-  font-size: 20px;
+  width: 20px;
+  height: 20px;
   flex-shrink: 0;
-  line-height: 1;
 `;
 
 export default SelectionTooltip;

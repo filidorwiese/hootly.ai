@@ -2,7 +2,7 @@ import sharp from 'sharp';
 import { readFileSync } from 'fs';
 import { mkdirSync } from 'fs';
 
-const svg = readFileSync('public/icons/icon.svg');
+const png = readFileSync('public/icons/icon.png');
 
 mkdirSync('dist/icons', { recursive: true });
 
@@ -10,7 +10,7 @@ mkdirSync('dist/icons', { recursive: true });
 const sizes = [16, 48, 128];
 
 for (const size of sizes) {
-  await sharp(svg)
+  await sharp(png)
     .resize(size, size)
     .png()
     .toFile(`dist/icons/icon-${size}.png`);

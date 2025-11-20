@@ -260,7 +260,10 @@ const Dialog: React.FC<DialogProps> = ({ isOpen, onClose }) => {
         >
         {/* Header */}
         <div className={`${headerStyles} drag-handle`}>
-          <h2>🔥 FireClaude</h2>
+          <h2>
+            <img src={chrome.runtime.getURL('icons/icon-48.png')} alt="" className={iconStyles} />
+            FireClaude
+          </h2>
           <div className={headerButtonsStyles}>
             <button onClick={() => chrome.runtime.sendMessage({ type: 'openSettings' })} aria-label="Settings" title="Open Settings">
               ⚙️
@@ -363,7 +366,15 @@ const headerStyles = css`
     font-size: 16px;
     font-weight: 600;
     color: #333;
+    display: flex;
+    align-items: center;
+    gap: 8px;
   }
+`;
+
+const iconStyles = css`
+  width: 24px;
+  height: 24px;
 `;
 
 const headerButtonsStyles = css`
