@@ -314,8 +314,12 @@ const headerStyles = css`
   align-items: center;
   padding: 12px 16px;
   border-bottom: 1px solid #e0e0e0;
-  cursor: move;
+  cursor: grab;
   user-select: none;
+
+  &:active {
+    cursor: grabbing;
+  }
 
   h2 {
     margin: 0;
