@@ -90,7 +90,7 @@ export const DEFAULT_SETTINGS: Settings = {
   temperature: 1.0,
   theme: 'system',
   fontSize: 14,
-  shortcut: 'Alt+W',
+  shortcut: 'Alt+C',
   autoClose: false,
   defaultContext: 'none',
   contextMaxLength: 100000,
