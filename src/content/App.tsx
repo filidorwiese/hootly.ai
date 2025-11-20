@@ -4,6 +4,11 @@ import Dialog from './components/Dialog';
 const App: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
 
+  // Log state changes
+  useEffect(() => {
+    console.log('[FireClaude] Dialog state changed to:', isOpen);
+  }, [isOpen]);
+
   useEffect(() => {
     console.log('[FireClaude] App component mounted');
 
@@ -11,8 +16,11 @@ const App: React.FC = () => {
     const handleMessage = (event: MessageEvent) => {
       console.log('[FireClaude] Window message received:', event.data);
       if (event.data.type === 'fireclaude-toggle') {
-        console.log('[FireClaude] Toggling dialog, current state:', isOpen);
-        setIsOpen((prev) => !prev);
+        console.log('[FireClaude] Toggling dialog');
+        setIsOpen((prev) => {
+          console.log('[FireClaude] State updating from', prev, 'to', !prev);
+          return !prev;
+        });
       }
     };
 
