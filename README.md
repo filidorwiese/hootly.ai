@@ -92,6 +92,30 @@ npm run build
 npm test
 ```
 
+### Configuring Available Models
+
+Models are configured in `src/config/models.json`:
+
+```json
+{
+  "models": [
+    {
+      "id": "claude-sonnet-4-5-20250929",
+      "name": "Claude Sonnet 4.5",
+      "description": "Smartest model for complex agents and coding",
+      "recommended": true,
+      "legacy": false
+    }
+  ],
+  "defaultModel": "claude-sonnet-4-5-20250929"
+}
+```
+
+To update models:
+1. Edit `src/config/models.json`
+2. Run `npm run build`
+3. Settings dropdown auto-populates from config
+
 ## Project Structure
 
 ```
@@ -101,6 +125,7 @@ fireclaude/
 │   ├── content/          # Injected UI (React)
 │   │   └── components/   # Dialog, Input, Response, etc.
 │   ├── settings/         # Settings page
+│   ├── config/           # Configuration files (models.json)
 │   └── shared/           # Types, storage, utils
 ├── public/icons/         # Extension icons
 ├── manifest.json         # Extension manifest
