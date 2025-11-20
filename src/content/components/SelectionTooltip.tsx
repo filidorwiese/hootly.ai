@@ -41,21 +41,7 @@ const SelectionTooltip: React.FC<SelectionTooltipProps> = ({ onOpenWithSelection
 
   return (
     <div className={tooltipStyles} onClick={onOpenWithSelection}>
-      <svg className={iconStyles} viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-        <defs>
-          <linearGradient id="fire-gradient" x1="0%" y1="0%" x2="0%" y2="100%">
-            <stop offset="0%" style={{ stopColor: '#FF6B35', stopOpacity: 1 }} />
-            <stop offset="100%" style={{ stopColor: '#F7931E', stopOpacity: 1 }} />
-          </linearGradient>
-        </defs>
-        <path
-          d="M30 70 Q20 50 30 30 Q35 20 45 25 Q40 35 45 45 Q55 20 70 30 Q80 40 75 55 Q70 70 50 75 Q30 80 30 70 Z"
-          fill="url(#fire-gradient)"
-        />
-        <circle cx="45" cy="45" r="3" fill="white" opacity="0.9" />
-        <circle cx="55" cy="50" r="2.5" fill="white" opacity="0.7" />
-        <circle cx="50" cy="55" r="2" fill="white" opacity="0.5" />
-      </svg>
+      <span className={iconStyles}>🔥</span>
       <span>Press <strong>{shortcut}</strong> to chat with selection</span>
     </div>
   );
@@ -109,9 +95,9 @@ const tooltipStyles = css`
 `;
 
 const iconStyles = css`
-  width: 24px;
-  height: 24px;
+  font-size: 20px;
   flex-shrink: 0;
+  line-height: 1;
 `;
 
 export default SelectionTooltip;
