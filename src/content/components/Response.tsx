@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { css } from '@emotion/css';
 import { marked } from 'marked';
 import hljs from 'highlight.js';
@@ -35,6 +35,7 @@ interface ResponseProps {
 
 const Response: React.FC<ResponseProps> = ({ conversationHistory, currentResponse, isLoading, error }) => {
   const containerRef = useRef<HTMLDivElement>(null);
+  const [copiedIndex, setCopiedIndex] = useState<number | null>(null);
 
   // Auto-scroll to bottom when new content arrives
   useEffect(() => {
@@ -42,6 +43,16 @@ const Response: React.FC<ResponseProps> = ({ conversationHistory, currentRespons
       containerRef.current.scrollTop = containerRef.current.scrollHeight;
     }
   }, [conversationHistory, currentResponse]);
+
+  const handleCopy = async (content: string, index: number) => {
+    try {
+      await navigator.clipboard.writeText(content);
+      setCopiedIndex(index);
+      setTimeout(() => setCopiedIndex(null), 2000);
+    } catch (err) {
+      console.error('Failed to copy:', err);
+    }
+  };
 
   const hasContent = conversationHistory.length > 0 || currentResponse;
 
@@ -74,6 +85,13 @@ const Response: React.FC<ResponseProps> = ({ conversationHistory, currentRespons
               className={markdownStyles}
               dangerouslySetInnerHTML={{ __html: rendered }}
             />
+            <button
+              className={copyButtonStyles}
+              onClick={() => handleCopy(message.content, index)}
+              title={copiedIndex === index ? 'Copied!' : 'Copy to clipboard'}
+            >
+              {copiedIndex === index ? '✓' : '📋'}
+            </button>
           </div>
         );
       })}
@@ -89,6 +107,13 @@ const Response: React.FC<ResponseProps> = ({ conversationHistory, currentRespons
             className={markdownStyles}
             dangerouslySetInnerHTML={{ __html: marked.parse(currentResponse) }}
           />
+          <button
+            className={copyButtonStyles}
+            onClick={() => handleCopy(currentResponse, -1)}
+            title={copiedIndex === -1 ? 'Copied!' : 'Copy to clipboard'}
+          >
+            {copiedIndex === -1 ? '✓' : '📋'}
+          </button>
         </div>
       )}
 
@@ -240,6 +265,7 @@ const placeholderStyles = css`
 `;
 
 const messageContainerStyles = (role: 'user' | 'assistant') => css`
+  position: relative;
   margin-bottom: 16px;
   padding: 14px;
   border-radius: 8px;
@@ -247,6 +273,10 @@ const messageContainerStyles = (role: 'user' | 'assistant') => css`
   border: 1px solid ${role === 'user' ? '#2196F3' : '#e0e0e0'};
   border-left: 4px solid ${role === 'user' ? '#1976d2' : '#4CAF50'};
   color: #212121;
+
+  &:hover button {
+    opacity: 1;
+  }
 `;
 
 const messageHeaderStyles = css`
@@ -273,6 +303,28 @@ const streamingIndicatorStyles = css`
     50% {
       opacity: 0.3;
     }
+  }
+`;
+
+const copyButtonStyles = css`
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  background: rgba(255, 255, 255, 0.9);
+  border: 1px solid #e0e0e0;
+  border-radius: 4px;
+  padding: 6px 8px;
+  font-size: 14px;
+  cursor: pointer;
+  opacity: 0;
+  transition: opacity 0.2s, background 0.2s;
+
+  &:hover {
+    background: #f5f5f5;
+  }
+
+  &:active {
+    transform: scale(0.95);
   }
 `;
 
