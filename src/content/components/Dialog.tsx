@@ -35,19 +35,16 @@ const Dialog: React.FC<DialogProps> = ({ isOpen, onClose }) => {
   const [error, setError] = useState<string | null>(null);
   const [conversationHistory, setConversationHistory] = useState<Message[]>([]);
 
-  // Auto-enable context when dialog opens with text selection
+  // Capture text selection when dialog opens
   useEffect(() => {
     if (isOpen) {
       const selection = window.getSelection();
       const selectionText = selection && selection.toString().trim();
       if (selectionText && selectionText.length > 0) {
         setCapturedSelection(selectionText);
-        setContextEnabled(true);
-        setContextMode('selection');
-        console.log('[FireClaude] Auto-enabled context with selection:', selectionText.length, 'chars');
+        console.log('[FireClaude] Captured selection:', selectionText.length, 'chars');
       } else {
         setCapturedSelection(null);
-        setContextMode('none');
       }
     } else {
       // Reset when dialog closes
@@ -275,9 +272,11 @@ const Dialog: React.FC<DialogProps> = ({ isOpen, onClose }) => {
             FireClaude
           </h2>
           <div className={headerButtonsStyles}>
-            <button onClick={handleClearConversation} aria-label="Clear conversation" title="Clear conversation">
-              🔄
-            </button>
+            {conversationHistory.length > 0 && (
+              <button onClick={handleClearConversation} aria-label="Clear conversation" title="Clear conversation">
+                🗑
+              </button>
+            )}
             <button onClick={() => chrome.runtime.sendMessage({ type: 'openSettings' })} aria-label="Settings" title="Open Settings">
               ⚙️
             </button>
