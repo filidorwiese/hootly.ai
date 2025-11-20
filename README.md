@@ -44,17 +44,21 @@ This creates a `dist/` folder with the compiled extension.
 3. Click "Load Temporary Add-on"
 4. Select `dist/manifest.json`
 
-### 4. Configure API Key
+### 4. Configure Settings
 
 1. Click the FireClaude icon in the toolbar (or navigate to settings)
 2. Enter your Anthropic API key
-3. (Optional) Adjust model, max tokens, temperature
+3. (Optional) Customize:
+   - Model selection
+   - Max tokens
+   - Temperature
+   - Keyboard shortcut (default: Alt+C)
 
 ## Usage
 
 ### Basic Usage
 
-1. Press `Alt+W` on any webpage to open dialog
+1. Press your configured keyboard shortcut (default: `Alt+C`) on any webpage to open dialog
 2. Type your query
 3. Press `Enter` to send (or click "Send")
 4. Response streams in real-time with markdown formatting

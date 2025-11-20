@@ -34,7 +34,7 @@
       "suggested_key": {
         "default": "Alt+C"
       },
-      "description": "Toggle FireClaude dialog"
+      "description": "Toggle FireClaude dialog (fallback - configure in settings)"
     }
   },
   "icons": {
