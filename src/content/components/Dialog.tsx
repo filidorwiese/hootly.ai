@@ -22,6 +22,10 @@ const Dialog: React.FC<DialogProps> = ({ isOpen, onClose }) => {
     return { x: centerX, y: centerY };
   });
   const [size, setSize] = useState({ width: 800, height: 400 });
+  const [maxDimensions, setMaxDimensions] = useState(() => ({
+    maxWidth: window.innerWidth - 40,
+    maxHeight: window.innerHeight - 40,
+  }));
   const [inputValue, setInputValue] = useState('');
   const [contextEnabled, setContextEnabled] = useState(false);
   const [response, setResponse] = useState('');
@@ -49,6 +53,19 @@ const Dialog: React.FC<DialogProps> = ({ isOpen, onClose }) => {
         setSize({ width: saved.width, height: saved.height });
       }
     });
+  }, []);
+
+  // Update max dimensions on window resize
+  useEffect(() => {
+    const handleResize = () => {
+      setMaxDimensions({
+        maxWidth: window.innerWidth - 40,
+        maxHeight: window.innerHeight - 40,
+      });
+    };
+
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
   }, []);
 
   // Save position when changed
@@ -165,8 +182,8 @@ const Dialog: React.FC<DialogProps> = ({ isOpen, onClose }) => {
           onResizeStop={handleResizeStop}
           minWidth={400}
           minHeight={200}
-          maxWidth={1200}
-          maxHeight={800}
+          maxWidth={maxDimensions.maxWidth}
+          maxHeight={maxDimensions.maxHeight}
           bounds="parent"
           dragHandleClassName="drag-handle"
           className={dialogStyles}
