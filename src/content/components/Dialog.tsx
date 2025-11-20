@@ -35,16 +35,19 @@ const Dialog: React.FC<DialogProps> = ({ isOpen, onClose }) => {
   const [error, setError] = useState<string | null>(null);
   const [conversationHistory, setConversationHistory] = useState<Message[]>([]);
 
-  // Capture text selection when dialog opens
+  // Capture text selection and auto-enable context when dialog opens
   useEffect(() => {
     if (isOpen) {
       const selection = window.getSelection();
       const selectionText = selection && selection.toString().trim();
       if (selectionText && selectionText.length > 0) {
         setCapturedSelection(selectionText);
-        console.log('[FireClaude] Captured selection:', selectionText.length, 'chars');
+        setContextEnabled(true);
+        setContextMode('selection');
+        console.log('[FireClaude] Auto-enabled context with selection:', selectionText.length, 'chars');
       } else {
         setCapturedSelection(null);
+        setContextMode('none');
       }
     } else {
       // Reset when dialog closes
