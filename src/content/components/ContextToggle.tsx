@@ -1,50 +1,46 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { css } from '@emotion/css';
-import { extractSelection } from '../../shared/utils';
 
 interface ContextToggleProps {
   enabled: boolean;
-  onToggle: (enabled: boolean) => void;
+  mode: 'none' | 'selection' | 'fullpage';
+  selectionLength?: number;
+  onToggle: () => void;
 }
 
-const ContextToggle: React.FC<ContextToggleProps> = ({ enabled, onToggle }) => {
-  const [selectionText, setSelectionText] = useState<string | null>(null);
+const ContextToggle: React.FC<ContextToggleProps> = ({ enabled, mode, selectionLength, onToggle }) => {
+  let buttonTitle = 'Enable context';
+  let badgeText = 'No context';
+  let badgeType: 'selection' | 'full' | 'off' = 'off';
 
-  useEffect(() => {
-    // Check for text selection when component mounts or enabled state changes
-    const selection = extractSelection();
-    setSelectionText(selection);
-  }, [enabled]);
-
-  const hasSelection = !!selectionText;
+  if (enabled && mode === 'selection' && selectionLength) {
+    buttonTitle = 'Click to switch to full page context';
+    badgeText = `Selection (${selectionLength} chars)`;
+    badgeType = 'selection';
+  } else if (enabled && mode === 'fullpage') {
+    buttonTitle = 'Click to disable context';
+    badgeText = 'Full page';
+    badgeType = 'full';
+  } else {
+    buttonTitle = 'Click to enable context';
+    badgeText = 'No context';
+    badgeType = 'off';
+  }
 
   return (
     <div className={containerStyles}>
       <button
-        onClick={() => onToggle(!enabled)}
+        onClick={onToggle}
         className={toggleButtonStyles(enabled)}
-        title={enabled ? 'Disable page context' : 'Enable page context'}
+        title={buttonTitle}
       >
         🌐
       </button>
       <div className={labelStyles}>
-        {enabled && hasSelection && (
-          <span className={badgeStyles('selection')}>
-            Selection ({selectionText.length} chars)
-          </span>
-        )}
-        {enabled && !hasSelection && (
-          <span className={badgeStyles('full')}>
-            Full page context
-          </span>
-        )}
-        {!enabled && (
-          <span className={badgeStyles('off')}>
-            No context
-          </span>
-        )}
+        <span className={badgeStyles(badgeType)}>
+          {badgeText}
+        </span>
       </div>
-      {/* @TODO: Add preview button in Phase 3 */}
     </div>
   );
 };

@@ -28,6 +28,8 @@ const Dialog: React.FC<DialogProps> = ({ isOpen, onClose }) => {
   }));
   const [inputValue, setInputValue] = useState('');
   const [contextEnabled, setContextEnabled] = useState(false);
+  const [contextMode, setContextMode] = useState<'none' | 'selection' | 'fullpage'>('none');
+  const [capturedSelection, setCapturedSelection] = useState<string | null>(null);
   const [response, setResponse] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -37,11 +39,21 @@ const Dialog: React.FC<DialogProps> = ({ isOpen, onClose }) => {
   useEffect(() => {
     if (isOpen) {
       const selection = window.getSelection();
-      const hasSelection = selection && selection.toString().trim().length > 0;
-      if (hasSelection) {
+      const selectionText = selection && selection.toString().trim();
+      if (selectionText && selectionText.length > 0) {
+        setCapturedSelection(selectionText);
         setContextEnabled(true);
-        console.log('[FireClaude] Auto-enabled context due to text selection');
+        setContextMode('selection');
+        console.log('[FireClaude] Auto-enabled context with selection:', selectionText.length, 'chars');
+      } else {
+        setCapturedSelection(null);
+        setContextMode('none');
       }
+    } else {
+      // Reset when dialog closes
+      setCapturedSelection(null);
+      setContextMode('none');
+      setContextEnabled(false);
     }
   }, [isOpen]);
 
@@ -111,6 +123,28 @@ const Dialog: React.FC<DialogProps> = ({ isOpen, onClose }) => {
     return () => chrome.runtime.onMessage.removeListener(handleMessage);
   }, []);
 
+  const handleContextToggle = () => {
+    if (!contextEnabled) {
+      // Enable context
+      if (capturedSelection) {
+        setContextMode('selection');
+      } else {
+        setContextMode('fullpage');
+      }
+      setContextEnabled(true);
+    } else {
+      // Cycle through modes or disable
+      if (contextMode === 'selection') {
+        // Switch to fullpage
+        setContextMode('fullpage');
+      } else if (contextMode === 'fullpage') {
+        // Disable context
+        setContextEnabled(false);
+        setContextMode('none');
+      }
+    }
+  };
+
   const handleSubmit = async () => {
     if (!inputValue.trim() || isLoading) return;
 
@@ -128,15 +162,27 @@ const Dialog: React.FC<DialogProps> = ({ isOpen, onClose }) => {
         return;
       }
 
-      // Build context if enabled
-      const context = contextEnabled
-        ? buildPageContext({
+      // Build context based on mode
+      let context = undefined;
+      if (contextEnabled && contextMode !== 'none') {
+        if (contextMode === 'selection' && capturedSelection) {
+          // Use captured selection
+          context = {
+            url: window.location.href,
+            title: document.title,
+            selection: capturedSelection,
+            metadata: undefined,
+          };
+        } else if (contextMode === 'fullpage') {
+          // Use full page context
+          context = buildPageContext({
             includeScripts: settings.includeScripts,
             includeStyles: settings.includeStyles,
             includeAltText: settings.includeAltText,
             maxLength: settings.contextMaxLength,
-          })
-        : undefined;
+          });
+        }
+      }
 
       // Add user message to history
       const userMessage: Message = {
@@ -210,7 +256,9 @@ const Dialog: React.FC<DialogProps> = ({ isOpen, onClose }) => {
           <div className={inputSectionStyles}>
             <ContextToggle
               enabled={contextEnabled}
-              onToggle={setContextEnabled}
+              mode={contextMode}
+              selectionLength={capturedSelection?.length}
+              onToggle={handleContextToggle}
             />
             <InputArea
               value={inputValue}
