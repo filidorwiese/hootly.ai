@@ -49,7 +49,6 @@ const containerStyles = css`
   display: flex;
   align-items: center;
   gap: 8px;
-  margin-bottom: 8px;
 `;
 
 const toggleButtonStyles = (enabled: boolean) => css`

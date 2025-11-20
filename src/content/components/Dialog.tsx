@@ -35,6 +35,24 @@ const Dialog: React.FC<DialogProps> = ({ isOpen, onClose }) => {
   const [error, setError] = useState<string | null>(null);
   const [conversationHistory, setConversationHistory] = useState<Message[]>([]);
 
+  // Estimate token count (rough approximation: ~4 chars per token)
+  const estimateTokens = (text: string): number => {
+    return Math.ceil(text.length / 4);
+  };
+
+  const getCurrentTokenCount = (): number => {
+    let count = estimateTokens(inputValue);
+
+    if (contextEnabled && contextMode === 'selection' && capturedSelection) {
+      count += estimateTokens(capturedSelection);
+    } else if (contextEnabled && contextMode === 'fullpage') {
+      const pageText = document.body.innerText || '';
+      count += estimateTokens(pageText.substring(0, 50000)); // Approximate page content
+    }
+
+    return count;
+  };
+
   // Capture text selection and auto-enable context when dialog opens
   useEffect(() => {
     if (isOpen) {
@@ -303,12 +321,17 @@ const Dialog: React.FC<DialogProps> = ({ isOpen, onClose }) => {
           <div className={inputSectionStyles}>
             {!isLoading ? (
               <>
-                <ContextToggle
-                  enabled={contextEnabled}
-                  mode={contextMode}
-                  selectionLength={capturedSelection?.length}
-                  onToggle={handleContextToggle}
-                />
+                <div className={inputHeaderStyles}>
+                  <ContextToggle
+                    enabled={contextEnabled}
+                    mode={contextMode}
+                    selectionLength={capturedSelection?.length}
+                    onToggle={handleContextToggle}
+                  />
+                  <div className={tokenCountStyles}>
+                    ~{getCurrentTokenCount()} tokens
+                  </div>
+                </div>
                 <InputArea
                   value={inputValue}
                   onChange={setInputValue}
@@ -428,6 +451,22 @@ const inputSectionStyles = css`
   border-top: 1px solid #e0e0e0;
   padding: 12px;
   background: #f9f9f9;
+`;
+
+const inputHeaderStyles = css`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+`;
+
+const tokenCountStyles = css`
+  font-size: 12px;
+  color: #666;
+  padding: 4px 8px;
+  background: #fff;
+  border-radius: 4px;
+  border: 1px solid #e0e0e0;
 `;
 
 const cancelHintStyles = css`
