@@ -10,6 +10,9 @@ export default defineConfig(({ command, mode }) => {
   if (isLibBuild) {
     return {
       plugins: [react()],
+      define: {
+        'process.env.NODE_ENV': JSON.stringify('production'),
+      },
       build: {
         lib: {
           entry: resolve(__dirname, process.env.BUILD_ENTRY!),
@@ -59,7 +62,7 @@ export default defineConfig(({ command, mode }) => {
         },
       },
       outDir: 'dist',
-      emptyOutDir: true,
+      emptyOutDir: false,
       target: 'es2015',
     },
   };
