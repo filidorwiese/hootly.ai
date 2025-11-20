@@ -15,6 +15,9 @@ chrome.runtime.onMessage.addListener((message: BackgroundMessage, sender, sendRe
   } else if (message.type === 'saveSettings') {
     // Settings are stored in chrome.storage, which content scripts can access directly
     sendResponse({ success: true });
+  } else if (message.type === 'openSettings') {
+    chrome.tabs.create({ url: chrome.runtime.getURL('settings.html') });
+    sendResponse({ success: true });
   }
 
   return true; // Keep message channel open for async response
@@ -58,19 +61,26 @@ async function handleSendPrompt(
   try {
     const client = new Anthropic({
       apiKey: settings.apiKey,
+      dangerouslyAllowBrowser: true,
     });
 
     // Build messages array from conversation history
+    // Filter out any messages with empty content
     const messages: Anthropic.MessageParam[] = [
-      ...conversationHistory.map((msg) => ({
-        role: msg.role as 'user' | 'assistant',
-        content: msg.content,
-      })),
+      ...conversationHistory
+        .filter((msg) => msg.content && msg.content.trim() !== '')
+        .map((msg) => ({
+          role: msg.role as 'user' | 'assistant',
+          content: msg.content,
+        })),
       {
         role: 'user' as const,
         content: buildPromptWithContext(prompt, context),
       },
     ];
+
+    console.log('[FireClaude] Sending messages to API:', messages.length, 'messages');
+    console.log('[FireClaude] Message roles:', messages.map(m => m.role).join(', '));
 
     // Stream response
     const stream = client.messages.stream({
@@ -81,7 +91,11 @@ async function handleSendPrompt(
       messages,
     });
 
+    // Track complete response content
+    let fullContent = '';
+
     stream.on('text', (text) => {
+      fullContent += text;
       sendToTab(tabId, {
         type: 'streamChunk',
         payload: { content: text },
@@ -91,21 +105,68 @@ async function handleSendPrompt(
     stream.on('end', () => {
       sendToTab(tabId, {
         type: 'streamEnd',
+        payload: { content: fullContent },
       });
     });
 
     stream.on('error', (error) => {
       sendToTab(tabId, {
         type: 'streamError',
-        payload: { error: error.message },
+        payload: { error: extractErrorMessage(error) },
       });
     });
   } catch (error) {
     sendToTab(tabId, {
       type: 'streamError',
-      payload: { error: error instanceof Error ? error.message : 'Unknown error' },
+      payload: { error: extractErrorMessage(error) },
     });
   }
+}
+
+function extractErrorMessage(error: any): string {
+  console.log('[FireClaude] Extracting error:', error);
+
+  // Handle Anthropic SDK errors
+  if (error?.error?.message) {
+    return error.error.message;
+  }
+
+  // Handle error with message field
+  if (error?.message) {
+    const msg = error.message;
+
+    // Try to parse JSON error message (format: "400 {json}")
+    try {
+      const match = msg.match(/\d{3}\s+(\{.*\})/);
+      if (match) {
+        const errorData = JSON.parse(match[1]);
+        if (errorData?.error?.message) {
+          return errorData.error.message;
+        }
+      }
+    } catch (e) {
+      // If parsing fails, return the original message
+    }
+
+    return msg;
+  }
+
+  // Handle string errors
+  if (typeof error === 'string') {
+    return error;
+  }
+
+  // Handle object errors - try to find any message
+  if (typeof error === 'object') {
+    if (error.error_message) return error.error_message;
+    if (error.detail) return error.detail;
+
+    // Last resort - stringify the error
+    console.error('[FireClaude] Unhandled error format:', error);
+    return JSON.stringify(error);
+  }
+
+  return 'An unexpected error occurred';
 }
 
 function buildPromptWithContext(prompt: string, context?: any): string {

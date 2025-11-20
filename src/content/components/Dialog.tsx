@@ -14,7 +14,13 @@ interface DialogProps {
 }
 
 const Dialog: React.FC<DialogProps> = ({ isOpen, onClose }) => {
-  const [position, setPosition] = useState({ x: 0, y: 0 });
+  // Initialize position centered on viewport
+  const [position, setPosition] = useState(() => {
+    const centerX = Math.max(0, (window.innerWidth - 800) / 2);
+    const centerY = Math.max(0, (window.innerHeight - 400) / 2);
+    console.log('[FireClaude] Initial dialog position:', { centerX, centerY, scrollY: window.scrollY, innerHeight: window.innerHeight });
+    return { x: centerX, y: centerY };
+  });
   const [size, setSize] = useState({ width: 800, height: 400 });
   const [inputValue, setInputValue] = useState('');
   const [contextEnabled, setContextEnabled] = useState(false);
@@ -23,18 +29,12 @@ const Dialog: React.FC<DialogProps> = ({ isOpen, onClose }) => {
   const [error, setError] = useState<string | null>(null);
   const [conversationHistory, setConversationHistory] = useState<Message[]>([]);
 
-  // Load saved position on mount
+  // Load saved position on mount (if exists)
   useEffect(() => {
     Storage.getDialogPosition().then((saved) => {
       if (saved) {
         setPosition({ x: saved.x, y: saved.y });
         setSize({ width: saved.width, height: saved.height });
-      } else {
-        // Center on screen
-        setPosition({
-          x: window.innerWidth / 2 - 400,
-          y: window.innerHeight / 2 - 200,
-        });
       }
     });
   }, []);
@@ -65,10 +65,10 @@ const Dialog: React.FC<DialogProps> = ({ isOpen, onClose }) => {
         setResponse((prev) => prev + message.payload.content);
       } else if (message.type === 'streamEnd') {
         setIsLoading(false);
-        // Save completed exchange to history
+        // Save completed exchange to history with the final content
         const assistantMessage: Message = {
           role: 'assistant',
-          content: response,
+          content: message.payload.content,
           timestamp: Date.now(),
         };
         setConversationHistory((prev) => [...prev, assistantMessage]);
@@ -80,7 +80,7 @@ const Dialog: React.FC<DialogProps> = ({ isOpen, onClose }) => {
 
     chrome.runtime.onMessage.addListener(handleMessage);
     return () => chrome.runtime.onMessage.removeListener(handleMessage);
-  }, [response]);
+  }, []);
 
   const handleSubmit = async () => {
     if (!inputValue.trim() || isLoading) return;
@@ -91,6 +91,13 @@ const Dialog: React.FC<DialogProps> = ({ isOpen, onClose }) => {
 
     try {
       const settings = await Storage.getSettings();
+
+      // Check if API key is set
+      if (!settings.apiKey || settings.apiKey.trim() === '') {
+        setError('No API key configured. Click the settings icon (⚙️) to add your Anthropic API key.');
+        setIsLoading(false);
+        return;
+      }
 
       // Build context if enabled
       const context = contextEnabled
@@ -136,26 +143,33 @@ const Dialog: React.FC<DialogProps> = ({ isOpen, onClose }) => {
       {/* Backdrop */}
       <div className={backdropStyles} onClick={onClose} />
 
-      {/* Draggable/Resizable Dialog */}
-      <Rnd
-        position={position}
-        size={size}
-        onDragStop={handleDragStop}
-        onResizeStop={handleResizeStop}
-        minWidth={400}
-        minHeight={200}
-        maxWidth={1200}
-        maxHeight={800}
-        bounds="window"
-        dragHandleClassName="drag-handle"
-        className={dialogStyles}
-      >
+      {/* Fixed container for dialog */}
+      <div className={fixedContainerStyles}>
+        {/* Draggable/Resizable Dialog */}
+        <Rnd
+          position={position}
+          size={size}
+          onDragStop={handleDragStop}
+          onResizeStop={handleResizeStop}
+          minWidth={400}
+          minHeight={200}
+          maxWidth={1200}
+          maxHeight={800}
+          bounds="parent"
+          dragHandleClassName="drag-handle"
+          className={dialogStyles}
+        >
         {/* Header */}
         <div className={`${headerStyles} drag-handle`}>
           <h2>FireClaude</h2>
-          <button onClick={onClose} aria-label="Close">
-            ✕
-          </button>
+          <div className={headerButtonsStyles}>
+            <button onClick={() => chrome.runtime.sendMessage({ type: 'openSettings' })} aria-label="Settings" title="Open Settings">
+              ⚙️
+            </button>
+            <button onClick={onClose} aria-label="Close">
+              ✕
+            </button>
+          </div>
         </div>
 
         {/* Content */}
@@ -178,9 +192,24 @@ const Dialog: React.FC<DialogProps> = ({ isOpen, onClose }) => {
           </div>
         </div>
       </Rnd>
+      </div>
     </>
   );
 };
+
+const fixedContainerStyles = css`
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  pointer-events: none;
+  z-index: 999999;
+
+  > div {
+    pointer-events: auto;
+  }
+`;
 
 const backdropStyles = css`
   position: fixed;
@@ -193,10 +222,10 @@ const backdropStyles = css`
 `;
 
 const dialogStyles = css`
+  position: absolute !important;
   background: white;
   border-radius: 8px;
   box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
-  z-index: 999999 !important;
   display: flex;
   flex-direction: column;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
@@ -217,6 +246,11 @@ const headerStyles = css`
     font-weight: 600;
     color: #333;
   }
+`;
+
+const headerButtonsStyles = css`
+  display: flex;
+  gap: 4px;
 
   button {
     background: none;

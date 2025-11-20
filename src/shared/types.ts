@@ -1,6 +1,8 @@
+import modelsConfig from '../config/models.json';
+
 export interface Settings {
   apiKey: string;
-  model: 'claude-3-5-sonnet-20241022' | 'claude-3-opus-20240229' | 'claude-3-haiku-20240307';
+  model: string;
   maxTokens: number;
   temperature: number;
   theme: 'light' | 'dark' | 'system';
@@ -16,6 +18,17 @@ export interface Settings {
   conversationDepth: 1 | 3 | 5 | 999;
   retentionDays: number;
 }
+
+export interface ModelConfig {
+  id: string;
+  name: string;
+  description: string;
+  recommended: boolean;
+  legacy: boolean;
+}
+
+export const MODELS: ModelConfig[] = modelsConfig.models;
+export const DEFAULT_MODEL: string = modelsConfig.defaultModel;
 
 export interface Conversation {
   id: string;
@@ -55,7 +68,8 @@ export type BackgroundMessage =
   | { type: 'sendPrompt'; payload: SendPromptPayload }
   | { type: 'cancelStream' }
   | { type: 'getSettings' }
-  | { type: 'saveSettings'; payload: Settings };
+  | { type: 'saveSettings'; payload: Settings }
+  | { type: 'openSettings' };
 
 export interface SendPromptPayload {
   prompt: string;
@@ -66,12 +80,12 @@ export interface SendPromptPayload {
 
 export type ContentMessage =
   | { type: 'streamChunk'; payload: { content: string } }
-  | { type: 'streamEnd' }
+  | { type: 'streamEnd'; payload: { content: string } }
   | { type: 'streamError'; payload: { error: string } };
 
 export const DEFAULT_SETTINGS: Settings = {
   apiKey: '',
-  model: 'claude-3-5-sonnet-20241022',
+  model: DEFAULT_MODEL,
   maxTokens: 4096,
   temperature: 1.0,
   theme: 'system',
