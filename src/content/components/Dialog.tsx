@@ -166,6 +166,16 @@ const Dialog: React.FC<DialogProps> = ({ isOpen, onClose }) => {
     }
   };
 
+  const handleClearConversation = () => {
+    if (conversationHistory.length > 0) {
+      if (confirm('Clear entire conversation?')) {
+        setConversationHistory([]);
+        setResponse('');
+        setError(null);
+      }
+    }
+  };
+
   const handleSubmit = async () => {
     if (!inputValue.trim() || isLoading) return;
 
@@ -265,6 +275,9 @@ const Dialog: React.FC<DialogProps> = ({ isOpen, onClose }) => {
             FireClaude
           </h2>
           <div className={headerButtonsStyles}>
+            <button onClick={handleClearConversation} aria-label="Clear conversation" title="Clear conversation">
+              🔄
+            </button>
             <button onClick={() => chrome.runtime.sendMessage({ type: 'openSettings' })} aria-label="Settings" title="Open Settings">
               ⚙️
             </button>
