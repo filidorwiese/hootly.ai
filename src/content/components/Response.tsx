@@ -1,4 +1,4 @@
-import React, { useMemo, useEffect, useRef } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { css } from '@emotion/css';
 import { marked } from 'marked';
 import hljs from 'highlight.js';
@@ -104,7 +104,7 @@ const Response: React.FC<ResponseProps> = ({ conversationHistory, currentRespons
 
 const containerStyles = css`
   flex: 1;
-  max-height: 80vh;
+  max-height: 50vh;
   overflow-y: scroll;
   padding: 16px;
   background: white;
@@ -133,27 +133,23 @@ const spinnerStyles = css`
   }
 `;
 
-const contentStyles = css`
-  position: relative;
-  font-size: 14px;
-  line-height: 1.6;
-  color: #333;
-`;
-
 const markdownStyles = css`
+  font-size: 13px;
+  line-height: 1.6;
+
   h1, h2, h3, h4, h5, h6 {
-    margin-top: 24px;
-    margin-bottom: 12px;
+    margin-top: 20px;
+    margin-bottom: 10px;
     font-weight: 600;
     line-height: 1.25;
   }
 
-  h1 { font-size: 28px; }
-  h2 { font-size: 24px; }
-  h3 { font-size: 20px; }
+  h1 { font-size: 20px; }
+  h2 { font-size: 18px; }
+  h3 { font-size: 16px; }
 
   p {
-    margin: 0 0 16px 0;
+    margin: 0 0 12px 0;
   }
 
   code {
@@ -220,25 +216,6 @@ const markdownStyles = css`
   }
 `;
 
-const copyButtonStyles = css`
-  position: sticky;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  width: 100%;
-  padding: 8px;
-  background: #f9f9f9;
-  border: 1px solid #e0e0e0;
-  border-radius: 4px;
-  cursor: pointer;
-  font-size: 13px;
-  margin-top: 16px;
-
-  &:hover {
-    background: #f0f0f0;
-  }
-`;
-
 const errorStyles = css`
   background: #ffebee;
   color: #c62828;
@@ -263,11 +240,13 @@ const placeholderStyles = css`
 `;
 
 const messageContainerStyles = (role: 'user' | 'assistant') => css`
-  margin-bottom: 20px;
-  padding: 16px;
+  margin-bottom: 16px;
+  padding: 14px;
   border-radius: 8px;
-  background: ${role === 'user' ? '#f0f7ff' : '#f9f9f9'};
-  border-left: 4px solid ${role === 'user' ? '#2196F3' : '#4CAF50'};
+  background: ${role === 'user' ? '#e3f2fd' : '#fff'};
+  border: 1px solid ${role === 'user' ? '#2196F3' : '#e0e0e0'};
+  border-left: 4px solid ${role === 'user' ? '#1976d2' : '#4CAF50'};
+  color: #212121;
 `;
 
 const messageHeaderStyles = css`

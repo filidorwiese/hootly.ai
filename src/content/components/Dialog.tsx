@@ -132,6 +132,8 @@ const Dialog: React.FC<DialogProps> = ({ isOpen, onClose }) => {
           timestamp: Date.now(),
         };
         setConversationHistory((prev) => [...prev, assistantMessage]);
+        // Clear current response to avoid duplication
+        setResponse('');
       } else if (message.type === 'streamError') {
         setIsLoading(false);
         setError(message.payload.error);
