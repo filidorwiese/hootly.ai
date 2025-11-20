@@ -16,11 +16,11 @@ function parseShortcut(shortcut: string): { key: string; alt: boolean; ctrl: boo
 }
 
 function init() {
-  console.log('[FireClaude] Content script starting...');
+  console.log('[FireOwl] Content script starting...');
 
   // Ensure body exists
   if (!document.body) {
-    console.log('[FireClaude] Body not ready, waiting...');
+    console.log('[FireOwl] Body not ready, waiting...');
     if (document.readyState === 'loading') {
       document.addEventListener('DOMContentLoaded', init);
       return;
@@ -32,19 +32,19 @@ function init() {
   container.id = 'fireclaude-root';
   document.body.appendChild(container);
 
-  console.log('[FireClaude] Container created, mounting React...');
+  console.log('[FireOwl] Container created, mounting React...');
 
   // Mount React app
   const root = createRoot(container);
   root.render(<App />);
 
-  console.log('[FireClaude] React app mounted');
+  console.log('[FireOwl] React app mounted');
 
   // Listen for toggle command from background (legacy manifest command)
   chrome.runtime.onMessage.addListener((message) => {
-    console.log('[FireClaude] Received message:', message);
+    console.log('[FireOwl] Received message:', message);
     if (message.type === 'toggleDialog') {
-      console.log('[FireClaude] Posting toggle message to window');
+      console.log('[FireOwl] Posting toggle message to window');
       window.postMessage({ type: 'fireclaude-toggle' }, '*');
     }
   });
@@ -55,14 +55,14 @@ function init() {
   // Load configured shortcut
   Storage.getSettings().then((settings) => {
     currentShortcut = parseShortcut(settings.shortcut);
-    console.log('[FireClaude] Keyboard shortcut configured:', settings.shortcut);
+    console.log('[FireOwl] Keyboard shortcut configured:', settings.shortcut);
   });
 
   // Listen for shortcut updates
   chrome.storage.onChanged.addListener((changes) => {
     if (changes.settings?.newValue?.shortcut) {
       currentShortcut = parseShortcut(changes.settings.newValue.shortcut);
-      console.log('[FireClaude] Keyboard shortcut updated:', changes.settings.newValue.shortcut);
+      console.log('[FireOwl] Keyboard shortcut updated:', changes.settings.newValue.shortcut);
     }
   });
 
@@ -78,12 +78,12 @@ function init() {
 
     if (matchesModifiers && matchesKey) {
       event.preventDefault();
-      console.log('[FireClaude] Keyboard shortcut triggered');
+      console.log('[FireOwl] Keyboard shortcut triggered');
       window.postMessage({ type: 'fireclaude-toggle' }, '*');
     }
   });
 
-  console.log('[FireClaude] Content script initialized successfully');
+  console.log('[FireOwl] Content script initialized successfully');
 }
 
 // Start initialization

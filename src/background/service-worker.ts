@@ -15,7 +15,7 @@ chrome.runtime.onMessage.addListener((message: BackgroundMessage, sender, sendRe
       const stream = activeStreams.get(tabId);
       stream.controller.abort();
       activeStreams.delete(tabId);
-      console.log('[FireClaude] Stream cancelled for tab:', tabId);
+      console.log('[FireOwl] Stream cancelled for tab:', tabId);
     }
     sendResponse({ success: true });
   } else if (message.type === 'getSettings') {
@@ -34,15 +34,15 @@ chrome.runtime.onMessage.addListener((message: BackgroundMessage, sender, sendRe
 
 // Handle keyboard command
 chrome.commands.onCommand.addListener((command) => {
-  console.log('[FireClaude Background] Command received:', command);
+  console.log('[FireOwl Background] Command received:', command);
   if (command === 'toggle-dialog') {
     chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
-      console.log('[FireClaude Background] Active tab:', tabs[0]);
+      console.log('[FireOwl Background] Active tab:', tabs[0]);
       if (tabs[0]?.id) {
-        console.log('[FireClaude Background] Sending message to tab:', tabs[0].id);
+        console.log('[FireOwl Background] Sending message to tab:', tabs[0].id);
         chrome.tabs.sendMessage(tabs[0].id, { type: 'toggleDialog' })
-          .then(() => console.log('[FireClaude Background] Message sent successfully'))
-          .catch((err) => console.error('[FireClaude Background] Error sending message:', err));
+          .then(() => console.log('[FireOwl Background] Message sent successfully'))
+          .catch((err) => console.error('[FireOwl Background] Error sending message:', err));
       }
     });
   }
@@ -88,8 +88,8 @@ async function handleSendPrompt(
       },
     ];
 
-    console.log('[FireClaude] Sending messages to API:', messages.length, 'messages');
-    console.log('[FireClaude] Message roles:', messages.map(m => m.role).join(', '));
+    console.log('[FireOwl] Sending messages to API:', messages.length, 'messages');
+    console.log('[FireOwl] Message roles:', messages.map(m => m.role).join(', '));
 
     // Stream response
     const stream = client.messages.stream({
@@ -138,7 +138,7 @@ async function handleSendPrompt(
 }
 
 function extractErrorMessage(error: any): string {
-  console.log('[FireClaude] Extracting error:', error);
+  console.log('[FireOwl] Extracting error:', error);
 
   // Handle Anthropic SDK errors
   if (error?.error?.message) {
@@ -176,7 +176,7 @@ function extractErrorMessage(error: any): string {
     if (error.detail) return error.detail;
 
     // Last resort - stringify the error
-    console.error('[FireClaude] Unhandled error format:', error);
+    console.error('[FireOwl] Unhandled error format:', error);
     return JSON.stringify(error);
   }
 
@@ -212,9 +212,9 @@ function sendToTab(tabId: number, message: ContentMessage) {
   });
 }
 
-console.log('[FireClaude Background] Service worker initialized');
+console.log('[FireOwl Background] Service worker initialized');
 
 // Test that commands API is available
 chrome.commands.getAll((commands) => {
-  console.log('[FireClaude Background] Registered commands:', commands);
+  console.log('[FireOwl Background] Registered commands:', commands);
 });

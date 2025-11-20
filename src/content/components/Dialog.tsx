@@ -18,7 +18,7 @@ const Dialog: React.FC<DialogProps> = ({ isOpen, onClose }) => {
   const [position, setPosition] = useState(() => {
     const centerX = Math.max(0, (window.innerWidth - 800) / 2);
     const centerY = Math.max(0, (window.innerHeight - 400) / 2);
-    console.log('[FireClaude] Initial dialog position:', { centerX, centerY, scrollY: window.scrollY, innerHeight: window.innerHeight });
+    console.log('[FireOwl] Initial dialog position:', { centerX, centerY, scrollY: window.scrollY, innerHeight: window.innerHeight });
     return { x: centerX, y: centerY };
   });
   const [size, setSize] = useState({ width: 800, height: 400 });
@@ -62,7 +62,7 @@ const Dialog: React.FC<DialogProps> = ({ isOpen, onClose }) => {
         setCapturedSelection(selectionText);
         setContextEnabled(true);
         setContextMode('selection');
-        console.log('[FireClaude] Auto-enabled context with selection:', selectionText.length, 'chars');
+        console.log('[FireOwl] Auto-enabled context with selection:', selectionText.length, 'chars');
       } else {
         setCapturedSelection(null);
         setContextMode('none');
@@ -109,7 +109,7 @@ const Dialog: React.FC<DialogProps> = ({ isOpen, onClose }) => {
         // Stop generation
         setIsLoading(false);
         chrome.runtime.sendMessage({ type: 'cancelStream' });
-        console.log('[FireClaude] Generation cancelled by user');
+        console.log('[FireOwl] Generation cancelled by user');
       }
     };
 
@@ -290,7 +290,7 @@ const Dialog: React.FC<DialogProps> = ({ isOpen, onClose }) => {
         <div className={`${headerStyles} drag-handle`}>
           <h2>
             <img src={chrome.runtime.getURL('icons/icon-48.png')} alt="" className={iconStyles} />
-            FireClaude
+            FireOwl
           </h2>
           <div className={headerButtonsStyles}>
             {conversationHistory.length > 0 && (

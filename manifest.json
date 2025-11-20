@@ -1,6 +1,6 @@
 {
   "manifest_version": 3,
-  "name": "FireClaude",
+  "name": "FireOwl",
   "version": "0.1.0",
   "description": "Interact with Claude AI directly from any webpage",
   "permissions": [
@@ -22,7 +22,7 @@
     }
   ],
   "action": {
-    "default_title": "FireClaude Settings",
+    "default_title": "FireOwl Settings",
     "default_popup": "settings.html"
   },
   "options_ui": {
@@ -34,7 +34,7 @@
       "suggested_key": {
         "default": "Alt+C"
       },
-      "description": "Toggle FireClaude dialog (fallback - configure in settings)"
+      "description": "Toggle FireOwl dialog (fallback - configure in settings)"
     }
   },
   "icons": {

@@ -7,19 +7,19 @@ const App: React.FC = () => {
 
   // Log state changes
   useEffect(() => {
-    console.log('[FireClaude] Dialog state changed to:', isOpen);
+    console.log('[FireOwl] Dialog state changed to:', isOpen);
   }, [isOpen]);
 
   useEffect(() => {
-    console.log('[FireClaude] App component mounted');
+    console.log('[FireOwl] App component mounted');
 
     // Listen for toggle message
     const handleMessage = (event: MessageEvent) => {
-      console.log('[FireClaude] Window message received:', event.data);
+      console.log('[FireOwl] Window message received:', event.data);
       if (event.data.type === 'fireclaude-toggle') {
-        console.log('[FireClaude] Toggling dialog');
+        console.log('[FireOwl] Toggling dialog');
         setIsOpen((prev) => {
-          console.log('[FireClaude] State updating from', prev, 'to', !prev);
+          console.log('[FireOwl] State updating from', prev, 'to', !prev);
           return !prev;
         });
       }
