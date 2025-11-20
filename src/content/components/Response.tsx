@@ -1,7 +1,8 @@
-import React, { useMemo } from 'react';
+import React, { useMemo, useEffect, useRef } from 'react';
 import { css } from '@emotion/css';
 import { marked } from 'marked';
 import hljs from 'highlight.js';
+import type { Message } from '../../shared/types';
 
 // Configure marked with renderer for code highlighting
 const renderer = new marked.Renderer();
@@ -26,19 +27,26 @@ renderer.code = ({ text, lang }: { text: string; lang?: string }) => {
 marked.use({ renderer, breaks: true });
 
 interface ResponseProps {
-  content: string;
+  conversationHistory: Message[];
+  currentResponse: string;
   isLoading: boolean;
   error?: string | null;
 }
 
-const Response: React.FC<ResponseProps> = ({ content, isLoading, error }) => {
-  const renderedContent = useMemo(() => {
-    if (!content) return '';
-    return marked.parse(content);
-  }, [content]);
+const Response: React.FC<ResponseProps> = ({ conversationHistory, currentResponse, isLoading, error }) => {
+  const containerRef = useRef<HTMLDivElement>(null);
+
+  // Auto-scroll to bottom when new content arrives
+  useEffect(() => {
+    if (containerRef.current) {
+      containerRef.current.scrollTop = containerRef.current.scrollHeight;
+    }
+  }, [conversationHistory, currentResponse]);
+
+  const hasContent = conversationHistory.length > 0 || currentResponse;
 
   return (
-    <div className={containerStyles}>
+    <div ref={containerRef} className={containerStyles}>
       {error && (
         <div className={errorStyles}>
           <div style={{ marginBottom: '8px' }}>
@@ -48,35 +56,46 @@ const Response: React.FC<ResponseProps> = ({ content, isLoading, error }) => {
         </div>
       )}
 
-      {isLoading && !content && (
+      {!hasContent && !isLoading && !error && (
+        <div className={placeholderStyles}>
+          Start a conversation by typing a message below...
+        </div>
+      )}
+
+      {/* Render conversation history */}
+      {conversationHistory.map((message, index) => {
+        const rendered = marked.parse(message.content);
+        return (
+          <div key={index} className={messageContainerStyles(message.role)}>
+            <div className={messageHeaderStyles}>
+              <strong>{message.role === 'user' ? '👤 You' : '🤖 Claude'}</strong>
+            </div>
+            <div
+              className={markdownStyles}
+              dangerouslySetInnerHTML={{ __html: rendered }}
+            />
+          </div>
+        );
+      })}
+
+      {/* Render current streaming response */}
+      {currentResponse && (
+        <div className={messageContainerStyles('assistant')}>
+          <div className={messageHeaderStyles}>
+            <strong>🤖 Claude</strong>
+            {isLoading && <span className={streamingIndicatorStyles}>●</span>}
+          </div>
+          <div
+            className={markdownStyles}
+            dangerouslySetInnerHTML={{ __html: marked.parse(currentResponse) }}
+          />
+        </div>
+      )}
+
+      {isLoading && !currentResponse && (
         <div className={loadingStyles}>
           <div className={spinnerStyles} />
           <span>Thinking...</span>
-        </div>
-      )}
-
-      {content && (
-        <div className={contentStyles}>
-          <div
-            className={markdownStyles}
-            dangerouslySetInnerHTML={{ __html: renderedContent }}
-          />
-          <button
-            className={copyButtonStyles}
-            onClick={() => {
-              navigator.clipboard.writeText(content);
-              // @TODO: Show toast notification
-            }}
-            title="Copy response"
-          >
-            📋 Copy
-          </button>
-        </div>
-      )}
-
-      {!content && !isLoading && !error && (
-        <div className={placeholderStyles}>
-          Start a conversation by typing a message below...
         </div>
       )}
     </div>
@@ -241,6 +260,41 @@ const placeholderStyles = css`
   color: #999;
   font-size: 14px;
   padding: 40px 20px;
+`;
+
+const messageContainerStyles = (role: 'user' | 'assistant') => css`
+  margin-bottom: 20px;
+  padding: 16px;
+  border-radius: 8px;
+  background: ${role === 'user' ? '#f0f7ff' : '#f9f9f9'};
+  border-left: 4px solid ${role === 'user' ? '#2196F3' : '#4CAF50'};
+`;
+
+const messageHeaderStyles = css`
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 12px;
+  font-size: 14px;
+  color: #666;
+
+  strong {
+    color: #333;
+  }
+`;
+
+const streamingIndicatorStyles = css`
+  color: #4CAF50;
+  animation: pulse 1.5s ease-in-out infinite;
+
+  @keyframes pulse {
+    0%, 100% {
+      opacity: 1;
+    }
+    50% {
+      opacity: 0.3;
+    }
+  }
 `;
 
 export default Response;

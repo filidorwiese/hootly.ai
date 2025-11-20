@@ -171,6 +171,10 @@ const Dialog: React.FC<DialogProps> = ({ isOpen, onClose }) => {
     setError(null);
     setResponse('');
 
+    // Store the current input value before clearing
+    const currentInput = inputValue;
+    setInputValue('');
+
     try {
       const settings = await Storage.getSettings();
 
@@ -206,19 +210,18 @@ const Dialog: React.FC<DialogProps> = ({ isOpen, onClose }) => {
       // Add user message to history
       const userMessage: Message = {
         role: 'user',
-        content: inputValue,
+        content: currentInput,
         timestamp: Date.now(),
         context,
       };
 
       setConversationHistory((prev) => [...prev, userMessage]);
-      setInputValue('');
 
       // Send to background worker
       await chrome.runtime.sendMessage({
         type: 'sendPrompt',
         payload: {
-          prompt: inputValue,
+          prompt: currentInput,
           context,
           conversationHistory,
           settings,
@@ -269,7 +272,12 @@ const Dialog: React.FC<DialogProps> = ({ isOpen, onClose }) => {
         {/* Content */}
         <div className={contentWrapperStyles}>
           {/* Response Area */}
-          <Response content={response} isLoading={isLoading} error={error} />
+          <Response
+            conversationHistory={conversationHistory}
+            currentResponse={response}
+            isLoading={isLoading}
+            error={error}
+          />
 
           {/* Input Area */}
           <div className={inputSectionStyles}>
