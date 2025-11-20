@@ -1,13 +1,22 @@
 import Anthropic from '@anthropic-ai/sdk';
 import type { BackgroundMessage, ContentMessage } from '../shared/types';
 
+// Track active streams for cancellation
+const activeStreams = new Map<number, any>();
+
 // Handle messages from content script
 chrome.runtime.onMessage.addListener((message: BackgroundMessage, sender, sendResponse) => {
   if (message.type === 'sendPrompt') {
     handleSendPrompt(message.payload, sender.tab?.id);
     sendResponse({ success: true });
   } else if (message.type === 'cancelStream') {
-    // @TODO: Implement stream cancellation
+    const tabId = sender.tab?.id;
+    if (tabId && activeStreams.has(tabId)) {
+      const stream = activeStreams.get(tabId);
+      stream.controller.abort();
+      activeStreams.delete(tabId);
+      console.log('[FireClaude] Stream cancelled for tab:', tabId);
+    }
     sendResponse({ success: true });
   } else if (message.type === 'getSettings') {
     // Settings are stored in chrome.storage, which content scripts can access directly
@@ -91,6 +100,9 @@ async function handleSendPrompt(
       messages,
     });
 
+    // Store stream for potential cancellation
+    activeStreams.set(tabId, stream);
+
     // Track complete response content
     let fullContent = '';
 
@@ -103,6 +115,7 @@ async function handleSendPrompt(
     });
 
     stream.on('end', () => {
+      activeStreams.delete(tabId);
       sendToTab(tabId, {
         type: 'streamEnd',
         payload: { content: fullContent },
@@ -110,6 +123,7 @@ async function handleSendPrompt(
     });
 
     stream.on('error', (error) => {
+      activeStreams.delete(tabId);
       sendToTab(tabId, {
         type: 'streamError',
         payload: { error: extractErrorMessage(error) },

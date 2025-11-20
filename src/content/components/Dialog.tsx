@@ -80,6 +80,25 @@ const Dialog: React.FC<DialogProps> = ({ isOpen, onClose }) => {
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
+  // Handle Esc to cancel generation
+  useEffect(() => {
+    if (!isLoading) return;
+
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') {
+        e.preventDefault();
+        e.stopPropagation();
+        // Stop generation
+        setIsLoading(false);
+        chrome.runtime.sendMessage({ type: 'cancelStream' });
+        console.log('[FireClaude] Generation cancelled by user');
+      }
+    };
+
+    document.addEventListener('keydown', handleKeyDown, true);
+    return () => document.removeEventListener('keydown', handleKeyDown, true);
+  }, [isLoading]);
+
   // Save position when changed
   const handleDragStop = (_e: any, d: { x: number; y: number }) => {
     const newPos: DialogPosition = { x: d.x, y: d.y, width: size.width, height: size.height };
@@ -254,18 +273,26 @@ const Dialog: React.FC<DialogProps> = ({ isOpen, onClose }) => {
 
           {/* Input Area */}
           <div className={inputSectionStyles}>
-            <ContextToggle
-              enabled={contextEnabled}
-              mode={contextMode}
-              selectionLength={capturedSelection?.length}
-              onToggle={handleContextToggle}
-            />
-            <InputArea
-              value={inputValue}
-              onChange={setInputValue}
-              onSubmit={handleSubmit}
-              disabled={isLoading}
-            />
+            {!isLoading ? (
+              <>
+                <ContextToggle
+                  enabled={contextEnabled}
+                  mode={contextMode}
+                  selectionLength={capturedSelection?.length}
+                  onToggle={handleContextToggle}
+                />
+                <InputArea
+                  value={inputValue}
+                  onChange={setInputValue}
+                  onSubmit={handleSubmit}
+                  disabled={isLoading}
+                />
+              </>
+            ) : (
+              <div className={cancelHintStyles}>
+                Press <strong>Esc</strong> to stop generating
+              </div>
+            )}
           </div>
         </div>
       </Rnd>
@@ -365,6 +392,20 @@ const inputSectionStyles = css`
   border-top: 1px solid #e0e0e0;
   padding: 12px;
   background: #f9f9f9;
+`;
+
+const cancelHintStyles = css`
+  text-align: center;
+  padding: 16px;
+  color: #666;
+  font-size: 14px;
+  background: #f0f0f0;
+  border-radius: 6px;
+
+  strong {
+    color: #333;
+    font-weight: 600;
+  }
 `;
 
 export default Dialog;
