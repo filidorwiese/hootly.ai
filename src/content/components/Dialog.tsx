@@ -190,7 +190,7 @@ const Dialog: React.FC<DialogProps> = ({ isOpen, onClose }) => {
         >
         {/* Header */}
         <div className={`${headerStyles} drag-handle`}>
-          <h2>FireClaude</h2>
+          <h2>🔥 FireClaude</h2>
           <div className={headerButtonsStyles}>
             <button onClick={() => chrome.runtime.sendMessage({ type: 'openSettings' })} aria-label="Settings" title="Open Settings">
               ⚙️
