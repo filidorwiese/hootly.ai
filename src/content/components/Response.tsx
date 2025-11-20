@@ -41,7 +41,10 @@ const Response: React.FC<ResponseProps> = ({ content, isLoading, error }) => {
     <div className={containerStyles}>
       {error && (
         <div className={errorStyles}>
-          <strong>Error:</strong> {error}
+          <div style={{ marginBottom: '8px' }}>
+            <strong>⚠️ Error</strong>
+          </div>
+          <div>{error}</div>
         </div>
       )}
 
@@ -219,13 +222,16 @@ const copyButtonStyles = css`
 const errorStyles = css`
   background: #ffebee;
   color: #c62828;
-  padding: 12px;
+  padding: 16px;
   border-radius: 6px;
   margin-bottom: 16px;
   border-left: 4px solid #c62828;
+  font-size: 14px;
+  line-height: 1.5;
 
   strong {
     font-weight: 600;
+    display: block;
   }
 `;
 
