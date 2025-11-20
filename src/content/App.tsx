@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import Dialog from './components/Dialog';
+import SelectionTooltip from './components/SelectionTooltip';
 
 const App: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -42,7 +43,16 @@ const App: React.FC = () => {
     return () => document.removeEventListener('keydown', handleKeyDown);
   }, [isOpen]);
 
-  return <Dialog isOpen={isOpen} onClose={() => setIsOpen(false)} />;
+  const handleOpenWithSelection = () => {
+    setIsOpen(true);
+  };
+
+  return (
+    <>
+      <SelectionTooltip onOpenWithSelection={handleOpenWithSelection} />
+      <Dialog isOpen={isOpen} onClose={() => setIsOpen(false)} />
+    </>
+  );
 };
 
 export default App;

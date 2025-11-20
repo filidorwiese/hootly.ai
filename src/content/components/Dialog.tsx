@@ -29,6 +29,18 @@ const Dialog: React.FC<DialogProps> = ({ isOpen, onClose }) => {
   const [error, setError] = useState<string | null>(null);
   const [conversationHistory, setConversationHistory] = useState<Message[]>([]);
 
+  // Auto-enable context when dialog opens with text selection
+  useEffect(() => {
+    if (isOpen) {
+      const selection = window.getSelection();
+      const hasSelection = selection && selection.toString().trim().length > 0;
+      if (hasSelection) {
+        setContextEnabled(true);
+        console.log('[FireClaude] Auto-enabled context due to text selection');
+      }
+    }
+  }, [isOpen]);
+
   // Load saved position on mount (if exists)
   useEffect(() => {
     Storage.getDialogPosition().then((saved) => {
