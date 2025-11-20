@@ -74,14 +74,15 @@
   <div class="setting">
     <label for="apiKey">Anthropic API Key</label>
     <input type="password" id="apiKey" placeholder="sk-ant-...">
+    <small style="color: #666; margin-top: 5px; display: block;">
+      Get your Claude API key <a href="https://console.anthropic.com/settings/keys" target="_blank" style="color: #4CAF50; text-decoration: none;">here</a>
+    </small>
   </div>
 
   <div class="setting">
     <label for="model">Model</label>
     <select id="model">
-      <option value="claude-3-5-sonnet-20241022">Claude 3.5 Sonnet</option>
-      <option value="claude-3-opus-20240229">Claude 3 Opus</option>
-      <option value="claude-3-haiku-20240307">Claude 3 Haiku</option>
+      <!-- Populated dynamically from models.json -->
     </select>
   </div>
 
