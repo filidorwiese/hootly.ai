@@ -85,7 +85,8 @@ const Response: React.FC<ResponseProps> = ({ content, isLoading, error }) => {
 
 const containerStyles = css`
   flex: 1;
-  overflow-y: auto;
+  max-height: 80vh;
+  overflow-y: scroll;
   padding: 16px;
   background: white;
 `;
