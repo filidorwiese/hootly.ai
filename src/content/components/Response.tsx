@@ -121,25 +121,40 @@ const Response: React.FC<ResponseProps> = ({ conversationHistory, currentRespons
 
 const containerStyles = css`
   flex: 1;
-  max-height: 50vh;
-  overflow-y: scroll;
-  padding: 16px;
-  background: white;
+  max-height: min(50vh, 400px);
+  overflow-y: auto;
+  padding: 18px;
+  background: #FAFBF9;
+
+  &::-webkit-scrollbar {
+    width: 8px;
+  }
+  &::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  &::-webkit-scrollbar-thumb {
+    background: #D4DCD6;
+    border-radius: 4px;
+  }
+  &::-webkit-scrollbar-thumb:hover {
+    background: #B8C4BC;
+  }
 `;
 
 const loadingStyles = css`
   display: flex;
   align-items: center;
   gap: 12px;
-  color: #666;
-  font-size: 14px;
+  color: #6B7A6E;
+  font-size: 13px;
+  padding: 8px 0;
 `;
 
 const spinnerStyles = css`
-  width: 16px;
-  height: 16px;
-  border: 2px solid #e0e0e0;
-  border-top-color: #4CAF50;
+  width: 18px;
+  height: 18px;
+  border: 2px solid #D4DCD6;
+  border-top-color: #4A7C54;
   border-radius: 50%;
   animation: spin 0.8s linear infinite;
 
@@ -151,116 +166,133 @@ const spinnerStyles = css`
 `;
 
 const markdownStyles = css`
-  font-size: 13px;
-  line-height: 1.6;
+  font-size: 13.5px;
+  line-height: 1.65;
+  color: #2D3A30;
 
   h1, h2, h3, h4, h5, h6 {
     margin-top: 20px;
     margin-bottom: 10px;
     font-weight: 600;
-    line-height: 1.25;
+    line-height: 1.3;
+    color: #1E2820;
   }
 
-  h1 { font-size: 20px; }
-  h2 { font-size: 18px; }
-  h3 { font-size: 16px; }
+  h1 { font-size: 19px; }
+  h2 { font-size: 17px; }
+  h3 { font-size: 15px; }
 
   p {
-    margin: 0 0 12px 0;
+    margin: 0 0 14px 0;
   }
 
   code {
-    background: #f5f5f5;
-    padding: 2px 6px;
-    border-radius: 3px;
-    font-family: 'Monaco', 'Menlo', 'Courier New', monospace;
-    font-size: 13px;
+    background: #E8EDE9;
+    padding: 2px 7px;
+    border-radius: 5px;
+    font-family: 'SF Mono', 'Fira Code', 'Monaco', 'Menlo', monospace;
+    font-size: 12.5px;
+    color: #3A5A40;
   }
 
   pre {
-    background: #f5f5f5;
-    padding: 12px;
-    border-radius: 6px;
+    background: #1E2820;
+    padding: 14px 16px;
+    border-radius: 10px;
     overflow-x: auto;
     margin: 0 0 16px 0;
 
     code {
       background: none;
       padding: 0;
+      color: #E8EDE9;
+      font-size: 12.5px;
     }
   }
 
   ul, ol {
     margin: 0 0 16px 0;
-    padding-left: 24px;
+    padding-left: 22px;
   }
 
   li {
-    margin-bottom: 4px;
+    margin-bottom: 6px;
   }
 
   blockquote {
     margin: 0 0 16px 0;
-    padding-left: 16px;
-    border-left: 3px solid #ddd;
-    color: #666;
+    padding: 12px 16px;
+    border-left: 3px solid #4A7C54;
+    background: #EEF2EF;
+    border-radius: 0 8px 8px 0;
+    color: #4A5A4C;
   }
 
   table {
     border-collapse: collapse;
     width: 100%;
     margin: 0 0 16px 0;
+    border-radius: 8px;
+    overflow: hidden;
   }
 
   th, td {
-    border: 1px solid #ddd;
-    padding: 8px 12px;
+    border: 1px solid #D4DCD6;
+    padding: 10px 14px;
     text-align: left;
   }
 
   th {
-    background: #f5f5f5;
+    background: #EEF2EF;
     font-weight: 600;
+    color: #2D3A30;
   }
 
   a {
-    color: #4CAF50;
+    color: #3A7248;
     text-decoration: none;
+    font-weight: 500;
 
     &:hover {
       text-decoration: underline;
+      color: #2E5A3A;
     }
   }
 `;
 
 const errorStyles = css`
-  background: #ffebee;
-  color: #c62828;
-  padding: 16px;
-  border-radius: 6px;
-  margin-bottom: 16px;
-  border-left: 4px solid #c62828;
-  font-size: 14px;
+  background: #FDF5F5;
+  color: #8B3E3E;
+  padding: 14px 16px;
+  border-radius: 10px;
+  margin-bottom: 14px;
+  border-left: 3px solid #C45A5A;
+  font-size: 13px;
   line-height: 1.5;
 
   strong {
     font-weight: 600;
     display: block;
+    color: #9B4444;
   }
 `;
 
 const messageContainerStyles = (role: 'user' | 'assistant') => css`
   position: relative;
-  margin-bottom: 16px;
-  padding: 14px;
-  border-radius: 8px;
-  background: ${role === 'user' ? '#e3f2fd' : '#fff'};
-  border: 1px solid ${role === 'user' ? '#2196F3' : '#e0e0e0'};
-  border-left: 4px solid ${role === 'user' ? '#1976d2' : '#4CAF50'};
-  color: #212121;
+  margin-bottom: 14px;
+  padding: 14px 16px;
+  border-radius: 12px;
+  background: ${role === 'user' ? '#EDF4F0' : '#FFFFFF'};
+  border: 1px solid ${role === 'user' ? '#C5D9CB' : '#E4E8E2'};
+  color: #2D3A30;
+  box-shadow: ${role === 'assistant' ? '0 1px 3px rgba(45, 60, 48, 0.04)' : 'none'};
 
   &:hover button {
     opacity: 1;
+  }
+
+  &:last-child {
+    margin-bottom: 0;
   }
 `;
 
@@ -268,18 +300,22 @@ const messageHeaderStyles = css`
   display: flex;
   align-items: center;
   gap: 8px;
-  margin-bottom: 12px;
-  font-size: 14px;
-  color: #666;
+  margin-bottom: 10px;
+  font-size: 12px;
+  color: #6B7A6E;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
 
   strong {
-    color: #333;
+    color: #4A5A4C;
+    font-weight: 600;
   }
 `;
 
 const streamingIndicatorStyles = css`
-  color: #4CAF50;
-  animation: pulse 1.5s ease-in-out infinite;
+  color: #4A7C54;
+  font-size: 10px;
+  animation: pulse 1.2s ease-in-out infinite;
 
   @keyframes pulse {
     0%, 100% {
@@ -293,19 +329,20 @@ const streamingIndicatorStyles = css`
 
 const copyButtonStyles = css`
   position: absolute;
-  top: 8px;
-  right: 8px;
-  background: rgba(255, 255, 255, 0.9);
-  border: 1px solid #e0e0e0;
-  border-radius: 4px;
+  top: 10px;
+  right: 10px;
+  background: rgba(250, 251, 249, 0.95);
+  border: 1px solid #D4DCD6;
+  border-radius: 6px;
   padding: 6px 8px;
-  font-size: 14px;
+  font-size: 13px;
   cursor: pointer;
   opacity: 0;
-  transition: opacity 0.2s, background 0.2s;
+  transition: all 0.15s ease;
 
   &:hover {
-    background: #f5f5f5;
+    background: #EEF2EF;
+    border-color: #B8C4BC;
   }
 
   &:active {

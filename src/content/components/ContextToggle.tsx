@@ -52,49 +52,54 @@ const containerStyles = css`
 `;
 
 const toggleButtonStyles = (enabled: boolean) => css`
-  width: 36px;
-  height: 36px;
+  width: 34px;
+  height: 34px;
   display: flex;
   align-items: center;
   justify-content: center;
-  border: 2px solid ${enabled ? '#4CAF50' : '#ddd'};
-  border-radius: 6px;
-  background: ${enabled ? '#e8f5e9' : 'white'};
+  border: 1.5px solid ${enabled ? '#4A7C54' : '#D4DCD6'};
+  border-radius: 8px;
+  background: ${enabled ? '#E8F0EA' : '#FFFFFF'};
   cursor: pointer;
-  font-size: 18px;
-  transition: all 0.2s;
+  font-size: 16px;
+  transition: all 0.15s ease;
 
   &:hover {
-    border-color: ${enabled ? '#45a049' : '#bbb'};
-    background: ${enabled ? '#c8e6c9' : '#f5f5f5'};
+    border-color: ${enabled ? '#3A6A44' : '#B8C4BC'};
+    background: ${enabled ? '#DCE8DE' : '#F5F7F4'};
+  }
+
+  &:active {
+    transform: scale(0.95);
   }
 `;
 
 const labelStyles = css`
   flex: 1;
-  font-size: 13px;
+  font-size: 12px;
 `;
 
 const badgeStyles = (type: 'selection' | 'full' | 'off') => css`
   display: inline-block;
   padding: 4px 10px;
-  border-radius: 12px;
-  font-size: 12px;
+  border-radius: 6px;
+  font-size: 11px;
   font-weight: 500;
+  letter-spacing: 0.01em;
 
   ${type === 'selection' && `
-    background: #e3f2fd;
-    color: #1976d2;
+    background: #E0EBE8;
+    color: #2A6A5A;
   `}
 
   ${type === 'full' && `
-    background: #e8f5e9;
-    color: #388e3c;
+    background: #E8F0EA;
+    color: #3A6A44;
   `}
 
   ${type === 'off' && `
-    background: #f5f5f5;
-    color: #666;
+    background: #ECEEED;
+    color: #6B7A6E;
   `}
 `;
 

@@ -20,10 +20,9 @@ const Dialog: React.FC<DialogProps> = ({ isOpen, onClose }) => {
     console.log('[FireOwl] Initial dialog position:', { centerX, centerY, scrollY: window.scrollY, innerHeight: window.innerHeight });
     return { x: centerX, y: centerY };
   });
-  const [size, setSize] = useState({ width: 800, height: 400 });
+  const [size, setSize] = useState({ width: 800 });
   const [maxDimensions, setMaxDimensions] = useState(() => ({
     maxWidth: window.innerWidth - 40,
-    maxHeight: window.innerHeight - 40,
   }));
   const [inputValue, setInputValue] = useState('');
   const [contextEnabled, setContextEnabled] = useState(false);
@@ -79,7 +78,7 @@ const Dialog: React.FC<DialogProps> = ({ isOpen, onClose }) => {
     Storage.getDialogPosition().then((saved) => {
       if (saved) {
         setPosition({ x: saved.x, y: saved.y });
-        setSize({ width: saved.width, height: saved.height });
+        setSize({ width: saved.width });
       }
     });
   }, []);
@@ -89,7 +88,6 @@ const Dialog: React.FC<DialogProps> = ({ isOpen, onClose }) => {
     const handleResize = () => {
       setMaxDimensions({
         maxWidth: window.innerWidth - 40,
-        maxHeight: window.innerHeight - 40,
       });
     };
 
@@ -118,7 +116,7 @@ const Dialog: React.FC<DialogProps> = ({ isOpen, onClose }) => {
 
   // Save position when changed
   const handleDragStop = (_e: any, d: { x: number; y: number }) => {
-    const newPos: DialogPosition = { x: d.x, y: d.y, width: size.width, height: size.height };
+    const newPos: DialogPosition = { x: d.x, y: d.y, width: size.width, height: 0 };
     setPosition({ x: d.x, y: d.y });
     Storage.saveDialogPosition(newPos);
   };
@@ -128,10 +126,10 @@ const Dialog: React.FC<DialogProps> = ({ isOpen, onClose }) => {
       x: position.x,
       y: position.y,
       width: parseInt(ref.style.width),
-      height: parseInt(ref.style.height),
+      height: 0,
     };
     setPosition({ x: position.x, y: position.y });
-    setSize({ width: newPos.width, height: newPos.height });
+    setSize({ width: newPos.width });
     Storage.saveDialogPosition(newPos);
   };
 
@@ -276,18 +274,16 @@ const Dialog: React.FC<DialogProps> = ({ isOpen, onClose }) => {
           position={position}
           size={{
             width: size.width,
-            height: (conversationHistory.length > 0 || response || isLoading || error) ? size.height : 'auto',
+            height: 'auto',
           }}
           onDragStop={handleDragStop}
           onResizeStop={handleResizeStop}
           minWidth={400}
-          minHeight={100}
           maxWidth={maxDimensions.maxWidth}
-          maxHeight={maxDimensions.maxHeight}
           bounds="parent"
           dragHandleClassName="drag-handle"
           className={dialogStyles}
-          enableResizing={(conversationHistory.length > 0 || response || isLoading || error) ? undefined : { bottom: false, bottomRight: false, bottomLeft: false }}
+          enableResizing={{ left: true, right: true, topLeft: true, topRight: true, bottomLeft: true, bottomRight: true, top: false, bottom: false }}
         >
         {/* Header */}
         <div className={`${headerStyles} drag-handle`}>
@@ -297,9 +293,7 @@ const Dialog: React.FC<DialogProps> = ({ isOpen, onClose }) => {
           </h2>
           <div className={headerButtonsStyles}>
             {conversationHistory.length > 0 && (
-              <button onClick={handleClearConversation} aria-label="Clear conversation" title="Clear conversation">
-                🗑
-              </button>
+              <button onClick={handleClearConversation} aria-label="Clear conversation" title="Clear conversation">🔥</button>
             )}
             <button onClick={() => chrome.runtime.sendMessage({ type: 'openSettings' })} aria-label="Settings" title="Open Settings">
               ⚙️
@@ -369,26 +363,32 @@ const backdropStyles = css`
   left: 0;
   right: 0;
   bottom: 0;
-  background: rgba(0, 0, 0, 0.3);
+  background: rgba(30, 40, 32, 0.4);
+  backdrop-filter: blur(2px);
   z-index: 999998;
 `;
 
 const dialogStyles = css`
   position: absolute !important;
-  background: white;
-  border-radius: 8px;
-  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+  background: #FAFBF9;
+  border-radius: 16px;
+  box-shadow:
+    0 4px 6px rgba(45, 60, 48, 0.04),
+    0 12px 28px rgba(45, 60, 48, 0.12),
+    0 0 0 1px rgba(45, 60, 48, 0.06);
   display: flex;
   flex-direction: column;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+  overflow: hidden;
 `;
 
 const headerStyles = css`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 12px 16px;
-  border-bottom: 1px solid #e0e0e0;
+  padding: 14px 18px;
+  background: linear-gradient(to bottom, #F5F7F4, #FAFBF9);
+  border-bottom: 1px solid #E4E8E2;
   cursor: grab;
   user-select: none;
 
@@ -398,41 +398,47 @@ const headerStyles = css`
 
   h2 {
     margin: 0;
-    font-size: 16px;
+    font-size: 15px;
     font-weight: 600;
-    color: #333;
+    color: #2D3A30;
     display: flex;
     align-items: center;
-    gap: 8px;
+    gap: 10px;
+    letter-spacing: -0.01em;
   }
 `;
 
 const iconStyles = css`
-  width: 24px;
-  height: 24px;
+  width: 26px;
+  height: 26px;
 `;
 
 const headerButtonsStyles = css`
   display: flex;
-  gap: 4px;
+  gap: 2px;
 
   button {
-    background: none;
+    background: transparent;
     border: none;
-    font-size: 20px;
-    color: #666;
+    font-size: 16px;
+    color: #6B7A6E;
     cursor: pointer;
     padding: 0;
-    width: 28px;
-    height: 28px;
+    width: 32px;
+    height: 32px;
     display: flex;
     align-items: center;
     justify-content: center;
-    border-radius: 4px;
+    border-radius: 8px;
+    transition: all 0.15s ease;
 
     &:hover {
-      background: #f0f0f0;
-      color: #333;
+      background: rgba(58, 90, 64, 0.08);
+      color: #3A5A40;
+    }
+
+    &:active {
+      transform: scale(0.95);
     }
   }
 `;
@@ -445,21 +451,21 @@ const contentWrapperStyles = css`
 `;
 
 const inputSectionStyles = css`
-  border-top: 1px solid #e0e0e0;
-  padding: 12px;
-  background: #f9f9f9;
+  border-top: 1px solid #E4E8E2;
+  padding: 14px 16px;
+  background: #F5F7F4;
 `;
 
 const cancelHintStyles = css`
   text-align: center;
-  padding: 16px;
-  color: #666;
-  font-size: 14px;
-  background: #f0f0f0;
-  border-radius: 6px;
+  padding: 18px;
+  color: #6B7A6E;
+  font-size: 13px;
+  background: #EEF1EC;
+  border-radius: 10px;
 
   strong {
-    color: #333;
+    color: #3A5A40;
     font-weight: 600;
   }
 `;

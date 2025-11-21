@@ -84,33 +84,37 @@ const InputArea: React.FC<InputAreaProps> = ({
 const containerStyles = css`
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 10px;
 `;
 
 const textareaStyles = css`
   width: 100%;
-  padding: 10px 12px;
-  border: 1px solid #ddd;
-  border-radius: 6px;
-  font-size: 14px;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  padding: 12px 14px;
+  border: 1px solid #D4DCD6;
+  border-radius: 10px;
+  font-size: 13.5px;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
   resize: none;
-  line-height: 1.5;
+  line-height: 1.55;
   box-sizing: border-box;
   outline: none;
+  background: #FFFFFF;
+  color: #2D3A30;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
 
   &:focus {
-    border-color: #4CAF50;
-    box-shadow: 0 0 0 2px rgba(76, 175, 80, 0.1);
+    border-color: #4A7C54;
+    box-shadow: 0 0 0 3px rgba(74, 124, 84, 0.1);
   }
 
   &:disabled {
-    background: #f5f5f5;
+    background: #EEF1EC;
     cursor: not-allowed;
+    color: #6B7A6E;
   }
 
   &::placeholder {
-    color: #999;
+    color: #9AA89C;
   }
 `;
 
@@ -127,8 +131,9 @@ const leftGroupStyles = css`
 `;
 
 const tokenCountStyles = css`
-  font-size: 12px;
-  color: #666;
+  font-size: 11px;
+  color: #8A9A8C;
+  font-weight: 500;
 `;
 
 const actionsStyles = css`
@@ -137,41 +142,55 @@ const actionsStyles = css`
 `;
 
 const clearButtonStyles = css`
-  padding: 6px 12px;
-  background: white;
-  border: 1px solid #ddd;
-  border-radius: 4px;
+  padding: 8px 14px;
+  background: #FFFFFF;
+  border: 1px solid #D4DCD6;
+  border-radius: 8px;
   font-size: 13px;
+  font-weight: 500;
   cursor: pointer;
-  color: #666;
+  color: #5A6A5C;
+  transition: all 0.15s ease;
 
   &:hover:not(:disabled) {
-    background: #f5f5f5;
-    border-color: #bbb;
+    background: #EEF2EF;
+    border-color: #B8C4BC;
+    color: #3A4A3C;
+  }
+
+  &:active:not(:disabled) {
+    transform: scale(0.98);
   }
 
   &:disabled {
-    opacity: 0.5;
+    opacity: 0.45;
     cursor: not-allowed;
   }
 `;
 
 const sendButtonStyles = css`
-  padding: 6px 16px;
-  background: #4CAF50;
+  padding: 8px 18px;
+  background: linear-gradient(to bottom, #4A8B58, #3A7248);
   border: none;
-  border-radius: 4px;
+  border-radius: 8px;
   font-size: 13px;
-  font-weight: 500;
+  font-weight: 600;
   color: white;
   cursor: pointer;
+  box-shadow: 0 1px 2px rgba(58, 114, 72, 0.2);
+  transition: all 0.15s ease;
 
   &:hover:not(:disabled) {
-    background: #45a049;
+    background: linear-gradient(to bottom, #4A9B60, #3A8250);
+    box-shadow: 0 2px 4px rgba(58, 114, 72, 0.25);
+  }
+
+  &:active:not(:disabled) {
+    transform: scale(0.98);
   }
 
   &:disabled {
-    opacity: 0.5;
+    opacity: 0.45;
     cursor: not-allowed;
   }
 `;
