@@ -69,11 +69,25 @@ async function init() {
   await iframeLoaded;
   console.log('[FireOwl] Iframe created and ready');
 
+  // Track dialog state to toggle iframe pointer-events
+  let dialogOpen = false;
+
   // Forward toggle commands to iframe
   const sendToggleToIframe = () => {
-    console.log('[FireOwl] Sending toggle to iframe');
+    dialogOpen = !dialogOpen;
+    console.log('[FireOwl] Sending toggle to iframe, dialogOpen:', dialogOpen);
+    iframe.style.pointerEvents = dialogOpen ? 'auto' : 'none';
     iframe.contentWindow?.postMessage({ type: 'fireowl-toggle' }, '*');
   };
+
+  // Listen for close events from iframe
+  window.addEventListener('message', (event) => {
+    if (event.data?.type === 'fireowl-dialog-closed') {
+      dialogOpen = false;
+      iframe.style.pointerEvents = 'none';
+      console.log('[FireOwl] Dialog closed, disabling iframe pointer events');
+    }
+  });
 
   // Listen for toggle command from background
   chrome.runtime.onMessage.addListener((message) => {

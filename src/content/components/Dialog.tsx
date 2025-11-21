@@ -260,6 +260,13 @@ const Dialog: React.FC<DialogProps> = ({ isOpen, onClose }) => {
     }
   };
 
+  // Notify parent window when dialog closes
+  useEffect(() => {
+    if (!isOpen) {
+      window.parent.postMessage({ type: 'fireowl-dialog-closed' }, '*');
+    }
+  }, [isOpen]);
+
   if (!isOpen) return null;
 
   return (
