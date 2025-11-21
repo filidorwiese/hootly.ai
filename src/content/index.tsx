@@ -1,8 +1,10 @@
 import { createRoot } from 'react-dom/client';
+import { CacheProvider } from '@emotion/react';
+import createCache from '@emotion/cache';
 import App from './App';
 import { Storage } from '../shared/storage';
 import { initLanguage } from '../shared/i18n';
-import 'highlight.js/styles/github.css';
+import highlightStyles from 'highlight.js/styles/github.css?inline';
 
 function parseShortcut(shortcut: string): { key: string; alt: boolean; ctrl: boolean; shift: boolean; meta: boolean } {
   const parts = shortcut.toLowerCase().split('+');
@@ -31,22 +33,51 @@ async function init() {
   // Initialize language before mounting React
   await initLanguage();
 
-  // Inject Inter font from Google Fonts
-  const fontLink = document.createElement('link');
-  fontLink.rel = 'stylesheet';
-  fontLink.href = 'https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap';
-  document.head.appendChild(fontLink);
-
-  // Create container for React app
+  // Create container with Shadow DOM for style isolation
   const container = document.createElement('div');
-  container.id = 'fireclaude-root';
+  container.id = 'fireowl-root';
   document.body.appendChild(container);
 
-  console.log('[FireOwl] Container created, mounting React...');
+  const shadowRoot = container.attachShadow({ mode: 'open' });
 
-  // Mount React app
-  const root = createRoot(container);
-  root.render(<App />);
+  // Inject styles into shadow root
+  const styleEl = document.createElement('style');
+  styleEl.textContent = `
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+    ${highlightStyles}
+
+    :host {
+      all: initial;
+      font-family: 'Inter', sans-serif;
+    }
+
+    *, *::before, *::after {
+      box-sizing: border-box;
+    }
+  `;
+  shadowRoot.appendChild(styleEl);
+
+  // Create mount point inside shadow root
+  const mountPoint = document.createElement('div');
+  mountPoint.id = 'fireowl-mount';
+  shadowRoot.appendChild(mountPoint);
+
+  // Create emotion cache that injects styles into shadow root
+  const emotionCache = createCache({
+    key: 'fireowl',
+    container: shadowRoot,
+  });
+
+  console.log('[FireOwl] Shadow DOM container created, mounting React...');
+
+  // Mount React app with emotion cache provider
+  const root = createRoot(mountPoint);
+  root.render(
+    <CacheProvider value={emotionCache}>
+      <App />
+    </CacheProvider>
+  );
 
   console.log('[FireOwl] React app mounted');
 
