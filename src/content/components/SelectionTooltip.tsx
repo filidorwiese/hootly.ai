@@ -59,7 +59,7 @@ const tooltipStyles = css`
   display: flex;
   align-items: center;
   gap: 10px;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  font-family: 'Inter', sans-serif;
   font-size: 13px;
   color: #333;
   cursor: pointer;

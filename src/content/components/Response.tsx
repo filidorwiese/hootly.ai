@@ -167,6 +167,7 @@ const spinnerStyles = css`
 `;
 
 const markdownStyles = css`
+  font-family: 'Inter', sans-serif;
   font-size: 13.5px;
   line-height: 1.65;
   color: #2D3A30;

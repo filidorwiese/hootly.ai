@@ -31,6 +31,12 @@ async function init() {
   // Initialize language before mounting React
   await initLanguage();
 
+  // Inject Inter font from Google Fonts
+  const fontLink = document.createElement('link');
+  fontLink.rel = 'stylesheet';
+  fontLink.href = 'https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap';
+  document.head.appendChild(fontLink);
+
   // Create container for React app
   const container = document.createElement('div');
   container.id = 'fireclaude-root';

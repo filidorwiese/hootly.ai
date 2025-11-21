@@ -94,7 +94,7 @@ const textareaStyles = css`
   border: 1px solid #D4DCD6;
   border-radius: 10px;
   font-size: 13.5px;
-  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+  font-family: 'Inter', sans-serif;
   resize: none;
   line-height: 1.55;
   box-sizing: border-box;

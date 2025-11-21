@@ -377,7 +377,7 @@ const dialogStyles = css`
     0 0 0 1px rgba(45, 60, 48, 0.06);
   display: flex;
   flex-direction: column;
-  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+  font-family: 'Inter', sans-serif;
   overflow: hidden;
 `;
 
