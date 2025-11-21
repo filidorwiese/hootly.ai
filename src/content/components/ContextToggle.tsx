@@ -1,5 +1,6 @@
 import React from 'react';
 import { css } from '@emotion/css';
+import { t } from '../../shared/i18n';
 
 interface ContextToggleProps {
   enabled: boolean;
@@ -9,21 +10,21 @@ interface ContextToggleProps {
 }
 
 const ContextToggle: React.FC<ContextToggleProps> = ({ enabled, mode, selectionLength, onToggle }) => {
-  let buttonTitle = 'Enable context';
-  let badgeText = 'No context';
+  let buttonTitle = t('context.enableContext');
+  let badgeText = t('context.noContext');
   let badgeType: 'selection' | 'full' | 'off' = 'off';
 
   if (enabled && mode === 'selection' && selectionLength) {
-    buttonTitle = 'Click to switch to full page context';
-    badgeText = `Selection (${selectionLength} chars)`;
+    buttonTitle = t('context.switchToFullPage');
+    badgeText = t('context.selection', { chars: selectionLength });
     badgeType = 'selection';
   } else if (enabled && mode === 'fullpage') {
-    buttonTitle = 'Click to disable context';
-    badgeText = 'Full page';
+    buttonTitle = t('context.disableContext');
+    badgeText = t('context.fullPage');
     badgeType = 'full';
   } else {
-    buttonTitle = 'Click to enable context';
-    badgeText = 'No context';
+    buttonTitle = t('context.clickToEnable');
+    badgeText = t('context.noContext');
     badgeType = 'off';
   }
 

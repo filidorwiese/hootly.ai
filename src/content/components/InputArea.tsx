@@ -1,6 +1,7 @@
 import React, { useRef, useEffect } from 'react';
 import { css } from '@emotion/css';
 import ContextToggle from './ContextToggle';
+import { t } from '../../shared/i18n';
 
 interface InputAreaProps {
   value: string;
@@ -46,7 +47,7 @@ const InputArea: React.FC<InputAreaProps> = ({
         value={value}
         onChange={(e) => onChange(e.target.value)}
         onKeyDown={handleKeyDown}
-        placeholder="Ask Claude anything... (Enter to send, Shift+Enter for newline)"
+        placeholder={t('input.placeholder')}
         disabled={disabled}
         className={textareaStyles}
       />
@@ -58,7 +59,7 @@ const InputArea: React.FC<InputAreaProps> = ({
             selectionLength={selectionLength}
             onToggle={onContextToggle}
           />
-          <span className={tokenCountStyles}>~{tokenCount} tokens</span>
+          <span className={tokenCountStyles}>{t('input.tokens', { count: tokenCount })}</span>
         </div>
         <div className={actionsStyles}>
           <button
@@ -66,14 +67,14 @@ const InputArea: React.FC<InputAreaProps> = ({
             disabled={disabled || !value}
             className={clearButtonStyles}
           >
-            Clear
+            {t('input.clear')}
           </button>
           <button
             onClick={onSubmit}
             disabled={disabled || !value.trim()}
             className={sendButtonStyles}
           >
-            {disabled ? 'Sending...' : 'Send'}
+            {disabled ? t('input.sending') : t('input.send')}
           </button>
         </div>
       </div>

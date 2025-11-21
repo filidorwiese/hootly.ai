@@ -1,0 +1,37 @@
+{
+  "appName": "FireOwl",
+  "dialog": {
+    "clearConversation": "Gesprek wissen",
+    "clearConversationConfirm": "Hele gesprek wissen?",
+    "settings": "Instellingen",
+    "openSettings": "Instellingen openen",
+    "close": "Sluiten",
+    "cancelHint": "Druk op <strong>Esc</strong> om te stoppen",
+    "noApiKey": "Geen API-sleutel geconfigureerd. Klik op het instellingen-icoon om je Anthropic API-sleutel toe te voegen.",
+    "sendFailed": "Bericht verzenden mislukt"
+  },
+  "response": {
+    "error": "Fout",
+    "you": "Jij",
+    "claude": "Claude",
+    "copied": "Gekopieerd!",
+    "copyToClipboard": "Kopieer naar klembord",
+    "thinking": "Aan het denken..."
+  },
+  "input": {
+    "placeholder": "Vraag Claude iets... (Enter om te versturen, Shift+Enter voor nieuwe regel)",
+    "tokens": "~{{count}} tokens",
+    "clear": "Wissen",
+    "send": "Verstuur",
+    "sending": "Versturen..."
+  },
+  "context": {
+    "enableContext": "Context inschakelen",
+    "switchToFullPage": "Klik om naar volledige pagina te wisselen",
+    "disableContext": "Klik om context uit te schakelen",
+    "clickToEnable": "Klik om context in te schakelen",
+    "selection": "Selectie ({{chars}} tekens)",
+    "fullPage": "Volledige pagina",
+    "noContext": "Geen context"
+  }
+}

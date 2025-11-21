@@ -3,6 +3,7 @@ import { css } from '@emotion/css';
 import { marked } from 'marked';
 import hljs from 'highlight.js';
 import type { Message } from '../../shared/types';
+import { t } from '../../shared/i18n';
 
 // Configure marked with renderer for code highlighting
 const renderer = new marked.Renderer();
@@ -59,7 +60,7 @@ const Response: React.FC<ResponseProps> = ({ conversationHistory, currentRespons
       {error && (
         <div className={errorStyles}>
           <div style={{ marginBottom: '8px' }}>
-            <strong>⚠️ Error</strong>
+            <strong>⚠️ {t('response.error')}</strong>
           </div>
           <div>{error}</div>
         </div>
@@ -71,7 +72,7 @@ const Response: React.FC<ResponseProps> = ({ conversationHistory, currentRespons
         return (
           <div key={index} className={messageContainerStyles(message.role)}>
             <div className={messageHeaderStyles}>
-              <strong>{message.role === 'user' ? '👤 You' : '🤖 Claude'}</strong>
+              <strong>{message.role === 'user' ? `👤 ${t('response.you')}` : `🤖 ${t('response.claude')}`}</strong>
             </div>
             <div
               className={markdownStyles}
@@ -80,7 +81,7 @@ const Response: React.FC<ResponseProps> = ({ conversationHistory, currentRespons
             <button
               className={copyButtonStyles}
               onClick={() => handleCopy(message.content, index)}
-              title={copiedIndex === index ? 'Copied!' : 'Copy to clipboard'}
+              title={copiedIndex === index ? t('response.copied') : t('response.copyToClipboard')}
             >
               {copiedIndex === index ? '✓' : '📋'}
             </button>
@@ -92,7 +93,7 @@ const Response: React.FC<ResponseProps> = ({ conversationHistory, currentRespons
       {currentResponse && (
         <div className={messageContainerStyles('assistant')}>
           <div className={messageHeaderStyles}>
-            <strong>🤖 Claude</strong>
+            <strong>🤖 {t('response.claude')}</strong>
             {isLoading && <span className={streamingIndicatorStyles}>●</span>}
           </div>
           <div
@@ -102,7 +103,7 @@ const Response: React.FC<ResponseProps> = ({ conversationHistory, currentRespons
           <button
             className={copyButtonStyles}
             onClick={() => handleCopy(currentResponse, -1)}
-            title={copiedIndex === -1 ? 'Copied!' : 'Copy to clipboard'}
+            title={copiedIndex === -1 ? t('response.copied') : t('response.copyToClipboard')}
           >
             {copiedIndex === -1 ? '✓' : '📋'}
           </button>
@@ -112,7 +113,7 @@ const Response: React.FC<ResponseProps> = ({ conversationHistory, currentRespons
       {isLoading && !currentResponse && (
         <div className={loadingStyles}>
           <div className={spinnerStyles} />
-          <span>Thinking...</span>
+          <span>{t('response.thinking')}</span>
         </div>
       )}
     </div>

@@ -4,6 +4,7 @@ import { css } from '@emotion/css';
 import { Storage } from '../../shared/storage';
 import type { DialogPosition, Message, ContentMessage } from '../../shared/types';
 import { buildPageContext } from '../../shared/utils';
+import { t } from '../../shared/i18n';
 import InputArea from './InputArea';
 import Response from './Response';
 
@@ -183,7 +184,7 @@ const Dialog: React.FC<DialogProps> = ({ isOpen, onClose }) => {
 
   const handleClearConversation = () => {
     if (conversationHistory.length > 0) {
-      if (confirm('Clear entire conversation?')) {
+      if (confirm(t('dialog.clearConversationConfirm'))) {
         setConversationHistory([]);
         setResponse('');
         setError(null);
@@ -207,7 +208,7 @@ const Dialog: React.FC<DialogProps> = ({ isOpen, onClose }) => {
 
       // Check if API key is set
       if (!settings.apiKey || settings.apiKey.trim() === '') {
-        setError('No API key configured. Click the settings icon (⚙️) to add your Anthropic API key.');
+        setError(t('dialog.noApiKey'));
         setIsLoading(false);
         return;
       }
@@ -256,7 +257,7 @@ const Dialog: React.FC<DialogProps> = ({ isOpen, onClose }) => {
       });
     } catch (err) {
       setIsLoading(false);
-      setError(err instanceof Error ? err.message : 'Failed to send message');
+      setError(err instanceof Error ? err.message : t('dialog.sendFailed'));
     }
   };
 
@@ -293,12 +294,12 @@ const Dialog: React.FC<DialogProps> = ({ isOpen, onClose }) => {
           </h2>
           <div className={headerButtonsStyles}>
             {conversationHistory.length > 0 && (
-              <button onClick={handleClearConversation} aria-label="Clear conversation" title="Clear conversation">🔥</button>
+              <button onClick={handleClearConversation} aria-label={t('dialog.clearConversation')} title={t('dialog.clearConversation')}>🔥</button>
             )}
-            <button onClick={() => chrome.runtime.sendMessage({ type: 'openSettings' })} aria-label="Settings" title="Open Settings">
+            <button onClick={() => chrome.runtime.sendMessage({ type: 'openSettings' })} aria-label={t('dialog.settings')} title={t('dialog.openSettings')}>
               ⚙️
             </button>
-            <button onClick={onClose} aria-label="Close">
+            <button onClick={onClose} aria-label={t('dialog.close')}>
               ✕
             </button>
           </div>
@@ -331,9 +332,7 @@ const Dialog: React.FC<DialogProps> = ({ isOpen, onClose }) => {
                 tokenCount={getCurrentTokenCount()}
               />
             ) : (
-              <div className={cancelHintStyles}>
-                Press <strong>Esc</strong> to stop generating
-              </div>
+              <div className={cancelHintStyles} dangerouslySetInnerHTML={{ __html: t('dialog.cancelHint') }} />
             )}
           </div>
         </div>

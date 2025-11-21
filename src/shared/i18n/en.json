@@ -1,0 +1,37 @@
+{
+  "appName": "FireOwl",
+  "dialog": {
+    "clearConversation": "Clear conversation",
+    "clearConversationConfirm": "Clear entire conversation?",
+    "settings": "Settings",
+    "openSettings": "Open Settings",
+    "close": "Close",
+    "cancelHint": "Press <strong>Esc</strong> to stop generating",
+    "noApiKey": "No API key configured. Click the settings icon to add your Anthropic API key.",
+    "sendFailed": "Failed to send message"
+  },
+  "response": {
+    "error": "Error",
+    "you": "You",
+    "claude": "Claude",
+    "copied": "Copied!",
+    "copyToClipboard": "Copy to clipboard",
+    "thinking": "Thinking..."
+  },
+  "input": {
+    "placeholder": "Ask Claude anything... (Enter to send, Shift+Enter for newline)",
+    "tokens": "~{{count}} tokens",
+    "clear": "Clear",
+    "send": "Send",
+    "sending": "Sending..."
+  },
+  "context": {
+    "enableContext": "Enable context",
+    "switchToFullPage": "Click to switch to full page context",
+    "disableContext": "Click to disable context",
+    "clickToEnable": "Click to enable context",
+    "selection": "Selection ({{chars}} chars)",
+    "fullPage": "Full page",
+    "noContext": "No context"
+  }
+}
