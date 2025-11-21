@@ -1,5 +1,5 @@
 import { Storage } from '../shared/storage';
-import { MODELS } from '../shared/types';
+import { MODELS, Settings } from '../shared/types';
 import { t, initLanguage, setLanguage } from '../shared/i18n';
 
 function getBrowserLanguage(): string {
@@ -110,7 +110,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         maxTokens: parseInt(maxTokensInput.value),
         temperature: parseFloat(temperatureInput.value),
         shortcut: shortcutInput.value.trim() || 'Alt+C',
-        language: languageSelect.value as 'auto' | 'en' | 'nl',
+        language: languageSelect.value as Settings['language'],
       });
 
       statusDiv.textContent = t('settings.saved');

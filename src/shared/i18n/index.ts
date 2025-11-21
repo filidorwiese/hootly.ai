@@ -1,10 +1,18 @@
 import en from './en.json';
 import nl from './nl.json';
+import de from './de.json';
+import fr from './fr.json';
+import es from './es.json';
+import it from './it.json';
+import pt from './pt.json';
+import zh from './zh.json';
+import ja from './ja.json';
+import ko from './ko.json';
 
 type Translations = typeof en;
 type TranslationKey = string;
 
-const translations: Record<string, Translations> = { en, nl };
+const translations: Record<string, Translations> = { en, nl, de, fr, es, it, pt, zh, ja, ko };
 
 function getBrowserLanguage(): string {
   const lang = navigator.language || (navigator as any).userLanguage || 'en';
@@ -12,7 +20,7 @@ function getBrowserLanguage(): string {
 }
 
 let currentLanguage = getBrowserLanguage();
-let languageSetting: 'auto' | 'en' | 'nl' = 'auto';
+let languageSetting: string = 'auto';
 
 export async function initLanguage(): Promise<void> {
   try {

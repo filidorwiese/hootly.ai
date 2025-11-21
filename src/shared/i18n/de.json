@@ -1,0 +1,56 @@
+{
+  "appName": "FireOwl",
+  "settings": {
+    "title": "Einstellungen",
+    "apiKey": "Anthropic API-Schlüssel",
+    "apiKeyHint": "Hol dir deinen Claude API-Schlüssel",
+    "apiKeyHintLink": "hier",
+    "model": "Modell",
+    "modelRecommended": "Empfohlen",
+    "modelCurrent": "Aktuelle Modelle",
+    "modelLegacy": "Ältere Modelle",
+    "maxTokens": "Max Tokens",
+    "temperature": "Temperatur (0-1)",
+    "shortcut": "Tastenkürzel",
+    "shortcutHint": "Format: Modifikator+Taste (z.B. Alt+C, Ctrl+Shift+K, Meta+Leertaste)",
+    "language": "Sprache",
+    "languageAuto": "Automatisch erkennen",
+    "save": "Einstellungen speichern",
+    "saved": "Einstellungen erfolgreich gespeichert!",
+    "saveError": "Fehler beim Speichern der Einstellungen"
+  },
+  "dialog": {
+    "clearConversation": "Gespräch löschen",
+    "clearConversationConfirm": "Gesamtes Gespräch löschen?",
+    "settings": "Einstellungen",
+    "openSettings": "Einstellungen öffnen",
+    "close": "Schließen",
+    "cancelHint": "Drücke <strong>Esc</strong> um die Generierung zu stoppen",
+    "noApiKey": "Kein API-Schlüssel konfiguriert. Klicke auf das Einstellungen-Symbol, um deinen Anthropic API-Schlüssel hinzuzufügen.",
+    "sendFailed": "Nachricht konnte nicht gesendet werden"
+  },
+  "response": {
+    "error": "Fehler",
+    "you": "Du",
+    "claude": "Claude",
+    "copied": "Kopiert!",
+    "copyToClipboard": "In Zwischenablage kopieren",
+    "thinking": "Denkt nach..."
+  },
+  "input": {
+    "placeholder": "Frag Claude etwas... (Enter zum Senden, Shift+Enter für neue Zeile)",
+    "tokens": "~{{count}} Tokens",
+    "clear": "Löschen",
+    "send": "Senden",
+    "sending": "Wird gesendet..."
+  },
+  "context": {
+    "enableContext": "Kontext aktivieren",
+    "switchToFullPage": "Klicken um zur ganzen Seite zu wechseln",
+    "disableContext": "Klicken um Kontext zu deaktivieren",
+    "clickToEnable": "Klicken um Kontext zu aktivieren",
+    "selection": "Auswahl ({{chars}} Zeichen)",
+    "fullPage": "Ganze Seite",
+    "noContext": "Kein Kontext"
+  }
+}

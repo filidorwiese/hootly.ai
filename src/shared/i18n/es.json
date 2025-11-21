@@ -1,0 +1,56 @@
+{
+  "appName": "FireOwl",
+  "settings": {
+    "title": "Configuración",
+    "apiKey": "Clave API de Anthropic",
+    "apiKeyHint": "Obtén tu clave API de Claude",
+    "apiKeyHintLink": "aquí",
+    "model": "Modelo",
+    "modelRecommended": "Recomendado",
+    "modelCurrent": "Modelos actuales",
+    "modelLegacy": "Modelos antiguos",
+    "maxTokens": "Tokens máximos",
+    "temperature": "Temperatura (0-1)",
+    "shortcut": "Atajo de teclado",
+    "shortcutHint": "Formato: Modificador+Tecla (ej: Alt+C, Ctrl+Shift+K, Meta+Espacio)",
+    "language": "Idioma",
+    "languageAuto": "Detección automática",
+    "save": "Guardar configuración",
+    "saved": "¡Configuración guardada correctamente!",
+    "saveError": "Error al guardar la configuración"
+  },
+  "dialog": {
+    "clearConversation": "Borrar conversación",
+    "clearConversationConfirm": "¿Borrar toda la conversación?",
+    "settings": "Configuración",
+    "openSettings": "Abrir configuración",
+    "close": "Cerrar",
+    "cancelHint": "Presiona <strong>Esc</strong> para detener la generación",
+    "noApiKey": "No hay clave API configurada. Haz clic en el icono de configuración para añadir tu clave API de Anthropic.",
+    "sendFailed": "Error al enviar el mensaje"
+  },
+  "response": {
+    "error": "Error",
+    "you": "Tú",
+    "claude": "Claude",
+    "copied": "¡Copiado!",
+    "copyToClipboard": "Copiar al portapapeles",
+    "thinking": "Pensando..."
+  },
+  "input": {
+    "placeholder": "Pregunta algo a Claude... (Enter para enviar, Shift+Enter para nueva línea)",
+    "tokens": "~{{count}} tokens",
+    "clear": "Borrar",
+    "send": "Enviar",
+    "sending": "Enviando..."
+  },
+  "context": {
+    "enableContext": "Activar contexto",
+    "switchToFullPage": "Clic para cambiar a página completa",
+    "disableContext": "Clic para desactivar contexto",
+    "clickToEnable": "Clic para activar contexto",
+    "selection": "Selección ({{chars}} caracteres)",
+    "fullPage": "Página completa",
+    "noContext": "Sin contexto"
+  }
+}

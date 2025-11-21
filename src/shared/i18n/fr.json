@@ -1,0 +1,56 @@
+{
+  "appName": "FireOwl",
+  "settings": {
+    "title": "Paramètres",
+    "apiKey": "Clé API Anthropic",
+    "apiKeyHint": "Obtenez votre clé API Claude",
+    "apiKeyHintLink": "ici",
+    "model": "Modèle",
+    "modelRecommended": "Recommandé",
+    "modelCurrent": "Modèles actuels",
+    "modelLegacy": "Anciens modèles",
+    "maxTokens": "Tokens maximum",
+    "temperature": "Température (0-1)",
+    "shortcut": "Raccourci clavier",
+    "shortcutHint": "Format: Modificateur+Touche (ex: Alt+C, Ctrl+Shift+K, Meta+Espace)",
+    "language": "Langue",
+    "languageAuto": "Détection automatique",
+    "save": "Enregistrer les paramètres",
+    "saved": "Paramètres enregistrés avec succès!",
+    "saveError": "Erreur lors de l'enregistrement des paramètres"
+  },
+  "dialog": {
+    "clearConversation": "Effacer la conversation",
+    "clearConversationConfirm": "Effacer toute la conversation?",
+    "settings": "Paramètres",
+    "openSettings": "Ouvrir les paramètres",
+    "close": "Fermer",
+    "cancelHint": "Appuyez sur <strong>Échap</strong> pour arrêter la génération",
+    "noApiKey": "Aucune clé API configurée. Cliquez sur l'icône des paramètres pour ajouter votre clé API Anthropic.",
+    "sendFailed": "Échec de l'envoi du message"
+  },
+  "response": {
+    "error": "Erreur",
+    "you": "Vous",
+    "claude": "Claude",
+    "copied": "Copié!",
+    "copyToClipboard": "Copier dans le presse-papiers",
+    "thinking": "Réflexion en cours..."
+  },
+  "input": {
+    "placeholder": "Demandez quelque chose à Claude... (Entrée pour envoyer, Shift+Entrée pour nouvelle ligne)",
+    "tokens": "~{{count}} tokens",
+    "clear": "Effacer",
+    "send": "Envoyer",
+    "sending": "Envoi en cours..."
+  },
+  "context": {
+    "enableContext": "Activer le contexte",
+    "switchToFullPage": "Cliquez pour passer à la page complète",
+    "disableContext": "Cliquez pour désactiver le contexte",
+    "clickToEnable": "Cliquez pour activer le contexte",
+    "selection": "Sélection ({{chars}} caractères)",
+    "fullPage": "Page complète",
+    "noContext": "Pas de contexte"
+  }
+}

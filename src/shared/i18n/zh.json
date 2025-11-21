@@ -1,0 +1,56 @@
+{
+  "appName": "FireOwl",
+  "settings": {
+    "title": "设置",
+    "apiKey": "Anthropic API 密钥",
+    "apiKeyHint": "获取您的 Claude API 密钥",
+    "apiKeyHintLink": "这里",
+    "model": "模型",
+    "modelRecommended": "推荐",
+    "modelCurrent": "当前模型",
+    "modelLegacy": "旧版模型",
+    "maxTokens": "最大令牌数",
+    "temperature": "温度 (0-1)",
+    "shortcut": "键盘快捷键",
+    "shortcutHint": "格式：修饰键+按键（例如：Alt+C、Ctrl+Shift+K、Meta+空格）",
+    "language": "语言",
+    "languageAuto": "自动检测",
+    "save": "保存设置",
+    "saved": "设置保存成功！",
+    "saveError": "保存设置时出错"
+  },
+  "dialog": {
+    "clearConversation": "清除对话",
+    "clearConversationConfirm": "清除整个对话？",
+    "settings": "设置",
+    "openSettings": "打开设置",
+    "close": "关闭",
+    "cancelHint": "按 <strong>Esc</strong> 停止生成",
+    "noApiKey": "未配置 API 密钥。点击设置图标添加您的 Anthropic API 密钥。",
+    "sendFailed": "发送消息失败"
+  },
+  "response": {
+    "error": "错误",
+    "you": "你",
+    "claude": "Claude",
+    "copied": "已复制！",
+    "copyToClipboard": "复制到剪贴板",
+    "thinking": "思考中..."
+  },
+  "input": {
+    "placeholder": "问 Claude 任何问题...（Enter 发送，Shift+Enter 换行）",
+    "tokens": "~{{count}} 令牌",
+    "clear": "清除",
+    "send": "发送",
+    "sending": "发送中..."
+  },
+  "context": {
+    "enableContext": "启用上下文",
+    "switchToFullPage": "点击切换到整页",
+    "disableContext": "点击禁用上下文",
+    "clickToEnable": "点击启用上下文",
+    "selection": "选中内容（{{chars}} 字符）",
+    "fullPage": "整页",
+    "noContext": "无上下文"
+  }
+}

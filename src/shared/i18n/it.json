@@ -1,0 +1,56 @@
+{
+  "appName": "FireOwl",
+  "settings": {
+    "title": "Impostazioni",
+    "apiKey": "Chiave API Anthropic",
+    "apiKeyHint": "Ottieni la tua chiave API Claude",
+    "apiKeyHintLink": "qui",
+    "model": "Modello",
+    "modelRecommended": "Consigliato",
+    "modelCurrent": "Modelli attuali",
+    "modelLegacy": "Modelli precedenti",
+    "maxTokens": "Token massimi",
+    "temperature": "Temperatura (0-1)",
+    "shortcut": "Scorciatoia da tastiera",
+    "shortcutHint": "Formato: Modificatore+Tasto (es: Alt+C, Ctrl+Shift+K, Meta+Spazio)",
+    "language": "Lingua",
+    "languageAuto": "Rilevamento automatico",
+    "save": "Salva impostazioni",
+    "saved": "Impostazioni salvate con successo!",
+    "saveError": "Errore nel salvataggio delle impostazioni"
+  },
+  "dialog": {
+    "clearConversation": "Cancella conversazione",
+    "clearConversationConfirm": "Cancellare l'intera conversazione?",
+    "settings": "Impostazioni",
+    "openSettings": "Apri impostazioni",
+    "close": "Chiudi",
+    "cancelHint": "Premi <strong>Esc</strong> per interrompere la generazione",
+    "noApiKey": "Nessuna chiave API configurata. Clicca sull'icona delle impostazioni per aggiungere la tua chiave API Anthropic.",
+    "sendFailed": "Invio del messaggio fallito"
+  },
+  "response": {
+    "error": "Errore",
+    "you": "Tu",
+    "claude": "Claude",
+    "copied": "Copiato!",
+    "copyToClipboard": "Copia negli appunti",
+    "thinking": "Sto pensando..."
+  },
+  "input": {
+    "placeholder": "Chiedi qualcosa a Claude... (Invio per inviare, Shift+Invio per nuova riga)",
+    "tokens": "~{{count}} token",
+    "clear": "Cancella",
+    "send": "Invia",
+    "sending": "Invio in corso..."
+  },
+  "context": {
+    "enableContext": "Attiva contesto",
+    "switchToFullPage": "Clicca per passare alla pagina intera",
+    "disableContext": "Clicca per disattivare il contesto",
+    "clickToEnable": "Clicca per attivare il contesto",
+    "selection": "Selezione ({{chars}} caratteri)",
+    "fullPage": "Pagina intera",
+    "noContext": "Nessun contesto"
+  }
+}

@@ -1,0 +1,56 @@
+{
+  "appName": "FireOwl",
+  "settings": {
+    "title": "설정",
+    "apiKey": "Anthropic API 키",
+    "apiKeyHint": "Claude API 키 받기",
+    "apiKeyHintLink": "여기",
+    "model": "모델",
+    "modelRecommended": "추천",
+    "modelCurrent": "현재 모델",
+    "modelLegacy": "이전 모델",
+    "maxTokens": "최대 토큰",
+    "temperature": "온도 (0-1)",
+    "shortcut": "키보드 단축키",
+    "shortcutHint": "형식: 수정자+키 (예: Alt+C, Ctrl+Shift+K, Meta+Space)",
+    "language": "언어",
+    "languageAuto": "자동 감지",
+    "save": "설정 저장",
+    "saved": "설정이 성공적으로 저장되었습니다!",
+    "saveError": "설정 저장 중 오류 발생"
+  },
+  "dialog": {
+    "clearConversation": "대화 지우기",
+    "clearConversationConfirm": "전체 대화를 지우시겠습니까?",
+    "settings": "설정",
+    "openSettings": "설정 열기",
+    "close": "닫기",
+    "cancelHint": "<strong>Esc</strong>를 눌러 생성 중지",
+    "noApiKey": "API 키가 설정되지 않았습니다. 설정 아이콘을 클릭하여 Anthropic API 키를 추가하세요.",
+    "sendFailed": "메시지 전송 실패"
+  },
+  "response": {
+    "error": "오류",
+    "you": "나",
+    "claude": "Claude",
+    "copied": "복사됨!",
+    "copyToClipboard": "클립보드에 복사",
+    "thinking": "생각 중..."
+  },
+  "input": {
+    "placeholder": "Claude에게 무엇이든 물어보세요... (Enter로 전송, Shift+Enter로 줄바꿈)",
+    "tokens": "~{{count}} 토큰",
+    "clear": "지우기",
+    "send": "전송",
+    "sending": "전송 중..."
+  },
+  "context": {
+    "enableContext": "컨텍스트 활성화",
+    "switchToFullPage": "클릭하여 전체 페이지로 전환",
+    "disableContext": "클릭하여 컨텍스트 비활성화",
+    "clickToEnable": "클릭하여 컨텍스트 활성화",
+    "selection": "선택 ({{chars}}자)",
+    "fullPage": "전체 페이지",
+    "noContext": "컨텍스트 없음"
+  }
+}

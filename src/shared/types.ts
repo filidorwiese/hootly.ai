@@ -17,7 +17,7 @@ export interface Settings {
   systemPrompt: string;
   conversationDepth: 1 | 3 | 5 | 999;
   retentionDays: number;
-  language: 'auto' | 'en' | 'nl';
+  language: 'auto' | 'en' | 'nl' | 'de' | 'fr' | 'es' | 'it' | 'pt' | 'zh' | 'ja' | 'ko';
 }
 
 export interface ModelConfig {

@@ -1,0 +1,56 @@
+{
+  "appName": "FireOwl",
+  "settings": {
+    "title": "設定",
+    "apiKey": "Anthropic APIキー",
+    "apiKeyHint": "Claude APIキーを取得",
+    "apiKeyHintLink": "こちら",
+    "model": "モデル",
+    "modelRecommended": "おすすめ",
+    "modelCurrent": "現行モデル",
+    "modelLegacy": "旧モデル",
+    "maxTokens": "最大トークン数",
+    "temperature": "温度 (0-1)",
+    "shortcut": "キーボードショートカット",
+    "shortcutHint": "形式：修飾キー+キー（例：Alt+C、Ctrl+Shift+K、Meta+Space）",
+    "language": "言語",
+    "languageAuto": "自動検出",
+    "save": "設定を保存",
+    "saved": "設定が正常に保存されました！",
+    "saveError": "設定の保存中にエラーが発生しました"
+  },
+  "dialog": {
+    "clearConversation": "会話をクリア",
+    "clearConversationConfirm": "会話全体をクリアしますか？",
+    "settings": "設定",
+    "openSettings": "設定を開く",
+    "close": "閉じる",
+    "cancelHint": "<strong>Esc</strong>キーで生成を停止",
+    "noApiKey": "APIキーが設定されていません。設定アイコンをクリックしてAnthropic APIキーを追加してください。",
+    "sendFailed": "メッセージの送信に失敗しました"
+  },
+  "response": {
+    "error": "エラー",
+    "you": "あなた",
+    "claude": "Claude",
+    "copied": "コピーしました！",
+    "copyToClipboard": "クリップボードにコピー",
+    "thinking": "考え中..."
+  },
+  "input": {
+    "placeholder": "Claudeに何でも聞いてください...（Enterで送信、Shift+Enterで改行）",
+    "tokens": "~{{count}} トークン",
+    "clear": "クリア",
+    "send": "送信",
+    "sending": "送信中..."
+  },
+  "context": {
+    "enableContext": "コンテキストを有効化",
+    "switchToFullPage": "クリックでページ全体に切り替え",
+    "disableContext": "クリックでコンテキストを無効化",
+    "clickToEnable": "クリックでコンテキストを有効化",
+    "selection": "選択範囲（{{chars}}文字）",
+    "fullPage": "ページ全体",
+    "noContext": "コンテキストなし"
+  }
+}

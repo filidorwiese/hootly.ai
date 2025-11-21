@@ -1,0 +1,56 @@
+{
+  "appName": "FireOwl",
+  "settings": {
+    "title": "Configurações",
+    "apiKey": "Chave API Anthropic",
+    "apiKeyHint": "Obtenha sua chave API Claude",
+    "apiKeyHintLink": "aqui",
+    "model": "Modelo",
+    "modelRecommended": "Recomendado",
+    "modelCurrent": "Modelos atuais",
+    "modelLegacy": "Modelos antigos",
+    "maxTokens": "Tokens máximos",
+    "temperature": "Temperatura (0-1)",
+    "shortcut": "Atalho de teclado",
+    "shortcutHint": "Formato: Modificador+Tecla (ex: Alt+C, Ctrl+Shift+K, Meta+Espaço)",
+    "language": "Idioma",
+    "languageAuto": "Detecção automática",
+    "save": "Salvar configurações",
+    "saved": "Configurações salvas com sucesso!",
+    "saveError": "Erro ao salvar configurações"
+  },
+  "dialog": {
+    "clearConversation": "Limpar conversa",
+    "clearConversationConfirm": "Limpar toda a conversa?",
+    "settings": "Configurações",
+    "openSettings": "Abrir configurações",
+    "close": "Fechar",
+    "cancelHint": "Pressione <strong>Esc</strong> para parar a geração",
+    "noApiKey": "Nenhuma chave API configurada. Clique no ícone de configurações para adicionar sua chave API Anthropic.",
+    "sendFailed": "Falha ao enviar mensagem"
+  },
+  "response": {
+    "error": "Erro",
+    "you": "Você",
+    "claude": "Claude",
+    "copied": "Copiado!",
+    "copyToClipboard": "Copiar para área de transferência",
+    "thinking": "Pensando..."
+  },
+  "input": {
+    "placeholder": "Pergunte algo ao Claude... (Enter para enviar, Shift+Enter para nova linha)",
+    "tokens": "~{{count}} tokens",
+    "clear": "Limpar",
+    "send": "Enviar",
+    "sending": "Enviando..."
+  },
+  "context": {
+    "enableContext": "Ativar contexto",
+    "switchToFullPage": "Clique para mudar para página completa",
+    "disableContext": "Clique para desativar contexto",
+    "clickToEnable": "Clique para ativar contexto",
+    "selection": "Seleção ({{chars}} caracteres)",
+    "fullPage": "Página completa",
+    "noContext": "Sem contexto"
+  }
+}
