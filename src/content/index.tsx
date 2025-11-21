@@ -1,10 +1,9 @@
 import { createRoot } from 'react-dom/client';
-import { CacheProvider } from '@emotion/react';
-import createCache from '@emotion/cache';
 import App from './App';
 import { Storage } from '../shared/storage';
 import { initLanguage } from '../shared/i18n';
-import highlightStyles from 'highlight.js/styles/github.css?inline';
+import { injectGlobal } from '@emotion/css';
+import 'highlight.js/styles/github.css';
 
 function parseShortcut(shortcut: string): { key: string; alt: boolean; ctrl: boolean; shift: boolean; meta: boolean } {
   const parts = shortcut.toLowerCase().split('+');
@@ -33,51 +32,44 @@ async function init() {
   // Initialize language before mounting React
   await initLanguage();
 
-  // Create container with Shadow DOM for style isolation
+  // Inject Inter font
+  const fontLink = document.createElement('link');
+  fontLink.rel = 'stylesheet';
+  fontLink.href = 'https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap';
+  document.head.appendChild(fontLink);
+
+  // Inject global reset styles for our container to isolate from page CSS
+  injectGlobal`
+    #fireowl-root {
+      all: initial !important;
+      display: block !important;
+    }
+    #fireowl-root *,
+    #fireowl-root *::before,
+    #fireowl-root *::after {
+      font-family: 'Inter', sans-serif;
+      box-sizing: border-box;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+    #fireowl-root input,
+    #fireowl-root textarea,
+    #fireowl-root select,
+    #fireowl-root button {
+      font-family: inherit;
+    }
+  `;
+
+  // Create container for React app
   const container = document.createElement('div');
   container.id = 'fireowl-root';
   document.body.appendChild(container);
 
-  const shadowRoot = container.attachShadow({ mode: 'open' });
+  console.log('[FireOwl] Container created, mounting React...');
 
-  // Inject styles into shadow root
-  const styleEl = document.createElement('style');
-  styleEl.textContent = `
-    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
-
-    ${highlightStyles}
-
-    :host {
-      all: initial;
-      font-family: 'Inter', sans-serif;
-    }
-
-    *, *::before, *::after {
-      box-sizing: border-box;
-    }
-  `;
-  shadowRoot.appendChild(styleEl);
-
-  // Create mount point inside shadow root
-  const mountPoint = document.createElement('div');
-  mountPoint.id = 'fireowl-mount';
-  shadowRoot.appendChild(mountPoint);
-
-  // Create emotion cache that injects styles into shadow root
-  const emotionCache = createCache({
-    key: 'fireowl',
-    container: shadowRoot,
-  });
-
-  console.log('[FireOwl] Shadow DOM container created, mounting React...');
-
-  // Mount React app with emotion cache provider
-  const root = createRoot(mountPoint);
-  root.render(
-    <CacheProvider value={emotionCache}>
-      <App />
-    </CacheProvider>
-  );
+  // Mount React app
+  const root = createRoot(container);
+  root.render(<App />);
 
   console.log('[FireOwl] React app mounted');
 
