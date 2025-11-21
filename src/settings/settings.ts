@@ -1,6 +1,11 @@
 import { Storage } from '../shared/storage';
 import { MODELS } from '../shared/types';
-import { t, initLanguage } from '../shared/i18n';
+import { t, initLanguage, setLanguage } from '../shared/i18n';
+
+function getBrowserLanguage(): string {
+  const lang = navigator.language || (navigator as any).userLanguage || 'en';
+  return lang.split('-')[0].toLowerCase();
+}
 
 function applyTranslations() {
   document.querySelectorAll('[data-i18n]').forEach((el) => {
@@ -11,23 +16,9 @@ function applyTranslations() {
   });
 }
 
-document.addEventListener('DOMContentLoaded', async () => {
-  // Initialize language first
-  await initLanguage();
-  applyTranslations();
-  const apiKeyInput = document.getElementById('apiKey') as HTMLInputElement;
-  const modelSelect = document.getElementById('model') as HTMLSelectElement;
-  const maxTokensInput = document.getElementById('maxTokens') as HTMLInputElement;
-  const temperatureInput = document.getElementById('temperature') as HTMLInputElement;
-  const shortcutInput = document.getElementById('shortcut') as HTMLInputElement;
-  const languageSelect = document.getElementById('language') as HTMLSelectElement;
-  const saveBtn = document.getElementById('saveBtn') as HTMLButtonElement;
-  const statusDiv = document.getElementById('status') as HTMLDivElement;
-
-  // Populate model dropdown from config
+function populateModelSelect(modelSelect: HTMLSelectElement, currentValue?: string) {
   modelSelect.innerHTML = '';
 
-  // Add recommended models
   const recommendedModels = MODELS.filter(m => m.recommended && !m.legacy);
   if (recommendedModels.length > 0) {
     const recommendedGroup = document.createElement('optgroup');
@@ -41,7 +32,6 @@ document.addEventListener('DOMContentLoaded', async () => {
     modelSelect.appendChild(recommendedGroup);
   }
 
-  // Add current models
   const currentModels = MODELS.filter(m => !m.recommended && !m.legacy);
   if (currentModels.length > 0) {
     const currentGroup = document.createElement('optgroup');
@@ -55,7 +45,6 @@ document.addEventListener('DOMContentLoaded', async () => {
     modelSelect.appendChild(currentGroup);
   }
 
-  // Add legacy models
   const legacyModels = MODELS.filter(m => m.legacy);
   if (legacyModels.length > 0) {
     const legacyGroup = document.createElement('optgroup');
@@ -69,8 +58,42 @@ document.addEventListener('DOMContentLoaded', async () => {
     modelSelect.appendChild(legacyGroup);
   }
 
+  if (currentValue) {
+    modelSelect.value = currentValue;
+  }
+}
+
+document.addEventListener('DOMContentLoaded', async () => {
+  // Initialize language first
+  await initLanguage();
+  applyTranslations();
+
+  const apiKeyInput = document.getElementById('apiKey') as HTMLInputElement;
+  const modelSelect = document.getElementById('model') as HTMLSelectElement;
+  const maxTokensInput = document.getElementById('maxTokens') as HTMLInputElement;
+  const temperatureInput = document.getElementById('temperature') as HTMLInputElement;
+  const shortcutInput = document.getElementById('shortcut') as HTMLInputElement;
+  const languageSelect = document.getElementById('language') as HTMLSelectElement;
+  const saveBtn = document.getElementById('saveBtn') as HTMLButtonElement;
+  const statusDiv = document.getElementById('status') as HTMLDivElement;
+
   // Load current settings
   const settings = await Storage.getSettings();
+
+  // Populate model dropdown
+  populateModelSelect(modelSelect, settings.model);
+
+  // Language change handler - update UI immediately
+  languageSelect.addEventListener('change', () => {
+    const newLang = languageSelect.value;
+    if (newLang === 'auto') {
+      setLanguage(getBrowserLanguage());
+    } else {
+      setLanguage(newLang);
+    }
+    applyTranslations();
+    populateModelSelect(modelSelect, modelSelect.value);
+  });
   apiKeyInput.value = settings.apiKey;
   modelSelect.value = settings.model;
   maxTokensInput.value = settings.maxTokens.toString();
