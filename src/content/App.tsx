@@ -20,10 +20,10 @@ const App: React.FC = () => {
   useEffect(() => {
     console.log('[FireOwl] App component mounted');
 
-    // Listen for toggle message
+    // Listen for toggle message from parent (iframe) or same window
     const handleMessage = (event: MessageEvent) => {
       console.log('[FireOwl] Window message received:', event.data);
-      if (event.data.type === 'fireclaude-toggle') {
+      if (event.data.type === 'fireowl-toggle' || event.data.type === 'fireclaude-toggle') {
         console.log('[FireOwl] Toggling dialog');
         setIsOpen((prev) => {
           console.log('[FireOwl] State updating from', prev, 'to', !prev);

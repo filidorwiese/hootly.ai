@@ -1,5 +1,18 @@
 import type { PageContext } from './types';
 
+// Type for page info exposed from parent window (iframe mode)
+interface PageInfo {
+  url: string;
+  title: string;
+  getSelection: () => string;
+  getPageText: () => string;
+}
+
+// Get page info - works in both iframe and direct mode
+function getPageInfo(): PageInfo | null {
+  return (window as any).__FIREOWL_PAGE_INFO__ || null;
+}
+
 /**
  * Estimate token count from character count
  * Conservative estimate: 1 token ≈ 3.5 characters
@@ -16,23 +29,8 @@ export function extractPageText(options: {
   includeStyles: boolean;
   maxLength: number;
 }): string {
-  let text = document.body.innerText;
-
-  if (!options.includeScripts) {
-    // Remove script tags content
-    const scripts = document.querySelectorAll('script');
-    scripts.forEach((script) => {
-      text = text.replace(script.innerText, '');
-    });
-  }
-
-  if (!options.includeStyles) {
-    // Remove style tags content
-    const styles = document.querySelectorAll('style');
-    styles.forEach((style) => {
-      text = text.replace(style.innerText, '');
-    });
-  }
+  const pageInfo = getPageInfo();
+  let text = pageInfo ? pageInfo.getPageText() : (document.body?.innerText || '');
 
   // Truncate if needed
   if (text.length > options.maxLength) {
@@ -46,14 +44,41 @@ export function extractPageText(options: {
  * Extract selected text from page
  */
 export function extractSelection(): string | null {
+  const pageInfo = getPageInfo();
+  if (pageInfo) {
+    const selection = pageInfo.getSelection();
+    return selection && selection.trim() || null;
+  }
   const selection = window.getSelection();
   return selection && selection.toString().trim() || null;
+}
+
+/**
+ * Get page URL
+ */
+export function getPageUrl(): string {
+  const pageInfo = getPageInfo();
+  return pageInfo ? pageInfo.url : window.location.href;
+}
+
+/**
+ * Get page title
+ */
+export function getPageTitle(): string {
+  const pageInfo = getPageInfo();
+  return pageInfo ? pageInfo.title : document.title;
 }
 
 /**
  * Extract page metadata
  */
 export function extractMetadata(): PageContext['metadata'] {
+  // In iframe mode, we don't have access to parent's meta tags
+  const pageInfo = getPageInfo();
+  if (pageInfo) {
+    return { description: undefined, keywords: undefined };
+  }
+
   const description = document.querySelector('meta[name="description"]')?.getAttribute('content');
   const keywords = document.querySelector('meta[name="keywords"]')?.getAttribute('content');
 
@@ -75,8 +100,8 @@ export function buildPageContext(options: {
   const selection = extractSelection();
 
   return {
-    url: window.location.href,
-    title: document.title,
+    url: getPageUrl(),
+    title: getPageTitle(),
     selection: selection || undefined,
     fullPage: selection ? undefined : extractPageText(options),
     metadata: extractMetadata(),

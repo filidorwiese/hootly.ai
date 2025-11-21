@@ -3,7 +3,7 @@ import { Rnd } from 'react-rnd';
 import { css } from '@emotion/css';
 import { Storage } from '../../shared/storage';
 import type { DialogPosition, Message, ContentMessage } from '../../shared/types';
-import { buildPageContext } from '../../shared/utils';
+import { buildPageContext, extractSelection, extractPageText, getPageUrl, getPageTitle } from '../../shared/utils';
 import { t } from '../../shared/i18n';
 import InputArea from './InputArea';
 import Response from './Response';
@@ -45,8 +45,8 @@ const Dialog: React.FC<DialogProps> = ({ isOpen, onClose }) => {
     if (contextEnabled && contextMode === 'selection' && capturedSelection) {
       count += estimateTokens(capturedSelection);
     } else if (contextEnabled && contextMode === 'fullpage') {
-      const pageText = document.body.innerText || '';
-      count += estimateTokens(pageText.substring(0, 50000)); // Approximate page content
+      const pageText = extractPageText({ includeScripts: false, includeStyles: false, maxLength: 50000 });
+      count += estimateTokens(pageText);
     }
 
     return count;
@@ -55,8 +55,7 @@ const Dialog: React.FC<DialogProps> = ({ isOpen, onClose }) => {
   // Capture text selection and auto-enable context when dialog opens
   useEffect(() => {
     if (isOpen) {
-      const selection = window.getSelection();
-      const selectionText = selection && selection.toString().trim();
+      const selectionText = extractSelection();
       if (selectionText && selectionText.length > 0) {
         setCapturedSelection(selectionText);
         setContextEnabled(true);
@@ -219,8 +218,8 @@ const Dialog: React.FC<DialogProps> = ({ isOpen, onClose }) => {
         if (contextMode === 'selection' && capturedSelection) {
           // Use captured selection
           context = {
-            url: window.location.href,
-            title: document.title,
+            url: getPageUrl(),
+            title: getPageTitle(),
             selection: capturedSelection,
             metadata: undefined,
           };

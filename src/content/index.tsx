@@ -1,9 +1,4 @@
-import { createRoot } from 'react-dom/client';
-import App from './App';
 import { Storage } from '../shared/storage';
-import { initLanguage } from '../shared/i18n';
-import { injectGlobal } from '@emotion/css';
-import 'highlight.js/styles/github.css';
 
 function parseShortcut(shortcut: string): { key: string; alt: boolean; ctrl: boolean; shift: boolean; meta: boolean } {
   const parts = shortcut.toLowerCase().split('+');
@@ -29,56 +24,99 @@ async function init() {
     }
   }
 
-  // Initialize language before mounting React
-  await initLanguage();
-
-  // Inject Inter font
-  const fontLink = document.createElement('link');
-  fontLink.rel = 'stylesheet';
-  fontLink.href = 'https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap';
-  document.head.appendChild(fontLink);
-
-  // Inject global reset styles for our container to isolate from page CSS
-  injectGlobal`
-    #fireowl-root {
-      all: initial !important;
-      display: block !important;
-    }
-    #fireowl-root *,
-    #fireowl-root *::before,
-    #fireowl-root *::after {
-      font-family: 'Inter', sans-serif;
-      box-sizing: border-box;
-      -webkit-font-smoothing: antialiased;
-      -moz-osx-font-smoothing: grayscale;
-    }
-    #fireowl-root input,
-    #fireowl-root textarea,
-    #fireowl-root select,
-    #fireowl-root button {
-      font-family: inherit;
-    }
+  // Create iframe for complete style isolation
+  const iframe = document.createElement('iframe');
+  iframe.id = 'fireowl-frame';
+  iframe.style.cssText = `
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    width: 100vw !important;
+    height: 100vh !important;
+    border: none !important;
+    z-index: 2147483647 !important;
+    background: transparent !important;
+    pointer-events: none !important;
+    color-scheme: light !important;
   `;
+  iframe.setAttribute('allowtransparency', 'true');
+  document.body.appendChild(iframe);
 
-  // Create container for React app
-  const container = document.createElement('div');
-  container.id = 'fireowl-root';
-  document.body.appendChild(container);
+  // Wait for iframe to load
+  await new Promise<void>((resolve) => {
+    iframe.onload = () => resolve();
+    // Trigger load for about:blank
+    iframe.src = 'about:blank';
+  });
 
-  console.log('[FireOwl] Container created, mounting React...');
+  const iframeDoc = iframe.contentDocument!;
+  const iframeWin = iframe.contentWindow!;
 
-  // Mount React app
-  const root = createRoot(container);
-  root.render(<App />);
+  // Write the iframe HTML with React app
+  iframeDoc.open();
+  iframeDoc.write(`
+    <!DOCTYPE html>
+    <html>
+    <head>
+      <meta charset="UTF-8">
+      <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap">
+      <style>
+        *, *::before, *::after {
+          box-sizing: border-box;
+        }
+        html, body {
+          margin: 0;
+          padding: 0;
+          background: transparent;
+          font-family: 'Inter', sans-serif;
+          -webkit-font-smoothing: antialiased;
+          -moz-osx-font-smoothing: grayscale;
+          pointer-events: none;
+        }
+        #fireowl-root {
+          pointer-events: none;
+        }
+        #fireowl-root > * {
+          pointer-events: auto;
+        }
+      </style>
+    </head>
+    <body>
+      <div id="fireowl-root"></div>
+    </body>
+    </html>
+  `);
+  iframeDoc.close();
 
-  console.log('[FireOwl] React app mounted');
+  // Expose chrome API to iframe
+  (iframeWin as any).chrome = chrome;
 
-  // Listen for toggle command from background (legacy manifest command)
+  // Expose page info to iframe
+  (iframeWin as any).__FIREOWL_PAGE_INFO__ = {
+    url: window.location.href,
+    title: document.title,
+    getSelection: () => window.getSelection()?.toString() || '',
+    getPageText: () => document.body.innerText || '',
+  };
+
+  // Load and execute the iframe bundle
+  const script = iframeDoc.createElement('script');
+  script.src = chrome.runtime.getURL('iframe-app.js');
+  iframeDoc.body.appendChild(script);
+
+  console.log('[FireOwl] Iframe created, loading app...');
+
+  // Forward toggle commands to iframe
+  const sendToggleToIframe = () => {
+    console.log('[FireOwl] Sending toggle to iframe');
+    iframeWin.postMessage({ type: 'fireowl-toggle' }, '*');
+  };
+
+  // Listen for toggle command from background
   chrome.runtime.onMessage.addListener((message) => {
     console.log('[FireOwl] Received message:', message);
     if (message.type === 'toggleDialog') {
-      console.log('[FireOwl] Posting toggle message to window');
-      window.postMessage({ type: 'fireclaude-toggle' }, '*');
+      sendToggleToIframe();
     }
   });
 
@@ -112,7 +150,7 @@ async function init() {
     if (matchesModifiers && matchesKey) {
       event.preventDefault();
       console.log('[FireOwl] Keyboard shortcut triggered');
-      window.postMessage({ type: 'fireclaude-toggle' }, '*');
+      sendToggleToIframe();
     }
   });
 

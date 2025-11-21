@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc && npm run build:scripts && vite build && node scripts/generate-icons.js",
-    "build:scripts": "BUILD_ENTRY=src/content/index.tsx BUILD_OUTPUT=content.js vite build --mode lib && BUILD_ENTRY=src/background/service-worker.ts BUILD_OUTPUT=background.js vite build --mode lib",
+    "build:scripts": "BUILD_ENTRY=src/content/index.tsx BUILD_OUTPUT=content.js vite build --mode lib && BUILD_ENTRY=src/content/iframe-app.tsx BUILD_OUTPUT=iframe-app.js vite build --mode lib && BUILD_ENTRY=src/background/service-worker.ts BUILD_OUTPUT=background.js vite build --mode lib",
     "preview": "vite preview",
     "test": "vitest"
   },
