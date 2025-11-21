@@ -1,5 +1,24 @@
 {
   "appName": "FireOwl",
+  "settings": {
+    "title": "Instellingen",
+    "apiKey": "Anthropic API-sleutel",
+    "apiKeyHint": "Haal je Claude API-sleutel op",
+    "apiKeyHintLink": "hier",
+    "model": "Model",
+    "modelRecommended": "Aanbevolen",
+    "modelCurrent": "Huidige modellen",
+    "modelLegacy": "Oude modellen",
+    "maxTokens": "Max tokens",
+    "temperature": "Temperatuur (0-1)",
+    "shortcut": "Sneltoets",
+    "shortcutHint": "Formaat: Modifier+Toets (bijv. Alt+C, Ctrl+Shift+K, Meta+Spatie)",
+    "language": "Taal",
+    "languageAuto": "Automatisch detecteren",
+    "save": "Instellingen opslaan",
+    "saved": "Instellingen succesvol opgeslagen!",
+    "saveError": "Fout bij opslaan instellingen"
+  },
   "dialog": {
     "clearConversation": "Gesprek wissen",
     "clearConversationConfirm": "Hele gesprek wissen?",

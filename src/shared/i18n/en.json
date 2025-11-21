@@ -1,5 +1,24 @@
 {
   "appName": "FireOwl",
+  "settings": {
+    "title": "Settings",
+    "apiKey": "Anthropic API Key",
+    "apiKeyHint": "Get your Claude API key",
+    "apiKeyHintLink": "here",
+    "model": "Model",
+    "modelRecommended": "Recommended",
+    "modelCurrent": "Current Models",
+    "modelLegacy": "Legacy Models",
+    "maxTokens": "Max Tokens",
+    "temperature": "Temperature (0-1)",
+    "shortcut": "Keyboard Shortcut",
+    "shortcutHint": "Format: Modifier+Key (e.g., Alt+C, Ctrl+Shift+K, Meta+Space)",
+    "language": "Language",
+    "languageAuto": "Auto-detect",
+    "save": "Save Settings",
+    "saved": "Settings saved successfully!",
+    "saveError": "Error saving settings"
+  },
   "dialog": {
     "clearConversation": "Clear conversation",
     "clearConversationConfirm": "Clear entire conversation?",

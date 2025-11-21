@@ -1,7 +1,20 @@
 import { Storage } from '../shared/storage';
 import { MODELS } from '../shared/types';
+import { t, initLanguage } from '../shared/i18n';
+
+function applyTranslations() {
+  document.querySelectorAll('[data-i18n]').forEach((el) => {
+    const key = el.getAttribute('data-i18n');
+    if (key) {
+      el.textContent = t(key);
+    }
+  });
+}
 
 document.addEventListener('DOMContentLoaded', async () => {
+  // Initialize language first
+  await initLanguage();
+  applyTranslations();
   const apiKeyInput = document.getElementById('apiKey') as HTMLInputElement;
   const modelSelect = document.getElementById('model') as HTMLSelectElement;
   const maxTokensInput = document.getElementById('maxTokens') as HTMLInputElement;
@@ -18,7 +31,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   const recommendedModels = MODELS.filter(m => m.recommended && !m.legacy);
   if (recommendedModels.length > 0) {
     const recommendedGroup = document.createElement('optgroup');
-    recommendedGroup.label = 'Recommended';
+    recommendedGroup.label = t('settings.modelRecommended');
     recommendedModels.forEach(model => {
       const option = document.createElement('option');
       option.value = model.id;
@@ -32,7 +45,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   const currentModels = MODELS.filter(m => !m.recommended && !m.legacy);
   if (currentModels.length > 0) {
     const currentGroup = document.createElement('optgroup');
-    currentGroup.label = 'Current Models';
+    currentGroup.label = t('settings.modelCurrent');
     currentModels.forEach(model => {
       const option = document.createElement('option');
       option.value = model.id;
@@ -46,7 +59,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   const legacyModels = MODELS.filter(m => m.legacy);
   if (legacyModels.length > 0) {
     const legacyGroup = document.createElement('optgroup');
-    legacyGroup.label = 'Legacy Models';
+    legacyGroup.label = t('settings.modelLegacy');
     legacyModels.forEach(model => {
       const option = document.createElement('option');
       option.value = model.id;
@@ -77,14 +90,14 @@ document.addEventListener('DOMContentLoaded', async () => {
         language: languageSelect.value as 'auto' | 'en' | 'nl',
       });
 
-      statusDiv.textContent = 'Settings saved successfully!';
+      statusDiv.textContent = t('settings.saved');
       statusDiv.className = 'status success';
 
       setTimeout(() => {
         statusDiv.className = 'status';
       }, 3000);
     } catch (error) {
-      statusDiv.textContent = 'Error saving settings';
+      statusDiv.textContent = t('settings.saveError');
       statusDiv.className = 'status error';
     }
   });
