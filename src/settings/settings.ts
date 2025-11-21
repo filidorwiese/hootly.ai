@@ -7,6 +7,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   const maxTokensInput = document.getElementById('maxTokens') as HTMLInputElement;
   const temperatureInput = document.getElementById('temperature') as HTMLInputElement;
   const shortcutInput = document.getElementById('shortcut') as HTMLInputElement;
+  const languageSelect = document.getElementById('language') as HTMLSelectElement;
   const saveBtn = document.getElementById('saveBtn') as HTMLButtonElement;
   const statusDiv = document.getElementById('status') as HTMLDivElement;
 
@@ -62,6 +63,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   maxTokensInput.value = settings.maxTokens.toString();
   temperatureInput.value = settings.temperature.toString();
   shortcutInput.value = settings.shortcut;
+  languageSelect.value = settings.language;
 
   // Save settings
   saveBtn.addEventListener('click', async () => {
@@ -72,6 +74,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         maxTokens: parseInt(maxTokensInput.value),
         temperature: parseFloat(temperatureInput.value),
         shortcut: shortcutInput.value.trim() || 'Alt+C',
+        language: languageSelect.value as 'auto' | 'en' | 'nl',
       });
 
       statusDiv.textContent = 'Settings saved successfully!';

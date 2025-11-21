@@ -17,6 +17,7 @@ export interface Settings {
   systemPrompt: string;
   conversationDepth: 1 | 3 | 5 | 999;
   retentionDays: number;
+  language: 'auto' | 'en' | 'nl';
 }
 
 export interface ModelConfig {
@@ -100,4 +101,5 @@ export const DEFAULT_SETTINGS: Settings = {
   systemPrompt: '',
   conversationDepth: 5,
   retentionDays: 30,
+  language: 'auto',
 };

@@ -12,6 +12,22 @@ function getBrowserLanguage(): string {
 }
 
 let currentLanguage = getBrowserLanguage();
+let languageSetting: 'auto' | 'en' | 'nl' = 'auto';
+
+export async function initLanguage(): Promise<void> {
+  try {
+    const result = await chrome.storage.local.get('fireclaude_settings');
+    const settings = result.fireclaude_settings;
+    if (settings?.language) {
+      languageSetting = settings.language;
+      if (languageSetting !== 'auto' && translations[languageSetting]) {
+        currentLanguage = languageSetting;
+      }
+    }
+  } catch {
+    // Storage not available, use browser language
+  }
+}
 
 export function setLanguage(lang: string): void {
   if (translations[lang]) {

@@ -1,6 +1,7 @@
 import { createRoot } from 'react-dom/client';
 import App from './App';
 import { Storage } from '../shared/storage';
+import { initLanguage } from '../shared/i18n';
 import 'highlight.js/styles/github.css';
 
 function parseShortcut(shortcut: string): { key: string; alt: boolean; ctrl: boolean; shift: boolean; meta: boolean } {
@@ -15,7 +16,7 @@ function parseShortcut(shortcut: string): { key: string; alt: boolean; ctrl: boo
   return { key, ...modifiers };
 }
 
-function init() {
+async function init() {
   console.log('[FireOwl] Content script starting...');
 
   // Ensure body exists
@@ -26,6 +27,9 @@ function init() {
       return;
     }
   }
+
+  // Initialize language before mounting React
+  await initLanguage();
 
   // Create container for React app
   const container = document.createElement('div');
