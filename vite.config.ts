@@ -41,6 +41,7 @@ export default defineConfig(({ command, mode }) => {
           mkdirSync('dist', { recursive: true });
           copyFileSync('manifest.json', 'dist/manifest.json');
           copyFileSync('public/background.html', 'dist/background.html');
+          copyFileSync('src/content/iframe.html', 'dist/iframe.html');
           const settingsPath = 'dist/src/settings/index.html';
           const settingsAltPath = 'dist/settings.html';
           if (existsSync(settingsPath)) {

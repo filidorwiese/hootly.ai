@@ -40,76 +40,39 @@ async function init() {
     color-scheme: light !important;
   `;
   iframe.setAttribute('allowtransparency', 'true');
-  document.body.appendChild(iframe);
 
-  // Wait for iframe to load
-  await new Promise<void>((resolve) => {
-    iframe.onload = () => resolve();
-    // Trigger load for about:blank
-    iframe.src = 'about:blank';
-  });
-
-  const iframeDoc = iframe.contentDocument!;
-  const iframeWin = iframe.contentWindow!;
-
-  // Write the iframe HTML with React app
-  iframeDoc.open();
-  iframeDoc.write(`
-    <!DOCTYPE html>
-    <html>
-    <head>
-      <meta charset="UTF-8">
-      <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap">
-      <style>
-        *, *::before, *::after {
-          box-sizing: border-box;
-        }
-        html, body {
-          margin: 0;
-          padding: 0;
-          background: transparent;
-          font-family: 'Inter', sans-serif;
-          -webkit-font-smoothing: antialiased;
-          -moz-osx-font-smoothing: grayscale;
-          pointer-events: none;
-        }
-        #fireowl-root {
-          pointer-events: none;
-        }
-        #fireowl-root > * {
-          pointer-events: auto;
-        }
-      </style>
-    </head>
-    <body>
-      <div id="fireowl-root"></div>
-    </body>
-    </html>
-  `);
-  iframeDoc.close();
-
-  // Expose chrome API to iframe
-  (iframeWin as any).chrome = chrome;
-
-  // Expose page info to iframe
-  (iframeWin as any).__FIREOWL_PAGE_INFO__ = {
+  // Store page info to pass to iframe after load
+  const pageInfo = {
     url: window.location.href,
     title: document.title,
     getSelection: () => window.getSelection()?.toString() || '',
     getPageText: () => document.body.innerText || '',
   };
 
-  // Load and execute the iframe bundle
-  const script = iframeDoc.createElement('script');
-  script.src = chrome.runtime.getURL('iframe-app.js');
-  iframeDoc.body.appendChild(script);
+  // Wait for iframe to load
+  const iframeLoaded = new Promise<void>((resolve) => {
+    iframe.onload = () => {
+      console.log('[FireOwl] Iframe loaded');
+      // Expose chrome API and page info to iframe
+      const iframeWin = iframe.contentWindow as any;
+      if (iframeWin) {
+        iframeWin.chrome = chrome;
+        iframeWin.__FIREOWL_PAGE_INFO__ = pageInfo;
+      }
+      resolve();
+    };
+  });
 
-  console.log('[FireOwl] Iframe created, loading app...');
+  iframe.src = chrome.runtime.getURL('iframe.html');
+  document.body.appendChild(iframe);
+
+  await iframeLoaded;
+  console.log('[FireOwl] Iframe created and ready');
 
   // Forward toggle commands to iframe
   const sendToggleToIframe = () => {
     console.log('[FireOwl] Sending toggle to iframe');
-    iframeWin.postMessage({ type: 'fireowl-toggle' }, '*');
+    iframe.contentWindow?.postMessage({ type: 'fireowl-toggle' }, '*');
   };
 
   // Listen for toggle command from background
