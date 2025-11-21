@@ -4,18 +4,15 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-FireClaude is a Firefox extension for interacting with Claude AI directly from any webpage. Built with Vite, React, and TypeScript.
+FireOwl is a Firefox extension for interacting with Claude AI directly from any webpage. Built with Vite, React, and TypeScript.
 
-**Status**: Phase 1-3 complete (MVP functional). Phases 4-6 remaining (see PRD.md).
+**Status**: MVP functional with i18n support (10 languages).
 
 ## Build Commands
 
 ```bash
 # Install dependencies
 npm install
-
-# Development (watch mode, no extension loading)
-npm run dev
 
 # Build extension for Firefox
 npm run build
@@ -32,170 +29,152 @@ npm test
 2. Firefox → `about:debugging#/runtime/this-firefox`
 3. "Load Temporary Add-on" → select `dist/manifest.json`
 4. Configure API key via toolbar icon (settings page)
-5. Test: Press `Alt+W` on any webpage
+5. Test: Press `Alt+C` on any webpage
 
 ## Architecture
 
 ### Multi-Entry Build System
 
-Vite configured for 3 separate entry points (no code-splitting):
+Vite configured for 4 separate entry points:
 
 1. **Content Script** (`src/content/index.tsx`)
    - Injected into all pages
-   - React app rendering dialog overlay
-   - Listens for keyboard command via `window.postMessage`
-   - Imports `highlight.js/styles/github.css` for syntax highlighting
+   - Creates transparent iframe for style isolation
+   - Forwards keyboard shortcuts and messages to iframe
+   - Exposes page info (URL, title, selection, text) to iframe via postMessage
 
-2. **Background Worker** (`src/background/service-worker.ts`)
+2. **Iframe App** (`src/content/iframe-app.tsx`)
+   - React app runs inside isolated iframe
+   - Complete style isolation from host page
+   - Communicates with content script via postMessage
+
+3. **Background Worker** (`src/background/service-worker.ts`)
    - Handles Anthropic API calls (bypasses CORS)
-   - Streams responses back to content script via `chrome.tabs.sendMessage`
-   - Listens for keyboard command (`Alt+W`) via `chrome.commands`
+   - Streams responses back to content script
+   - Listens for keyboard command via `chrome.commands`
 
-3. **Settings Page** (`src/settings/index.html` + `settings.ts`)
-   - Standalone page (not popup - toolbar icon opens this)
-   - Basic API key/model/tokens/temp configuration
-   - Loads/saves via `Storage` wrapper
+4. **Settings Page** (`src/settings/index.html` + `settings.ts`)
+   - Standalone page for configuration
+   - API key, model, language, shortcuts
 
-**Key Build Detail**: `vite.config.ts` has custom plugin that copies `manifest.json`, `settings.html`, and icons to `dist/` root after build.
+### Iframe Style Isolation
+
+The extension uses an iframe approach for complete CSS isolation:
+
+```
+Host Page
+  └── #fireowl-frame (transparent iframe, pointer-events toggled)
+        └── iframe.html (loads iframe-app.js)
+              └── React App (Dialog, Response, InputArea)
+```
+
+- Iframe has `pointer-events: none` when dialog closed (clicks pass through)
+- Iframe has `pointer-events: auto` when dialog open (interactive)
+- Dialog notifies parent when closed via postMessage
 
 ### Message Passing Flow
 
 ```
-User presses Alt+W
+User presses Alt+C
   ↓
-chrome.commands → background worker
+content script (keydown listener)
   ↓
-chrome.tabs.sendMessage({ type: 'toggleDialog' })
+postMessage to iframe ('fireowl-toggle')
   ↓
-content script → window.postMessage('fireclaude-toggle')
+App.tsx toggles dialog visibility
   ↓
-React app toggles dialog visibility
+iframe.style.pointerEvents = 'auto'
 ```
 
 ```
-User submits prompt
+Dialog needs page context
   ↓
-Dialog.tsx → chrome.runtime.sendMessage({ type: 'sendPrompt', payload })
+requestPageInfo() → postMessage('fireowl-get-page-info')
   ↓
-background worker → Anthropic API (streaming)
+content script responds with URL, title, selection, pageText
   ↓
-chrome.tabs.sendMessage({ type: 'streamChunk', payload: { content } })
-  ↓
-Dialog.tsx updates response state
-  ↓
-Response.tsx renders markdown with syntax highlighting
+Dialog uses cached page info for context
 ```
+
+### Internationalization (i18n)
+
+**Languages supported**: English, Dutch, German, French, Spanish, Italian, Portuguese, Chinese, Japanese, Korean
+
+**Files**:
+- `src/shared/i18n/index.ts` - Translation utility (`t()` function)
+- `src/shared/i18n/*.json` - Translation files (en, nl, de, fr, es, it, pt, zh, ja, ko)
+
+**Usage**:
+```typescript
+import { t } from '../shared/i18n';
+t('dialog.close')  // Returns localized string
+t('input.tokens', { count: 100 })  // With interpolation
+```
+
+**Auto-detection**: Uses `navigator.language`, falls back to English.
 
 ### Storage Architecture
 
 **Wrapper**: `src/shared/storage.ts` wraps `chrome.storage.local`
 
 **Schema**: Defined in `src/shared/types.ts`
-- `Settings`: API key, model, temp, context options, UI preferences
-- `Conversation`: Array of `Message` objects with timestamps
-- `DialogPosition`: Last x/y/width/height for persistence
-
-**Current Limitation**: Conversation history tracked in memory but not yet persisted or displayed (Phase 4).
-
-### Context Injection
-
-**Function**: `buildPageContext()` in `src/shared/utils.ts`
-
-**Priority**:
-1. Text selection (`window.getSelection()`) if exists
-2. Full page text (`document.body.innerText`) if context toggle enabled
-3. Filtered by settings (exclude scripts/styles)
-4. Truncated to `contextMaxLength`
-
-**Sent to API**: Context prepended to user prompt in background worker as structured text.
+- `Settings`: API key, model, temp, language, shortcuts
+- `Conversation`: Array of `Message` objects
+- `DialogPosition`: Last x/y/width for persistence
 
 ## Component Structure
 
 ### Dialog.tsx (Main Component)
-- Wraps everything in `<Rnd>` for drag/resize (react-rnd)
-- Manages conversation state (`conversationHistory`, `response`, `isLoading`)
-- Listens for streaming messages from background
-- Saves position to storage on drag/resize
+- Wraps everything in `<Rnd>` for drag/resize
+- Manages conversation state
+- Auto-height with max-height response area
+- Forest theme styling
 
 ### InputArea.tsx
 - Auto-expanding textarea (2-6 lines)
-- Token estimation: `chars / 3.5` (conservative estimate, not exact)
-- Enter = submit, Shift+Enter = newline
+- Token estimation display
+- Context toggle and clear/send buttons in footer
 
 ### Response.tsx
 - Markdown rendering via `marked` library
-- Syntax highlighting via `highlight.js` with custom renderer
-- Copy button (no toast yet - Phase 6)
-- Error display
+- Syntax highlighting via `highlight.js`
+- Copy button per message
+- Max-height with scroll
 
 ### ContextToggle.tsx
-- Detects selection on mount via `extractSelection()`
-- Shows badge: "Selection (N chars)" or "Full page" or "No context"
-- Preview button not yet implemented (Phase 4)
+- Cycles through: selection → full page → disabled
+- Shows badge with character count
 
-## Key Files to Understand
+## Key Files
 
-- **`src/shared/types.ts`**: All TypeScript interfaces (Settings, Conversation, Message, PageContext, message types)
-- **`src/shared/storage.ts`**: Chrome storage wrapper with typed methods
-- **`src/shared/utils.ts`**: Context extraction, token estimation, date formatting
-- **`vite.config.ts`**: Multi-entry build + post-build file copying
-- **`manifest.json`**: Extension config (permissions, commands, content scripts)
-- **`PRD.md`**: Detailed plan for remaining Phases 4-6
-
-## Important Implementation Details
-
-### Markdown + Syntax Highlighting
-- Custom `marked.Renderer` in `Response.tsx` to integrate highlight.js
-- Highlights code blocks during render, not post-processing
-- CSS imported in `src/content/index.tsx`
-
-### React in Content Script
-- Creates isolated `div#fireclaude-root` appended to `document.body`
-- Emotion CSS generates scoped class names (no style conflicts with page)
-- High z-index (999999) to overlay all page content
-
-### API Streaming
-- Background worker uses `@anthropic-ai/sdk`'s `.stream()` method
-- Accumulates chunks and relays incrementally to content script
-- Content script concatenates chunks into response string
-- Cancel not yet implemented (Phase 6)
-
-### TypeScript Configuration
-- `tsconfig.json` includes `@types/chrome` for extension APIs
-- Strict mode enabled
-- JSX set to `react-jsx` (new transform, no need to import React)
+- **`src/shared/types.ts`**: TypeScript interfaces
+- **`src/shared/storage.ts`**: Chrome storage wrapper
+- **`src/shared/utils.ts`**: Context extraction, page info via postMessage
+- **`src/shared/i18n/`**: Translation system
+- **`src/content/iframe.html`**: Iframe document template
+- **`manifest.json`**: Extension config
 
 ## Development Workflow
 
 1. Make changes to `src/`
 2. Run `npm run build`
 3. Firefox → `about:debugging` → Reload extension
-4. Test on any webpage (Alt+W)
+4. Test on any webpage (Alt+C)
 5. Check console for errors (both page console and background worker console)
 
-**Note**: Temporary add-ons reset on Firefox restart. Need to rebuild and reload each time.
+**Note**: Temporary add-ons reset on Firefox restart.
 
 ## Common Pitfalls
 
-### Build Warnings
-- Bundle size warning (1.2MB) is expected - highlight.js includes all languages
-- Can be optimized later by importing only common languages
+### Iframe Communication
+- Page info must be requested via postMessage (iframe can't access parent DOM)
+- `requestPageInfo()` is async - must await before using extractSelection/extractPageText
 
-### Message Passing
-- Background worker can't send messages before content script loads
-- Content script must handle case where dialog is toggled before React mounts
-- Use `chrome.runtime.onMessage.addListener` return value `true` for async responses
+### Style Isolation
+- All styles must be in iframe.html or emotion CSS
+- Google Fonts loaded via `<link>` in iframe.html
+- Page CSS cannot affect extension UI
 
-### Storage Limits
-- `chrome.storage.local` has ~10MB limit (Firefox)
-- Conversation history will hit this eventually (need retention in Phase 4)
-
-## Remaining Work
-
-See **PRD.md** for detailed implementation plans:
-
-- **Phase 4**: Conversation history UI, threading, export
-- **Phase 5**: Complete settings page with all options
-- **Phase 6**: Animations, toasts, keyboard nav, right-click menu, error recovery
-
-Each phase has specific file locations, UI mockups, and validation checklists.
+### Bundle Size
+- ~1.2MB for iframe-app.js (highlight.js includes all languages)
+- Can be optimized by importing only common languages
