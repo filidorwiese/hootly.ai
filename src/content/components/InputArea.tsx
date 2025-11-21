@@ -21,6 +21,13 @@ const InputArea: React.FC<InputAreaProps> = ({
 }) => {
   const textareaRef = useRef<HTMLTextAreaElement>(null);
 
+  // Auto-focus textarea on mount
+  useEffect(() => {
+    if (textareaRef.current) {
+      textareaRef.current.focus();
+    }
+  }, []);
+
   // Auto-expand textarea
   useEffect(() => {
     if (textareaRef.current) {
