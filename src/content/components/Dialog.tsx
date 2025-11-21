@@ -6,7 +6,6 @@ import type { DialogPosition, Message, ContentMessage } from '../../shared/types
 import { buildPageContext } from '../../shared/utils';
 import InputArea from './InputArea';
 import Response from './Response';
-import ContextToggle from './ContextToggle';
 
 interface DialogProps {
   isOpen: boolean;
@@ -275,16 +274,20 @@ const Dialog: React.FC<DialogProps> = ({ isOpen, onClose }) => {
         {/* Draggable/Resizable Dialog */}
         <Rnd
           position={position}
-          size={size}
+          size={{
+            width: size.width,
+            height: (conversationHistory.length > 0 || response || isLoading || error) ? size.height : 'auto',
+          }}
           onDragStop={handleDragStop}
           onResizeStop={handleResizeStop}
           minWidth={400}
-          minHeight={200}
+          minHeight={100}
           maxWidth={maxDimensions.maxWidth}
           maxHeight={maxDimensions.maxHeight}
           bounds="parent"
           dragHandleClassName="drag-handle"
           className={dialogStyles}
+          enableResizing={(conversationHistory.length > 0 || response || isLoading || error) ? undefined : { bottom: false, bottomRight: false, bottomLeft: false }}
         >
         {/* Header */}
         <div className={`${headerStyles} drag-handle`}>
@@ -309,36 +312,30 @@ const Dialog: React.FC<DialogProps> = ({ isOpen, onClose }) => {
 
         {/* Content */}
         <div className={contentWrapperStyles}>
-          {/* Response Area */}
-          <Response
-            conversationHistory={conversationHistory}
-            currentResponse={response}
-            isLoading={isLoading}
-            error={error}
-          />
+          {/* Response Area - only shown when there's content */}
+          {(conversationHistory.length > 0 || response || isLoading || error) && (
+            <Response
+              conversationHistory={conversationHistory}
+              currentResponse={response}
+              isLoading={isLoading}
+              error={error}
+            />
+          )}
 
           {/* Input Area */}
           <div className={inputSectionStyles}>
             {!isLoading ? (
-              <>
-                <div className={inputHeaderStyles}>
-                  <ContextToggle
-                    enabled={contextEnabled}
-                    mode={contextMode}
-                    selectionLength={capturedSelection?.length}
-                    onToggle={handleContextToggle}
-                  />
-                  <div className={tokenCountStyles}>
-                    ~{getCurrentTokenCount()} tokens
-                  </div>
-                </div>
-                <InputArea
-                  value={inputValue}
-                  onChange={setInputValue}
-                  onSubmit={handleSubmit}
-                  disabled={isLoading}
-                />
-              </>
+              <InputArea
+                value={inputValue}
+                onChange={setInputValue}
+                onSubmit={handleSubmit}
+                disabled={isLoading}
+                contextEnabled={contextEnabled}
+                contextMode={contextMode}
+                selectionLength={capturedSelection?.length}
+                onContextToggle={handleContextToggle}
+                tokenCount={getCurrentTokenCount()}
+              />
             ) : (
               <div className={cancelHintStyles}>
                 Press <strong>Esc</strong> to stop generating
@@ -451,22 +448,6 @@ const inputSectionStyles = css`
   border-top: 1px solid #e0e0e0;
   padding: 12px;
   background: #f9f9f9;
-`;
-
-const inputHeaderStyles = css`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 8px;
-`;
-
-const tokenCountStyles = css`
-  font-size: 12px;
-  color: #666;
-  padding: 4px 8px;
-  background: #fff;
-  border-radius: 4px;
-  border: 1px solid #e0e0e0;
 `;
 
 const cancelHintStyles = css`

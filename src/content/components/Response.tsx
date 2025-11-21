@@ -54,8 +54,6 @@ const Response: React.FC<ResponseProps> = ({ conversationHistory, currentRespons
     }
   };
 
-  const hasContent = conversationHistory.length > 0 || currentResponse;
-
   return (
     <div ref={containerRef} className={containerStyles}>
       {error && (
@@ -64,12 +62,6 @@ const Response: React.FC<ResponseProps> = ({ conversationHistory, currentRespons
             <strong>⚠️ Error</strong>
           </div>
           <div>{error}</div>
-        </div>
-      )}
-
-      {!hasContent && !isLoading && !error && (
-        <div className={placeholderStyles}>
-          Start a conversation by typing a message below...
         </div>
       )}
 
@@ -255,13 +247,6 @@ const errorStyles = css`
     font-weight: 600;
     display: block;
   }
-`;
-
-const placeholderStyles = css`
-  text-align: center;
-  color: #999;
-  font-size: 14px;
-  padding: 40px 20px;
 `;
 
 const messageContainerStyles = (role: 'user' | 'assistant') => css`

@@ -1,15 +1,23 @@
 import React, { useRef, useEffect } from 'react';
 import { css } from '@emotion/css';
-import { estimateTokens } from '../../shared/utils';
+import ContextToggle from './ContextToggle';
 
 interface InputAreaProps {
   value: string;
   onChange: (value: string) => void;
   onSubmit: () => void;
   disabled?: boolean;
+  contextEnabled: boolean;
+  contextMode: 'none' | 'selection' | 'fullpage';
+  selectionLength?: number;
+  onContextToggle: () => void;
+  tokenCount: number;
 }
 
-const InputArea: React.FC<InputAreaProps> = ({ value, onChange, onSubmit, disabled }) => {
+const InputArea: React.FC<InputAreaProps> = ({
+  value, onChange, onSubmit, disabled,
+  contextEnabled, contextMode, selectionLength, onContextToggle, tokenCount
+}) => {
   const textareaRef = useRef<HTMLTextAreaElement>(null);
 
   // Auto-expand textarea
@@ -31,8 +39,6 @@ const InputArea: React.FC<InputAreaProps> = ({ value, onChange, onSubmit, disabl
     }
   };
 
-  const tokenCount = estimateTokens(value);
-
   return (
     <div className={containerStyles}>
       <textarea
@@ -45,12 +51,14 @@ const InputArea: React.FC<InputAreaProps> = ({ value, onChange, onSubmit, disabl
         className={textareaStyles}
       />
       <div className={footerStyles}>
-        <div className={tokenCountStyles}>
-          {value.length > 0 && (
-            <>
-              {value.length} chars · ~{tokenCount} tokens
-            </>
-          )}
+        <div className={leftGroupStyles}>
+          <ContextToggle
+            enabled={contextEnabled}
+            mode={contextMode}
+            selectionLength={selectionLength}
+            onToggle={onContextToggle}
+          />
+          <span className={tokenCountStyles}>~{tokenCount} tokens</span>
         </div>
         <div className={actionsStyles}>
           <button
@@ -110,6 +118,12 @@ const footerStyles = css`
   display: flex;
   justify-content: space-between;
   align-items: center;
+`;
+
+const leftGroupStyles = css`
+  display: flex;
+  align-items: center;
+  gap: 12px;
 `;
 
 const tokenCountStyles = css`
