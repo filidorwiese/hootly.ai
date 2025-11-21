@@ -80,12 +80,24 @@ async function init() {
     iframe.contentWindow?.postMessage({ type: 'fireowl-toggle' }, '*');
   };
 
-  // Listen for close events from iframe
+  // Listen for messages from iframe
   window.addEventListener('message', (event) => {
     if (event.data?.type === 'fireowl-dialog-closed') {
       dialogOpen = false;
       iframe.style.pointerEvents = 'none';
       console.log('[FireOwl] Dialog closed, disabling iframe pointer events');
+    }
+    // Respond to page info requests from iframe
+    if (event.data?.type === 'fireowl-get-page-info') {
+      iframe.contentWindow?.postMessage({
+        type: 'fireowl-page-info',
+        payload: {
+          url: window.location.href,
+          title: document.title,
+          selection: window.getSelection()?.toString() || '',
+          pageText: document.body.innerText || '',
+        }
+      }, '*');
     }
   });
 

@@ -1,16 +1,61 @@
 import type { PageContext } from './types';
 
-// Type for page info exposed from parent window (iframe mode)
-interface PageInfo {
+// Cached page info from parent
+let cachedPageInfo: {
   url: string;
   title: string;
-  getSelection: () => string;
-  getPageText: () => string;
+  selection: string;
+  pageText: string;
+} | null = null;
+
+// Check if running in iframe
+function isInIframe(): boolean {
+  try {
+    return window.self !== window.top;
+  } catch (e) {
+    return true;
+  }
 }
 
-// Get page info - works in both iframe and direct mode
-function getPageInfo(): PageInfo | null {
-  return (window as any).__FIREOWL_PAGE_INFO__ || null;
+// Request page info from parent window (returns promise)
+export function requestPageInfo(): Promise<typeof cachedPageInfo> {
+  return new Promise((resolve) => {
+    if (!isInIframe()) {
+      // Direct mode - get info from current window
+      resolve({
+        url: window.location.href,
+        title: document.title,
+        selection: window.getSelection()?.toString() || '',
+        pageText: document.body?.innerText || '',
+      });
+      return;
+    }
+
+    const handler = (event: MessageEvent) => {
+      if (event.data?.type === 'fireowl-page-info') {
+        window.removeEventListener('message', handler);
+        cachedPageInfo = event.data.payload;
+        resolve(cachedPageInfo);
+      }
+    };
+    window.addEventListener('message', handler);
+
+    // Request info from parent
+    window.parent.postMessage({ type: 'fireowl-get-page-info' }, '*');
+
+    // Timeout fallback
+    setTimeout(() => {
+      window.removeEventListener('message', handler);
+      if (!cachedPageInfo) {
+        resolve(null);
+      }
+    }, 1000);
+  });
+}
+
+// Get cached page info (sync) - call requestPageInfo first
+function getPageInfo() {
+  return cachedPageInfo;
 }
 
 /**
@@ -30,7 +75,7 @@ export function extractPageText(options: {
   maxLength: number;
 }): string {
   const pageInfo = getPageInfo();
-  let text = pageInfo ? pageInfo.getPageText() : (document.body?.innerText || '');
+  let text = pageInfo?.pageText || document.body?.innerText || '';
 
   // Truncate if needed
   if (text.length > options.maxLength) {
@@ -41,16 +86,15 @@ export function extractPageText(options: {
 }
 
 /**
- * Extract selected text from page
+ * Extract selected text from page (uses cached value)
  */
 export function extractSelection(): string | null {
   const pageInfo = getPageInfo();
   if (pageInfo) {
-    const selection = pageInfo.getSelection();
-    return selection && selection.trim() || null;
+    return pageInfo.selection?.trim() || null;
   }
   const selection = window.getSelection();
-  return selection && selection.toString().trim() || null;
+  return selection?.toString().trim() || null;
 }
 
 /**
@@ -58,7 +102,7 @@ export function extractSelection(): string | null {
  */
 export function getPageUrl(): string {
   const pageInfo = getPageInfo();
-  return pageInfo ? pageInfo.url : window.location.href;
+  return pageInfo?.url || window.location.href;
 }
 
 /**
@@ -66,7 +110,7 @@ export function getPageUrl(): string {
  */
 export function getPageTitle(): string {
   const pageInfo = getPageInfo();
-  return pageInfo ? pageInfo.title : document.title;
+  return pageInfo?.title || document.title;
 }
 
 /**

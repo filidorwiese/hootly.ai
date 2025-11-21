@@ -3,7 +3,7 @@ import { Rnd } from 'react-rnd';
 import { css } from '@emotion/css';
 import { Storage } from '../../shared/storage';
 import type { DialogPosition, Message, ContentMessage } from '../../shared/types';
-import { buildPageContext, extractSelection, extractPageText, getPageUrl, getPageTitle } from '../../shared/utils';
+import { buildPageContext, extractSelection, extractPageText, getPageUrl, getPageTitle, requestPageInfo } from '../../shared/utils';
 import { t } from '../../shared/i18n';
 import InputArea from './InputArea';
 import Response from './Response';
@@ -55,16 +55,19 @@ const Dialog: React.FC<DialogProps> = ({ isOpen, onClose }) => {
   // Capture text selection and auto-enable context when dialog opens
   useEffect(() => {
     if (isOpen) {
-      const selectionText = extractSelection();
-      if (selectionText && selectionText.length > 0) {
-        setCapturedSelection(selectionText);
-        setContextEnabled(true);
-        setContextMode('selection');
-        console.log('[FireOwl] Auto-enabled context with selection:', selectionText.length, 'chars');
-      } else {
-        setCapturedSelection(null);
-        setContextMode('none');
-      }
+      // Request fresh page info from parent (for iframe mode)
+      requestPageInfo().then(() => {
+        const selectionText = extractSelection();
+        if (selectionText && selectionText.length > 0) {
+          setCapturedSelection(selectionText);
+          setContextEnabled(true);
+          setContextMode('selection');
+          console.log('[FireOwl] Auto-enabled context with selection:', selectionText.length, 'chars');
+        } else {
+          setCapturedSelection(null);
+          setContextMode('none');
+        }
+      });
     } else {
       // Reset when dialog closes
       setCapturedSelection(null);
@@ -215,6 +218,9 @@ const Dialog: React.FC<DialogProps> = ({ isOpen, onClose }) => {
       // Build context based on mode
       let context = undefined;
       if (contextEnabled && contextMode !== 'none') {
+        // Refresh page info for accurate context
+        await requestPageInfo();
+
         if (contextMode === 'selection' && capturedSelection) {
           // Use captured selection
           context = {
