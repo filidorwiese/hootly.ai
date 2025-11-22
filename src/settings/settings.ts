@@ -1,7 +1,23 @@
 import { Storage } from '../shared/storage';
-import { Settings, ModelConfig } from '../shared/types';
+import { Settings, ModelConfig, LLMProvider } from '../shared/types';
 import { t, initLanguage, setLanguage } from '../shared/i18n';
 import { selectDefaultModel } from '../shared/models';
+
+const API_KEY_SECTIONS: Record<LLMProvider, string> = {
+  claude: 'claudeApiKeySection',
+  openai: 'openaiApiKeySection',
+  gemini: 'geminiApiKeySection',
+  openrouter: 'openrouterApiKeySection',
+};
+
+function showApiKeySection(provider: LLMProvider) {
+  Object.entries(API_KEY_SECTIONS).forEach(([p, sectionId]) => {
+    const section = document.getElementById(sectionId);
+    if (section) {
+      section.style.display = p === provider ? 'block' : 'none';
+    }
+  });
+}
 
 function getBrowserLanguage(): string {
   const lang = navigator.language || (navigator as any).userLanguage || 'en';
@@ -82,7 +98,11 @@ document.addEventListener('DOMContentLoaded', async () => {
   await initLanguage();
   applyTranslations();
 
-  const apiKeyInput = document.getElementById('apiKey') as HTMLInputElement;
+  const providerSelect = document.getElementById('provider') as HTMLSelectElement;
+  const claudeApiKeyInput = document.getElementById('claudeApiKey') as HTMLInputElement;
+  const openaiApiKeyInput = document.getElementById('openaiApiKey') as HTMLInputElement;
+  const geminiApiKeyInput = document.getElementById('geminiApiKey') as HTMLInputElement;
+  const openrouterApiKeyInput = document.getElementById('openrouterApiKey') as HTMLInputElement;
   const modelSelect = document.getElementById('model') as HTMLSelectElement;
   const maxTokensInput = document.getElementById('maxTokens') as HTMLInputElement;
   const temperatureInput = document.getElementById('temperature') as HTMLInputElement;
@@ -91,22 +111,42 @@ document.addEventListener('DOMContentLoaded', async () => {
   const saveBtn = document.getElementById('saveBtn') as HTMLButtonElement;
   const statusDiv = document.getElementById('status') as HTMLDivElement;
 
+  const apiKeyInputs: Record<LLMProvider, HTMLInputElement> = {
+    claude: claudeApiKeyInput,
+    openai: openaiApiKeyInput,
+    gemini: geminiApiKeyInput,
+    openrouter: openrouterApiKeyInput,
+  };
+
+  function getCurrentApiKey(): string {
+    const provider = providerSelect.value as LLMProvider;
+    return apiKeyInputs[provider]?.value || '';
+  }
+
   // Load current settings
   const settings = await Storage.getSettings();
 
   // Populate form fields
-  apiKeyInput.value = settings.apiKey;
+  providerSelect.value = settings.provider;
+  claudeApiKeyInput.value = settings.claudeApiKey;
+  openaiApiKeyInput.value = settings.openaiApiKey;
+  geminiApiKeyInput.value = settings.geminiApiKey;
+  openrouterApiKeyInput.value = settings.openrouterApiKey;
   maxTokensInput.value = settings.maxTokens.toString();
   temperatureInput.value = settings.temperature.toString();
   shortcutInput.value = settings.shortcut;
   languageSelect.value = settings.language;
+
+  // Show correct API key section
+  showApiKeySection(settings.provider);
 
   // Track current models for language updates
   let currentModels: ModelConfig[] = [];
 
   // Fetch and populate models
   async function loadModels() {
-    if (!apiKeyInput.value.trim()) {
+    const apiKey = getCurrentApiKey();
+    if (!apiKey.trim()) {
       setModelSelectState(modelSelect, 'disabled');
       return;
     }
@@ -127,16 +167,31 @@ document.addEventListener('DOMContentLoaded', async () => {
   // Load models on page load
   await loadModels();
 
+  // Provider change handler
+  providerSelect.addEventListener('change', async () => {
+    const provider = providerSelect.value as LLMProvider;
+    showApiKeySection(provider);
+    await Storage.saveSettings({ provider, model: '' });
+    settings.model = '';
+    await loadModels();
+  });
+
   // Refetch models when API key changes
   let apiKeyDebounce: number | null = null;
-  apiKeyInput.addEventListener('input', () => {
-    if (apiKeyDebounce) clearTimeout(apiKeyDebounce);
-    apiKeyDebounce = window.setTimeout(async () => {
-      // Save API key first, then fetch models
-      await Storage.saveSettings({ apiKey: apiKeyInput.value });
-      await loadModels();
-    }, 500);
-  });
+  function setupApiKeyListener(input: HTMLInputElement, keyName: keyof Settings) {
+    input.addEventListener('input', () => {
+      if (apiKeyDebounce) clearTimeout(apiKeyDebounce);
+      apiKeyDebounce = window.setTimeout(async () => {
+        await Storage.saveSettings({ [keyName]: input.value });
+        await loadModels();
+      }, 500);
+    });
+  }
+
+  setupApiKeyListener(claudeApiKeyInput, 'claudeApiKey');
+  setupApiKeyListener(openaiApiKeyInput, 'openaiApiKey');
+  setupApiKeyListener(geminiApiKeyInput, 'geminiApiKey');
+  setupApiKeyListener(openrouterApiKeyInput, 'openrouterApiKey');
 
   // Language change handler - update UI immediately
   languageSelect.addEventListener('change', () => {
@@ -157,7 +212,11 @@ document.addEventListener('DOMContentLoaded', async () => {
   saveBtn.addEventListener('click', async () => {
     try {
       await Storage.saveSettings({
-        apiKey: apiKeyInput.value,
+        provider: providerSelect.value as LLMProvider,
+        claudeApiKey: claudeApiKeyInput.value,
+        openaiApiKey: openaiApiKeyInput.value,
+        geminiApiKey: geminiApiKeyInput.value,
+        openrouterApiKey: openrouterApiKeyInput.value,
         model: modelSelect.value,
         maxTokens: parseInt(maxTokensInput.value),
         temperature: parseFloat(temperatureInput.value),
