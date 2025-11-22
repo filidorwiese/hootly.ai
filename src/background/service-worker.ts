@@ -51,19 +51,25 @@ async function handleFetchModels(): Promise<{ success: boolean; models?: ModelCo
   }
 }
 
+// Toggle dialog helper
+function toggleDialogInActiveTab() {
+  chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
+    if (tabs[0]?.id) {
+      chrome.tabs.sendMessage(tabs[0].id, { type: 'toggleDialog' })
+        .catch((err) => console.error('[FireOwl Background] Error sending message:', err));
+    }
+  });
+}
+
+// Handle toolbar icon click
+chrome.action.onClicked.addListener(() => {
+  toggleDialogInActiveTab();
+});
+
 // Handle keyboard command
 chrome.commands.onCommand.addListener((command) => {
-  console.log('[FireOwl Background] Command received:', command);
   if (command === 'toggle-dialog') {
-    chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
-      console.log('[FireOwl Background] Active tab:', tabs[0]);
-      if (tabs[0]?.id) {
-        console.log('[FireOwl Background] Sending message to tab:', tabs[0].id);
-        chrome.tabs.sendMessage(tabs[0].id, { type: 'toggleDialog' })
-          .then(() => console.log('[FireOwl Background] Message sent successfully'))
-          .catch((err) => console.error('[FireOwl Background] Error sending message:', err));
-      }
-    });
+    toggleDialogInActiveTab();
   }
 });
 
