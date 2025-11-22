@@ -17,7 +17,11 @@
     "languageAuto": "자동 감지",
     "save": "설정 저장",
     "saved": "설정이 성공적으로 저장되었습니다!",
-    "saveError": "설정 저장 중 오류 발생"
+    "saveError": "설정 저장 중 오류 발생",
+    "enterApiKeyFirst": "먼저 API 키를 입력하세요",
+    "loadingModels": "모델 로딩 중...",
+    "fetchModelsFailed": "모델 로드 실패",
+    "noModels": "사용 가능한 모델 없음"
   },
   "dialog": {
     "clearConversation": "대화 지우기",
@@ -27,6 +31,8 @@
     "close": "닫기",
     "cancelHint": "<strong>Esc</strong>를 눌러 생성 중지",
     "noApiKey": "API 키가 설정되지 않았습니다. 설정 아이콘을 클릭하여 Anthropic API 키를 추가하세요.",
+    "noModelSelected": "모델이 선택되지 않았습니다. 설정을 열어 구성하세요.",
+    "modelNotFound": "선택한 모델을 더 이상 사용할 수 없습니다. 설정을 열어 새 모델을 선택하세요.",
     "sendFailed": "메시지 전송 실패"
   },
   "response": {

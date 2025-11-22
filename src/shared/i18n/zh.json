@@ -17,7 +17,11 @@
     "languageAuto": "自动检测",
     "save": "保存设置",
     "saved": "设置保存成功！",
-    "saveError": "保存设置时出错"
+    "saveError": "保存设置时出错",
+    "enterApiKeyFirst": "请先输入 API 密钥",
+    "loadingModels": "加载模型中...",
+    "fetchModelsFailed": "加载模型失败",
+    "noModels": "无可用模型"
   },
   "dialog": {
     "clearConversation": "清除对话",
@@ -27,6 +31,8 @@
     "close": "关闭",
     "cancelHint": "按 <strong>Esc</strong> 停止生成",
     "noApiKey": "未配置 API 密钥。点击设置图标添加您的 Anthropic API 密钥。",
+    "noModelSelected": "未选择模型。打开设置进行配置。",
+    "modelNotFound": "所选模型不再可用。打开设置选择新模型。",
     "sendFailed": "发送消息失败"
   },
   "response": {

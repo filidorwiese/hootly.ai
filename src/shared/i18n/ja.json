@@ -17,7 +17,11 @@
     "languageAuto": "自動検出",
     "save": "設定を保存",
     "saved": "設定が正常に保存されました！",
-    "saveError": "設定の保存中にエラーが発生しました"
+    "saveError": "設定の保存中にエラーが発生しました",
+    "enterApiKeyFirst": "最初にAPIキーを入力してください",
+    "loadingModels": "モデルを読み込み中...",
+    "fetchModelsFailed": "モデルの読み込みに失敗しました",
+    "noModels": "利用可能なモデルがありません"
   },
   "dialog": {
     "clearConversation": "会話をクリア",
@@ -27,6 +31,8 @@
     "close": "閉じる",
     "cancelHint": "<strong>Esc</strong>キーで生成を停止",
     "noApiKey": "APIキーが設定されていません。設定アイコンをクリックしてAnthropic APIキーを追加してください。",
+    "noModelSelected": "モデルが選択されていません。設定を開いて構成してください。",
+    "modelNotFound": "選択したモデルは利用できなくなりました。設定を開いて新しいモデルを選択してください。",
     "sendFailed": "メッセージの送信に失敗しました"
   },
   "response": {

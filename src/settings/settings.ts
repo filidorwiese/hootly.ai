@@ -1,6 +1,7 @@
 import { Storage } from '../shared/storage';
-import { MODELS, Settings } from '../shared/types';
+import { Settings, ModelConfig } from '../shared/types';
 import { t, initLanguage, setLanguage } from '../shared/i18n';
+import { selectDefaultModel } from '../shared/models';
 
 function getBrowserLanguage(): string {
   const lang = navigator.language || (navigator as any).userLanguage || 'en';
@@ -16,51 +17,64 @@ function applyTranslations() {
   });
 }
 
-function populateModelSelect(modelSelect: HTMLSelectElement, currentValue?: string) {
+function populateModelSelect(modelSelect: HTMLSelectElement, models: ModelConfig[], currentValue?: string) {
   modelSelect.innerHTML = '';
 
-  const recommendedModels = MODELS.filter(m => m.recommended && !m.legacy);
-  if (recommendedModels.length > 0) {
-    const recommendedGroup = document.createElement('optgroup');
-    recommendedGroup.label = t('settings.modelRecommended');
-    recommendedModels.forEach(model => {
-      const option = document.createElement('option');
-      option.value = model.id;
-      option.textContent = `${model.name} - ${model.description}`;
-      recommendedGroup.appendChild(option);
-    });
-    modelSelect.appendChild(recommendedGroup);
+  if (models.length === 0) {
+    const option = document.createElement('option');
+    option.value = '';
+    option.textContent = t('settings.noModels');
+    modelSelect.appendChild(option);
+    return;
   }
 
-  const currentModels = MODELS.filter(m => !m.recommended && !m.legacy);
-  if (currentModels.length > 0) {
-    const currentGroup = document.createElement('optgroup');
-    currentGroup.label = t('settings.modelCurrent');
-    currentModels.forEach(model => {
-      const option = document.createElement('option');
-      option.value = model.id;
-      option.textContent = `${model.name} - ${model.description}`;
-      currentGroup.appendChild(option);
-    });
-    modelSelect.appendChild(currentGroup);
-  }
+  models.forEach(model => {
+    const option = document.createElement('option');
+    option.value = model.id;
+    option.textContent = model.name;
+    modelSelect.appendChild(option);
+  });
 
-  const legacyModels = MODELS.filter(m => m.legacy);
-  if (legacyModels.length > 0) {
-    const legacyGroup = document.createElement('optgroup');
-    legacyGroup.label = t('settings.modelLegacy');
-    legacyModels.forEach(model => {
-      const option = document.createElement('option');
-      option.value = model.id;
-      option.textContent = `${model.name} - ${model.description}`;
-      legacyGroup.appendChild(option);
-    });
-    modelSelect.appendChild(legacyGroup);
-  }
-
-  if (currentValue) {
+  if (currentValue && models.some(m => m.id === currentValue)) {
     modelSelect.value = currentValue;
+  } else if (models.length > 0) {
+    // Auto-select default model
+    const defaultModel = selectDefaultModel(models);
+    if (defaultModel) {
+      modelSelect.value = defaultModel;
+    }
   }
+}
+
+function setModelSelectState(modelSelect: HTMLSelectElement, state: 'loading' | 'disabled' | 'enabled', message?: string) {
+  modelSelect.innerHTML = '';
+  const option = document.createElement('option');
+
+  switch (state) {
+    case 'loading':
+      option.value = '';
+      option.textContent = t('settings.loadingModels');
+      modelSelect.appendChild(option);
+      modelSelect.disabled = true;
+      break;
+    case 'disabled':
+      option.value = '';
+      option.textContent = message || t('settings.enterApiKeyFirst');
+      modelSelect.appendChild(option);
+      modelSelect.disabled = true;
+      break;
+    case 'enabled':
+      modelSelect.disabled = false;
+      break;
+  }
+}
+
+async function fetchModelsFromBackground(): Promise<{ success: boolean; models?: ModelConfig[]; error?: string }> {
+  return new Promise((resolve) => {
+    chrome.runtime.sendMessage({ type: 'fetchModels' }, (response) => {
+      resolve(response || { success: false, error: 'No response from background' });
+    });
+  });
 }
 
 document.addEventListener('DOMContentLoaded', async () => {
@@ -80,8 +94,49 @@ document.addEventListener('DOMContentLoaded', async () => {
   // Load current settings
   const settings = await Storage.getSettings();
 
-  // Populate model dropdown
-  populateModelSelect(modelSelect, settings.model);
+  // Populate form fields
+  apiKeyInput.value = settings.apiKey;
+  maxTokensInput.value = settings.maxTokens.toString();
+  temperatureInput.value = settings.temperature.toString();
+  shortcutInput.value = settings.shortcut;
+  languageSelect.value = settings.language;
+
+  // Track current models for language updates
+  let currentModels: ModelConfig[] = [];
+
+  // Fetch and populate models
+  async function loadModels() {
+    if (!apiKeyInput.value.trim()) {
+      setModelSelectState(modelSelect, 'disabled');
+      return;
+    }
+
+    setModelSelectState(modelSelect, 'loading');
+
+    const result = await fetchModelsFromBackground();
+
+    if (result.success && result.models) {
+      currentModels = result.models;
+      modelSelect.disabled = false;
+      populateModelSelect(modelSelect, result.models, settings.model);
+    } else {
+      setModelSelectState(modelSelect, 'disabled', result.error || t('settings.fetchModelsFailed'));
+    }
+  }
+
+  // Load models on page load
+  await loadModels();
+
+  // Refetch models when API key changes
+  let apiKeyDebounce: number | null = null;
+  apiKeyInput.addEventListener('input', () => {
+    if (apiKeyDebounce) clearTimeout(apiKeyDebounce);
+    apiKeyDebounce = window.setTimeout(async () => {
+      // Save API key first, then fetch models
+      await Storage.saveSettings({ apiKey: apiKeyInput.value });
+      await loadModels();
+    }, 500);
+  });
 
   // Language change handler - update UI immediately
   languageSelect.addEventListener('change', () => {
@@ -92,21 +147,18 @@ document.addEventListener('DOMContentLoaded', async () => {
       setLanguage(newLang);
     }
     applyTranslations();
-    populateModelSelect(modelSelect, modelSelect.value);
+    // Repopulate model select with current models
+    if (currentModels.length > 0) {
+      populateModelSelect(modelSelect, currentModels, modelSelect.value);
+    }
   });
-  apiKeyInput.value = settings.apiKey;
-  modelSelect.value = settings.model;
-  maxTokensInput.value = settings.maxTokens.toString();
-  temperatureInput.value = settings.temperature.toString();
-  shortcutInput.value = settings.shortcut;
-  languageSelect.value = settings.language;
 
   // Save settings
   saveBtn.addEventListener('click', async () => {
     try {
       await Storage.saveSettings({
         apiKey: apiKeyInput.value,
-        model: modelSelect.value as any,
+        model: modelSelect.value,
         maxTokens: parseInt(maxTokensInput.value),
         temperature: parseFloat(temperatureInput.value),
         shortcut: shortcutInput.value.trim() || 'Alt+C',

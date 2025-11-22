@@ -17,7 +17,11 @@
     "languageAuto": "Détection automatique",
     "save": "Enregistrer les paramètres",
     "saved": "Paramètres enregistrés avec succès!",
-    "saveError": "Erreur lors de l'enregistrement des paramètres"
+    "saveError": "Erreur lors de l'enregistrement des paramètres",
+    "enterApiKeyFirst": "Entrez d'abord la clé API",
+    "loadingModels": "Chargement des modèles...",
+    "fetchModelsFailed": "Échec du chargement des modèles",
+    "noModels": "Aucun modèle disponible"
   },
   "dialog": {
     "clearConversation": "Effacer la conversation",
@@ -27,6 +31,8 @@
     "close": "Fermer",
     "cancelHint": "Appuyez sur <strong>Échap</strong> pour arrêter la génération",
     "noApiKey": "Aucune clé API configurée. Cliquez sur l'icône des paramètres pour ajouter votre clé API Anthropic.",
+    "noModelSelected": "Aucun modèle sélectionné. Ouvrez les Paramètres pour configurer.",
+    "modelNotFound": "Le modèle sélectionné n'est plus disponible. Ouvrez les Paramètres pour sélectionner un nouveau modèle.",
     "sendFailed": "Échec de l'envoi du message"
   },
   "response": {

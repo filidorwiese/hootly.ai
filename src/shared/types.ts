@@ -1,5 +1,3 @@
-import modelsConfig from '../config/models.json';
-
 export interface Settings {
   apiKey: string;
   model: string;
@@ -20,16 +18,8 @@ export interface Settings {
   language: 'auto' | 'en' | 'nl' | 'de' | 'fr' | 'es' | 'it' | 'pt' | 'zh' | 'ja' | 'ko';
 }
 
-export interface ModelConfig {
-  id: string;
-  name: string;
-  description: string;
-  recommended: boolean;
-  legacy: boolean;
-}
-
-export const MODELS: ModelConfig[] = modelsConfig.models;
-export const DEFAULT_MODEL: string = modelsConfig.defaultModel;
+// Re-export ModelConfig from models.ts for convenience
+export type { ModelConfig } from './models';
 
 export interface Conversation {
   id: string;
@@ -70,7 +60,8 @@ export type BackgroundMessage =
   | { type: 'cancelStream' }
   | { type: 'getSettings' }
   | { type: 'saveSettings'; payload: Settings }
-  | { type: 'openSettings' };
+  | { type: 'openSettings' }
+  | { type: 'fetchModels' };
 
 export interface SendPromptPayload {
   prompt: string;
@@ -82,11 +73,12 @@ export interface SendPromptPayload {
 export type ContentMessage =
   | { type: 'streamChunk'; payload: { content: string } }
   | { type: 'streamEnd'; payload: { content: string } }
-  | { type: 'streamError'; payload: { error: string } };
+  | { type: 'streamError'; payload: { error: string } }
+  | { type: 'modelNotFound'; payload: { model: string } };
 
 export const DEFAULT_SETTINGS: Settings = {
   apiKey: '',
-  model: DEFAULT_MODEL,
+  model: '',
   maxTokens: 4096,
   temperature: 1.0,
   theme: 'system',

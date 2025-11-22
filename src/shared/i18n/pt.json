@@ -17,7 +17,11 @@
     "languageAuto": "Detecção automática",
     "save": "Salvar configurações",
     "saved": "Configurações salvas com sucesso!",
-    "saveError": "Erro ao salvar configurações"
+    "saveError": "Erro ao salvar configurações",
+    "enterApiKeyFirst": "Digite a chave API primeiro",
+    "loadingModels": "Carregando modelos...",
+    "fetchModelsFailed": "Falha ao carregar modelos",
+    "noModels": "Nenhum modelo disponível"
   },
   "dialog": {
     "clearConversation": "Limpar conversa",
@@ -27,6 +31,8 @@
     "close": "Fechar",
     "cancelHint": "Pressione <strong>Esc</strong> para parar a geração",
     "noApiKey": "Nenhuma chave API configurada. Clique no ícone de configurações para adicionar sua chave API Anthropic.",
+    "noModelSelected": "Nenhum modelo selecionado. Abra Configurações para configurar.",
+    "modelNotFound": "O modelo selecionado não está mais disponível. Abra Configurações para selecionar um novo modelo.",
     "sendFailed": "Falha ao enviar mensagem"
   },
   "response": {

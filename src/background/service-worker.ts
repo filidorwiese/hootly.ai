@@ -1,5 +1,7 @@
 import Anthropic from '@anthropic-ai/sdk';
 import type { BackgroundMessage, ContentMessage } from '../shared/types';
+import { fetchModels, type ModelConfig } from '../shared/models';
+import { Storage } from '../shared/storage';
 
 // Track active streams for cancellation
 const activeStreams = new Map<number, any>();
@@ -27,10 +29,27 @@ chrome.runtime.onMessage.addListener((message: BackgroundMessage, sender, sendRe
   } else if (message.type === 'openSettings') {
     chrome.tabs.create({ url: chrome.runtime.getURL('settings.html') });
     sendResponse({ success: true });
+  } else if (message.type === 'fetchModels') {
+    handleFetchModels().then(sendResponse);
+    return true; // Keep channel open for async response
   }
 
   return true; // Keep message channel open for async response
 });
+
+async function handleFetchModels(): Promise<{ success: boolean; models?: ModelConfig[]; error?: string }> {
+  try {
+    const settings = await Storage.getSettings();
+    if (!settings.apiKey) {
+      return { success: false, error: 'No API key configured' };
+    }
+    const models = await fetchModels(settings.apiKey);
+    return { success: true, models };
+  } catch (error: any) {
+    console.error('[FireOwl] Failed to fetch models:', error);
+    return { success: false, error: error.message || 'Failed to fetch models' };
+  }
+}
 
 // Handle keyboard command
 chrome.commands.onCommand.addListener((command) => {
@@ -124,17 +143,47 @@ async function handleSendPrompt(
 
     stream.on('error', (error) => {
       activeStreams.delete(tabId);
-      sendToTab(tabId, {
-        type: 'streamError',
-        payload: { error: extractErrorMessage(error) },
-      });
+      handleStreamError(tabId, error, settings.model);
     });
   } catch (error) {
+    handleStreamError(tabId, error, settings.model);
+  }
+}
+
+function handleStreamError(tabId: number, error: any, modelId: string) {
+  const errorMessage = extractErrorMessage(error);
+  const isModelNotFound = isModelNotFoundError(error, errorMessage);
+
+  if (isModelNotFound) {
+    // Clear the model setting
+    Storage.saveSettings({ model: '' });
+    sendToTab(tabId, {
+      type: 'modelNotFound',
+      payload: { model: modelId },
+    });
+  } else {
     sendToTab(tabId, {
       type: 'streamError',
-      payload: { error: extractErrorMessage(error) },
+      payload: { error: errorMessage },
     });
   }
+}
+
+function isModelNotFoundError(error: any, errorMessage: string): boolean {
+  // Check for 404 status
+  if (error?.status === 404) return true;
+
+  // Check error message for model not found indicators
+  const lowerMessage = errorMessage.toLowerCase();
+  if (lowerMessage.includes('model') && (
+    lowerMessage.includes('not found') ||
+    lowerMessage.includes('does not exist') ||
+    lowerMessage.includes('invalid model')
+  )) {
+    return true;
+  }
+
+  return false;
 }
 
 function extractErrorMessage(error: any): string {

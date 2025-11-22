@@ -155,6 +155,9 @@ const Dialog: React.FC<DialogProps> = ({ isOpen, onClose }) => {
       } else if (message.type === 'streamError') {
         setIsLoading(false);
         setError(message.payload.error);
+      } else if (message.type === 'modelNotFound') {
+        setIsLoading(false);
+        setError(t('dialog.modelNotFound'));
       }
     };
 
@@ -211,6 +214,13 @@ const Dialog: React.FC<DialogProps> = ({ isOpen, onClose }) => {
       // Check if API key is set
       if (!settings.apiKey || settings.apiKey.trim() === '') {
         setError(t('dialog.noApiKey'));
+        setIsLoading(false);
+        return;
+      }
+
+      // Check if model is selected
+      if (!settings.model || settings.model.trim() === '') {
+        setError(t('dialog.noModelSelected'));
         setIsLoading(false);
         return;
       }

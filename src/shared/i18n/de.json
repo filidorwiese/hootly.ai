@@ -17,7 +17,11 @@
     "languageAuto": "Automatisch erkennen",
     "save": "Einstellungen speichern",
     "saved": "Einstellungen erfolgreich gespeichert!",
-    "saveError": "Fehler beim Speichern der Einstellungen"
+    "saveError": "Fehler beim Speichern der Einstellungen",
+    "enterApiKeyFirst": "API-Schlüssel zuerst eingeben",
+    "loadingModels": "Modelle werden geladen...",
+    "fetchModelsFailed": "Modelle konnten nicht abgerufen werden",
+    "noModels": "Keine Modelle verfügbar"
   },
   "dialog": {
     "clearConversation": "Gespräch löschen",
@@ -27,6 +31,8 @@
     "close": "Schließen",
     "cancelHint": "Drücke <strong>Esc</strong> um die Generierung zu stoppen",
     "noApiKey": "Kein API-Schlüssel konfiguriert. Klicke auf das Einstellungen-Symbol, um deinen Anthropic API-Schlüssel hinzuzufügen.",
+    "noModelSelected": "Kein Modell ausgewählt. Öffne Einstellungen zum Konfigurieren.",
+    "modelNotFound": "Ausgewähltes Modell nicht mehr verfügbar. Öffne Einstellungen, um ein neues Modell auszuwählen.",
     "sendFailed": "Nachricht konnte nicht gesendet werden"
   },
   "response": {

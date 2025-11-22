@@ -17,7 +17,11 @@
     "languageAuto": "Auto-detect",
     "save": "Save Settings",
     "saved": "Settings saved successfully!",
-    "saveError": "Error saving settings"
+    "saveError": "Error saving settings",
+    "enterApiKeyFirst": "Enter API key first",
+    "loadingModels": "Loading models...",
+    "fetchModelsFailed": "Failed to fetch models",
+    "noModels": "No models available"
   },
   "dialog": {
     "clearConversation": "Clear conversation",
@@ -27,6 +31,8 @@
     "close": "Close",
     "cancelHint": "Press <strong>Esc</strong> to stop generating",
     "noApiKey": "No API key configured. Click the settings icon to add your Anthropic API key.",
+    "noModelSelected": "No model selected. Open Settings to configure.",
+    "modelNotFound": "Selected model no longer available. Open Settings to select a new model.",
     "sendFailed": "Failed to send message"
   },
   "response": {
