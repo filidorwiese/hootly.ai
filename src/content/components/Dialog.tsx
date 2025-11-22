@@ -2,8 +2,9 @@ import React, { useState, useEffect } from 'react';
 import { Rnd } from 'react-rnd';
 import { css } from '@emotion/css';
 import { Storage } from '../../shared/storage';
-import type { DialogPosition, Message, ContentMessage } from '../../shared/types';
+import type { DialogPosition, Message, ContentMessage, LLMProvider } from '../../shared/types';
 import { buildPageContext, extractSelection, extractPageText, getPageUrl, getPageTitle, requestPageInfo } from '../../shared/utils';
+import { getApiKey } from '../../shared/providers';
 import { t } from '../../shared/i18n';
 import InputArea from './InputArea';
 import Response from './Response';
@@ -34,6 +35,7 @@ const Dialog: React.FC<DialogProps> = ({ isOpen, onClose }) => {
   const [error, setError] = useState<string | null>(null);
   const [conversationHistory, setConversationHistory] = useState<Message[]>([]);
   const [currentModel, setCurrentModel] = useState<string>('');
+  const [currentProvider, setCurrentProvider] = useState<LLMProvider>('claude');
 
   // Estimate token count (rough approximation: ~4 chars per token)
   const estimateTokens = (text: string): number => {
@@ -56,9 +58,10 @@ const Dialog: React.FC<DialogProps> = ({ isOpen, onClose }) => {
   // Capture text selection and auto-enable context when dialog opens
   useEffect(() => {
     if (isOpen) {
-      // Load current model
+      // Load current model and provider
       Storage.getSettings().then((settings) => {
         setCurrentModel(settings.model || '');
+        setCurrentProvider(settings.provider || 'claude');
       });
       // Request fresh page info from parent (for iframe mode)
       requestPageInfo().then(() => {
@@ -90,6 +93,26 @@ const Dialog: React.FC<DialogProps> = ({ isOpen, onClose }) => {
       }
     });
   }, []);
+
+  // Listen for provider changes and clear conversation
+  useEffect(() => {
+    const handleStorageChange = (changes: { [key: string]: chrome.storage.StorageChange }) => {
+      if (changes.settings?.newValue?.provider !== changes.settings?.oldValue?.provider) {
+        const newProvider = changes.settings?.newValue?.provider;
+        if (newProvider && newProvider !== currentProvider) {
+          setCurrentProvider(newProvider);
+          setCurrentModel(changes.settings?.newValue?.model || '');
+          setConversationHistory([]);
+          setResponse('');
+          setError(null);
+          console.log('[FireOwl] Provider changed to:', newProvider, '- conversation cleared');
+        }
+      }
+    };
+
+    chrome.storage.onChanged.addListener(handleStorageChange);
+    return () => chrome.storage.onChanged.removeListener(handleStorageChange);
+  }, [currentProvider]);
 
   // Update max dimensions on window resize
   useEffect(() => {
@@ -216,8 +239,9 @@ const Dialog: React.FC<DialogProps> = ({ isOpen, onClose }) => {
     try {
       const settings = await Storage.getSettings();
 
-      // Check if API key is set
-      if (!settings.apiKey || settings.apiKey.trim() === '') {
+      // Check if API key is set for current provider
+      const apiKey = getApiKey(settings);
+      if (!apiKey || apiKey.trim() === '') {
         setError(t('dialog.noApiKey'));
         setIsLoading(false);
         return;
@@ -358,6 +382,7 @@ const Dialog: React.FC<DialogProps> = ({ isOpen, onClose }) => {
                 onContextToggle={handleContextToggle}
                 tokenCount={getCurrentTokenCount()}
                 modelId={currentModel}
+                provider={currentProvider}
               />
             ) : (
               <div className={cancelHintStyles} dangerouslySetInnerHTML={{ __html: t('dialog.cancelHint') }} />

@@ -2,6 +2,51 @@ import React, { useRef, useEffect } from 'react';
 import { css } from '@emotion/css';
 import ContextToggle from './ContextToggle';
 import { t } from '../../shared/i18n';
+import type { LLMProvider } from '../../shared/types';
+
+function formatModelName(modelId: string, provider?: LLMProvider): string {
+  if (!modelId) return '';
+
+  // Claude models: claude-sonnet-4-5-20250514 -> Claude Sonnet 4.5
+  if (provider === 'claude' || modelId.startsWith('claude')) {
+    const match = modelId.match(/claude[- ](sonnet|opus|haiku)[- ]?(\d+)?[- ]?(\d+)?/i);
+    if (match) {
+      const variant = match[1].charAt(0).toUpperCase() + match[1].slice(1);
+      const version = match[2] && match[3] ? `${match[2]}.${match[3]}` : match[2] || '';
+      return `Claude ${variant}${version ? ' ' + version : ''}`;
+    }
+    return modelId;
+  }
+
+  // OpenAI models: gpt-4o, gpt-4-turbo, o1-preview -> GPT-4o, GPT-4 Turbo, O1 Preview
+  if (provider === 'openai' || modelId.startsWith('gpt') || modelId.startsWith('o1') || modelId.startsWith('o3')) {
+    return modelId
+      .replace(/^gpt-/, 'GPT-')
+      .replace(/^o(\d)/, 'O$1')
+      .replace(/-/g, ' ')
+      .replace(/\b\w/g, c => c.toUpperCase());
+  }
+
+  // Gemini models: gemini-1.5-pro -> Gemini 1.5 Pro
+  if (provider === 'gemini' || modelId.startsWith('gemini')) {
+    return modelId
+      .replace(/^gemini-/, 'Gemini ')
+      .replace(/-/g, ' ')
+      .replace(/\b\w/g, c => c.toUpperCase());
+  }
+
+  // OpenRouter: various formats, just clean up
+  if (provider === 'openrouter') {
+    // Format: provider/model-name -> Model Name
+    const parts = modelId.split('/');
+    const model = parts[parts.length - 1];
+    return model
+      .replace(/-/g, ' ')
+      .replace(/\b\w/g, c => c.toUpperCase());
+  }
+
+  return modelId;
+}
 
 interface InputAreaProps {
   value: string;
@@ -14,11 +59,12 @@ interface InputAreaProps {
   onContextToggle: () => void;
   tokenCount: number;
   modelId?: string;
+  provider?: LLMProvider;
 }
 
 const InputArea: React.FC<InputAreaProps> = ({
   value, onChange, onSubmit, disabled,
-  contextEnabled, contextMode, selectionLength, onContextToggle, tokenCount, modelId
+  contextEnabled, contextMode, selectionLength, onContextToggle, tokenCount, modelId, provider
 }) => {
   const textareaRef = useRef<HTMLTextAreaElement>(null);
 
@@ -80,7 +126,11 @@ const InputArea: React.FC<InputAreaProps> = ({
         />
         <div className={rightGroupStyles}>
           <span className={tokenCountStyles}>{t('input.tokens', { count: tokenCount })}</span>
-          {modelId && <span className={modelIdStyles}>{modelId}</span>}
+          {modelId && (
+            <span className={modelIdStyles}>
+              {formatModelName(modelId, provider)}
+            </span>
+          )}
         </div>
       </div>
     </div>
