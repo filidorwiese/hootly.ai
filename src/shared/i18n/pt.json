@@ -51,7 +51,7 @@
     "thinking": "Pensando..."
   },
   "input": {
-    "placeholder": "Pergunte algo ao Claude... (Enter para enviar, Shift+Enter para nova linha)",
+    "placeholder": "Pia sua pergunta... (Enter para enviar, Shift+Enter para nova linha)",
     "tokens": "~{{count}} tokens",
     "clear": "Limpar",
     "send": "Enviar",

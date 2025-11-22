@@ -51,7 +51,7 @@
     "thinking": "考え中..."
   },
   "input": {
-    "placeholder": "Claudeに何でも聞いてください...（Enterで送信、Shift+Enterで改行）",
+    "placeholder": "ホーホー、質問をどうぞ...（Enterで送信、Shift+Enterで改行）",
     "tokens": "~{{count}} トークン",
     "clear": "クリア",
     "send": "送信",

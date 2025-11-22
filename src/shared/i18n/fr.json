@@ -51,7 +51,7 @@
     "thinking": "Réflexion en cours..."
   },
   "input": {
-    "placeholder": "Demandez quelque chose à Claude... (Entrée pour envoyer, Shift+Entrée pour nouvelle ligne)",
+    "placeholder": "Hou-hou, une question... (Entrée pour envoyer, Shift+Entrée pour nouvelle ligne)",
     "tokens": "~{{count}} tokens",
     "clear": "Effacer",
     "send": "Envoyer",

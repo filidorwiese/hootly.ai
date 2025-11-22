@@ -51,7 +51,7 @@
     "thinking": "Aan het denken..."
   },
   "input": {
-    "placeholder": "Vraag Claude iets... (Enter om te versturen, Shift+Enter voor nieuwe regel)",
+    "placeholder": "Oehoe me een vraag... (Enter om te versturen, Shift+Enter voor nieuwe regel)",
     "tokens": "~{{count}} tokens",
     "clear": "Wissen",
     "send": "Verstuur",

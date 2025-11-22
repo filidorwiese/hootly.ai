@@ -51,7 +51,7 @@
     "thinking": "Sto pensando..."
   },
   "input": {
-    "placeholder": "Chiedi qualcosa a Claude... (Invio per inviare, Shift+Invio per nuova riga)",
+    "placeholder": "Gufa la tua domanda... (Invio per inviare, Shift+Invio per nuova riga)",
     "tokens": "~{{count}} token",
     "clear": "Cancella",
     "send": "Invia",
