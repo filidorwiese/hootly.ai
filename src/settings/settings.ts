@@ -31,7 +31,7 @@ function populateModelSelect(modelSelect: HTMLSelectElement, models: ModelConfig
   models.forEach(model => {
     const option = document.createElement('option');
     option.value = model.id;
-    option.textContent = model.name;
+    option.textContent = `${model.name} - ${model.description}`;
     modelSelect.appendChild(option);
   });
 
