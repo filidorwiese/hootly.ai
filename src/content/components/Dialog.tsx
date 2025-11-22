@@ -126,24 +126,29 @@ const Dialog: React.FC<DialogProps> = ({ isOpen, onClose }) => {
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
-  // Handle Esc to cancel generation
+  // Handle Esc: cancel generation if loading, otherwise close dialog
   useEffect(() => {
-    if (!isLoading) return;
+    if (!isOpen) return;
 
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === 'Escape') {
         e.preventDefault();
         e.stopPropagation();
-        // Stop generation
-        setIsLoading(false);
-        chrome.runtime.sendMessage({ type: 'cancelStream' });
-        console.log('[FireOwl] Generation cancelled by user');
+        if (isLoading) {
+          // Stop generation
+          setIsLoading(false);
+          chrome.runtime.sendMessage({ type: 'cancelStream' });
+          console.log('[FireOwl] Generation cancelled by user');
+        } else {
+          // Close dialog
+          onClose();
+        }
       }
     };
 
     document.addEventListener('keydown', handleKeyDown, true);
     return () => document.removeEventListener('keydown', handleKeyDown, true);
-  }, [isLoading]);
+  }, [isOpen, isLoading, onClose]);
 
   // Save position when changed
   const handleDragStop = (_e: any, d: { x: number; y: number }) => {
