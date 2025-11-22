@@ -217,11 +217,9 @@ const Dialog: React.FC<DialogProps> = ({ isOpen, onClose }) => {
 
   const handleClearConversation = () => {
     if (conversationHistory.length > 0) {
-      if (confirm(t('dialog.clearConversationConfirm'))) {
-        setConversationHistory([]);
-        setResponse('');
-        setError(null);
-      }
+      setConversationHistory([]);
+      setResponse('');
+      setError(null);
     }
   };
 
