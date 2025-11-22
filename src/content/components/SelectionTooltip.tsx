@@ -23,17 +23,17 @@ const SelectionTooltip: React.FC<SelectionTooltipProps> = ({ onOpenWithSelection
       }
     });
 
-    // Listen for text selection
-    const handleSelectionChange = () => {
-      const selection = window.getSelection();
-      const hasSelection = selection && selection.toString().trim().length > 0;
-      setIsVisible(!!hasSelection);
+    // Listen for selection changes from parent window (content script)
+    const handleMessage = (event: MessageEvent) => {
+      if (event.data?.type === 'fireowl-selection-change') {
+        setIsVisible(event.data.payload?.hasSelection || false);
+      }
     };
 
-    document.addEventListener('selectionchange', handleSelectionChange);
+    window.addEventListener('message', handleMessage);
 
     return () => {
-      document.removeEventListener('selectionchange', handleSelectionChange);
+      window.removeEventListener('message', handleMessage);
     };
   }, []);
 

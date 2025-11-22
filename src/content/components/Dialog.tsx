@@ -3,7 +3,7 @@ import { Rnd } from 'react-rnd';
 import { css } from '@emotion/css';
 import { Storage } from '../../shared/storage';
 import type { DialogPosition, Message, ContentMessage, LLMProvider } from '../../shared/types';
-import { buildPageContext, extractSelection, extractPageText, getPageUrl, getPageTitle, requestPageInfo } from '../../shared/utils';
+import { extractSelection, extractPageText, getPageUrl, getPageTitle, requestPageInfo } from '../../shared/utils';
 import { getApiKey } from '../../shared/providers';
 import { t } from '../../shared/i18n';
 import InputArea from './InputArea';
@@ -269,13 +269,17 @@ const Dialog: React.FC<DialogProps> = ({ isOpen, onClose }) => {
             metadata: undefined,
           };
         } else if (contextMode === 'fullpage') {
-          // Use full page context
-          context = buildPageContext({
-            includeScripts: settings.includeScripts,
-            includeStyles: settings.includeStyles,
-            includeAltText: settings.includeAltText,
-            maxLength: settings.contextMaxLength,
-          });
+          // Use full page context (ignore any selection)
+          context = {
+            url: getPageUrl(),
+            title: getPageTitle(),
+            fullPage: extractPageText({
+              includeScripts: settings.includeScripts,
+              includeStyles: settings.includeStyles,
+              maxLength: settings.contextMaxLength,
+            }),
+            metadata: undefined,
+          };
         }
       }
 

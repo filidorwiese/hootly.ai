@@ -101,6 +101,15 @@ async function init() {
     }
   });
 
+  // Track selection changes and notify iframe for tooltip
+  document.addEventListener('selectionchange', () => {
+    const selection = window.getSelection()?.toString().trim() || '';
+    iframe.contentWindow?.postMessage({
+      type: 'fireowl-selection-change',
+      payload: { hasSelection: selection.length > 0 }
+    }, '*');
+  });
+
   // Listen for toggle command from background
   chrome.runtime.onMessage.addListener((message) => {
     console.log('[FireOwl] Received message:', message);
