@@ -348,7 +348,7 @@ const Dialog: React.FC<DialogProps> = ({ isOpen, onClose }) => {
         <div className={`${headerStyles} drag-handle`}>
           <h2>
             <img src={chrome.runtime.getURL('icons/icon-48.png')} alt="" className={iconStyles} />
-            FireOwl - Your wise web companion
+            FireOwl <span className={taglineStyles}>- Your wise web companion</span>
           </h2>
           <div className={headerButtonsStyles}>
             {conversationHistory.length > 0 && (
@@ -470,6 +470,11 @@ const headerStyles = css`
 const iconStyles = css`
   width: 26px;
   height: 26px;
+`;
+
+const taglineStyles = css`
+  font-weight: 400;
+  color: #8A9A8C;
 `;
 
 const headerButtonsStyles = css`
