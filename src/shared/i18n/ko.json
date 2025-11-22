@@ -51,7 +51,7 @@
     "thinking": "생각 중..."
   },
   "input": {
-    "placeholder": "부엉부엉 질문하세요... (Enter로 전송, Shift+Enter로 줄바꿈)",
+    "placeholder": "부엉부엉 질문하세요... (⏎ 전송, ⇧⏎ 줄바꿈)",
     "tokens": "~{{count}} 토큰",
     "clear": "지우기",
     "send": "전송",

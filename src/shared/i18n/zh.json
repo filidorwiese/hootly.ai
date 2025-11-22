@@ -51,7 +51,7 @@
     "thinking": "思考中..."
   },
   "input": {
-    "placeholder": "咕咕你的问题...（Enter 发送，Shift+Enter 换行）",
+    "placeholder": "咕咕你的问题...（⏎ 发送，⇧⏎ 换行）",
     "tokens": "~{{count}} 令牌",
     "clear": "清除",
     "send": "发送",

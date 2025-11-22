@@ -51,7 +51,7 @@
     "thinking": "Denkt nach..."
   },
   "input": {
-    "placeholder": "Schuhu mir eine Frage... (Enter zum Senden, Shift+Enter für neue Zeile)",
+    "placeholder": "Schuhu mir eine Frage... (⏎ senden, ⇧⏎ neue Zeile)",
     "tokens": "~{{count}} Tokens",
     "clear": "Löschen",
     "send": "Senden",
