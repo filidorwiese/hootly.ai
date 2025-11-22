@@ -13,11 +13,12 @@ interface InputAreaProps {
   selectionLength?: number;
   onContextToggle: () => void;
   tokenCount: number;
+  modelId?: string;
 }
 
 const InputArea: React.FC<InputAreaProps> = ({
   value, onChange, onSubmit, disabled,
-  contextEnabled, contextMode, selectionLength, onContextToggle, tokenCount
+  contextEnabled, contextMode, selectionLength, onContextToggle, tokenCount, modelId
 }) => {
   const textareaRef = useRef<HTMLTextAreaElement>(null);
 
@@ -77,7 +78,10 @@ const InputArea: React.FC<InputAreaProps> = ({
           selectionLength={selectionLength}
           onToggle={onContextToggle}
         />
-        <span className={tokenCountStyles}>{t('input.tokens', { count: tokenCount })}</span>
+        <div className={rightGroupStyles}>
+          <span className={tokenCountStyles}>{t('input.tokens', { count: tokenCount })}</span>
+          {modelId && <span className={modelIdStyles}>{modelId}</span>}
+        </div>
       </div>
     </div>
   );
@@ -159,10 +163,22 @@ const footerStyles = css`
   align-items: center;
 `;
 
+const rightGroupStyles = css`
+  display: flex;
+  align-items: center;
+  gap: 12px;
+`;
+
 const tokenCountStyles = css`
   font-size: 11px;
   color: #8A9A8C;
   font-weight: 500;
+`;
+
+const modelIdStyles = css`
+  font-size: 10px;
+  color: #B0BAB2;
+  font-weight: 400;
 `;
 
 export default InputArea;

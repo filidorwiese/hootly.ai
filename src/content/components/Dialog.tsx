@@ -33,6 +33,7 @@ const Dialog: React.FC<DialogProps> = ({ isOpen, onClose }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [conversationHistory, setConversationHistory] = useState<Message[]>([]);
+  const [currentModel, setCurrentModel] = useState<string>('');
 
   // Estimate token count (rough approximation: ~4 chars per token)
   const estimateTokens = (text: string): number => {
@@ -55,6 +56,10 @@ const Dialog: React.FC<DialogProps> = ({ isOpen, onClose }) => {
   // Capture text selection and auto-enable context when dialog opens
   useEffect(() => {
     if (isOpen) {
+      // Load current model
+      Storage.getSettings().then((settings) => {
+        setCurrentModel(settings.model || '');
+      });
       // Request fresh page info from parent (for iframe mode)
       requestPageInfo().then(() => {
         const selectionText = extractSelection();
@@ -352,6 +357,7 @@ const Dialog: React.FC<DialogProps> = ({ isOpen, onClose }) => {
                 selectionLength={capturedSelection?.length}
                 onContextToggle={handleContextToggle}
                 tokenCount={getCurrentTokenCount()}
+                modelId={currentModel}
               />
             ) : (
               <div className={cancelHintStyles} dangerouslySetInnerHTML={{ __html: t('dialog.cancelHint') }} />
