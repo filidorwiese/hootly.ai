@@ -1,7 +1,7 @@
-import Anthropic from '@anthropic-ai/sdk';
 import type { BackgroundMessage, ContentMessage } from '../shared/types';
-import { fetchModels, type ModelConfig } from '../shared/models';
+import type { ModelConfig } from '../shared/models';
 import { Storage } from '../shared/storage';
+import { getProvider, getApiKey } from '../shared/providers';
 
 // Track active streams for cancellation
 const activeStreams = new Map<number, any>();
@@ -15,7 +15,7 @@ chrome.runtime.onMessage.addListener((message: BackgroundMessage, sender, sendRe
     const tabId = sender.tab?.id;
     if (tabId && activeStreams.has(tabId)) {
       const stream = activeStreams.get(tabId);
-      stream.controller.abort();
+      stream.abort();
       activeStreams.delete(tabId);
       console.log('[FireOwl] Stream cancelled for tab:', tabId);
     }
@@ -40,10 +40,12 @@ chrome.runtime.onMessage.addListener((message: BackgroundMessage, sender, sendRe
 async function handleFetchModels(): Promise<{ success: boolean; models?: ModelConfig[]; error?: string }> {
   try {
     const settings = await Storage.getSettings();
-    if (!settings.apiKey) {
+    const apiKey = getApiKey(settings);
+    if (!apiKey) {
       return { success: false, error: 'No API key configured' };
     }
-    const models = await fetchModels(settings.apiKey);
+    const provider = getProvider(settings.provider);
+    const models = await provider.fetchModels(apiKey);
     return { success: true, models };
   } catch (error: any) {
     console.error('[FireOwl] Failed to fetch models:', error);
@@ -84,7 +86,8 @@ async function handleSendPrompt(
 
   const { prompt, context, conversationHistory, settings } = payload;
 
-  if (!settings.apiKey) {
+  const apiKey = getApiKey(settings);
+  if (!apiKey) {
     sendToTab(tabId, {
       type: 'streamError',
       payload: { error: 'API key not set. Please configure in settings.' },
@@ -93,17 +96,12 @@ async function handleSendPrompt(
   }
 
   try {
-    const client = new Anthropic({
-      apiKey: settings.apiKey,
-      dangerouslyAllowBrowser: true,
-    });
+    const provider = getProvider(settings.provider);
 
-    // Build messages array from conversation history
-    // Filter out any messages with empty content
-    const messages: Anthropic.MessageParam[] = [
+    const messages = [
       ...conversationHistory
-        .filter((msg) => msg.content && msg.content.trim() !== '')
-        .map((msg) => ({
+        .filter((msg: any) => msg.content && msg.content.trim() !== '')
+        .map((msg: any) => ({
           role: msg.role as 'user' | 'assistant',
           content: msg.content,
         })),
@@ -114,43 +112,39 @@ async function handleSendPrompt(
     ];
 
     console.log('[FireOwl] Sending messages to API:', messages.length, 'messages');
-    console.log('[FireOwl] Message roles:', messages.map(m => m.role).join(', '));
+    console.log('[FireOwl] Provider:', settings.provider, 'Model:', settings.model);
 
-    // Stream response
-    const stream = client.messages.stream({
-      model: settings.model,
-      max_tokens: settings.maxTokens,
-      temperature: settings.temperature,
-      system: settings.systemPrompt || undefined,
-      messages,
-    });
+    const stream = provider.streamChat(
+      apiKey,
+      {
+        model: settings.model,
+        messages,
+        maxTokens: settings.maxTokens,
+        temperature: settings.temperature,
+        systemPrompt: settings.systemPrompt || undefined,
+      },
+      {
+        onText: (text) => {
+          sendToTab(tabId, {
+            type: 'streamChunk',
+            payload: { content: text },
+          });
+        },
+        onEnd: (fullContent) => {
+          activeStreams.delete(tabId);
+          sendToTab(tabId, {
+            type: 'streamEnd',
+            payload: { content: fullContent },
+          });
+        },
+        onError: (error) => {
+          activeStreams.delete(tabId);
+          handleStreamError(tabId, error, settings.model);
+        },
+      }
+    );
 
-    // Store stream for potential cancellation
     activeStreams.set(tabId, stream);
-
-    // Track complete response content
-    let fullContent = '';
-
-    stream.on('text', (text) => {
-      fullContent += text;
-      sendToTab(tabId, {
-        type: 'streamChunk',
-        payload: { content: text },
-      });
-    });
-
-    stream.on('end', () => {
-      activeStreams.delete(tabId);
-      sendToTab(tabId, {
-        type: 'streamEnd',
-        payload: { content: fullContent },
-      });
-    });
-
-    stream.on('error', (error) => {
-      activeStreams.delete(tabId);
-      handleStreamError(tabId, error, settings.model);
-    });
   } catch (error) {
     handleStreamError(tabId, error, settings.model);
   }
