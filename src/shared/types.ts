@@ -1,5 +1,11 @@
+export type LLMProvider = 'claude' | 'gemini' | 'openai' | 'openrouter';
+
 export interface Settings {
-  apiKey: string;
+  provider: LLMProvider;
+  claudeApiKey: string;
+  geminiApiKey: string;
+  openaiApiKey: string;
+  openrouterApiKey: string;
   model: string;
   maxTokens: number;
   temperature: number;
@@ -77,7 +83,11 @@ export type ContentMessage =
   | { type: 'modelNotFound'; payload: { model: string } };
 
 export const DEFAULT_SETTINGS: Settings = {
-  apiKey: '',
+  provider: 'claude',
+  claudeApiKey: '',
+  geminiApiKey: '',
+  openaiApiKey: '',
+  openrouterApiKey: '',
   model: '',
   maxTokens: 4096,
   temperature: 1.0,
