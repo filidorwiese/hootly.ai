@@ -1,6 +1,6 @@
 import React from 'react'
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest'
-import { render, screen, fireEvent, waitFor } from '@testing-library/react'
+import { render, screen, fireEvent, waitFor, act } from '@testing-library/react'
 import Dialog from '../../content/components/Dialog'
 import { setLanguage } from '../../shared/i18n'
 import { setMockStorage, chromeMock } from '../__mocks__/chrome'
@@ -14,6 +14,17 @@ vi.mock('react-rnd', () => ({
     </div>
   ),
 }))
+
+// Helper to render Dialog and wait for async effects
+async function renderDialog(props: { isOpen: boolean; onClose: () => void }) {
+  let result: ReturnType<typeof render>
+  await act(async () => {
+    result = render(<Dialog {...props} />)
+    // Wait for async useEffects to settle
+    await new Promise(resolve => setTimeout(resolve, 0))
+  })
+  return result!
+}
 
 describe('Dialog', () => {
   beforeEach(() => {
@@ -29,125 +40,131 @@ describe('Dialog', () => {
   })
 
   describe('rendering', () => {
-    it('renders nothing when closed', () => {
-      const { container } = render(<Dialog isOpen={false} onClose={() => {}} />)
+    it('renders nothing when closed', async () => {
+      const { container } = await renderDialog({ isOpen: false, onClose: () => {} })
       expect(container.innerHTML).toBe('')
     })
 
-    it('renders dialog when open', () => {
-      render(<Dialog isOpen={true} onClose={() => {}} />)
+    it('renders dialog when open', async () => {
+      await renderDialog({ isOpen: true, onClose: () => {} })
       expect(screen.getByText('FireOwl')).toBeInTheDocument()
     })
 
-    it('renders header with title', () => {
-      render(<Dialog isOpen={true} onClose={() => {}} />)
+    it('renders header with title', async () => {
+      await renderDialog({ isOpen: true, onClose: () => {} })
       expect(screen.getByRole('heading')).toHaveTextContent('FireOwl')
     })
 
-    it('renders settings button', () => {
-      render(<Dialog isOpen={true} onClose={() => {}} />)
+    it('renders settings button', async () => {
+      await renderDialog({ isOpen: true, onClose: () => {} })
       expect(screen.getByLabelText('Settings')).toBeInTheDocument()
     })
 
-    it('renders close button', () => {
-      render(<Dialog isOpen={true} onClose={() => {}} />)
+    it('renders close button', async () => {
+      await renderDialog({ isOpen: true, onClose: () => {} })
       expect(screen.getByLabelText('Close')).toBeInTheDocument()
     })
 
-    it('renders input area', () => {
-      render(<Dialog isOpen={true} onClose={() => {}} />)
+    it('renders input area', async () => {
+      await renderDialog({ isOpen: true, onClose: () => {} })
       expect(screen.getByRole('textbox')).toBeInTheDocument()
     })
   })
 
   describe('close behavior', () => {
-    it('calls onClose when close button clicked', () => {
+    it('calls onClose when close button clicked', async () => {
       const onClose = vi.fn()
-      render(<Dialog isOpen={true} onClose={onClose} />)
+      await renderDialog({ isOpen: true, onClose })
 
-      fireEvent.click(screen.getByLabelText('Close'))
+      await act(async () => {
+        fireEvent.click(screen.getByLabelText('Close'))
+      })
       expect(onClose).toHaveBeenCalledTimes(1)
     })
 
-    it('calls onClose when backdrop clicked', () => {
+    it('calls onClose when backdrop clicked', async () => {
       const onClose = vi.fn()
-      render(<Dialog isOpen={true} onClose={onClose} />)
+      await renderDialog({ isOpen: true, onClose })
 
-      // Find backdrop (first div with backdrop styles)
       const backdrop = document.querySelector('[class*="backdrop"]')
       if (backdrop) {
-        fireEvent.click(backdrop)
+        await act(async () => {
+          fireEvent.click(backdrop)
+        })
         expect(onClose).toHaveBeenCalledTimes(1)
       }
     })
 
     it('calls onClose on Escape when not loading', async () => {
       const onClose = vi.fn()
-      render(<Dialog isOpen={true} onClose={onClose} />)
+      await renderDialog({ isOpen: true, onClose })
 
-      fireEvent.keyDown(document, { key: 'Escape' })
-
-      await waitFor(() => {
-        expect(onClose).toHaveBeenCalledTimes(1)
+      await act(async () => {
+        fireEvent.keyDown(document, { key: 'Escape' })
       })
+
+      expect(onClose).toHaveBeenCalledTimes(1)
     })
   })
 
   describe('Escape key behavior', () => {
     it('cancels stream on Escape when loading', async () => {
-      render(<Dialog isOpen={true} onClose={() => {}} />)
+      await renderDialog({ isOpen: true, onClose: () => {} })
 
-      // Simulate loading state by typing and submitting (mocked)
       const textarea = screen.getByRole('textbox')
-      fireEvent.change(textarea, { target: { value: 'test message' } })
-      fireEvent.keyDown(textarea, { key: 'Enter' })
+      await act(async () => {
+        fireEvent.change(textarea, { target: { value: 'test message' } })
+        fireEvent.keyDown(textarea, { key: 'Enter' })
+      })
 
-      // Wait for loading state
       await waitFor(() => {
-        // Check if cancel message is shown (indicates loading state)
-        // or just verify the sendMessage was called
         expect(chromeMock.runtime.sendMessage).toHaveBeenCalled()
       })
     })
   })
 
   describe('settings button', () => {
-    it('sends openSettings message when clicked', () => {
-      render(<Dialog isOpen={true} onClose={() => {}} />)
+    it('sends openSettings message when clicked', async () => {
+      await renderDialog({ isOpen: true, onClose: () => {} })
 
-      fireEvent.click(screen.getByLabelText('Settings'))
+      await act(async () => {
+        fireEvent.click(screen.getByLabelText('Settings'))
+      })
 
       expect(chromeMock.runtime.sendMessage).toHaveBeenCalledWith({ type: 'openSettings' })
     })
   })
 
   describe('clear conversation', () => {
-    it('does not show clear button when no history', () => {
-      render(<Dialog isOpen={true} onClose={() => {}} />)
+    it('does not show clear button when no history', async () => {
+      await renderDialog({ isOpen: true, onClose: () => {} })
 
       expect(screen.queryByLabelText('Clear conversation')).not.toBeInTheDocument()
     })
   })
 
   describe('input submission', () => {
-    it('does not submit empty input', () => {
-      render(<Dialog isOpen={true} onClose={() => {}} />)
+    it('does not submit empty input', async () => {
+      await renderDialog({ isOpen: true, onClose: () => {} })
 
       const textarea = screen.getByRole('textbox')
-      fireEvent.keyDown(textarea, { key: 'Enter' })
+      await act(async () => {
+        fireEvent.keyDown(textarea, { key: 'Enter' })
+      })
 
-      // Should not send message for empty input
       expect(chromeMock.runtime.sendMessage).not.toHaveBeenCalledWith(
         expect.objectContaining({ type: 'sendPrompt' })
       )
     })
 
     it('submits non-empty input on Enter', async () => {
-      render(<Dialog isOpen={true} onClose={() => {}} />)
+      await renderDialog({ isOpen: true, onClose: () => {} })
 
       const textarea = screen.getByRole('textbox')
-      fireEvent.change(textarea, { target: { value: 'test prompt' } })
-      fireEvent.keyDown(textarea, { key: 'Enter' })
+      await act(async () => {
+        fireEvent.change(textarea, { target: { value: 'test prompt' } })
+        fireEvent.keyDown(textarea, { key: 'Enter' })
+      })
 
       await waitFor(() => {
         expect(chromeMock.runtime.sendMessage).toHaveBeenCalledWith(
@@ -157,49 +174,57 @@ describe('Dialog', () => {
     })
 
     it('shows loading state after submission', async () => {
-      render(<Dialog isOpen={true} onClose={() => {}} />)
+      await renderDialog({ isOpen: true, onClose: () => {} })
 
-      const textarea = screen.getByRole('textbox') as HTMLTextAreaElement
-      fireEvent.change(textarea, { target: { value: 'test prompt' } })
-      fireEvent.keyDown(textarea, { key: 'Enter' })
+      const textarea = screen.getByRole('textbox')
+      await act(async () => {
+        fireEvent.change(textarea, { target: { value: 'test prompt' } })
+        fireEvent.keyDown(textarea, { key: 'Enter' })
+      })
 
       await waitFor(() => {
-        // Message should be added to conversation
         expect(screen.getByText('test prompt')).toBeInTheDocument()
-        // Should show loading indicator
         expect(screen.getByText('Thinking...')).toBeInTheDocument()
       })
     })
   })
 
   describe('context toggle', () => {
-    it('renders context toggle in input area', () => {
-      render(<Dialog isOpen={true} onClose={() => {}} />)
+    it('renders context toggle in input area', async () => {
+      await renderDialog({ isOpen: true, onClose: () => {} })
 
       expect(screen.getByText('🌐')).toBeInTheDocument()
     })
 
-    it('shows "No context" initially', () => {
-      render(<Dialog isOpen={true} onClose={() => {}} />)
+    it('shows "No context" initially', async () => {
+      await renderDialog({ isOpen: true, onClose: () => {} })
 
       expect(screen.getByText('No context')).toBeInTheDocument()
     })
   })
 
   describe('token count', () => {
-    it('displays token count in input area', () => {
-      render(<Dialog isOpen={true} onClose={() => {}} />)
+    it('displays token count in input area', async () => {
+      await renderDialog({ isOpen: true, onClose: () => {} })
 
       expect(screen.getByText(/~\d+ tokens/)).toBeInTheDocument()
     })
   })
 
   describe('notification to parent', () => {
-    it('posts message to parent when closed', () => {
+    it('posts message to parent when closed', async () => {
       const postMessageSpy = vi.spyOn(window.parent, 'postMessage')
 
-      const { rerender } = render(<Dialog isOpen={true} onClose={() => {}} />)
-      rerender(<Dialog isOpen={false} onClose={() => {}} />)
+      let rerender: ReturnType<typeof render>['rerender']
+      await act(async () => {
+        const result = render(<Dialog isOpen={true} onClose={() => {}} />)
+        rerender = result.rerender
+        await new Promise(resolve => setTimeout(resolve, 0))
+      })
+
+      await act(async () => {
+        rerender(<Dialog isOpen={false} onClose={() => {}} />)
+      })
 
       expect(postMessageSpy).toHaveBeenCalledWith(
         { type: 'fireowl-dialog-closed' },
@@ -218,11 +243,9 @@ describe('Dialog state management', () => {
   })
 
   it('loads settings on open', async () => {
-    render(<Dialog isOpen={true} onClose={() => {}} />)
+    await renderDialog({ isOpen: true, onClose: () => {} })
 
-    await waitFor(() => {
-      expect(chromeMock.storage.local.get).toHaveBeenCalled()
-    })
+    expect(chromeMock.storage.local.get).toHaveBeenCalled()
   })
 
   it('loads saved dialog position', async () => {
@@ -231,10 +254,8 @@ describe('Dialog state management', () => {
       fireclaude_dialog_position: { x: 100, y: 200, width: 600, height: 0 },
     })
 
-    render(<Dialog isOpen={true} onClose={() => {}} />)
+    await renderDialog({ isOpen: true, onClose: () => {} })
 
-    await waitFor(() => {
-      expect(chromeMock.storage.local.get).toHaveBeenCalled()
-    })
+    expect(chromeMock.storage.local.get).toHaveBeenCalled()
   })
 })
