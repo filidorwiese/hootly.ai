@@ -82,15 +82,23 @@ const Dialog: React.FC<DialogProps> = ({ isOpen, onClose }) => {
     }
   }, [isOpen]);
 
-  // Load saved position on mount (if exists)
+  // Load saved width on mount, but always reset position when opening
   useEffect(() => {
     Storage.getDialogPosition().then((saved) => {
       if (saved) {
-        setPosition({ x: saved.x, y: saved.y });
         setSize({ width: saved.width });
       }
     });
   }, []);
+
+  // Reset position when dialog opens: centered horizontally, 60px from top
+  useEffect(() => {
+    if (isOpen) {
+      const width = size.width;
+      const centerX = Math.max(0, (window.innerWidth - width) / 2);
+      setPosition({ x: centerX, y: 60 });
+    }
+  }, [isOpen]);
 
   // Listen for provider changes and clear conversation
   useEffect(() => {
