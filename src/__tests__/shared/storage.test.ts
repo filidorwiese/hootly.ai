@@ -1,0 +1,243 @@
+import { describe, it, expect, beforeEach } from 'vitest'
+import { Storage } from '../../shared/storage'
+import { DEFAULT_SETTINGS } from '../../shared/types'
+import { resetChromeMock, setMockStorage, getMockStorage } from '../__mocks__/chrome'
+import {
+  createConversation,
+  fullConversation,
+  emptyConversation,
+  oldConversation,
+} from '../fixtures/conversations'
+import { configuredSettings } from '../fixtures/settings'
+
+describe('Storage', () => {
+  beforeEach(() => {
+    resetChromeMock()
+  })
+
+  describe('getSettings', () => {
+    it('returns default settings when storage is empty', async () => {
+      const settings = await Storage.getSettings()
+      expect(settings).toEqual(DEFAULT_SETTINGS)
+    })
+
+    it('merges stored settings with defaults', async () => {
+      setMockStorage({
+        fireclaude_settings: { claudeApiKey: 'test-key', model: 'claude-3-opus' },
+      })
+
+      const settings = await Storage.getSettings()
+      expect(settings.claudeApiKey).toBe('test-key')
+      expect(settings.model).toBe('claude-3-opus')
+      // Check defaults are still present
+      expect(settings.maxTokens).toBe(DEFAULT_SETTINGS.maxTokens)
+      expect(settings.temperature).toBe(DEFAULT_SETTINGS.temperature)
+    })
+
+    it('preserves all stored settings', async () => {
+      setMockStorage({ fireclaude_settings: configuredSettings })
+
+      const settings = await Storage.getSettings()
+      expect(settings.claudeApiKey).toBe(configuredSettings.claudeApiKey)
+      expect(settings.systemPrompt).toBe(configuredSettings.systemPrompt)
+    })
+  })
+
+  describe('saveSettings', () => {
+    it('saves partial settings', async () => {
+      await Storage.saveSettings({ claudeApiKey: 'new-key' })
+
+      const storage = getMockStorage()
+      expect(storage.fireclaude_settings).toBeDefined()
+      expect((storage.fireclaude_settings as any).claudeApiKey).toBe('new-key')
+    })
+
+    it('merges with existing settings', async () => {
+      setMockStorage({
+        fireclaude_settings: { claudeApiKey: 'old-key', model: 'old-model' },
+      })
+
+      await Storage.saveSettings({ model: 'new-model' })
+
+      const settings = await Storage.getSettings()
+      expect(settings.claudeApiKey).toBe('old-key') // preserved
+      expect(settings.model).toBe('new-model') // updated
+    })
+
+    it('preserves defaults for unset values', async () => {
+      await Storage.saveSettings({ claudeApiKey: 'test' })
+
+      const settings = await Storage.getSettings()
+      expect(settings.maxTokens).toBe(DEFAULT_SETTINGS.maxTokens)
+      expect(settings.shortcut).toBe(DEFAULT_SETTINGS.shortcut)
+    })
+  })
+
+  describe('getConversations', () => {
+    it('returns empty array when no conversations', async () => {
+      const conversations = await Storage.getConversations()
+      expect(conversations).toEqual([])
+    })
+
+    it('returns stored conversations', async () => {
+      setMockStorage({
+        fireclaude_conversations: [fullConversation, emptyConversation],
+      })
+
+      const conversations = await Storage.getConversations()
+      expect(conversations).toHaveLength(2)
+      expect(conversations[0].id).toBe(fullConversation.id)
+    })
+  })
+
+  describe('saveConversation', () => {
+    it('adds new conversation', async () => {
+      const conv = createConversation({ id: 'new-conv' })
+      await Storage.saveConversation(conv)
+
+      const conversations = await Storage.getConversations()
+      expect(conversations).toHaveLength(1)
+      expect(conversations[0].id).toBe('new-conv')
+    })
+
+    it('updates existing conversation', async () => {
+      const conv = createConversation({ id: 'existing', title: 'Original' })
+      setMockStorage({ fireclaude_conversations: [conv] })
+
+      const updated = { ...conv, title: 'Updated' }
+      await Storage.saveConversation(updated)
+
+      const conversations = await Storage.getConversations()
+      expect(conversations).toHaveLength(1)
+      expect(conversations[0].title).toBe('Updated')
+    })
+
+    it('preserves other conversations when updating', async () => {
+      setMockStorage({
+        fireclaude_conversations: [fullConversation, emptyConversation],
+      })
+
+      const updated = { ...fullConversation, title: 'Modified' }
+      await Storage.saveConversation(updated)
+
+      const conversations = await Storage.getConversations()
+      expect(conversations).toHaveLength(2)
+      expect(conversations.find(c => c.id === fullConversation.id)?.title).toBe('Modified')
+      expect(conversations.find(c => c.id === emptyConversation.id)).toBeDefined()
+    })
+  })
+
+  describe('deleteConversation', () => {
+    it('removes conversation by id', async () => {
+      setMockStorage({
+        fireclaude_conversations: [fullConversation, emptyConversation],
+      })
+
+      await Storage.deleteConversation(fullConversation.id)
+
+      const conversations = await Storage.getConversations()
+      expect(conversations).toHaveLength(1)
+      expect(conversations[0].id).toBe(emptyConversation.id)
+    })
+
+    it('does nothing if conversation not found', async () => {
+      setMockStorage({
+        fireclaude_conversations: [fullConversation],
+      })
+
+      await Storage.deleteConversation('nonexistent')
+
+      const conversations = await Storage.getConversations()
+      expect(conversations).toHaveLength(1)
+    })
+  })
+
+  describe('getCurrentConversation / setCurrentConversation', () => {
+    it('returns null when no current conversation', async () => {
+      const current = await Storage.getCurrentConversation()
+      expect(current).toBeNull()
+    })
+
+    it('sets and gets current conversation', async () => {
+      await Storage.setCurrentConversation(fullConversation)
+
+      const current = await Storage.getCurrentConversation()
+      expect(current?.id).toBe(fullConversation.id)
+    })
+
+    it('clears current conversation with null', async () => {
+      await Storage.setCurrentConversation(fullConversation)
+      await Storage.setCurrentConversation(null)
+
+      const current = await Storage.getCurrentConversation()
+      expect(current).toBeNull()
+    })
+  })
+
+  describe('getDialogPosition / saveDialogPosition', () => {
+    it('returns null when no position saved', async () => {
+      const position = await Storage.getDialogPosition()
+      expect(position).toBeNull()
+    })
+
+    it('saves and retrieves dialog position', async () => {
+      const pos = { x: 100, y: 200, width: 400, height: 500 }
+      await Storage.saveDialogPosition(pos)
+
+      const retrieved = await Storage.getDialogPosition()
+      expect(retrieved).toEqual(pos)
+    })
+  })
+
+  describe('clearOldConversations', () => {
+    it('removes conversations older than retention days', async () => {
+      const recentConv = createConversation({
+        id: 'recent',
+        updatedAt: Date.now() - 5 * 24 * 60 * 60 * 1000, // 5 days ago
+      })
+
+      setMockStorage({
+        fireclaude_conversations: [recentConv, oldConversation], // oldConversation is 60 days old
+      })
+
+      await Storage.clearOldConversations(30) // 30 day retention
+
+      const conversations = await Storage.getConversations()
+      expect(conversations).toHaveLength(1)
+      expect(conversations[0].id).toBe('recent')
+    })
+
+    it('keeps all conversations within retention period', async () => {
+      const conv1 = createConversation({
+        id: 'conv1',
+        updatedAt: Date.now() - 10 * 24 * 60 * 60 * 1000,
+      })
+      const conv2 = createConversation({
+        id: 'conv2',
+        updatedAt: Date.now() - 20 * 24 * 60 * 60 * 1000,
+      })
+
+      setMockStorage({
+        fireclaude_conversations: [conv1, conv2],
+      })
+
+      await Storage.clearOldConversations(30)
+
+      const conversations = await Storage.getConversations()
+      expect(conversations).toHaveLength(2)
+    })
+
+    it('removes all conversations with 0 day retention', async () => {
+      const conv = createConversation({ updatedAt: Date.now() - 1000 }) // 1 second ago
+
+      setMockStorage({
+        fireclaude_conversations: [conv],
+      })
+
+      await Storage.clearOldConversations(0)
+
+      const conversations = await Storage.getConversations()
+      expect(conversations).toHaveLength(0)
+    })
+  })
+})
