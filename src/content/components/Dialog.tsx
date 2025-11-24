@@ -15,12 +15,10 @@ interface DialogProps {
 }
 
 const Dialog: React.FC<DialogProps> = ({ isOpen, onClose }) => {
-  // Initialize position centered on viewport
+  // Initialize position: centered horizontally, 60px from top
   const [position, setPosition] = useState(() => {
     const centerX = Math.max(0, (window.innerWidth - 800) / 2);
-    const centerY = Math.max(0, (window.innerHeight - 400) / 2);
-    console.log('[FireOwl] Initial dialog position:', { centerX, centerY, scrollY: window.scrollY, innerHeight: window.innerHeight });
-    return { x: centerX, y: centerY };
+    return { x: centerX, y: 60 };
   });
   const [size, setSize] = useState({ width: 800 });
   const [maxDimensions, setMaxDimensions] = useState(() => ({
