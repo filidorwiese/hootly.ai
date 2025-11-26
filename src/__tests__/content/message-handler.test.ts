@@ -2,11 +2,11 @@ import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest'
 
 // Message types used between content script and iframe
 type IframeMessage =
-  | { type: 'fireowl-toggle' }
-  | { type: 'fireowl-get-page-info' }
-  | { type: 'fireowl-page-info'; payload: PageInfo }
-  | { type: 'fireowl-dialog-closed' }
-  | { type: 'fireowl-selection-change'; payload: { hasSelection: boolean } }
+  | { type: 'hootly-toggle' }
+  | { type: 'hootly-get-page-info' }
+  | { type: 'hootly-page-info'; payload: PageInfo }
+  | { type: 'hootly-dialog-closed' }
+  | { type: 'hootly-selection-change'; payload: { hasSelection: boolean } }
 
 interface PageInfo {
   url: string
@@ -32,19 +32,19 @@ describe('Content Script Message Handling', () => {
   })
 
   describe('Message Type Validation', () => {
-    it('fireowl-toggle has correct structure', () => {
-      const msg: IframeMessage = { type: 'fireowl-toggle' }
-      expect(msg.type).toBe('fireowl-toggle')
+    it('hootly-toggle has correct structure', () => {
+      const msg: IframeMessage = { type: 'hootly-toggle' }
+      expect(msg.type).toBe('hootly-toggle')
     })
 
-    it('fireowl-get-page-info has correct structure', () => {
-      const msg: IframeMessage = { type: 'fireowl-get-page-info' }
-      expect(msg.type).toBe('fireowl-get-page-info')
+    it('hootly-get-page-info has correct structure', () => {
+      const msg: IframeMessage = { type: 'hootly-get-page-info' }
+      expect(msg.type).toBe('hootly-get-page-info')
     })
 
-    it('fireowl-page-info includes all required fields', () => {
+    it('hootly-page-info includes all required fields', () => {
       const msg: IframeMessage = {
-        type: 'fireowl-page-info',
+        type: 'hootly-page-info',
         payload: {
           url: 'https://example.com',
           title: 'Test Page',
@@ -58,14 +58,14 @@ describe('Content Script Message Handling', () => {
       expect(msg.payload.pageText).toBeDefined()
     })
 
-    it('fireowl-dialog-closed has correct structure', () => {
-      const msg: IframeMessage = { type: 'fireowl-dialog-closed' }
-      expect(msg.type).toBe('fireowl-dialog-closed')
+    it('hootly-dialog-closed has correct structure', () => {
+      const msg: IframeMessage = { type: 'hootly-dialog-closed' }
+      expect(msg.type).toBe('hootly-dialog-closed')
     })
 
-    it('fireowl-selection-change includes hasSelection', () => {
+    it('hootly-selection-change includes hasSelection', () => {
       const msg: IframeMessage = {
-        type: 'fireowl-selection-change',
+        type: 'hootly-selection-change',
         payload: { hasSelection: true },
       }
       expect(msg.payload.hasSelection).toBe(true)
@@ -74,7 +74,7 @@ describe('Content Script Message Handling', () => {
 
   describe('Page Info Response Logic', () => {
     function simulatePageInfoRequest(): PageInfo {
-      // Simulates what content script does when receiving fireowl-get-page-info
+      // Simulates what content script does when receiving hootly-get-page-info
       return {
         url: window.location.href,
         title: document.title,

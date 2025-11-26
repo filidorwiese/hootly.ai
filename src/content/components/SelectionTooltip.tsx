@@ -25,7 +25,7 @@ const SelectionTooltip: React.FC<SelectionTooltipProps> = ({ onOpenWithSelection
 
     // Listen for selection changes from parent window (content script)
     const handleMessage = (event: MessageEvent) => {
-      if (event.data?.type === 'fireowl-selection-change') {
+      if (event.data?.type === 'hootly-selection-change') {
         setIsVisible(event.data.payload?.hasSelection || false);
       }
     };

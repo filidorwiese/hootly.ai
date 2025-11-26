@@ -13,11 +13,11 @@ function parseShortcut(shortcut: string): { key: string; alt: boolean; ctrl: boo
 }
 
 async function init() {
-  console.log('[FireOwl] Content script starting...');
+  console.log('[Hootly] Content script starting...');
 
   // Ensure body exists
   if (!document.body) {
-    console.log('[FireOwl] Body not ready, waiting...');
+    console.log('[Hootly] Body not ready, waiting...');
     if (document.readyState === 'loading') {
       document.addEventListener('DOMContentLoaded', init);
       return;
@@ -26,7 +26,7 @@ async function init() {
 
   // Create iframe for complete style isolation
   const iframe = document.createElement('iframe');
-  iframe.id = 'fireowl-frame';
+  iframe.id = 'hootly-frame';
   iframe.style.cssText = `
     position: fixed !important;
     top: 0 !important;
@@ -52,12 +52,12 @@ async function init() {
   // Wait for iframe to load
   const iframeLoaded = new Promise<void>((resolve) => {
     iframe.onload = () => {
-      console.log('[FireOwl] Iframe loaded');
+      console.log('[Hootly] Iframe loaded');
       // Expose chrome API and page info to iframe
       const iframeWin = iframe.contentWindow as any;
       if (iframeWin) {
         iframeWin.chrome = chrome;
-        iframeWin.__FIREOWL_PAGE_INFO__ = pageInfo;
+        iframeWin.__HOOTLY_PAGE_INFO__ = pageInfo;
       }
       resolve();
     };
@@ -67,7 +67,7 @@ async function init() {
   document.body.appendChild(iframe);
 
   await iframeLoaded;
-  console.log('[FireOwl] Iframe created and ready');
+  console.log('[Hootly] Iframe created and ready');
 
   // Track dialog state to toggle iframe pointer-events
   let dialogOpen = false;
@@ -75,22 +75,22 @@ async function init() {
   // Forward toggle commands to iframe
   const sendToggleToIframe = () => {
     dialogOpen = !dialogOpen;
-    console.log('[FireOwl] Sending toggle to iframe, dialogOpen:', dialogOpen);
+    console.log('[Hootly] Sending toggle to iframe, dialogOpen:', dialogOpen);
     iframe.style.pointerEvents = dialogOpen ? 'auto' : 'none';
-    iframe.contentWindow?.postMessage({ type: 'fireowl-toggle' }, '*');
+    iframe.contentWindow?.postMessage({ type: 'hootly-toggle' }, '*');
   };
 
   // Listen for messages from iframe
   window.addEventListener('message', (event) => {
-    if (event.data?.type === 'fireowl-dialog-closed') {
+    if (event.data?.type === 'hootly-dialog-closed') {
       dialogOpen = false;
       iframe.style.pointerEvents = 'none';
-      console.log('[FireOwl] Dialog closed, disabling iframe pointer events');
+      console.log('[Hootly] Dialog closed, disabling iframe pointer events');
     }
     // Respond to page info requests from iframe
-    if (event.data?.type === 'fireowl-get-page-info') {
+    if (event.data?.type === 'hootly-get-page-info') {
       iframe.contentWindow?.postMessage({
-        type: 'fireowl-page-info',
+        type: 'hootly-page-info',
         payload: {
           url: window.location.href,
           title: document.title,
@@ -105,14 +105,14 @@ async function init() {
   document.addEventListener('selectionchange', () => {
     const selection = window.getSelection()?.toString().trim() || '';
     iframe.contentWindow?.postMessage({
-      type: 'fireowl-selection-change',
+      type: 'hootly-selection-change',
       payload: { hasSelection: selection.length > 0 }
     }, '*');
   });
 
   // Listen for toggle command from background
   chrome.runtime.onMessage.addListener((message) => {
-    console.log('[FireOwl] Received message:', message);
+    console.log('[Hootly] Received message:', message);
     if (message.type === 'toggleDialog') {
       sendToggleToIframe();
     }
@@ -124,14 +124,14 @@ async function init() {
   // Load configured shortcut
   Storage.getSettings().then((settings) => {
     currentShortcut = parseShortcut(settings.shortcut);
-    console.log('[FireOwl] Keyboard shortcut configured:', settings.shortcut);
+    console.log('[Hootly] Keyboard shortcut configured:', settings.shortcut);
   });
 
   // Listen for shortcut updates
   chrome.storage.onChanged.addListener((changes) => {
     if (changes.settings?.newValue?.shortcut) {
       currentShortcut = parseShortcut(changes.settings.newValue.shortcut);
-      console.log('[FireOwl] Keyboard shortcut updated:', changes.settings.newValue.shortcut);
+      console.log('[Hootly] Keyboard shortcut updated:', changes.settings.newValue.shortcut);
     }
   });
 
@@ -147,12 +147,12 @@ async function init() {
 
     if (matchesModifiers && matchesKey) {
       event.preventDefault();
-      console.log('[FireOwl] Keyboard shortcut triggered');
+      console.log('[Hootly] Keyboard shortcut triggered');
       sendToggleToIframe();
     }
   });
 
-  console.log('[FireOwl] Content script initialized successfully');
+  console.log('[Hootly] Content script initialized successfully');
 }
 
 // Start initialization

@@ -47,12 +47,12 @@ describe('Dialog', () => {
 
     it('renders dialog when open', async () => {
       await renderDialog({ isOpen: true, onClose: () => {} })
-      expect(screen.getByText('FireOwl')).toBeInTheDocument()
+      expect(screen.getByText('Hootly')).toBeInTheDocument()
     })
 
     it('renders header with title', async () => {
       await renderDialog({ isOpen: true, onClose: () => {} })
-      expect(screen.getByRole('heading')).toHaveTextContent('FireOwl')
+      expect(screen.getByRole('heading')).toHaveTextContent('Hootly')
     })
 
     it('renders settings button', async () => {
@@ -227,7 +227,7 @@ describe('Dialog', () => {
       })
 
       expect(postMessageSpy).toHaveBeenCalledWith(
-        { type: 'fireowl-dialog-closed' },
+        { type: 'hootly-dialog-closed' },
         '*'
       )
     })

@@ -2,7 +2,7 @@
 
 ## Overview
 
-Comprehensive testing strategy for FireOwl Firefox extension. Focus on core functionality, not visual styles. External APIs mocked.
+Comprehensive testing strategy for Hootly browser extension. Focus on core functionality, not visual styles. External APIs mocked.
 
 **Coverage target**: 80%
 

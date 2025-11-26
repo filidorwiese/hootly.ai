@@ -1,8 +1,8 @@
-# Fireowl Pricing & Plans
+# Hootly Pricing & Plans
 
 ## Overview
 
-Fireowl offers three pricing tiers designed to meet different user needs: **Free**, **Premium**, and **BYOK** (Bring Your Own Key).
+Hootly offers three pricing tiers designed to meet different user needs: **Free**, **Premium**, and **BYOK** (Bring Your Own Key).
 
 ---
 
@@ -112,7 +112,7 @@ Premium models via our backend:
 ### Usage Limits
 - **Unlimited requests**
 - Limited only by your API key quotas
-- No Fireowl-imposed restrictions
+- No Hootly-imposed restrictions
 
 ### AI Models
 Use your own API keys for:
@@ -141,7 +141,7 @@ Use your own API keys for:
 ### Storage
 - All data stored locally in browser
 - API keys encrypted and stored locally
-- Never sent to Fireowl servers
+- Never sent to Hootly servers
 - Complete privacy control
 
 ### Setup
@@ -151,7 +151,7 @@ Use your own API keys for:
    - [Google AI Studio](https://makersuite.google.com/app/apikey)
    - [OpenRouter Keys](https://openrouter.ai/keys)
 
-2. Add keys in Fireowl settings
+2. Add keys in Hootly settings
 3. Select your preferred model
 4. Start chatting with unlimited requests
 
@@ -159,7 +159,7 @@ Use your own API keys for:
 - ✅ API keys stored locally, encrypted
 - ✅ No telemetry or tracking
 - ✅ Requests go directly to AI provider
-- ✅ Fireowl never sees your data
+- ✅ Hootly never sees your data
 - ✅ Open source (coming soon)
 
 ---
@@ -204,7 +204,7 @@ Use your own API keys for:
 - **Response delay:** None (instant)
 
 ### BYOK Tier Limits
-- **Fireowl limits:** None
+- **Hootly limits:** None
 - **Provider limits:** Based on your API key tier
 - **Output tokens:** Based on model selection
 - **Context tokens:** Based on model selection
@@ -235,7 +235,7 @@ You'll receive a warning at 400 requests (80%). At 500, you can either:
 Go to Settings → Billing → Cancel Subscription. You'll retain Premium access until the end of your billing period.
 
 ### Is my payment information secure?
-Yes. We use Stripe for payment processing. Fireowl never stores your credit card information.
+Yes. We use Stripe for payment processing. Hootly never stores your credit card information.
 
 ### What about refunds?
 Premium is billed monthly. If you cancel within 7 days of your first charge, you'll receive a full refund. No refunds after 7 days.
@@ -244,7 +244,7 @@ Premium is billed monthly. If you cancel within 7 days of your first charge, you
 Yes! You can add multiple providers and switch between them, or set up automatic rotation.
 
 ### Does BYOK support custom/local models?
-Yes! If you run a local model with an OpenAI-compatible API (like Ollama, LM Studio), you can point Fireowl to your localhost endpoint.
+Yes! If you run a local model with an OpenAI-compatible API (like Ollama, LM Studio), you can point Hootly to your localhost endpoint.
 
 ---
 
@@ -264,7 +264,7 @@ We're considering adding:
   - Limited availability
 
 - **API Access** ($10/month)
-  - Use Fireowl's API in your own apps
+  - Use Hootly's API in your own apps
   - 10,000 requests/month included
   - Programmatic access to all models
 
@@ -282,7 +282,7 @@ Vote on feature requests at [github.com/yourrepo/fireowl/discussions](https://gi
 
 ## Getting Started
 
-1. **Install Fireowl** from [Firefox Add-ons](https://addons.mozilla.org) or [Chrome Web Store](https://chrome.google.com)
+1. **Install Hootly** from [Firefox Add-ons](https://addons.mozilla.org) or [Chrome Web Store](https://chrome.google.com)
 2. **Choose your tier:**
    - Try Free (no signup)
    - Upgrade to Premium (better models + sync)

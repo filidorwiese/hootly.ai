@@ -42,8 +42,8 @@ export class OpenRouterProvider implements Provider {
       baseURL: 'https://openrouter.ai/api/v1',
       dangerouslyAllowBrowser: true,
       defaultHeaders: {
-        'HTTP-Referer': 'https://github.com/user/fireowl',
-        'X-Title': 'FireOwl',
+        'HTTP-Referer': 'https://github.com/user/hootly',
+        'X-Title': 'Hootly',
       },
     });
 

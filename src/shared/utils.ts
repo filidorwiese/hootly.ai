@@ -32,7 +32,7 @@ export function requestPageInfo(): Promise<typeof cachedPageInfo> {
     }
 
     const handler = (event: MessageEvent) => {
-      if (event.data?.type === 'fireowl-page-info') {
+      if (event.data?.type === 'hootly-page-info') {
         window.removeEventListener('message', handler);
         cachedPageInfo = event.data.payload;
         resolve(cachedPageInfo);
@@ -41,7 +41,7 @@ export function requestPageInfo(): Promise<typeof cachedPageInfo> {
     window.addEventListener('message', handler);
 
     // Request info from parent
-    window.parent.postMessage({ type: 'fireowl-get-page-info' }, '*');
+    window.parent.postMessage({ type: 'hootly-get-page-info' }, '*');
 
     // Timeout fallback
     setTimeout(() => {

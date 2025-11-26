@@ -17,7 +17,7 @@ chrome.runtime.onMessage.addListener((message: BackgroundMessage, sender, sendRe
       const stream = activeStreams.get(tabId);
       stream.abort();
       activeStreams.delete(tabId);
-      console.log('[FireOwl] Stream cancelled for tab:', tabId);
+      console.log('[Hootly] Stream cancelled for tab:', tabId);
     }
     sendResponse({ success: true });
   } else if (message.type === 'getSettings') {
@@ -48,7 +48,7 @@ async function handleFetchModels(): Promise<{ success: boolean; models?: ModelCo
     const models = await provider.fetchModels(apiKey);
     return { success: true, models };
   } catch (error: any) {
-    console.error('[FireOwl] Failed to fetch models:', error);
+    console.error('[Hootly] Failed to fetch models:', error);
     return { success: false, error: error.message || 'Failed to fetch models' };
   }
 }
@@ -111,8 +111,8 @@ async function handleSendPrompt(
       },
     ];
 
-    console.log('[FireOwl] Sending messages to API:', messages.length, 'messages');
-    console.log('[FireOwl] Provider:', settings.provider, 'Model:', settings.model);
+    console.log('[Hootly] Sending messages to API:', messages.length, 'messages');
+    console.log('[Hootly] Provider:', settings.provider, 'Model:', settings.model);
 
     const stream = provider.streamChat(
       apiKey,
@@ -187,7 +187,7 @@ function isModelNotFoundError(error: any, errorMessage: string): boolean {
 }
 
 function extractErrorMessage(error: any): string {
-  console.log('[FireOwl] Extracting error:', error);
+  console.log('[Hootly] Extracting error:', error);
 
   // Handle Anthropic SDK errors
   if (error?.error?.message) {
@@ -225,7 +225,7 @@ function extractErrorMessage(error: any): string {
     if (error.detail) return error.detail;
 
     // Last resort - stringify the error
-    console.error('[FireOwl] Unhandled error format:', error);
+    console.error('[Hootly] Unhandled error format:', error);
     return JSON.stringify(error);
   }
 

@@ -68,7 +68,7 @@ const Dialog: React.FC<DialogProps> = ({ isOpen, onClose }) => {
           setCapturedSelection(selectionText);
           setContextEnabled(true);
           setContextMode('selection');
-          console.log('[FireOwl] Auto-enabled context with selection:', selectionText.length, 'chars');
+          console.log('[Hootly] Auto-enabled context with selection:', selectionText.length, 'chars');
         } else {
           setCapturedSelection(null);
           setContextMode('none');
@@ -111,7 +111,7 @@ const Dialog: React.FC<DialogProps> = ({ isOpen, onClose }) => {
           setConversationHistory([]);
           setResponse('');
           setError(null);
-          console.log('[FireOwl] Provider changed to:', newProvider, '- conversation cleared');
+          console.log('[Hootly] Provider changed to:', newProvider, '- conversation cleared');
         }
       }
     };
@@ -144,7 +144,7 @@ const Dialog: React.FC<DialogProps> = ({ isOpen, onClose }) => {
           // Stop generation
           setIsLoading(false);
           chrome.runtime.sendMessage({ type: 'cancelStream' });
-          console.log('[FireOwl] Generation cancelled by user');
+          console.log('[Hootly] Generation cancelled by user');
         } else {
           // Close dialog
           onClose();
@@ -321,7 +321,7 @@ const Dialog: React.FC<DialogProps> = ({ isOpen, onClose }) => {
   // Notify parent window when dialog closes
   useEffect(() => {
     if (!isOpen) {
-      window.parent.postMessage({ type: 'fireowl-dialog-closed' }, '*');
+      window.parent.postMessage({ type: 'hootly-dialog-closed' }, '*');
     }
   }, [isOpen]);
 
@@ -354,7 +354,7 @@ const Dialog: React.FC<DialogProps> = ({ isOpen, onClose }) => {
         <div className={`${headerStyles} drag-handle`}>
           <h2>
             <img src={chrome.runtime.getURL('icons/icon-48.png')} alt="" className={iconStyles} />
-            FireOwl <span className={taglineStyles}>- Your wise web companion</span>
+            Hootly <span className={taglineStyles}>- Your wise web companion</span>
           </h2>
           <div className={headerButtonsStyles}>
             {conversationHistory.length > 0 && (

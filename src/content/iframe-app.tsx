@@ -4,22 +4,22 @@ import { initLanguage } from '../shared/i18n';
 import 'highlight.js/styles/github.css';
 
 async function init() {
-  console.log('[FireOwl] Iframe app starting...');
+  console.log('[Hootly] Iframe app starting...');
 
   // Initialize language
   await initLanguage();
 
   // Mount React app
-  const container = document.getElementById('fireowl-root');
+  const container = document.getElementById('hootly-root');
   if (!container) {
-    console.error('[FireOwl] Mount point not found');
+    console.error('[Hootly] Mount point not found');
     return;
   }
 
   const root = createRoot(container);
   root.render(<App />);
 
-  console.log('[FireOwl] Iframe app mounted');
+  console.log('[Hootly] Iframe app mounted');
 }
 
 init();

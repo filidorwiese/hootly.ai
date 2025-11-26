@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-FireOwl is a browser extension for interacting with Claude AI directly from any webpage. Built with Vite, React, and TypeScript. Supports Firefox and Chrome.
+Hootly is a browser extension for interacting with Claude AI directly from any webpage. Built with Vite, React, and TypeScript. Supports Firefox and Chrome.
 
 **Status**: MVP functional with i18n support (10 languages).
 
@@ -78,7 +78,7 @@ The extension uses an iframe approach for complete CSS isolation:
 
 ```
 Host Page
-  └── #fireowl-frame (transparent iframe, pointer-events toggled)
+  └── #hootly-frame (transparent iframe, pointer-events toggled)
         └── iframe.html (loads iframe-app.js)
               └── React App (Dialog, Response, InputArea)
 ```
@@ -94,7 +94,7 @@ User presses Alt+C
   ↓
 content script (keydown listener)
   ↓
-postMessage to iframe ('fireowl-toggle')
+postMessage to iframe ('hootly-toggle')
   ↓
 App.tsx toggles dialog visibility
   ↓
@@ -104,7 +104,7 @@ iframe.style.pointerEvents = 'auto'
 ```
 Dialog needs page context
   ↓
-requestPageInfo() → postMessage('fireowl-get-page-info')
+requestPageInfo() → postMessage('hootly-get-page-info')
   ↓
 content script responds with URL, title, selection, pageText
   ↓
