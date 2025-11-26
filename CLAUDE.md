@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-FireOwl is a Firefox extension for interacting with Claude AI directly from any webpage. Built with Vite, React, and TypeScript.
+FireOwl is a browser extension for interacting with Claude AI directly from any webpage. Built with Vite, React, and TypeScript. Supports Firefox and Chrome.
 
 **Status**: MVP functional with i18n support (10 languages).
 
@@ -14,8 +14,11 @@ FireOwl is a Firefox extension for interacting with Claude AI directly from any 
 # Install dependencies
 npm install
 
-# Build extension for Firefox
+# Build for Firefox (default)
 npm run build
+
+# Build for Chrome
+npm run build:chrome
 
 # Output: dist/ folder with manifest.json
 
@@ -30,6 +33,15 @@ npm test
 3. "Load Temporary Add-on" → select `dist/manifest.json`
 4. Configure API key via toolbar icon (settings page)
 5. Test: Press `Alt+C` on any webpage
+
+## Testing in Chrome
+
+1. Build: `npm run build:chrome`
+2. Chrome → `chrome://extensions`
+3. Enable "Developer mode" (top right)
+4. "Load unpacked" → select `dist/` folder
+5. Configure API key via toolbar icon (settings page)
+6. Test: Press `Alt+C` on any webpage
 
 ## Architecture
 
@@ -152,7 +164,8 @@ t('input.tokens', { count: 100 })  // With interpolation
 - **`src/shared/utils.ts`**: Context extraction, page info via postMessage
 - **`src/shared/i18n/`**: Translation system
 - **`src/content/iframe.html`**: Iframe document template
-- **`manifest.json`**: Extension config
+- **`manifest.json`**: Firefox extension config
+- **`manifest.chrome.json`**: Chrome extension config
 
 ## Development Workflow
 
