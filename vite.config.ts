@@ -3,6 +3,8 @@ import react from '@vitejs/plugin-react';
 import { resolve } from 'path';
 import { copyFileSync, mkdirSync, existsSync } from 'fs';
 
+const isChrome = process.env.TARGET === 'chrome';
+
 export default defineConfig(({ command, mode }) => {
   // Check if building for library mode (content/background scripts)
   const isLibBuild = mode === 'lib';
@@ -39,8 +41,11 @@ export default defineConfig(({ command, mode }) => {
         name: 'copy-files',
         closeBundle() {
           mkdirSync('dist', { recursive: true });
-          copyFileSync('manifest.json', 'dist/manifest.json');
-          copyFileSync('public/background.html', 'dist/background.html');
+          const manifestSrc = isChrome ? 'manifest.chrome.json' : 'manifest.json';
+          copyFileSync(manifestSrc, 'dist/manifest.json');
+          if (!isChrome) {
+            copyFileSync('src/background/background.html', 'dist/background.html');
+          }
           copyFileSync('src/content/iframe.html', 'dist/iframe.html');
           const settingsPath = 'dist/src/settings/index.html';
           const settingsAltPath = 'dist/settings.html';
