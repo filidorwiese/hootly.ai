@@ -4,6 +4,7 @@ import { resolve } from 'path';
 import { copyFileSync, mkdirSync, existsSync } from 'fs';
 
 const isChrome = process.env.TARGET === 'chrome';
+const outDir = isChrome ? 'dist-chrome' : 'dist-firefox';
 
 export default defineConfig(({ command, mode }) => {
   // Check if building for library mode (content/background scripts)
@@ -22,7 +23,7 @@ export default defineConfig(({ command, mode }) => {
           name: 'FireClaude',
           fileName: () => process.env.BUILD_OUTPUT!,
         },
-        outDir: 'dist',
+        outDir,
         emptyOutDir: false,
         target: 'es2015',
         rollupOptions: {
@@ -40,19 +41,19 @@ export default defineConfig(({ command, mode }) => {
       {
         name: 'copy-files',
         closeBundle() {
-          mkdirSync('dist', { recursive: true });
+          mkdirSync(outDir, { recursive: true });
           const manifestSrc = isChrome ? 'manifest.chrome.json' : 'manifest.json';
-          copyFileSync(manifestSrc, 'dist/manifest.json');
+          copyFileSync(manifestSrc, `${outDir}/manifest.json`);
           if (!isChrome) {
-            copyFileSync('src/background/background.html', 'dist/background.html');
+            copyFileSync('src/background/background.html', `${outDir}/background.html`);
           }
-          copyFileSync('src/content/iframe.html', 'dist/iframe.html');
-          const settingsPath = 'dist/src/settings/index.html';
-          const settingsAltPath = 'dist/settings.html';
+          copyFileSync('src/content/iframe.html', `${outDir}/iframe.html`);
+          const settingsPath = `${outDir}/src/settings/index.html`;
+          const settingsAltPath = `${outDir}/settings.html`;
           if (existsSync(settingsPath)) {
             copyFileSync(settingsPath, settingsAltPath);
-          } else if (existsSync('dist/index.html')) {
-            copyFileSync('dist/index.html', settingsAltPath);
+          } else if (existsSync(`${outDir}/index.html`)) {
+            copyFileSync(`${outDir}/index.html`, settingsAltPath);
           }
         },
       },
@@ -67,7 +68,7 @@ export default defineConfig(({ command, mode }) => {
           assetFileNames: '[name].[ext]',
         },
       },
-      outDir: 'dist',
+      outDir,
       emptyOutDir: false,
       target: 'es2015',
     },

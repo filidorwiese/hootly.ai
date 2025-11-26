@@ -14,13 +14,16 @@ FireOwl is a browser extension for interacting with Claude AI directly from any 
 # Install dependencies
 npm install
 
-# Build for Firefox (default)
+# Build both Firefox and Chrome
 npm run build
 
-# Build for Chrome
+# Build Firefox only
+npm run build:firefox
+
+# Build Chrome only
 npm run build:chrome
 
-# Output: dist/ folder with manifest.json
+# Output: dist-firefox/ and dist-chrome/ folders
 
 # Run tests
 npm test
@@ -28,9 +31,9 @@ npm test
 
 ## Testing in Firefox
 
-1. Build: `npm run build`
+1. Build: `npm run build:firefox`
 2. Firefox → `about:debugging#/runtime/this-firefox`
-3. "Load Temporary Add-on" → select `dist/manifest.json`
+3. "Load Temporary Add-on" → select `dist-firefox/manifest.json`
 4. Configure API key via toolbar icon (settings page)
 5. Test: Press `Alt+C` on any webpage
 
@@ -39,7 +42,7 @@ npm test
 1. Build: `npm run build:chrome`
 2. Chrome → `chrome://extensions`
 3. Enable "Developer mode" (top right)
-4. "Load unpacked" → select `dist/` folder
+4. "Load unpacked" → select `dist-chrome/` folder
 5. Configure API key via toolbar icon (settings page)
 6. Test: Press `Alt+C` on any webpage
 
