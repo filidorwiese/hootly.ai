@@ -4,7 +4,7 @@ import { initLanguage } from '../shared/i18n';
 import 'highlight.js/styles/github.css';
 
 async function init() {
-  console.log('[Hootly] Iframe app starting...');
+  // console.log('[Hootly] Iframe app starting...');
 
   // Initialize language
   await initLanguage();
@@ -19,7 +19,7 @@ async function init() {
   const root = createRoot(container);
   root.render(<App />);
 
-  console.log('[Hootly] Iframe app mounted');
+  // console.log('[Hootly] Iframe app mounted');
 }
 
 init();

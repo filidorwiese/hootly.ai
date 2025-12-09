@@ -14,19 +14,19 @@ const App: React.FC = () => {
 
   // Log state changes
   useEffect(() => {
-    console.log('[Hootly] Dialog state changed to:', isOpen);
+    // console.log('[Hootly] Dialog state changed to:', isOpen);
   }, [isOpen]);
 
   useEffect(() => {
-    console.log('[Hootly] App component mounted');
+    // console.log('[Hootly] App component mounted');
 
     // Listen for toggle message from parent (iframe) or same window
     const handleMessage = (event: MessageEvent) => {
-      console.log('[Hootly] Window message received:', event.data);
+      // console.log('[Hootly] Window message received:', event.data);
       if (event.data.type === 'hootly-toggle') {
-        console.log('[Hootly] Toggling dialog');
+        // console.log('[Hootly] Toggling dialog');
         setIsOpen((prev) => {
-          console.log('[Hootly] State updating from', prev, 'to', !prev);
+          // console.log('[Hootly] State updating from', prev, 'to', !prev);
           return !prev;
         });
       }
@@ -45,7 +45,7 @@ const App: React.FC = () => {
         if (effectiveLang !== getLanguage()) {
           setLanguage(effectiveLang);
           setLangKey(k => k + 1);
-          console.log('[Hootly] Language changed to:', effectiveLang);
+          // console.log('[Hootly] Language changed to:', effectiveLang);
         }
       }
     };

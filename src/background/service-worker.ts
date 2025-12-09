@@ -17,7 +17,7 @@ chrome.runtime.onMessage.addListener((message: BackgroundMessage, sender, sendRe
       const stream = activeStreams.get(tabId);
       stream.abort();
       activeStreams.delete(tabId);
-      console.log('[Hootly] Stream cancelled for tab:', tabId);
+      // console.log('[Hootly] Stream cancelled for tab:', tabId);
     }
     sendResponse({ success: true });
   } else if (message.type === 'getSettings') {
@@ -111,8 +111,8 @@ async function handleSendPrompt(
       },
     ];
 
-    console.log('[Hootly] Sending messages to API:', messages.length, 'messages');
-    console.log('[Hootly] Provider:', settings.provider, 'Model:', settings.model);
+    // console.log('[Hootly] Sending messages to API:', messages.length, 'messages');
+    // console.log('[Hootly] Provider:', settings.provider, 'Model:', settings.model);
 
     const stream = provider.streamChat(
       apiKey,
@@ -187,7 +187,7 @@ function isModelNotFoundError(error: any, errorMessage: string): boolean {
 }
 
 function extractErrorMessage(error: any): string {
-  console.log('[Hootly] Extracting error:', error);
+  // console.log('[Hootly] Extracting error:', error);
 
   // Handle Anthropic SDK errors
   if (error?.error?.message) {
@@ -261,9 +261,9 @@ function sendToTab(tabId: number, message: ContentMessage) {
   });
 }
 
-console.log('[Hootly Background] Service worker initialized');
+// console.log('[Hootly Background] Service worker initialized');
 
 // Test that commands API is available
-chrome.commands.getAll((commands) => {
-  console.log('[Hootly Background] Registered commands:', commands);
-});
+// chrome.commands.getAll((commands) => {
+//   console.log('[Hootly Background] Registered commands:', commands);
+// });

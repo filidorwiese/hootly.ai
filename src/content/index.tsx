@@ -13,11 +13,11 @@ function parseShortcut(shortcut: string): { key: string; alt: boolean; ctrl: boo
 }
 
 async function init() {
-  console.log('[Hootly] Content script starting...');
+  // console.log('[Hootly] Content script starting...');
 
   // Ensure body exists
   if (!document.body) {
-    console.log('[Hootly] Body not ready, waiting...');
+    // console.log('[Hootly] Body not ready, waiting...');
     if (document.readyState === 'loading') {
       document.addEventListener('DOMContentLoaded', init);
       return;
@@ -52,7 +52,7 @@ async function init() {
   // Wait for iframe to load
   const iframeLoaded = new Promise<void>((resolve) => {
     iframe.onload = () => {
-      console.log('[Hootly] Iframe loaded');
+      // console.log('[Hootly] Iframe loaded');
       // Expose chrome API and page info to iframe
       const iframeWin = iframe.contentWindow as any;
       if (iframeWin) {
@@ -67,7 +67,7 @@ async function init() {
   document.body.appendChild(iframe);
 
   await iframeLoaded;
-  console.log('[Hootly] Iframe created and ready');
+  // console.log('[Hootly] Iframe created and ready');
 
   // Track dialog state to toggle iframe pointer-events
   let dialogOpen = false;
@@ -75,7 +75,7 @@ async function init() {
   // Forward toggle commands to iframe
   const sendToggleToIframe = () => {
     dialogOpen = !dialogOpen;
-    console.log('[Hootly] Sending toggle to iframe, dialogOpen:', dialogOpen);
+    // console.log('[Hootly] Sending toggle to iframe, dialogOpen:', dialogOpen);
     iframe.style.pointerEvents = dialogOpen ? 'auto' : 'none';
     iframe.contentWindow?.postMessage({ type: 'hootly-toggle' }, '*');
   };
@@ -85,7 +85,7 @@ async function init() {
     if (event.data?.type === 'hootly-dialog-closed') {
       dialogOpen = false;
       iframe.style.pointerEvents = 'none';
-      console.log('[Hootly] Dialog closed, disabling iframe pointer events');
+      // console.log('[Hootly] Dialog closed, disabling iframe pointer events');
     }
     // Respond to page info requests from iframe
     if (event.data?.type === 'hootly-get-page-info') {
@@ -112,7 +112,7 @@ async function init() {
 
   // Listen for toggle command from background
   chrome.runtime.onMessage.addListener((message) => {
-    console.log('[Hootly] Received message:', message);
+    // console.log('[Hootly] Received message:', message);
     if (message.type === 'toggleDialog') {
       sendToggleToIframe();
     }
@@ -124,14 +124,14 @@ async function init() {
   // Load configured shortcut
   Storage.getSettings().then((settings) => {
     currentShortcut = parseShortcut(settings.shortcut);
-    console.log('[Hootly] Keyboard shortcut configured:', settings.shortcut);
+    // console.log('[Hootly] Keyboard shortcut configured:', settings.shortcut);
   });
 
   // Listen for shortcut updates
   chrome.storage.onChanged.addListener((changes) => {
     if (changes.settings?.newValue?.shortcut) {
       currentShortcut = parseShortcut(changes.settings.newValue.shortcut);
-      console.log('[Hootly] Keyboard shortcut updated:', changes.settings.newValue.shortcut);
+      // console.log('[Hootly] Keyboard shortcut updated:', changes.settings.newValue.shortcut);
     }
   });
 
@@ -147,12 +147,12 @@ async function init() {
 
     if (matchesModifiers && matchesKey) {
       event.preventDefault();
-      console.log('[Hootly] Keyboard shortcut triggered');
+      // console.log('[Hootly] Keyboard shortcut triggered');
       sendToggleToIframe();
     }
   });
 
-  console.log('[Hootly] Content script initialized successfully');
+  // console.log('[Hootly] Content script initialized successfully');
 }
 
 // Start initialization

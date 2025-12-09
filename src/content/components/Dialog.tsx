@@ -68,7 +68,7 @@ const Dialog: React.FC<DialogProps> = ({ isOpen, onClose }) => {
           setCapturedSelection(selectionText);
           setContextEnabled(true);
           setContextMode('selection');
-          console.log('[Hootly] Auto-enabled context with selection:', selectionText.length, 'chars');
+          // console.log('[Hootly] Auto-enabled context with selection:', selectionText.length, 'chars');
         } else {
           setCapturedSelection(null);
           setContextMode('none');
@@ -111,7 +111,7 @@ const Dialog: React.FC<DialogProps> = ({ isOpen, onClose }) => {
           setConversationHistory([]);
           setResponse('');
           setError(null);
-          console.log('[Hootly] Provider changed to:', newProvider, '- conversation cleared');
+          // console.log('[Hootly] Provider changed to:', newProvider, '- conversation cleared');
         }
       }
     };
@@ -144,7 +144,7 @@ const Dialog: React.FC<DialogProps> = ({ isOpen, onClose }) => {
           // Stop generation
           setIsLoading(false);
           chrome.runtime.sendMessage({ type: 'cancelStream' });
-          console.log('[Hootly] Generation cancelled by user');
+          // console.log('[Hootly] Generation cancelled by user');
         } else {
           // Close dialog
           onClose();
