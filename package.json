@@ -13,7 +13,8 @@
     "release": "rimraf dist/*.zip && node scripts/release.js",
     "preview": "vite preview",
     "test": "vitest",
-    "prepare": "husky"
+    "prepare": "husky",
+    "postversion": "git push --follow-tags"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.32.1",
