@@ -1,6 +1,6 @@
 # Hootly
 
-Browser extension for interacting with Claude AI directly from any webpage.
+Hootly is a browser extension that brings AI to any webpage. It's completely free—just connect your own API key from Claude, OpenAI, Gemini, or OpenRouter.
 
 ## Build Requirements
 

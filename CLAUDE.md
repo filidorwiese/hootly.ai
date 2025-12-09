@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-Hootly is a browser extension for interacting with Claude AI directly from any webpage. Built with Vite, React, and TypeScript. Supports Firefox and Chrome.
+Hootly is a browser extension for interacting with Claude/OpenAI/Gemini/OpenRouter AI directly from any webpage. Built with Vite, React, and TypeScript. Supports Firefox and Chrome.
 
 **Status**: MVP functional with i18n support (10 languages).
 

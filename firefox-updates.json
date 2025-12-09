@@ -1,0 +1,12 @@
+{
+  "addons": {
+    "@hootly-ai": {
+      "updates": [
+        {
+          "version": "0.3",
+          "update_link": "https://hootly.ai/releases/hootly-firefox-0.3.0.zip"
+        }
+      ]
+    }
+  }
+}
