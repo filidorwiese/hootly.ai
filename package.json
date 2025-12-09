@@ -8,9 +8,9 @@
     "build": "npm run build:firefox && npm run build:chrome",
     "build:firefox": "export TARGET=firefox && rimraf dist/firefox && npm run build:base",
     "build:chrome": "export TARGET=chrome && rimraf dist/chrome && npm run build:base",
-    "build:base": "tsc && npm run build:scripts && vite build && node scripts/generate-icons.js",
+    "build:base": "tsc && npm run build:scripts && vite build && node scripts/generate-icons.js && node scripts/update-version.js",
     "build:scripts": "BUILD_ENTRY=src/content/index.tsx BUILD_OUTPUT=content.js vite build --mode lib && BUILD_ENTRY=src/content/iframe-app.tsx BUILD_OUTPUT=iframe-app.js vite build --mode lib && BUILD_ENTRY=src/background/service-worker.ts BUILD_OUTPUT=background.js vite build --mode lib",
-    "release": "node scripts/release.js",
+    "release": "rimraf dist/*.zip && node scripts/release.js",
     "preview": "vite preview",
     "test": "vitest",
     "prepare": "husky"

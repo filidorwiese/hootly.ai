@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
-  "name": "Hootly",
-  "version": "0.1.0",
+  "name": "Hootly.ai",
+  "version": "0.0.0",
   "description": "Interact with Claude AI directly from any webpage",
   "permissions": [
     "storage",
