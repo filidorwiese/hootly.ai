@@ -22,7 +22,9 @@ renderer.code = ({ text, lang }: { text: string; lang?: string }) => {
       // Fallback to plain text
     }
   }
-  return `<pre><code class="hljs${lang ? ` language-${lang}` : ''}">${highlighted}</code></pre>`;
+  // Store raw text in data attribute for copying
+  const escapedText = text.replace(/&/g, '&amp;').replace(/"/g, '&quot;');
+  return `<pre class="code-block-wrapper"><button class="code-copy-btn" data-code="${escapedText}" title="Copy code">📋</button><code class="hljs${lang ? ` language-${lang}` : ''}">${highlighted}</code></pre>`;
 };
 
 marked.use({ renderer, breaks: true });
@@ -37,6 +39,7 @@ interface ResponseProps {
 const Response: React.FC<ResponseProps> = ({ conversationHistory, currentResponse, isLoading, error }) => {
   const containerRef = useRef<HTMLDivElement>(null);
   const [copiedIndex, setCopiedIndex] = useState<number | null>(null);
+  const [, setCopiedCodeBlock] = useState<string | null>(null);
 
   // Auto-scroll to bottom when new content arrives
   useEffect(() => {
@@ -44,6 +47,36 @@ const Response: React.FC<ResponseProps> = ({ conversationHistory, currentRespons
       containerRef.current.scrollTop = containerRef.current.scrollHeight;
     }
   }, [conversationHistory, currentResponse]);
+
+  // Handle code block copy button clicks
+  useEffect(() => {
+    const handleCodeCopy = (e: MouseEvent) => {
+      const target = e.target as HTMLElement;
+      if (target.classList.contains('code-copy-btn')) {
+        const code = target.getAttribute('data-code');
+        if (code) {
+          const unescaped = code.replace(/&quot;/g, '"').replace(/&amp;/g, '&');
+          navigator.clipboard.writeText(unescaped).then(() => {
+            const originalText = target.textContent;
+            setCopiedCodeBlock(code);
+            target.textContent = '✓';
+            setTimeout(() => {
+              target.textContent = originalText || '📋';
+              setCopiedCodeBlock(null);
+            }, 2000);
+          }).catch(err => {
+            console.error('Failed to copy code:', err);
+          });
+        }
+      }
+    };
+
+    const container = containerRef.current;
+    if (container) {
+      container.addEventListener('click', handleCodeCopy);
+      return () => container.removeEventListener('click', handleCodeCopy);
+    }
+  }, []);
 
   const handleCopy = async (content: string, index: number) => {
     try {
@@ -198,11 +231,18 @@ const markdownStyles = css`
   }
 
   pre {
+    position: relative;
     background: #1E2820;
     padding: 14px 16px;
     border-radius: 10px;
     overflow-x: auto;
-    margin: 0 0 16px 0;
+    margin: 0;
+    margin-bottom: 16px;
+
+    &.code-block-wrapper {
+      padding-top: 14px;
+      padding-right: 50px;
+    }
 
     code {
       background: none;
@@ -210,6 +250,35 @@ const markdownStyles = css`
       color: #E8EDE9;
       font-size: 12.5px;
     }
+  }
+
+  .code-copy-btn {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    background: rgba(250, 251, 249, 0.1);
+    border: 1px solid rgba(250, 251, 249, 0.2);
+    border-radius: 6px;
+    padding: 6px 10px;
+    font-size: 13px;
+    cursor: pointer;
+    color: #E8EDE9;
+    transition: all 0.15s ease;
+    z-index: 1;
+    opacity: 0;
+
+    &:hover {
+      background: rgba(250, 251, 249, 0.15);
+      border-color: rgba(250, 251, 249, 0.3);
+    }
+
+    &:active {
+      transform: scale(0.95);
+    }
+  }
+
+  pre:hover .code-copy-btn {
+    opacity: 1;
   }
 
   ul, ol {
@@ -289,7 +358,7 @@ const messageContainerStyles = (role: 'user' | 'assistant') => css`
   color: #2D3A30;
   box-shadow: ${role === 'assistant' ? '0 1px 3px rgba(45, 60, 48, 0.04)' : 'none'};
 
-  &:hover button {
+  &:hover > button {
     opacity: 1;
   }
 
