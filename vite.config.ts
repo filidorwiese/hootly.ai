@@ -20,7 +20,7 @@ export default defineConfig(({ mode }) => {
         lib: {
           entry: resolve(__dirname, process.env.BUILD_ENTRY!),
           formats: ['iife'],
-          name: 'FireClaude',
+          name: 'Hootly.ai',
           fileName: () => process.env.BUILD_OUTPUT!,
         },
         outDir,

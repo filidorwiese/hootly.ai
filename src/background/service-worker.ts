@@ -58,7 +58,7 @@ function toggleDialogInActiveTab() {
   chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
     if (tabs[0]?.id) {
       chrome.tabs.sendMessage(tabs[0].id, { type: 'toggleDialog' })
-        .catch((err) => console.error('[FireOwl Background] Error sending message:', err));
+        .catch((err) => console.error('[Hootly Background] Error sending message:', err));
     }
   });
 }
@@ -261,9 +261,9 @@ function sendToTab(tabId: number, message: ContentMessage) {
   });
 }
 
-console.log('[FireOwl Background] Service worker initialized');
+console.log('[Hootly Background] Service worker initialized');
 
 // Test that commands API is available
 chrome.commands.getAll((commands) => {
-  console.log('[FireOwl Background] Registered commands:', commands);
+  console.log('[Hootly Background] Registered commands:', commands);
 });

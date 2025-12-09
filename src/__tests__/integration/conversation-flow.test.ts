@@ -83,7 +83,7 @@ describe('Conversation Flow Integration', () => {
   describe('Settings and provider flow', () => {
     it('retrieves correct API key for provider', async () => {
       setMockStorage({
-        fireclaude_settings: {
+        hootly_settings: {
           ...DEFAULT_SETTINGS,
           provider: 'claude',
           claudeApiKey: 'sk-claude-key',
@@ -98,7 +98,7 @@ describe('Conversation Flow Integration', () => {
     it('switches providers correctly', async () => {
       // Start with Claude
       setMockStorage({
-        fireclaude_settings: {
+        hootly_settings: {
           ...DEFAULT_SETTINGS,
           provider: 'claude',
           claudeApiKey: 'sk-claude',
@@ -155,7 +155,7 @@ describe('Conversation Flow Integration', () => {
   describe('Conversation history depth', () => {
     it('respects conversation depth setting', async () => {
       setMockStorage({
-        fireclaude_settings: { ...configuredSettings, conversationDepth: 3 },
+        hootly_settings: { ...configuredSettings, conversationDepth: 3 },
       })
 
       const settings = await Storage.getSettings()
@@ -186,8 +186,8 @@ describe('Conversation Flow Integration', () => {
       })
 
       setMockStorage({
-        fireclaude_conversations: [recentConv, oldConv],
-        fireclaude_settings: { ...DEFAULT_SETTINGS, retentionDays: 30 },
+        hootly_conversations: [recentConv, oldConv],
+        hootly_settings: { ...DEFAULT_SETTINGS, retentionDays: 30 },
       })
 
       await Storage.clearOldConversations(30)

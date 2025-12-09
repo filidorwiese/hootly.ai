@@ -23,7 +23,7 @@ const App: React.FC = () => {
     // Listen for toggle message from parent (iframe) or same window
     const handleMessage = (event: MessageEvent) => {
       console.log('[Hootly] Window message received:', event.data);
-      if (event.data.type === 'hootly-toggle' || event.data.type === 'fireclaude-toggle') {
+      if (event.data.type === 'hootly-toggle') {
         console.log('[Hootly] Toggling dialog');
         setIsOpen((prev) => {
           console.log('[Hootly] State updating from', prev, 'to', !prev);
@@ -39,8 +39,8 @@ const App: React.FC = () => {
   // Listen for language changes in storage
   useEffect(() => {
     const handleStorageChange = (changes: { [key: string]: chrome.storage.StorageChange }) => {
-      if (changes.fireclaude_settings?.newValue?.language) {
-        const newLang = changes.fireclaude_settings.newValue.language;
+      if (changes.hootly_settings?.newValue?.language) {
+        const newLang = changes.hootly_settings.newValue.language;
         const effectiveLang = newLang === 'auto' ? getBrowserLanguage() : newLang;
         if (effectiveLang !== getLanguage()) {
           setLanguage(effectiveLang);

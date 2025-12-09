@@ -102,7 +102,7 @@ To update models:
 ## Project Structure
 
 ```
-fireclaude/
+hootly.ai/
 ├── src/
 │   ├── background/       # Service worker (API calls)
 │   ├── content/          # Injected UI (React)

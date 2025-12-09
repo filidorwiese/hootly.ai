@@ -24,8 +24,8 @@ let languageSetting: string = 'auto';
 
 export async function initLanguage(): Promise<void> {
   try {
-    const result = await chrome.storage.local.get('fireclaude_settings');
-    const settings = result.fireclaude_settings;
+    const result = await chrome.storage.local.get('hootly_settings');
+    const settings = result.hootly_settings;
     if (settings?.language) {
       languageSetting = settings.language;
       if (languageSetting !== 'auto' && translations[languageSetting]) {

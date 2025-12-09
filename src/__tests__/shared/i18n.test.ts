@@ -78,7 +78,7 @@ describe('i18n', () => {
   describe('initLanguage', () => {
     it('loads language from storage', async () => {
       setMockStorage({
-        fireclaude_settings: { language: 'fr' },
+        hootly_settings: { language: 'fr' },
       })
       await initLanguage()
       expect(getLanguage()).toBe('fr')
@@ -86,7 +86,7 @@ describe('i18n', () => {
 
     it('uses auto-detect when language is auto', async () => {
       setMockStorage({
-        fireclaude_settings: { language: 'auto' },
+        hootly_settings: { language: 'auto' },
       })
       await initLanguage()
       // Should use browser language (mocked as 'en' in jsdom)

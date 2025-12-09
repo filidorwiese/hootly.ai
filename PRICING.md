@@ -268,8 +268,6 @@ We're considering adding:
   - 10,000 requests/month included
   - Programmatic access to all models
 
-Vote on feature requests at [github.com/yourrepo/fireowl/discussions](https://github.com)
-
 ---
 
 ## Support

@@ -30,7 +30,7 @@ describe('Dialog', () => {
   beforeEach(() => {
     setLanguage('en')
     setMockStorage({
-      fireclaude_settings: configuredSettings,
+      hootly_settings: configuredSettings,
     })
     vi.clearAllMocks()
   })
@@ -238,7 +238,7 @@ describe('Dialog state management', () => {
   beforeEach(() => {
     setLanguage('en')
     setMockStorage({
-      fireclaude_settings: configuredSettings,
+      hootly_settings: configuredSettings,
     })
   })
 
@@ -250,8 +250,8 @@ describe('Dialog state management', () => {
 
   it('loads saved dialog position', async () => {
     setMockStorage({
-      fireclaude_settings: configuredSettings,
-      fireclaude_dialog_position: { x: 100, y: 200, width: 600, height: 0 },
+      hootly_settings: configuredSettings,
+      hootly_dialog_position: { x: 100, y: 200, width: 600, height: 0 },
     })
 
     await renderDialog({ isOpen: true, onClose: () => {} })

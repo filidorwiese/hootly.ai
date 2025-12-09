@@ -23,7 +23,7 @@ describe('Storage', () => {
 
     it('merges stored settings with defaults', async () => {
       setMockStorage({
-        fireclaude_settings: { claudeApiKey: 'test-key', model: 'claude-3-opus' },
+        hootly_settings: { claudeApiKey: 'test-key', model: 'claude-3-opus' },
       })
 
       const settings = await Storage.getSettings()
@@ -35,7 +35,7 @@ describe('Storage', () => {
     })
 
     it('preserves all stored settings', async () => {
-      setMockStorage({ fireclaude_settings: configuredSettings })
+      setMockStorage({ hootly_settings: configuredSettings })
 
       const settings = await Storage.getSettings()
       expect(settings.claudeApiKey).toBe(configuredSettings.claudeApiKey)
@@ -48,13 +48,13 @@ describe('Storage', () => {
       await Storage.saveSettings({ claudeApiKey: 'new-key' })
 
       const storage = getMockStorage()
-      expect(storage.fireclaude_settings).toBeDefined()
-      expect((storage.fireclaude_settings as any).claudeApiKey).toBe('new-key')
+      expect(storage.hootly_settings).toBeDefined()
+      expect((storage.hootly_settings as any).claudeApiKey).toBe('new-key')
     })
 
     it('merges with existing settings', async () => {
       setMockStorage({
-        fireclaude_settings: { claudeApiKey: 'old-key', model: 'old-model' },
+        hootly_settings: { claudeApiKey: 'old-key', model: 'old-model' },
       })
 
       await Storage.saveSettings({ model: 'new-model' })
@@ -81,7 +81,7 @@ describe('Storage', () => {
 
     it('returns stored conversations', async () => {
       setMockStorage({
-        fireclaude_conversations: [fullConversation, emptyConversation],
+        hootly_conversations: [fullConversation, emptyConversation],
       })
 
       const conversations = await Storage.getConversations()
@@ -102,7 +102,7 @@ describe('Storage', () => {
 
     it('updates existing conversation', async () => {
       const conv = createConversation({ id: 'existing', title: 'Original' })
-      setMockStorage({ fireclaude_conversations: [conv] })
+      setMockStorage({ hootly_conversations: [conv] })
 
       const updated = { ...conv, title: 'Updated' }
       await Storage.saveConversation(updated)
@@ -114,7 +114,7 @@ describe('Storage', () => {
 
     it('preserves other conversations when updating', async () => {
       setMockStorage({
-        fireclaude_conversations: [fullConversation, emptyConversation],
+        hootly_conversations: [fullConversation, emptyConversation],
       })
 
       const updated = { ...fullConversation, title: 'Modified' }
@@ -130,7 +130,7 @@ describe('Storage', () => {
   describe('deleteConversation', () => {
     it('removes conversation by id', async () => {
       setMockStorage({
-        fireclaude_conversations: [fullConversation, emptyConversation],
+        hootly_conversations: [fullConversation, emptyConversation],
       })
 
       await Storage.deleteConversation(fullConversation.id)
@@ -142,7 +142,7 @@ describe('Storage', () => {
 
     it('does nothing if conversation not found', async () => {
       setMockStorage({
-        fireclaude_conversations: [fullConversation],
+        hootly_conversations: [fullConversation],
       })
 
       await Storage.deleteConversation('nonexistent')
@@ -197,7 +197,7 @@ describe('Storage', () => {
       })
 
       setMockStorage({
-        fireclaude_conversations: [recentConv, oldConversation], // oldConversation is 60 days old
+        hootly_conversations: [recentConv, oldConversation], // oldConversation is 60 days old
       })
 
       await Storage.clearOldConversations(30) // 30 day retention
@@ -218,7 +218,7 @@ describe('Storage', () => {
       })
 
       setMockStorage({
-        fireclaude_conversations: [conv1, conv2],
+        hootly_conversations: [conv1, conv2],
       })
 
       await Storage.clearOldConversations(30)
@@ -231,7 +231,7 @@ describe('Storage', () => {
       const conv = createConversation({ updatedAt: Date.now() - 1000 }) // 1 second ago
 
       setMockStorage({
-        fireclaude_conversations: [conv],
+        hootly_conversations: [conv],
       })
 
       await Storage.clearOldConversations(0)

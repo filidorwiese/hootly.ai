@@ -2,10 +2,10 @@ import type { Settings, Conversation, DialogPosition } from './types';
 import { DEFAULT_SETTINGS } from './types';
 
 const STORAGE_KEYS = {
-  SETTINGS: 'fireclaude_settings',
-  CONVERSATIONS: 'fireclaude_conversations',
-  CURRENT_CONVERSATION: 'fireclaude_current_conversation',
-  DIALOG_POSITION: 'fireclaude_dialog_position',
+  SETTINGS: 'hootly_settings',
+  CONVERSATIONS: 'hootly_conversations',
+  CURRENT_CONVERSATION: 'hootly_current_conversation',
+  DIALOG_POSITION: 'hootly_dialog_position',
 } as const;
 
 export class Storage {

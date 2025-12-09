@@ -31,7 +31,7 @@ describe('service-worker message handling', () => {
     vi.clearAllMocks()
 
     setMockStorage({
-      fireclaude_settings: configuredSettings,
+      hootly_settings: configuredSettings,
     })
 
     // Capture the message listener when it's registered
