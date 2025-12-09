@@ -3,7 +3,7 @@ import { readFileSync } from 'fs';
 import { mkdirSync } from 'fs';
 
 const isChrome = process.env.TARGET === 'chrome';
-const outDir = isChrome ? 'dist-chrome' : 'dist-firefox';
+const outDir = isChrome ? 'dist/chrome' : 'dist/firefox';
 
 const png = readFileSync('public/icons/icon.png');
 

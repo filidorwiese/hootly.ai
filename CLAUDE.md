@@ -23,7 +23,7 @@ npm run build:firefox
 # Build Chrome only
 npm run build:chrome
 
-# Output: dist-firefox/ and dist-chrome/ folders
+# Output: dist/firefox/ and dist/chrome/ folders
 
 # Run tests
 npm test
@@ -33,7 +33,7 @@ npm test
 
 1. Build: `npm run build:firefox`
 2. Firefox → `about:debugging#/runtime/this-firefox`
-3. "Load Temporary Add-on" → select `dist-firefox/manifest.json`
+3. "Load Temporary Add-on" → select `dist/firefox/manifest.json`
 4. Configure API key via toolbar icon (settings page)
 5. Test: Press `Alt+C` on any webpage
 
@@ -42,7 +42,7 @@ npm test
 1. Build: `npm run build:chrome`
 2. Chrome → `chrome://extensions`
 3. Enable "Developer mode" (top right)
-4. "Load unpacked" → select `dist-chrome/` folder
+4. "Load unpacked" → select `dist/chrome/` folder
 5. Configure API key via toolbar icon (settings page)
 6. Test: Press `Alt+C` on any webpage
 

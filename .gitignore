@@ -7,11 +7,8 @@ yarn-error.log*
 pnpm-debug.log*
 lerna-debug.log*
 
-node_modules
-dist
-dist-firefox
-dist-chrome
-dist-ssr
+node_modules/
+dist/
 *.local
 .env
 
@@ -28,3 +25,5 @@ dist-ssr
 
 # Extension build
 web-ext-artifacts
+
+*.zip

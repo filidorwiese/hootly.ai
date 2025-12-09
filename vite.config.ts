@@ -4,9 +4,9 @@ import { resolve } from 'path';
 import { copyFileSync, mkdirSync, existsSync } from 'fs';
 
 const isChrome = process.env.TARGET === 'chrome';
-const outDir = isChrome ? 'dist-chrome' : 'dist-firefox';
+const outDir = isChrome ? 'dist/chrome' : 'dist/firefox';
 
-export default defineConfig(({ command, mode }) => {
+export default defineConfig(({ mode }) => {
   // Check if building for library mode (content/background scripts)
   const isLibBuild = mode === 'lib';
 
@@ -26,9 +26,11 @@ export default defineConfig(({ command, mode }) => {
         outDir,
         emptyOutDir: false,
         target: 'es2015',
+        minify: false,
         rollupOptions: {
           output: {
-            inlineDynamicImports: true,
+            inlineDynamicImports: false,
+            manualChunks: undefined,
           },
         },
       },
@@ -42,7 +44,7 @@ export default defineConfig(({ command, mode }) => {
         name: 'copy-files',
         closeBundle() {
           mkdirSync(outDir, { recursive: true });
-          const manifestSrc = isChrome ? 'manifest.chrome.json' : 'manifest.json';
+          const manifestSrc = isChrome ? 'manifest.chrome.json' : 'manifest.firefox.json';
           copyFileSync(manifestSrc, `${outDir}/manifest.json`);
           if (!isChrome) {
             copyFileSync('src/background/background.html', `${outDir}/background.html`);
@@ -71,6 +73,7 @@ export default defineConfig(({ command, mode }) => {
       outDir,
       emptyOutDir: false,
       target: 'es2015',
+      minify: false,
     },
   };
 });

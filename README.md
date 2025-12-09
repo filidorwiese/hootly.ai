@@ -1,25 +1,4 @@
-# FireClaude
-
-Firefox extension for interacting with Claude AI directly from any webpage.
-
-## Features
-
-✅ **Phase 1-3 Completed:**
-- Keyboard-activated dialog (Alt+W)
-- Draggable & resizable interface
-- Auto-expanding textarea with token counter
-- Context injection (full page or text selection)
-- Streaming API responses
-- Markdown rendering with syntax highlighting
-- Conversation history tracking
-- Local storage persistence
-
-🚧 **Not Yet Implemented:**
-- Conversation history UI/search
-- Full settings page
-- Multi-turn conversation depth controls
-- Theme customization
-- Export functionality
+# Hootly.ai
 
 ## Setup
 
@@ -35,18 +14,18 @@ npm install
 npm run build
 ```
 
-This creates a `dist/` folder with the compiled extension.
+This creates a `dist/` folder with the compiled extensions.
 
 ### 3. Load in Firefox
 
 1. Open Firefox
 2. Navigate to `about:debugging#/runtime/this-firefox`
 3. Click "Load Temporary Add-on"
-4. Select `dist/manifest.json`
+4. Select `dist/firefox/manifest.json`
 
 ### 4. Configure Settings
 
-1. Click the FireClaude icon in the toolbar (or navigate to settings)
+1. Click the Hootly icon in the toolbar (or navigate to settings)
 2. Enter your Anthropic API key
 3. (Optional) Customize:
    - Model selection
