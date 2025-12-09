@@ -51,7 +51,7 @@
     "thinking": "考え中..."
   },
   "input": {
-    "placeholder": "ホーホー、質問をどうぞ...（⏎ 送信、⇧⏎ 改行）",
+    "placeholder": "ホーホー、質問をどうぞ...",
     "tokens": "~{{count}} トークン",
     "clear": "クリア",
     "send": "送信",

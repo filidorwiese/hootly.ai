@@ -51,7 +51,7 @@
     "thinking": "Sto pensando..."
   },
   "input": {
-    "placeholder": "Gufa la tua domanda... (⏎ inviare, ⇧⏎ nuova riga)",
+    "placeholder": "Gufa la tua domanda...",
     "tokens": "~{{count}} token",
     "clear": "Cancella",
     "send": "Invia",

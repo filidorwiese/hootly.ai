@@ -51,7 +51,7 @@
     "thinking": "Pensando..."
   },
   "input": {
-    "placeholder": "Ulula tu pregunta... (⏎ enviar, ⇧⏎ nueva línea)",
+    "placeholder": "Ulula tu pregunta...",
     "tokens": "~{{count}} tokens",
     "clear": "Borrar",
     "send": "Enviar",

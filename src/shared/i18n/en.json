@@ -51,7 +51,7 @@
     "thinking": "Thinking..."
   },
   "input": {
-    "placeholder": "Hoot me a question... (⏎ send, ⇧⏎ newline)",
+    "placeholder": "Hoot me a question...",
     "tokens": "~{{count}} tokens",
     "clear": "Clear",
     "send": "Send",

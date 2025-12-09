@@ -51,7 +51,7 @@
     "thinking": "Aan het denken..."
   },
   "input": {
-    "placeholder": "Oehoe me een vraag... (⏎ versturen, ⇧⏎ nieuwe regel)",
+    "placeholder": "Oehoe me een vraag...",
     "tokens": "~{{count}} tokens",
     "clear": "Wissen",
     "send": "Verstuur",

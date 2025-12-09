@@ -107,14 +107,24 @@ const InputArea: React.FC<InputAreaProps> = ({
           className={textareaStyles}
         />
         {value && !disabled && (
-          <button
-            onClick={() => onChange('')}
-            className={clearIconStyles}
-            aria-label={t('input.clear')}
-            type="button"
-          >
-            ✕
-          </button>
+          <>
+            <button
+                onClick={onSubmit}
+                className={sendIconStyles}
+                aria-label={t('input.send')}
+                type="button"
+            >
+              ▶
+            </button>
+            <button
+                onClick={() => onChange('')}
+                className={clearIconStyles}
+                aria-label={t('input.clear')}
+                type="button"
+            >
+              ✕
+            </button>
+          </>
         )}
       </div>
       <div className={footerStyles}>
@@ -151,7 +161,7 @@ const textareaWrapperStyles = css`
 
 const textareaStyles = css`
   width: 100%;
-  padding: 12px 36px 12px 14px;
+  padding: 12px 70px 12px 14px;
   border: 1px solid #D4DCD6;
   border-radius: 10px;
   font-size: 13.5px;
@@ -177,6 +187,34 @@ const textareaStyles = css`
 
   &::placeholder {
     color: #9AA89C;
+  }
+`;
+
+const sendIconStyles = css`
+  position: absolute;
+  right: 40px;
+  top: 10px;
+  width: 22px;
+  height: 22px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #99cd7e;
+  border: none;
+  border-radius: 50%;
+  font-size: 9px;
+  color: #FFFFFF;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  padding-left: 6px;
+
+  &:hover {
+    background: #769d60;
+    transform: scale(1.05);
+  }
+
+  &:active {
+    transform: scale(0.95);
   }
 `;
 

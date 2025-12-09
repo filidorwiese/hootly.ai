@@ -51,7 +51,7 @@
     "thinking": "Réflexion en cours..."
   },
   "input": {
-    "placeholder": "Hou-hou, une question... (⏎ envoyer, ⇧⏎ nouvelle ligne)",
+    "placeholder": "Hou-hou, une question...",
     "tokens": "~{{count}} tokens",
     "clear": "Effacer",
     "send": "Envoyer",
