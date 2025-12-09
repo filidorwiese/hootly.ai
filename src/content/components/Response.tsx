@@ -9,6 +9,8 @@ import { t } from '../../shared/i18n';
 const renderer = new marked.Renderer();
 renderer.code = ({ text, lang }: { text: string; lang?: string }) => {
   let highlighted = text;
+  let detectedLang = lang;
+  
   if (lang && hljs.getLanguage(lang)) {
     try {
       highlighted = hljs.highlight(text, { language: lang }).value;
@@ -17,14 +19,18 @@ renderer.code = ({ text, lang }: { text: string; lang?: string }) => {
     }
   } else {
     try {
-      highlighted = hljs.highlightAuto(text).value;
+      const result = hljs.highlightAuto(text);
+      highlighted = result.value;
+      detectedLang = result.language;
     } catch (e) {
       // Fallback to plain text
     }
   }
+  
   // Store raw text in data attribute for copying
   const escapedText = text.replace(/&/g, '&amp;').replace(/"/g, '&quot;');
-  return `<pre class="code-block-wrapper"><button class="code-copy-btn" data-code="${escapedText}" title="Copy code">📋</button><code class="hljs${lang ? ` language-${lang}` : ''}">${highlighted}</code></pre>`;
+  const langLabel = detectedLang ? `<span class="code-lang-label">${detectedLang}</span>` : '';
+  return `<pre class="code-block-wrapper">${langLabel}<button class="code-copy-btn" data-code="${escapedText}" title="Copy code">📋</button><code class="hljs${lang ? ` language-${lang}` : ''}">${highlighted}</code></pre>`;
 };
 
 marked.use({ renderer, breaks: true });
@@ -240,7 +246,7 @@ const markdownStyles = css`
     margin-bottom: 16px;
 
     &.code-block-wrapper {
-      padding-top: 14px;
+      padding-top: 32px;
       padding-right: 50px;
     }
 
@@ -250,6 +256,18 @@ const markdownStyles = css`
       color: #E8EDE9;
       font-size: 12.5px;
     }
+  }
+
+  .code-lang-label {
+    position: absolute;
+    top: 8px;
+    left: 12px;
+    font-size: 11px;
+    color: rgba(250, 251, 249, 0.5);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    font-weight: 500;
+    font-family: 'SF Mono', 'Fira Code', 'Monaco', 'Menlo', monospace;
   }
 
   .code-copy-btn {
