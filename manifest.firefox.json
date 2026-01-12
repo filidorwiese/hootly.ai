@@ -60,6 +60,7 @@
   "browser_specific_settings": {
     "gecko": {
       "id": "@hootly-ai",
+      "strict_min_version": "109.0",
       "update_url": "https://hootly.ai/firefox-updates.json",
       "data_collection_permissions": {
         "required": [
