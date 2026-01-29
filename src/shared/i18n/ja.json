@@ -65,5 +65,13 @@
     "selection": "選択範囲（{{chars}}文字）",
     "fullPage": "ページ全体",
     "noContext": "コンテキストなし"
+  },
+  "history": {
+    "title": "履歴",
+    "empty": "会話がありません",
+    "yesterday": "昨日",
+    "messages": "{{count}}件",
+    "delete": "会話を削除",
+    "openHistory": "履歴を開く"
   }
 }

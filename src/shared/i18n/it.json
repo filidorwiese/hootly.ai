@@ -65,5 +65,13 @@
     "selection": "Selezione ({{chars}} caratteri)",
     "fullPage": "Pagina intera",
     "noContext": "Nessun contesto"
+  },
+  "history": {
+    "title": "Cronologia",
+    "empty": "Nessuna conversazione",
+    "yesterday": "Ieri",
+    "messages": "{{count}} msg",
+    "delete": "Elimina conversazione",
+    "openHistory": "Apri cronologia"
   }
 }

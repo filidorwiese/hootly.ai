@@ -8,6 +8,7 @@ import { getApiKey } from '../../shared/providers';
 import { t } from '../../shared/i18n';
 import InputArea from './InputArea';
 import Response from './Response';
+import HistoryPanel from './HistoryPanel';
 
 interface DialogProps {
   isOpen: boolean;
@@ -35,6 +36,8 @@ const Dialog: React.FC<DialogProps> = ({ isOpen, onClose }) => {
   const [currentModel, setCurrentModel] = useState<string>('');
   const [currentProvider, setCurrentProvider] = useState<LLMProvider>('claude');
   const [currentConversationId, setCurrentConversationId] = useState<string | null>(null);
+  const [isHistoryOpen, setIsHistoryOpen] = useState(false);
+  const [savedConversations, setSavedConversations] = useState<Conversation[]>([]);
 
   // Estimate token count (rough approximation: ~4 chars per token)
   const estimateTokens = (text: string): number => {
@@ -287,6 +290,31 @@ const Dialog: React.FC<DialogProps> = ({ isOpen, onClose }) => {
     }
   };
 
+  const handleOpenHistory = async () => {
+    const conversations = await Storage.getConversations();
+    setSavedConversations(conversations);
+    setIsHistoryOpen(true);
+  };
+
+  const handleSelectConversation = (conversation: Conversation) => {
+    setConversationHistory(conversation.messages);
+    setCurrentConversationId(conversation.id);
+    setResponse('');
+    setError(null);
+    setIsHistoryOpen(false);
+  };
+
+  const handleDeleteConversation = async (id: string) => {
+    await Storage.deleteConversation(id);
+    setSavedConversations((prev) => prev.filter((c) => c.id !== id));
+    if (currentConversationId === id) {
+      setConversationHistory([]);
+      setCurrentConversationId(null);
+      setResponse('');
+      setError(null);
+    }
+  };
+
   const handleSubmit = async () => {
     if (!inputValue.trim() || isLoading) return;
 
@@ -413,6 +441,7 @@ const Dialog: React.FC<DialogProps> = ({ isOpen, onClose }) => {
             {conversationHistory.length > 0 && (
               <button onClick={handleClearConversation} aria-label={t('dialog.clearConversation')} title={t('dialog.clearConversation')}>🔥</button>
             )}
+            <button onClick={handleOpenHistory} aria-label={t('history.openHistory')} title={t('history.openHistory')}>📜</button>
             <button onClick={() => chrome.runtime.sendMessage({ type: 'openSettings' })} aria-label={t('dialog.settings')} title={t('dialog.openSettings')}>
               ⚙️
             </button>
@@ -454,6 +483,16 @@ const Dialog: React.FC<DialogProps> = ({ isOpen, onClose }) => {
               <div className={cancelHintStyles} dangerouslySetInnerHTML={{ __html: t('dialog.cancelHint') }} />
             )}
           </div>
+
+          {/* History Panel */}
+          <HistoryPanel
+            isOpen={isHistoryOpen}
+            onClose={() => setIsHistoryOpen(false)}
+            conversations={savedConversations}
+            onSelectConversation={handleSelectConversation}
+            onDeleteConversation={handleDeleteConversation}
+            currentConversationId={currentConversationId}
+          />
         </div>
       </Rnd>
       </div>

@@ -65,5 +65,13 @@
     "selection": "Selectie ({{chars}} tekens)",
     "fullPage": "Volledige pagina",
     "noContext": "Geen context"
+  },
+  "history": {
+    "title": "Geschiedenis",
+    "empty": "Nog geen gesprekken",
+    "yesterday": "Gisteren",
+    "messages": "{{count}} ber.",
+    "delete": "Gesprek verwijderen",
+    "openHistory": "Geschiedenis openen"
   }
 }

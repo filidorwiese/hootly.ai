@@ -17,3 +17,38 @@ NOTES FOR NEXT PERSON:
 - CH-7 (burn button) is functionally complete but can't be verified without history panel
 - Storage infrastructure already exists for conversations (Storage.getConversations, etc)
 - Next priority: CH-2 (history panel accessible from dialog header) to make saved convos visible
+
+---
+
+2026-01-29 - CH-2: History panel accessible from dialog header
+
+COMPLETED:
+- Created HistoryPanel.tsx component with slide-in panel UI
+- Added 📜 history button to Dialog header
+- Panel shows conversation list with title, date, message count
+- Click conversation to load it into dialog (CH-3)
+- Delete button on each conversation (CH-4)
+- Empty state with localized message (UI-3)
+- Forest theme styling matches dialog (UI-1)
+- Added i18n translations for history section (all 10 languages)
+
+FILES CHANGED:
+- src/content/components/Dialog.tsx (import, state, handlers, JSX)
+- src/content/components/HistoryPanel.tsx (new)
+- src/shared/i18n/*.json (added history section)
+
+PRD ITEMS COMPLETED:
+- CH-2: History panel accessible from dialog header
+- CH-3: Load previous conversation from history
+- CH-4: Delete individual conversations from history
+- CH-5: Auto-generate title (was in CH-1, now verifiable)
+- CH-7: Burn button (was in CH-1, now verifiable)
+- UI-1: History panel styling matches forest theme
+- UI-3: Empty history state displayed correctly
+
+NOTES FOR NEXT PERSON:
+- CH-6 (retentionDays cleanup) not implemented - needs to be called somewhere on app init
+- All persona features (P-1 through P-6) not started
+- UI-2 (persona selector) not started
+- DATA-1, DATA-2 (persona storage) not started
+- INT-1, INT-2 (persona API integration) not started

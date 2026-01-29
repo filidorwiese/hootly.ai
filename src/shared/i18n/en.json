@@ -65,5 +65,13 @@
     "selection": "Selection ({{chars}} chars)",
     "fullPage": "Full page",
     "noContext": "No context"
+  },
+  "history": {
+    "title": "History",
+    "empty": "No conversations yet",
+    "yesterday": "Yesterday",
+    "messages": "{{count}} msgs",
+    "delete": "Delete conversation",
+    "openHistory": "Open history"
   }
 }

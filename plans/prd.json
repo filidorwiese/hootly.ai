@@ -21,7 +21,7 @@
       "Verify history panel opens",
       "Check panel shows title, date, message count for each conversation"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "CH-3",
@@ -33,7 +33,7 @@
       "Verify conversation messages load into dialog",
       "Check conversation context is restored"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "CH-4",
@@ -45,7 +45,7 @@
       "Verify conversation is removed from list",
       "Reopen history and confirm deletion persisted"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "CH-5",
@@ -57,7 +57,7 @@
       "Open history panel",
       "Verify title is truncated to ~50 chars with ellipsis"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "CH-6",
@@ -82,7 +82,7 @@
       "Verify messages cleared from dialog",
       "Open history panel and confirm conversation deleted"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "P-1",
@@ -172,7 +172,7 @@
       "Check font is Inter",
       "Verify hover states and transitions consistent"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "UI-2",
@@ -196,7 +196,7 @@
       "Verify empty state message shown",
       "Check message is localized"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "DATA-1",

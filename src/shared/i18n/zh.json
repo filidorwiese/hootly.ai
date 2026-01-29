@@ -65,5 +65,13 @@
     "selection": "选中内容（{{chars}} 字符）",
     "fullPage": "整页",
     "noContext": "无上下文"
+  },
+  "history": {
+    "title": "历史记录",
+    "empty": "暂无对话",
+    "yesterday": "昨天",
+    "messages": "{{count}} 条",
+    "delete": "删除对话",
+    "openHistory": "打开历史"
   }
 }

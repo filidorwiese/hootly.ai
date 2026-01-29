@@ -65,5 +65,13 @@
     "selection": "Auswahl ({{chars}} Zeichen)",
     "fullPage": "Ganze Seite",
     "noContext": "Kein Kontext"
+  },
+  "history": {
+    "title": "Verlauf",
+    "empty": "Noch keine Gespräche",
+    "yesterday": "Gestern",
+    "messages": "{{count}} Nachr.",
+    "delete": "Gespräch löschen",
+    "openHistory": "Verlauf öffnen"
   }
 }

@@ -65,5 +65,13 @@
     "selection": "선택 ({{chars}}자)",
     "fullPage": "전체 페이지",
     "noContext": "컨텍스트 없음"
+  },
+  "history": {
+    "title": "기록",
+    "empty": "대화 없음",
+    "yesterday": "어제",
+    "messages": "{{count}}개",
+    "delete": "대화 삭제",
+    "openHistory": "기록 열기"
   }
 }
