@@ -95,7 +95,8 @@
     "openHistory": "打开历史",
     "view": "查看",
     "continue": "继续",
-    "close": "关闭"
+    "close": "关闭",
+    "noOriginalContext": "无页面上下文"
   },
   "persona": {
     "selectPersona": "选择角色",

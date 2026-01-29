@@ -95,7 +95,8 @@
     "openHistory": "Apri cronologia",
     "view": "Visualizza",
     "continue": "Continua",
-    "close": "Chiudi"
+    "close": "Chiudi",
+    "noOriginalContext": "Nessun contesto di pagina"
   },
   "persona": {
     "selectPersona": "Seleziona persona",

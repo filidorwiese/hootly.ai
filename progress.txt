@@ -408,3 +408,32 @@ PRD ITEMS COMPLETED:
 NOTES FOR NEXT PERSON:
 - HP-11 (context toggle in history) not implemented
 - ICON-1 through ICON-6 (glyphs.fyi icons) not started
+
+---
+
+2026-01-29 - HP-11: Context toggle available when continuing
+
+COMPLETED:
+- Added context toggle to history page input area
+- Toggle reuses original page context from conversation (selection or fullpage)
+- Context state tracked per conversation via contextEnabledMap
+- Toggle button shows enabled/disabled state with forest theme styling
+- Badge displays context type (Selection with char count, Full page, or No context)
+- Disabled state when conversation has no original context
+- Context included in sendPrompt payload when enabled
+- Added i18n translations for all 10 languages (noOriginalContext)
+- Added unit tests for context toggle functionality
+
+FILES CHANGED:
+- src/history/index.html (added CSS for context toggle styling)
+- src/history/history.ts (added context toggle logic, UI rendering, state management)
+- src/shared/i18n/*.json (added history.noOriginalContext to all 10 languages)
+- src/__tests__/history/history-page.test.ts (added HP-11 context toggle tests)
+- plans/prd.json (marked HP-11 as passing)
+
+PRD ITEMS COMPLETED:
+- HP-11: Context toggle available when continuing
+
+NOTES FOR NEXT PERSON:
+- ICON-1 through ICON-6 (glyphs.fyi icons) not started
+- These are the only remaining non-passing items

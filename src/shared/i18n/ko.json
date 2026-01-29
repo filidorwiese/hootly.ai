@@ -95,7 +95,8 @@
     "openHistory": "기록 열기",
     "view": "보기",
     "continue": "계속",
-    "close": "닫기"
+    "close": "닫기",
+    "noOriginalContext": "페이지 컨텍스트 없음"
   },
   "persona": {
     "selectPersona": "페르소나 선택",

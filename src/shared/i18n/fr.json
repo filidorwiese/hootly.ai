@@ -95,7 +95,8 @@
     "openHistory": "Ouvrir l'historique",
     "view": "Voir",
     "continue": "Continuer",
-    "close": "Fermer"
+    "close": "Fermer",
+    "noOriginalContext": "Pas de contexte de page"
   },
   "persona": {
     "selectPersona": "Sélectionner un persona",

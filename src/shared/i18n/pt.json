@@ -95,7 +95,8 @@
     "openHistory": "Abrir histórico",
     "view": "Ver",
     "continue": "Continuar",
-    "close": "Fechar"
+    "close": "Fechar",
+    "noOriginalContext": "Sem contexto de página"
   },
   "persona": {
     "selectPersona": "Selecionar persona",

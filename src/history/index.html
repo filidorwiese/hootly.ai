@@ -185,6 +185,69 @@
     .conversation-item.continuing {
       border-color: #3A5A40;
     }
+    .input-footer {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 8px;
+    }
+    .context-toggle {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .context-toggle-btn {
+      width: 34px;
+      height: 34px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 1.5px solid #D4DCD6;
+      border-radius: 8px;
+      background: #FFFFFF;
+      cursor: pointer;
+      font-size: 16px;
+      transition: all 0.15s ease;
+    }
+    .context-toggle-btn:hover {
+      border-color: #B8C4BC;
+      background: #F5F7F4;
+    }
+    .context-toggle-btn.enabled {
+      border-color: #4A7C54;
+      background: #E8F0EA;
+    }
+    .context-toggle-btn.enabled:hover {
+      border-color: #3A6A44;
+      background: #DCE8DE;
+    }
+    .context-toggle-btn:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+    .context-badge {
+      display: inline-block;
+      padding: 4px 10px;
+      border-radius: 6px;
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.01em;
+      background: #ECEEED;
+      color: #6B7A6E;
+    }
+    .context-badge.selection {
+      background: #E0EBE8;
+      color: #2A6A5A;
+    }
+    .context-badge.fullpage {
+      background: #E8F0EA;
+      color: #3A6A44;
+    }
+    .context-badge.unavailable {
+      background: #ECEEED;
+      color: #9AA89C;
+      font-style: italic;
+    }
     .input-wrapper {
       position: relative;
     }

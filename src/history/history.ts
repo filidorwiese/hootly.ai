@@ -16,6 +16,9 @@ let activeConversationId: string | null = null;
 let isStreaming = false;
 let streamingContent = '';
 
+// Context toggle state per conversation
+const contextEnabledMap: Map<string, boolean> = new Map();
+
 // Group conversations by date categories
 function groupByDate(conversations: Conversation[]): DateGroup[] {
   const now = Date.now();
@@ -79,6 +82,30 @@ function escapeHtml(text: string): string {
   return div.innerHTML;
 }
 
+// Get the first context found in a conversation's messages
+function getConversationContext(conv: Conversation): { type: 'selection' | 'fullpage'; url: string; title: string; content: string } | null {
+  for (const msg of conv.messages) {
+    if (msg.context) {
+      if (msg.context.selection) {
+        return {
+          type: 'selection',
+          url: msg.context.url,
+          title: msg.context.title,
+          content: msg.context.selection,
+        };
+      } else if (msg.context.fullPage) {
+        return {
+          type: 'fullpage',
+          url: msg.context.url,
+          title: msg.context.title,
+          content: msg.context.fullPage,
+        };
+      }
+    }
+  }
+  return null;
+}
+
 function renderConversation(conv: Conversation): string {
   const personaIcon = getPersonaIcon(conv.personaId);
   const messageCount = conv.messages.length;
@@ -98,6 +125,47 @@ function renderConversation(conv: Conversation): string {
   const continueLabel = t('history.continue') || 'Continue';
   const sendLabel = t('input.send') || 'Send';
   const placeholder = t('input.placeholder') || 'Hoot me a question...';
+
+  // Check if conversation has context
+  const originalContext = getConversationContext(conv);
+  const hasContext = originalContext !== null;
+  const contextEnabled = contextEnabledMap.get(conv.id) || false;
+
+  // Build context toggle HTML
+  let contextToggleHtml = '';
+  if (hasContext) {
+    const contextType = originalContext.type;
+    const contextChars = originalContext.content.length;
+    const badgeClass = contextEnabled ? (contextType === 'selection' ? 'selection' : 'fullpage') : '';
+    const badgeText = contextEnabled
+      ? (contextType === 'selection'
+          ? (t('context.selection', { chars: contextChars }) || `Selection (${contextChars} chars)`)
+          : (t('context.fullPage') || 'Full page'))
+      : (t('context.noContext') || 'No context');
+    const toggleTitle = contextEnabled
+      ? (t('context.disableContext') || 'Click to disable context')
+      : (t('context.clickToEnable') || 'Click to enable context');
+
+    contextToggleHtml = `
+      <div class="context-toggle" data-id="${conv.id}">
+        <button class="context-toggle-btn ${contextEnabled ? 'enabled' : ''}" data-id="${conv.id}" title="${toggleTitle}">
+          🌐
+        </button>
+        <span class="context-badge ${badgeClass}">${badgeText}</span>
+      </div>
+    `;
+  } else {
+    // No context available - show disabled state
+    const noContextLabel = t('history.noOriginalContext') || 'No page context';
+    contextToggleHtml = `
+      <div class="context-toggle" data-id="${conv.id}">
+        <button class="context-toggle-btn" data-id="${conv.id}" disabled title="${noContextLabel}">
+          🌐
+        </button>
+        <span class="context-badge unavailable">${noContextLabel}</span>
+      </div>
+    `;
+  }
 
   return `
     <div class="conversation-item" data-id="${conv.id}">
@@ -130,6 +198,9 @@ function renderConversation(conv: Conversation): string {
         </div>
         <div class="cancel-hint" style="display: none;" data-id="${conv.id}">
           Press <strong>Esc</strong> to stop generating
+        </div>
+        <div class="input-footer">
+          ${contextToggleHtml}
         </div>
         <div class="input-wrapper">
           <textarea class="input-textarea" data-id="${conv.id}" placeholder="${placeholder}" rows="2"></textarea>
@@ -239,6 +310,17 @@ function renderHistoryList(conversations: Conversation[]): void {
     });
   });
 
+  // Context toggle handlers
+  container.querySelectorAll('.context-toggle-btn:not([disabled])').forEach((btn) => {
+    btn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const id = (btn as HTMLElement).dataset.id;
+      if (id) {
+        handleContextToggle(id, conversations);
+      }
+    });
+  });
+
   // Textarea Enter key handlers
   container.querySelectorAll('.input-textarea').forEach((textarea) => {
     textarea.addEventListener('keydown', (e: Event) => {
@@ -280,6 +362,28 @@ async function deleteConversation(id: string): Promise<void> {
   await Storage.deleteConversation(id);
   const conversations = await Storage.getConversations();
   renderHistoryList(conversations);
+}
+
+function handleContextToggle(convId: string, conversations: Conversation[]): void {
+  const currentEnabled = contextEnabledMap.get(convId) || false;
+  contextEnabledMap.set(convId, !currentEnabled);
+
+  // Re-render the history list to update the UI
+  renderHistoryList(conversations);
+
+  // Re-expand and continue the conversation that was active
+  const container = document.getElementById('historyList')!;
+  const item = container.querySelector(`.conversation-item[data-id="${convId}"]`);
+  if (item) {
+    item.classList.add('expanded');
+    item.classList.add('continuing');
+
+    // Focus the textarea
+    const textarea = item.querySelector('.input-textarea') as HTMLTextAreaElement;
+    if (textarea) {
+      textarea.focus();
+    }
+  }
 }
 
 function startContinueConversation(id: string): void {
@@ -356,11 +460,34 @@ async function handleSendMessage(convId: string): Promise<void> {
       : currentSettings.systemPrompt;
   }
 
+  // Build context if enabled
+  let context = undefined;
+  const contextEnabled = contextEnabledMap.get(convId) || false;
+  if (contextEnabled) {
+    const originalContext = getConversationContext(conversation);
+    if (originalContext) {
+      if (originalContext.type === 'selection') {
+        context = {
+          url: originalContext.url,
+          title: originalContext.title,
+          selection: originalContext.content,
+        };
+      } else {
+        context = {
+          url: originalContext.url,
+          title: originalContext.title,
+          fullPage: originalContext.content,
+        };
+      }
+    }
+  }
+
   // Add user message to conversation
   const userMessage: Message = {
     role: 'user',
     content: prompt,
     timestamp: Date.now(),
+    context,
   };
   conversation.messages.push(userMessage);
 
@@ -376,6 +503,7 @@ async function handleSendMessage(convId: string): Promise<void> {
       type: 'sendPrompt',
       payload: {
         prompt,
+        context,
         conversationHistory: conversation.messages.slice(0, -1), // Exclude the new user message, it's added in payload
         settings: { ...currentSettings, systemPrompt: combinedSystemPrompt },
       },

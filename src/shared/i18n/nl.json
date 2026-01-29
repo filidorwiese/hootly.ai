@@ -95,7 +95,8 @@
     "openHistory": "Geschiedenis openen",
     "view": "Bekijken",
     "continue": "Doorgaan",
-    "close": "Sluiten"
+    "close": "Sluiten",
+    "noOriginalContext": "Geen paginacontext"
   },
   "persona": {
     "selectPersona": "Selecteer persona",

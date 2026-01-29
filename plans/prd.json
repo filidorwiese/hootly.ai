@@ -486,7 +486,7 @@
       "Toggle context mode",
       "Verify context included in next message"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "HP-12",
@@ -593,6 +593,274 @@
       "Open dialog",
       "Cycle through context modes",
       "Verify selection/full-page/disabled icons are glyphs.fyi colorful icons"
+    ],
+    "passes": false
+  },
+  {
+    "id": "FD-1",
+    "category": "flat-design",
+    "description": "Define flat design color palette",
+    "steps": [
+      "Create/update CSS variables for flat design",
+      "Define solid background colors (no gradients)",
+      "Define accent colors for buttons and highlights",
+      "Remove all box-shadow definitions",
+      "Verify colors accessible (WCAG contrast)"
+    ],
+    "passes": false
+  },
+  {
+    "id": "FD-2",
+    "category": "flat-design",
+    "description": "Update dialog component to flat design",
+    "steps": [
+      "Open dialog",
+      "Remove all shadows from header/body/footer",
+      "Replace gradient backgrounds with solid colors",
+      "Use solid borders instead of shadow effects",
+      "Verify flat appearance with clean edges"
+    ],
+    "passes": false
+  },
+  {
+    "id": "FD-3",
+    "category": "flat-design",
+    "description": "Update buttons to flat design",
+    "steps": [
+      "Update send button to flat style",
+      "Update clear/burn button to flat style",
+      "Update context toggle to flat style",
+      "Remove hover shadows, use color change instead",
+      "Verify consistent button styling across extension"
+    ],
+    "passes": false
+  },
+  {
+    "id": "FD-4",
+    "category": "flat-design",
+    "description": "Update settings page to flat design",
+    "steps": [
+      "Open settings page",
+      "Remove card shadows",
+      "Use solid borders for section separation",
+      "Flatten input fields and dropdowns",
+      "Verify consistent with dialog flat style"
+    ],
+    "passes": false
+  },
+  {
+    "id": "FD-5",
+    "category": "flat-design",
+    "description": "Update personas page to flat design",
+    "steps": [
+      "Open personas page",
+      "Remove card shadows from persona items",
+      "Flatten action buttons",
+      "Use solid background colors",
+      "Verify consistent flat appearance"
+    ],
+    "passes": false
+  },
+  {
+    "id": "FD-6",
+    "category": "flat-design",
+    "description": "Update history page to flat design",
+    "steps": [
+      "Open history page",
+      "Remove shadows from history items",
+      "Flatten date group headers",
+      "Flatten action buttons (view/continue/delete)",
+      "Verify consistent flat appearance"
+    ],
+    "passes": false
+  },
+  {
+    "id": "FD-7",
+    "category": "flat-design",
+    "description": "Update input areas to flat design",
+    "steps": [
+      "Flatten textarea borders",
+      "Remove inner shadows from input fields",
+      "Use solid focus states instead of glow",
+      "Verify in dialog and history page continue mode"
+    ],
+    "passes": false
+  },
+  {
+    "id": "WS-1",
+    "category": "website",
+    "description": "Create website folder structure",
+    "steps": [
+      "Create /website folder in project root",
+      "Create index.html file",
+      "Create styles.css file",
+      "Create /website/images folder for assets"
+    ],
+    "passes": false
+  },
+  {
+    "id": "WS-2",
+    "category": "website",
+    "description": "Create HTML structure with hero section",
+    "steps": [
+      "Add semantic HTML5 structure",
+      "Create hero section with headline",
+      "Add tagline about AI assistant in browser",
+      "Add placeholder for screenshot hero image",
+      "Verify responsive viewport meta tag"
+    ],
+    "passes": false
+  },
+  {
+    "id": "WS-3",
+    "category": "website",
+    "description": "Add download buttons for browsers",
+    "steps": [
+      "Add Firefox download button in hero",
+      "Add Chrome download button in hero",
+      "Style buttons distinctly with browser icons",
+      "Link to respective addon stores (placeholder URLs)",
+      "Verify buttons prominent and accessible"
+    ],
+    "passes": false
+  },
+  {
+    "id": "WS-4",
+    "category": "website",
+    "description": "Add BYOK selling point section",
+    "steps": [
+      "Create feature section for BYOK",
+      "Add heading: Bring Your Own Key",
+      "Explain user controls their API costs",
+      "Explain no middleman markup",
+      "Add relevant icon or illustration"
+    ],
+    "passes": false
+  },
+  {
+    "id": "WS-5",
+    "category": "website",
+    "description": "Add privacy selling point section",
+    "steps": [
+      "Create feature section for privacy",
+      "Add heading: Privacy Friendly",
+      "Explain data stored locally only",
+      "Explain no telemetry or tracking",
+      "Add relevant icon or illustration"
+    ],
+    "passes": false
+  },
+  {
+    "id": "WS-6",
+    "category": "website",
+    "description": "Add free/no subscription section",
+    "steps": [
+      "Create feature section for pricing",
+      "Add heading: Free as in Beer",
+      "Explain no subscription fees",
+      "Explain user pays only API usage",
+      "Add relevant icon or illustration"
+    ],
+    "passes": false
+  },
+  {
+    "id": "WS-7",
+    "category": "website",
+    "description": "Add history and personas section",
+    "steps": [
+      "Create feature section for features",
+      "Highlight conversation history feature",
+      "Highlight personas/roles feature",
+      "Explain local storage benefits",
+      "Add relevant icons or illustrations"
+    ],
+    "passes": false
+  },
+  {
+    "id": "WS-8",
+    "category": "website",
+    "description": "Add screenshot as hero image",
+    "steps": [
+      "Take screenshot of browser plugin in action",
+      "Save to /website/images/screenshot.png",
+      "Add to hero section as main visual",
+      "Style with appropriate sizing and shadow",
+      "Ensure responsive image scaling"
+    ],
+    "passes": false
+  },
+  {
+    "id": "WS-9",
+    "category": "website",
+    "description": "Style website with flat design CSS",
+    "steps": [
+      "Apply flat design principles to website",
+      "Use solid colors matching extension theme",
+      "No shadows or gradients on elements",
+      "Clean typography with Inter font",
+      "Verify consistent with extension styling"
+    ],
+    "passes": false
+  },
+  {
+    "id": "WS-10",
+    "category": "website",
+    "description": "Make website responsive",
+    "steps": [
+      "Add mobile-first media queries",
+      "Stack feature sections on mobile",
+      "Resize hero image appropriately",
+      "Ensure download buttons usable on mobile",
+      "Test at 320px, 768px, 1024px widths"
+    ],
+    "passes": false
+  },
+  {
+    "id": "ST-1",
+    "category": "selection-tooltip",
+    "description": "Add showSelectionTooltip setting to storage",
+    "steps": [
+      "Add showSelectionTooltip boolean to Settings type",
+      "Default to true (tooltip enabled)",
+      "Update storage wrapper if needed"
+    ],
+    "passes": false
+  },
+  {
+    "id": "ST-2",
+    "category": "selection-tooltip",
+    "description": "Add toggle in settings near keyboard shortcut",
+    "steps": [
+      "Open settings page",
+      "Locate keyboard shortcut section",
+      "Add checkbox/toggle for Show Selection Tooltip",
+      "Position below or near shortcut setting",
+      "Verify toggle saves to storage"
+    ],
+    "passes": false
+  },
+  {
+    "id": "ST-3",
+    "category": "selection-tooltip",
+    "description": "Content script respects tooltip setting",
+    "steps": [
+      "Load showSelectionTooltip from storage in content script",
+      "If disabled, skip tooltip creation on text selection",
+      "If enabled, show tooltip as normal",
+      "Listen for storage changes to update behavior"
+    ],
+    "passes": false
+  },
+  {
+    "id": "ST-4",
+    "category": "selection-tooltip",
+    "description": "Tooltip toggle works without reload",
+    "steps": [
+      "Open settings and disable tooltip",
+      "Select text on page without reloading",
+      "Verify tooltip does not appear",
+      "Enable tooltip in settings",
+      "Select text and verify tooltip appears"
     ],
     "passes": false
   }

@@ -1,7 +1,7 @@
 import { describe, it, expect, beforeEach, vi } from 'vitest';
 import { resetChromeMock, setMockStorage, chromeMock } from '../__mocks__/chrome';
-import { createConversation } from '../fixtures/conversations';
-import type { Conversation } from '../../shared/types';
+import { createConversation, createMessage, samplePageContext, fullPageContext } from '../fixtures/conversations';
+import type { Conversation, Message, PageContext } from '../../shared/types';
 
 // Mock DOM environment
 function createMockDOM() {
@@ -350,6 +350,260 @@ describe('Continue Conversation', () => {
 
       // Verify personaId is preserved
       expect(conv.personaId).toBe('code-helper');
+    });
+  });
+});
+
+describe('HP-11: Context toggle in history page', () => {
+  beforeEach(() => {
+    resetChromeMock();
+    createMockDOM();
+    vi.clearAllMocks();
+  });
+
+  // Helper to extract context from conversation
+  function getConversationContext(conv: Conversation): { type: 'selection' | 'fullpage'; content: string } | null {
+    for (const msg of conv.messages) {
+      if (msg.context?.selection) {
+        return { type: 'selection', content: msg.context.selection };
+      } else if (msg.context?.fullPage) {
+        return { type: 'fullpage', content: msg.context.fullPage };
+      }
+    }
+    return null;
+  }
+
+  describe('context detection', () => {
+    it('detects selection context in conversation messages', () => {
+      const msgWithContext: Message = {
+        role: 'user',
+        content: 'What is this about?',
+        timestamp: Date.now(),
+        context: samplePageContext,
+      };
+
+      const conv = createConversation({
+        id: 'test-conv',
+        messages: [msgWithContext],
+      });
+
+      const context = getConversationContext(conv);
+      expect(context).not.toBeNull();
+      expect(context?.type).toBe('selection');
+      expect(context?.content).toBe(samplePageContext.selection);
+    });
+
+    it('detects fullpage context in conversation messages', () => {
+      const msgWithContext: Message = {
+        role: 'user',
+        content: 'Summarize this page',
+        timestamp: Date.now(),
+        context: fullPageContext,
+      };
+
+      const conv = createConversation({
+        id: 'test-conv',
+        messages: [msgWithContext],
+      });
+
+      const context = getConversationContext(conv);
+      expect(context).not.toBeNull();
+      expect(context?.type).toBe('fullpage');
+      expect(context?.content).toBe(fullPageContext.fullPage);
+    });
+
+    it('returns null when no context exists', () => {
+      const conv = createConversation({
+        id: 'test-conv',
+        messages: [
+          { role: 'user', content: 'Hello', timestamp: Date.now() },
+          { role: 'assistant', content: 'Hi!', timestamp: Date.now() },
+        ],
+      });
+
+      const context = getConversationContext(conv);
+      expect(context).toBeNull();
+    });
+  });
+
+  describe('context toggle UI', () => {
+    it('renders context toggle button when conversation has context', () => {
+      const historyList = document.getElementById('historyList')!;
+
+      // Simulate rendering a conversation with context toggle
+      historyList.innerHTML = `
+        <div class="conversation-item continuing" data-id="test-conv">
+          <div class="input-footer">
+            <div class="context-toggle" data-id="test-conv">
+              <button class="context-toggle-btn" data-id="test-conv" title="Click to enable context">🌐</button>
+              <span class="context-badge">No context</span>
+            </div>
+          </div>
+          <div class="input-wrapper">
+            <textarea class="input-textarea" data-id="test-conv"></textarea>
+          </div>
+        </div>
+      `;
+
+      const toggleBtn = historyList.querySelector('.context-toggle-btn');
+      expect(toggleBtn).not.toBeNull();
+      expect(toggleBtn?.textContent).toBe('🌐');
+    });
+
+    it('renders disabled toggle when conversation has no original context', () => {
+      const historyList = document.getElementById('historyList')!;
+
+      // Simulate rendering a conversation without context
+      historyList.innerHTML = `
+        <div class="conversation-item continuing" data-id="test-conv">
+          <div class="input-footer">
+            <div class="context-toggle" data-id="test-conv">
+              <button class="context-toggle-btn" data-id="test-conv" disabled title="No page context">🌐</button>
+              <span class="context-badge unavailable">No page context</span>
+            </div>
+          </div>
+        </div>
+      `;
+
+      const toggleBtn = historyList.querySelector('.context-toggle-btn') as HTMLButtonElement;
+      expect(toggleBtn).not.toBeNull();
+      expect(toggleBtn?.disabled).toBe(true);
+
+      const badge = historyList.querySelector('.context-badge');
+      expect(badge?.classList.contains('unavailable')).toBe(true);
+    });
+
+    it('toggles enabled class when clicked', () => {
+      const historyList = document.getElementById('historyList')!;
+
+      historyList.innerHTML = `
+        <div class="conversation-item continuing" data-id="test-conv">
+          <div class="context-toggle" data-id="test-conv">
+            <button class="context-toggle-btn" data-id="test-conv">🌐</button>
+            <span class="context-badge">No context</span>
+          </div>
+        </div>
+      `;
+
+      const toggleBtn = historyList.querySelector('.context-toggle-btn')!;
+
+      // Simulate toggle on
+      toggleBtn.classList.add('enabled');
+      expect(toggleBtn.classList.contains('enabled')).toBe(true);
+
+      // Simulate toggle off
+      toggleBtn.classList.remove('enabled');
+      expect(toggleBtn.classList.contains('enabled')).toBe(false);
+    });
+
+    it('updates badge text when context is enabled', () => {
+      const historyList = document.getElementById('historyList')!;
+
+      historyList.innerHTML = `
+        <div class="context-toggle" data-id="test-conv">
+          <button class="context-toggle-btn enabled" data-id="test-conv">🌐</button>
+          <span class="context-badge selection">Selection (42 chars)</span>
+        </div>
+      `;
+
+      const badge = historyList.querySelector('.context-badge');
+      expect(badge?.classList.contains('selection')).toBe(true);
+      expect(badge?.textContent).toContain('Selection');
+    });
+  });
+
+  describe('context inclusion in messages', () => {
+    it('includes context in sendPrompt when enabled', async () => {
+      const context: PageContext = {
+        url: 'https://example.com',
+        title: 'Test Page',
+        selection: 'Selected text from page',
+      };
+
+      // Simulate sending a message with context
+      const payload = {
+        type: 'sendPrompt',
+        payload: {
+          prompt: 'Explain this',
+          context: {
+            url: context.url,
+            title: context.title,
+            selection: context.selection,
+          },
+          conversationHistory: [],
+          settings: {},
+        },
+      };
+
+      await chromeMock.runtime.sendMessage(payload);
+
+      expect(chromeMock.runtime.sendMessage).toHaveBeenCalledWith(
+        expect.objectContaining({
+          type: 'sendPrompt',
+          payload: expect.objectContaining({
+            context: expect.objectContaining({
+              selection: 'Selected text from page',
+            }),
+          }),
+        })
+      );
+    });
+
+    it('does not include context in sendPrompt when disabled', async () => {
+      const payload = {
+        type: 'sendPrompt',
+        payload: {
+          prompt: 'Hello',
+          conversationHistory: [],
+          settings: {},
+        },
+      };
+
+      await chromeMock.runtime.sendMessage(payload);
+
+      expect(chromeMock.runtime.sendMessage).toHaveBeenCalledWith(
+        expect.objectContaining({
+          payload: expect.not.objectContaining({
+            context: expect.anything(),
+          }),
+        })
+      );
+    });
+  });
+
+  describe('full page context', () => {
+    it('includes fullPage context when enabled', async () => {
+      const context: PageContext = {
+        url: 'https://example.com/docs',
+        title: 'Documentation',
+        fullPage: 'Full page content here with lots of text',
+      };
+
+      const payload = {
+        type: 'sendPrompt',
+        payload: {
+          prompt: 'Summarize this',
+          context: {
+            url: context.url,
+            title: context.title,
+            fullPage: context.fullPage,
+          },
+          conversationHistory: [],
+          settings: {},
+        },
+      };
+
+      await chromeMock.runtime.sendMessage(payload);
+
+      expect(chromeMock.runtime.sendMessage).toHaveBeenCalledWith(
+        expect.objectContaining({
+          payload: expect.objectContaining({
+            context: expect.objectContaining({
+              fullPage: 'Full page content here with lots of text',
+            }),
+          }),
+        })
+      );
     });
   });
 });

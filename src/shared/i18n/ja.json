@@ -95,7 +95,8 @@
     "openHistory": "履歴を開く",
     "view": "表示",
     "continue": "続ける",
-    "close": "閉じる"
+    "close": "閉じる",
+    "noOriginalContext": "ページコンテキストなし"
   },
   "persona": {
     "selectPersona": "ペルソナを選択",
