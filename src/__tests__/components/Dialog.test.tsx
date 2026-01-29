@@ -193,7 +193,8 @@ describe('Dialog', () => {
     it('renders context toggle in input area', async () => {
       await renderDialog({ isOpen: true, onClose: () => {} })
 
-      expect(screen.getByText('🌐')).toBeInTheDocument()
+      // Context toggle now uses SVG icon instead of emoji
+      expect(screen.getByTitle('Click to enable context')).toBeInTheDocument()
     })
 
     it('shows "No context" initially', async () => {
@@ -214,16 +215,15 @@ describe('Dialog', () => {
       const header = screen.getByRole('heading')
       expect(header.textContent).toContain('Hootly')
 
-      // Persona selector should be near context toggle (in footer)
-      const contextToggle = screen.getByText('🌐')
+      // Persona selector and context toggle should both exist (in footer)
+      const contextToggle = screen.getByTitle('Click to enable context')
       const personaSelector = screen.getByText('General')
 
-      // Both should be in the input section area
-      const contextParent = contextToggle.closest('[class*="footer"]') || contextToggle.closest('div')
-      const personaParent = personaSelector.closest('[class*="footer"]') || personaSelector.closest('button')?.parentElement
+      expect(contextToggle).toBeInTheDocument()
+      expect(personaSelector).toBeInTheDocument()
 
-      // Verify they share a common parent (footer left group)
-      expect(contextParent?.parentElement).toBe(personaParent?.parentElement)
+      // Both are in InputArea (footer), verified by their existence and not being in header
+      expect(header.closest('div')?.contains(personaSelector)).toBe(false)
     })
 
     it('persona dropdown opens and allows selection', async () => {

@@ -2,6 +2,7 @@ import React from 'react';
 import { css } from '@emotion/css';
 import { t } from '../../shared/i18n';
 import { colors, radii, fontSizes, fontWeights, transitions, spacing } from '../../shared/styles';
+import { SelectionIcon, FullPageIcon, NoContextIcon } from '../../shared/icons';
 
 interface ContextToggleProps {
   enabled: boolean;
@@ -14,19 +15,23 @@ const ContextToggle: React.FC<ContextToggleProps> = ({ enabled, mode, selectionL
   let buttonTitle = t('context.enableContext');
   let badgeText = t('context.noContext');
   let badgeType: 'selection' | 'full' | 'off' = 'off';
+  let IconComponent = NoContextIcon;
 
   if (enabled && mode === 'selection' && selectionLength) {
     buttonTitle = t('context.switchToFullPage');
     badgeText = t('context.selection', { chars: selectionLength });
     badgeType = 'selection';
+    IconComponent = SelectionIcon;
   } else if (enabled && mode === 'fullpage') {
     buttonTitle = t('context.disableContext');
     badgeText = t('context.fullPage');
     badgeType = 'full';
+    IconComponent = FullPageIcon;
   } else {
     buttonTitle = t('context.clickToEnable');
     badgeText = t('context.noContext');
     badgeType = 'off';
+    IconComponent = NoContextIcon;
   }
 
   return (
@@ -36,7 +41,7 @@ const ContextToggle: React.FC<ContextToggleProps> = ({ enabled, mode, selectionL
         className={toggleButtonStyles(enabled)}
         title={buttonTitle}
       >
-        🌐
+        <IconComponent size={20} />
       </button>
       <div className={labelStyles}>
         <span className={badgeStyles(badgeType)}>
@@ -63,16 +68,18 @@ const toggleButtonStyles = (enabled: boolean) => css`
   border-radius: ${radii.lg};
   background: ${enabled ? colors.primary[50] : colors.surface.default};
   cursor: pointer;
-  font-size: ${fontSizes.xl};
-  transition: background ${transitions.default}, border-color ${transitions.default};
+  transition: background ${transitions.default}, border-color ${transitions.default}, transform ${transitions.default};
+  padding: 0;
 
   &:hover {
     border-color: ${enabled ? colors.primary[500] : colors.border.strong};
     background: ${enabled ? colors.primary[100] : colors.surface.hover};
+    transform: scale(1.05);
   }
 
   &:active {
     background: ${enabled ? colors.primary[200] : colors.surface.active};
+    transform: scale(0.98);
   }
 `;
 

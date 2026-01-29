@@ -9,6 +9,7 @@ import { extractSelection, extractPageText, getPageUrl, getPageTitle, requestPag
 import { getApiKey } from '../../shared/providers';
 import { t } from '../../shared/i18n';
 import { colors, radii, spacing, fontSizes, fontWeights, transitions } from '../../shared/styles';
+import { FireIcon, HistoryIcon, SettingsIcon, CloseIcon } from '../../shared/icons';
 import InputArea from './InputArea';
 import Response from './Response';
 
@@ -467,14 +468,18 @@ const Dialog: React.FC<DialogProps> = ({ isOpen, onClose }) => {
           </div>
           <div className={headerButtonsStyles}>
             {conversationHistory.length > 0 && (
-              <button onClick={handleClearConversation} aria-label={t('dialog.clearConversation')} title={t('dialog.clearConversation')}>🔥</button>
+              <button onClick={handleClearConversation} aria-label={t('dialog.clearConversation')} title={t('dialog.clearConversation')}>
+                <FireIcon size={18} />
+              </button>
             )}
-            <button onClick={handleOpenHistory} aria-label={t('history.openHistory')} title={t('history.openHistory')}>📜</button>
+            <button onClick={handleOpenHistory} aria-label={t('history.openHistory')} title={t('history.openHistory')}>
+              <HistoryIcon size={18} />
+            </button>
             <button onClick={() => chrome.runtime.sendMessage({ type: 'openSettings' })} aria-label={t('dialog.settings')} title={t('dialog.openSettings')}>
-              ⚙️
+              <SettingsIcon size={18} />
             </button>
             <button onClick={onClose} aria-label={t('dialog.close')}>
-              ✕
+              <CloseIcon size={18} />
             </button>
           </div>
         </div>

@@ -1120,3 +1120,39 @@ NOTES FOR NEXT PERSON:
 - All INTRO items (INTRO-1, INTRO-2, INTRO-3) now pass
 - ICON-1 through ICON-6 (glyphs.fyi icons) not started
 - WS-1 through WS-10 (website) not started
+
+---
+
+2026-01-29 - ICON-1: Replace dialog icons with glyphs.fyi colorful icons
+
+COMPLETED:
+- Created src/shared/icons.tsx with colorful SVG icon components
+- Icons: FireIcon, HistoryIcon, SettingsIcon, CloseIcon, SendIcon, ClearIcon
+- Context icons: SelectionIcon, FullPageIcon, NoContextIcon
+- Additional icons for other pages: ExportIcon, ImportIcon, TrashIcon, AddIcon, EditIcon, BackIcon, ContinueIcon, ViewIcon, SearchIcon
+- All icons use colors from forest theme design system (greens, teals, oranges)
+- Updated Dialog.tsx to use FireIcon, HistoryIcon, SettingsIcon, CloseIcon
+- Updated InputArea.tsx to use SendIcon, ClearIcon
+- Updated ContextToggle.tsx to use SelectionIcon, FullPageIcon, NoContextIcon
+- Icons support size prop for flexible sizing
+- Updated existing tests to find elements by title instead of emoji
+- Added 43 unit tests for ICON-1 verification
+
+FILES CHANGED:
+- src/shared/icons.tsx (new - 19 icon components)
+- src/content/components/Dialog.tsx (import and use new icons)
+- src/content/components/InputArea.tsx (import and use new icons)
+- src/content/components/ContextToggle.tsx (import and use new icons)
+- src/__tests__/icons/dialog-icons.test.ts (new - 43 tests)
+- src/__tests__/components/ContextToggle.test.tsx (updated for SVG icons)
+- src/__tests__/components/InputArea.test.tsx (updated for SVG icons)
+- src/__tests__/components/Dialog.test.tsx (updated for SVG icons)
+- plans/prd.json (marked ICON-1 as passing)
+
+PRD ITEMS COMPLETED:
+- ICON-1: Replace dialog icons with glyphs.fyi icons
+
+NOTES FOR NEXT PERSON:
+- ICON-2 through ICON-6 (settings/personas/history page icons) not started
+- WS-1 through WS-10 (website) not started
+- Icons module (src/shared/icons.tsx) can be reused for other pages

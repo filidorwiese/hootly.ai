@@ -4,6 +4,7 @@ import ContextToggle from './ContextToggle';
 import PersonaSelector from './PersonaSelector';
 import ModelSelector from './ModelSelector';
 import { t } from '../../shared/i18n';
+import { SendIcon, ClearIcon } from '../../shared/icons';
 import type { LLMProvider, Persona } from '../../shared/types';
 import type { ModelConfig } from '../../shared/models';
 import { colors, radii, fontSizes, transitions, spacing } from '../../shared/styles';
@@ -81,7 +82,7 @@ const InputArea: React.FC<InputAreaProps> = ({
                 aria-label={t('input.send')}
                 type="button"
             >
-              ▶
+              <SendIcon size={14} />
             </button>
             <button
                 onClick={() => onChange('')}
@@ -89,7 +90,7 @@ const InputArea: React.FC<InputAreaProps> = ({
                 aria-label={t('input.clear')}
                 type="button"
             >
-              ✕
+              <ClearIcon size={14} />
             </button>
           </>
         )}
@@ -175,21 +176,20 @@ const sendIconStyles = css`
   display: flex;
   align-items: center;
   justify-content: center;
-  background: ${colors.send.default};
+  background: transparent;
   border: none;
   border-radius: ${radii.full};
-  font-size: ${fontSizes.xs};
-  color: ${colors.text.inverse};
   cursor: pointer;
-  transition: background ${transitions.default};
-  padding-left: 6px;
+  transition: opacity ${transitions.default}, transform ${transitions.default};
+  padding: 0;
 
   &:hover {
-    background: ${colors.send.hover};
+    opacity: 0.8;
+    transform: scale(1.1);
   }
 
   &:active {
-    background: ${colors.send.active};
+    transform: scale(0.95);
   }
 `;
 
@@ -202,21 +202,20 @@ const clearIconStyles = css`
   display: flex;
   align-items: center;
   justify-content: center;
-  background: ${colors.surface.hover};
+  background: transparent;
   border: none;
   border-radius: ${radii.full};
-  font-size: ${fontSizes.sm};
-  color: ${colors.text.secondary};
   cursor: pointer;
-  transition: background ${transitions.default}, color ${transitions.default};
+  transition: opacity ${transitions.default}, transform ${transitions.default};
+  padding: 0;
 
   &:hover {
-    background: ${colors.surface.active};
-    color: ${colors.text.primary};
+    opacity: 0.7;
+    transform: scale(1.1);
   }
 
   &:active {
-    background: ${colors.border.default};
+    transform: scale(0.95);
   }
 `;
 

@@ -131,8 +131,8 @@ describe('InputArea', () => {
       const onContextToggle = vi.fn()
       render(<InputArea {...defaultProps} onContextToggle={onContextToggle} />)
 
-      // Click the globe button (ContextToggle)
-      const toggleButton = screen.getByText('🌐')
+      // Click the context toggle button (has SVG icon now, find by title)
+      const toggleButton = screen.getByTitle('Click to enable context')
       fireEvent.click(toggleButton)
 
       expect(onContextToggle).toHaveBeenCalledTimes(1)
@@ -221,11 +221,11 @@ describe('InputArea', () => {
       expect(screen.getByText('Code Helper')).toBeInTheDocument()
 
       // Both context toggle and persona selector should be siblings in the footer left group
-      const contextToggle = screen.getByText('🌐')
+      const contextToggleButton = screen.getByTitle('Click to enable context')
       const personaButton = screen.getByLabelText('Select persona')
 
       // They should share a common ancestor (the footer left group)
-      const contextAncestor = contextToggle.closest('button')?.parentElement?.parentElement
+      const contextAncestor = contextToggleButton.parentElement?.parentElement
       const personaAncestor = personaButton.parentElement?.parentElement
 
       expect(contextAncestor).toBe(personaAncestor)

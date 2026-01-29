@@ -113,7 +113,7 @@ describe('ContextToggle', () => {
       expect(screen.getByText('No context')).toBeInTheDocument()
     })
 
-    it('displays globe emoji in button', () => {
+    it('displays SVG icon in button', () => {
       render(
         <ContextToggle
           enabled={false}
@@ -122,7 +122,9 @@ describe('ContextToggle', () => {
         />
       )
 
-      expect(screen.getByRole('button')).toHaveTextContent('🌐')
+      // Button should contain SVG icon (NoContextIcon), not emoji
+      const button = screen.getByRole('button')
+      expect(button.querySelector('svg')).toBeInTheDocument()
     })
   })
 

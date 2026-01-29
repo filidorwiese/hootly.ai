@@ -534,7 +534,7 @@
       "Verify send button icon uses glyphs.fyi colorful icon",
       "Verify clear/burn button icon uses glyphs.fyi colorful icon"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "ICON-2",
