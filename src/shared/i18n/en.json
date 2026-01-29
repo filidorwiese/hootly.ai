@@ -28,7 +28,9 @@
     "enterApiKeyFirst": "Enter API key first",
     "loadingModels": "Loading models...",
     "fetchModelsFailed": "Failed to fetch models",
-    "noModels": "No models available"
+    "noModels": "No models available",
+    "defaultPersona": "Default Persona",
+    "defaultPersonaHint": "Persona used for new conversations"
   },
   "dialog": {
     "clearConversation": "Clear conversation",

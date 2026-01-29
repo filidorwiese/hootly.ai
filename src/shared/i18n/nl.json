@@ -28,7 +28,9 @@
     "enterApiKeyFirst": "Voer eerst API-sleutel in",
     "loadingModels": "Modellen laden...",
     "fetchModelsFailed": "Modellen ophalen mislukt",
-    "noModels": "Geen modellen beschikbaar"
+    "noModels": "Geen modellen beschikbaar",
+    "defaultPersona": "Standaard persona",
+    "defaultPersonaHint": "Persona voor nieuwe gesprekken"
   },
   "dialog": {
     "clearConversation": "Gesprek wissen",

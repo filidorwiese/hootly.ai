@@ -1,5 +1,5 @@
 import { Storage } from '../shared/storage';
-import { Settings, ModelConfig, LLMProvider } from '../shared/types';
+import { Settings, ModelConfig, LLMProvider, DEFAULT_PERSONAS } from '../shared/types';
 import { t, initLanguage, setLanguage } from '../shared/i18n';
 import { selectDefaultModel } from '../shared/models';
 
@@ -108,6 +108,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   const temperatureInput = document.getElementById('temperature') as HTMLInputElement;
   const shortcutInput = document.getElementById('shortcut') as HTMLInputElement;
   const languageSelect = document.getElementById('language') as HTMLSelectElement;
+  const defaultPersonaSelect = document.getElementById('defaultPersona') as HTMLSelectElement;
   const saveBtn = document.getElementById('saveBtn') as HTMLButtonElement;
   const statusDiv = document.getElementById('status') as HTMLDivElement;
 
@@ -136,6 +137,15 @@ document.addEventListener('DOMContentLoaded', async () => {
   temperatureInput.value = settings.temperature.toString();
   shortcutInput.value = settings.shortcut;
   languageSelect.value = settings.language;
+
+  // Populate default persona select
+  DEFAULT_PERSONAS.forEach(persona => {
+    const option = document.createElement('option');
+    option.value = persona.id;
+    option.textContent = `${persona.icon} ${persona.name}`;
+    defaultPersonaSelect.appendChild(option);
+  });
+  defaultPersonaSelect.value = settings.defaultPersonaId || 'general';
 
   // Show correct API key section
   showApiKeySection(settings.provider);
@@ -222,6 +232,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         temperature: parseFloat(temperatureInput.value),
         shortcut: shortcutInput.value.trim() || 'Alt+C',
         language: languageSelect.value as Settings['language'],
+        defaultPersonaId: defaultPersonaSelect.value,
       });
 
       statusDiv.textContent = t('settings.saved');

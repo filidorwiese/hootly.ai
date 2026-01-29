@@ -28,7 +28,9 @@
     "enterApiKeyFirst": "Introduce primero la clave API",
     "loadingModels": "Cargando modelos...",
     "fetchModelsFailed": "Error al cargar los modelos",
-    "noModels": "No hay modelos disponibles"
+    "noModels": "No hay modelos disponibles",
+    "defaultPersona": "Persona predeterminada",
+    "defaultPersonaHint": "Persona para nuevas conversaciones"
   },
   "dialog": {
     "clearConversation": "Borrar conversación",

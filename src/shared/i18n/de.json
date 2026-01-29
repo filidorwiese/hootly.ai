@@ -28,7 +28,9 @@
     "enterApiKeyFirst": "API-Schlüssel zuerst eingeben",
     "loadingModels": "Modelle werden geladen...",
     "fetchModelsFailed": "Modelle konnten nicht abgerufen werden",
-    "noModels": "Keine Modelle verfügbar"
+    "noModels": "Keine Modelle verfügbar",
+    "defaultPersona": "Standard-Persona",
+    "defaultPersonaHint": "Persona für neue Gespräche"
   },
   "dialog": {
     "clearConversation": "Gespräch löschen",

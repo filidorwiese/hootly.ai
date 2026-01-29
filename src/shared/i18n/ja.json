@@ -28,7 +28,9 @@
     "enterApiKeyFirst": "最初にAPIキーを入力してください",
     "loadingModels": "モデルを読み込み中...",
     "fetchModelsFailed": "モデルの読み込みに失敗しました",
-    "noModels": "利用可能なモデルがありません"
+    "noModels": "利用可能なモデルがありません",
+    "defaultPersona": "デフォルトペルソナ",
+    "defaultPersonaHint": "新しい会話で使用するペルソナ"
   },
   "dialog": {
     "clearConversation": "会話をクリア",

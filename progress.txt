@@ -90,3 +90,29 @@ NOTES FOR NEXT PERSON:
 - DATA-1 (persona interface stored correctly) - only custom personas need storage, built-in are in code
 - UI-2 (persona selector compact/unobtrusive) - implemented but may need styling review
 - CH-6 (retentionDays cleanup) still not implemented
+
+---
+
+2026-01-29 - P-6: Set default persona for new conversations
+
+COMPLETED:
+- Added default persona dropdown to settings page (settings/index.html)
+- Populated dropdown with built-in personas (icon + name)
+- Settings.ts saves defaultPersonaId to storage on save
+- Dialog.tsx already uses settings.defaultPersonaId for new conversations
+- Added i18n translations for all 10 languages (defaultPersona, defaultPersonaHint)
+
+FILES CHANGED:
+- src/settings/index.html (added defaultPersona select element)
+- src/settings/settings.ts (import DEFAULT_PERSONAS, populate/save defaultPersonaId)
+- src/shared/i18n/*.json (added settings.defaultPersona, settings.defaultPersonaHint)
+
+PRD ITEMS COMPLETED:
+- P-6: Set default persona for new conversations
+
+NOTES FOR NEXT PERSON:
+- P-2 (create custom persona in settings) not implemented - needs settings page UI
+- P-5 (edit/delete custom personas) not implemented - needs settings page UI
+- DATA-1 (persona interface stored correctly) - only custom personas need storage
+- UI-2 (persona selector compact/unobtrusive) - may need styling review
+- CH-6 (retentionDays cleanup) still not implemented

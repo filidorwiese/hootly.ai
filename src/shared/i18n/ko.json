@@ -28,7 +28,9 @@
     "enterApiKeyFirst": "먼저 API 키를 입력하세요",
     "loadingModels": "모델 로딩 중...",
     "fetchModelsFailed": "모델 로드 실패",
-    "noModels": "사용 가능한 모델 없음"
+    "noModels": "사용 가능한 모델 없음",
+    "defaultPersona": "기본 페르소나",
+    "defaultPersonaHint": "새 대화에 사용되는 페르소나"
   },
   "dialog": {
     "clearConversation": "대화 지우기",

@@ -160,7 +160,7 @@
       "Open dialog for new conversation",
       "Verify 'Code Helper' is pre-selected"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "UI-1",

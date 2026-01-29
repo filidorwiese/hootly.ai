@@ -28,7 +28,9 @@
     "enterApiKeyFirst": "请先输入 API 密钥",
     "loadingModels": "加载模型中...",
     "fetchModelsFailed": "加载模型失败",
-    "noModels": "无可用模型"
+    "noModels": "无可用模型",
+    "defaultPersona": "默认角色",
+    "defaultPersonaHint": "新对话使用的角色"
   },
   "dialog": {
     "clearConversation": "清除对话",
