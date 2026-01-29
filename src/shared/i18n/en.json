@@ -113,7 +113,9 @@
     "importSuccess": "Import successful!",
     "importFailed": "Import failed",
     "clearAll": "Clear All",
-    "clearAllConfirm": "Delete all conversations? This cannot be undone."
+    "clearAllConfirm": "Delete all conversations? This cannot be undone.",
+    "searchPlaceholder": "Search conversations...",
+    "noResults": "No matching conversations"
   },
   "persona": {
     "selectPersona": "Select persona",

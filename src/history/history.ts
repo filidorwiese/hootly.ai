@@ -22,6 +22,10 @@ let pendingImportData: Conversation[] | null = null;
 // Context toggle state per conversation
 const contextEnabledMap: Map<string, boolean> = new Map();
 
+// Search state
+let allConversations: Conversation[] = [];
+let currentSearchQuery = '';
+
 // Group conversations by date categories
 function groupByDate(conversations: Conversation[]): DateGroup[] {
   const now = Date.now();
@@ -61,6 +65,29 @@ function groupByDate(conversations: Conversation[]): DateGroup[] {
   if (groups.older.length > 0) result.push({ label: t('history.older') || 'Older', conversations: groups.older });
 
   return result;
+}
+
+// Search conversations by title and message content
+function filterConversations(conversations: Conversation[], query: string): Conversation[] {
+  if (!query.trim()) return conversations;
+
+  const lowerQuery = query.toLowerCase().trim();
+
+  return conversations.filter((conv) => {
+    // Check title match
+    if (conv.title.toLowerCase().includes(lowerQuery)) {
+      return true;
+    }
+
+    // Check message content match
+    for (const msg of conv.messages) {
+      if (msg.content.toLowerCase().includes(lowerQuery)) {
+        return true;
+      }
+    }
+
+    return false;
+  });
 }
 
 function formatDate(timestamp: number): string {
@@ -218,17 +245,33 @@ function renderConversation(conv: Conversation): string {
 function renderHistoryList(conversations: Conversation[]): void {
   const container = document.getElementById('historyList')!;
   const emptyState = document.getElementById('emptyState')!;
+  const noResultsState = document.getElementById('noResultsState')!;
 
-  if (conversations.length === 0) {
+  // Apply search filter
+  const filtered = filterConversations(conversations, currentSearchQuery);
+
+  // Handle empty states
+  if (allConversations.length === 0) {
+    // No conversations at all
     container.innerHTML = '';
     emptyState.style.display = 'block';
+    noResultsState.style.display = 'none';
+    return;
+  }
+
+  if (filtered.length === 0 && currentSearchQuery) {
+    // No results for search query
+    container.innerHTML = '';
+    emptyState.style.display = 'none';
+    noResultsState.style.display = 'block';
     return;
   }
 
   emptyState.style.display = 'none';
+  noResultsState.style.display = 'none';
 
   // Sort by updatedAt descending
-  const sorted = [...conversations].sort((a, b) => b.updatedAt - a.updatedAt);
+  const sorted = [...filtered].sort((a, b) => b.updatedAt - a.updatedAt);
   const groups = groupByDate(sorted);
 
   container.innerHTML = groups
@@ -319,7 +362,7 @@ function renderHistoryList(conversations: Conversation[]): void {
       e.stopPropagation();
       const id = (btn as HTMLElement).dataset.id;
       if (id) {
-        handleContextToggle(id, conversations);
+        handleContextToggle(id);
       }
     });
   });
@@ -373,21 +416,22 @@ function hideClearAllConfirm(): void {
 
 async function clearAllHistory(): Promise<void> {
   await chrome.storage.local.set({ hootly_conversations: [] });
-  renderHistoryList([]);
+  allConversations = [];
+  renderHistoryList(allConversations);
 }
 
 async function deleteConversation(id: string): Promise<void> {
   await Storage.deleteConversation(id);
-  const conversations = await Storage.getConversations();
-  renderHistoryList(conversations);
+  allConversations = await Storage.getConversations();
+  renderHistoryList(allConversations);
 }
 
-function handleContextToggle(convId: string, conversations: Conversation[]): void {
+function handleContextToggle(convId: string): void {
   const currentEnabled = contextEnabledMap.get(convId) || false;
   contextEnabledMap.set(convId, !currentEnabled);
 
   // Re-render the history list to update the UI
-  renderHistoryList(conversations);
+  renderHistoryList(allConversations);
 
   // Re-expand and continue the conversation that was active
   const container = document.getElementById('historyList')!;
@@ -629,6 +673,15 @@ function applyTranslations(): void {
       el.textContent = translated;
     }
   });
+
+  // Handle placeholder translations
+  document.querySelectorAll('[data-i18n-placeholder]').forEach((el) => {
+    const key = el.getAttribute('data-i18n-placeholder')!;
+    const translated = t(key);
+    if (translated) {
+      (el as HTMLInputElement).placeholder = translated;
+    }
+  });
 }
 
 // Import dialog functions
@@ -792,8 +845,8 @@ async function performImport(mode: 'merge' | 'replace'): Promise<void> {
     // Refresh the list after a short delay
     setTimeout(async () => {
       hideImportDialog();
-      const conversations = await Storage.getConversations();
-      renderHistoryList(conversations);
+      allConversations = await Storage.getConversations();
+      renderHistoryList(allConversations);
     }, 1500);
   } catch (err) {
     showImportError(t('history.importFailed') || 'Import failed');
@@ -865,8 +918,26 @@ async function init(): Promise<void> {
   applyTranslations();
 
   // Load and render conversations
-  const conversations = await Storage.getConversations();
-  renderHistoryList(conversations);
+  allConversations = await Storage.getConversations();
+  renderHistoryList(allConversations);
+
+  // Search input handlers
+  const searchInput = document.getElementById('searchInput') as HTMLInputElement;
+  const clearSearchBtn = document.getElementById('clearSearchBtn')!;
+
+  searchInput.addEventListener('input', () => {
+    currentSearchQuery = searchInput.value;
+    clearSearchBtn.style.display = currentSearchQuery ? 'flex' : 'none';
+    renderHistoryList(allConversations);
+  });
+
+  clearSearchBtn.addEventListener('click', () => {
+    searchInput.value = '';
+    currentSearchQuery = '';
+    clearSearchBtn.style.display = 'none';
+    renderHistoryList(allConversations);
+    searchInput.focus();
+  });
 
   // Close button handler
   document.getElementById('closeBtn')!.addEventListener('click', (e) => {

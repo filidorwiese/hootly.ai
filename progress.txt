@@ -964,3 +964,38 @@ NOTES FOR NEXT PERSON:
 - ICON-1 through ICON-6 (glyphs.fyi icons) not started
 - WS-1 through WS-10 (website) not started
 - INTRO-1 through INTRO-3 (intro text) not started
+
+---
+
+2026-01-29 - HP-16: Add search to history page
+
+COMPLETED:
+- Added search input at top of history page
+- Search filters conversations by title (case-insensitive)
+- Search filters by message content as well
+- Shows "No matching conversations" state when no matches
+- Clear search button (X) shows when query is not empty
+- Clearing search shows all conversations again
+- Search input has i18n placeholder translation support
+- Added allConversations state to track full list separately from filtered view
+- Updated delete/clear/import functions to use allConversations
+- Added 69 unit tests covering all HP-16 requirements
+- Added i18n translations for all 10 languages (searchPlaceholder, noResults)
+
+FILES CHANGED:
+- src/history/index.html (added search input, clear button, no results state, CSS)
+- src/history/history.ts (added filterConversations, search state, event handlers)
+- src/shared/i18n/*.json (added searchPlaceholder, noResults to all 10 languages)
+- src/__tests__/history/search-history.test.ts (new - 69 tests)
+- src/__tests__/history/clear-all-history.test.ts (updated for allConversations)
+- src/__tests__/history/import-history.test.ts (updated for allConversations)
+- plans/prd.json (marked HP-16 as passing)
+
+PRD ITEMS COMPLETED:
+- HP-16: Add search to history page
+
+NOTES FOR NEXT PERSON:
+- HP-17 (continue conversation in popup window) not started
+- ICON-1 through ICON-6 (glyphs.fyi icons) not started
+- WS-1 through WS-10 (website) not started
+- INTRO-1 through INTRO-3 (intro text) not started

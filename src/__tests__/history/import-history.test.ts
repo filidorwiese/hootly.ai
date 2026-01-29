@@ -311,6 +311,8 @@ describe('HP-14: Integration with storage', () => {
   });
 
   it('should refresh history list after import', () => {
-    expect(tsContent).toContain('renderHistoryList(conversations)');
+    // After import, allConversations is updated and renderHistoryList is called
+    expect(tsContent).toContain('allConversations = await Storage.getConversations()');
+    expect(tsContent).toContain('renderHistoryList(allConversations)');
   });
 });

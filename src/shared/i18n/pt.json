@@ -113,7 +113,9 @@
     "importSuccess": "Importação concluída!",
     "importFailed": "Falha na importação",
     "clearAll": "Limpar tudo",
-    "clearAllConfirm": "Excluir todas as conversas? Isso não pode ser desfeito."
+    "clearAllConfirm": "Excluir todas as conversas? Isso não pode ser desfeito.",
+    "searchPlaceholder": "Pesquisar conversas...",
+    "noResults": "Nenhuma conversa correspondente"
   },
   "persona": {
     "selectPersona": "Selecionar persona",

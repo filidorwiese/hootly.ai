@@ -113,7 +113,9 @@
     "importSuccess": "¡Importación exitosa!",
     "importFailed": "Error en la importación",
     "clearAll": "Borrar todo",
-    "clearAllConfirm": "¿Eliminar todas las conversaciones? Esto no se puede deshacer."
+    "clearAllConfirm": "¿Eliminar todas las conversaciones? Esto no se puede deshacer.",
+    "searchPlaceholder": "Buscar conversaciones...",
+    "noResults": "No hay conversaciones coincidentes"
   },
   "persona": {
     "selectPersona": "Seleccionar persona",

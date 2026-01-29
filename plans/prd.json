@@ -979,7 +979,7 @@
       "Show no results state if no matches",
       "Clear search shows all conversations again"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "HP-17",

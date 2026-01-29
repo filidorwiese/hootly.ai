@@ -113,7 +113,9 @@
     "importSuccess": "インポート成功！",
     "importFailed": "インポート失敗",
     "clearAll": "すべて削除",
-    "clearAllConfirm": "すべての会話を削除しますか？この操作は元に戻せません。"
+    "clearAllConfirm": "すべての会話を削除しますか？この操作は元に戻せません。",
+    "searchPlaceholder": "会話を検索...",
+    "noResults": "一致する会話がありません"
   },
   "persona": {
     "selectPersona": "ペルソナを選択",

@@ -499,6 +499,62 @@
     .empty-state-text {
       font-size: var(--font-size-xl);
     }
+    .search-container {
+      position: relative;
+      margin-bottom: var(--spacing-5);
+    }
+    .search-input {
+      width: 100%;
+      padding: var(--spacing-3) var(--spacing-10) var(--spacing-3) var(--spacing-4);
+      border: 1px solid var(--color-border-default);
+      border-radius: var(--radius-xl);
+      font-size: var(--font-size-base);
+      font-family: 'Inter', sans-serif;
+      background: var(--color-surface-default);
+      color: var(--color-text-primary);
+      outline: none;
+      transition: border-color var(--transition-default);
+    }
+    .search-input:focus {
+      border-color: var(--color-border-focus);
+    }
+    .search-input::placeholder {
+      color: var(--color-text-tertiary);
+    }
+    .clear-search-btn {
+      position: absolute;
+      right: var(--spacing-3);
+      top: 50%;
+      transform: translateY(-50%);
+      width: 24px;
+      height: 24px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--color-surface-active);
+      border: none;
+      border-radius: var(--radius-full);
+      font-size: var(--font-size-sm);
+      color: var(--color-text-secondary);
+      cursor: pointer;
+      transition: all var(--transition-default);
+    }
+    .clear-search-btn:hover {
+      background: var(--color-border-default);
+      color: var(--color-text-primary);
+    }
+    .no-results-state {
+      text-align: center;
+      padding: 60px var(--spacing-5);
+      color: var(--color-text-tertiary);
+    }
+    .no-results-icon {
+      font-size: 48px;
+      margin-bottom: var(--spacing-4);
+    }
+    .no-results-text {
+      font-size: var(--font-size-xl);
+    }
     .confirm-dialog {
       display: none;
       position: fixed;
@@ -673,6 +729,16 @@
         </a>
       </div>
     </header>
+
+    <div class="search-container">
+      <input type="text" id="searchInput" class="search-input" data-i18n-placeholder="history.searchPlaceholder" placeholder="Search conversations...">
+      <button id="clearSearchBtn" class="clear-search-btn" style="display: none;" title="Clear search">✕</button>
+    </div>
+
+    <div id="noResultsState" class="no-results-state" style="display: none;">
+      <div class="no-results-icon">🔍</div>
+      <div class="no-results-text" data-i18n="history.noResults">No matching conversations</div>
+    </div>
 
     <div id="historyList">
       <!-- Populated dynamically -->

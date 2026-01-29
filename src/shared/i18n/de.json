@@ -113,7 +113,9 @@
     "importSuccess": "Import erfolgreich!",
     "importFailed": "Import fehlgeschlagen",
     "clearAll": "Alle löschen",
-    "clearAllConfirm": "Alle Gespräche löschen? Dies kann nicht rückgängig gemacht werden."
+    "clearAllConfirm": "Alle Gespräche löschen? Dies kann nicht rückgängig gemacht werden.",
+    "searchPlaceholder": "Gespräche durchsuchen...",
+    "noResults": "Keine passenden Gespräche"
   },
   "persona": {
     "selectPersona": "Persona auswählen",

@@ -113,7 +113,9 @@
     "importSuccess": "导入成功！",
     "importFailed": "导入失败",
     "clearAll": "全部清除",
-    "clearAllConfirm": "删除所有对话？此操作无法撤销。"
+    "clearAllConfirm": "删除所有对话？此操作无法撤销。",
+    "searchPlaceholder": "搜索对话...",
+    "noResults": "没有匹配的对话"
   },
   "persona": {
     "selectPersona": "选择角色",

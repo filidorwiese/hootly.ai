@@ -113,7 +113,9 @@
     "importSuccess": "Import succesvol!",
     "importFailed": "Import mislukt",
     "clearAll": "Alles wissen",
-    "clearAllConfirm": "Alle gesprekken verwijderen? Dit kan niet ongedaan worden."
+    "clearAllConfirm": "Alle gesprekken verwijderen? Dit kan niet ongedaan worden.",
+    "searchPlaceholder": "Zoek gesprekken...",
+    "noResults": "Geen overeenkomende gesprekken"
   },
   "persona": {
     "selectPersona": "Selecteer persona",

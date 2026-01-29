@@ -81,8 +81,11 @@ describe('HP-15: Add Clear All button to history page', () => {
       expect(tsContent).toContain('hootly_conversations: []');
     });
 
-    it('should call renderHistoryList with empty array after clearing', () => {
-      expect(tsContent).toMatch(/clearAllHistory[\s\S]*?renderHistoryList\s*\(\s*\[\s*\]\s*\)/);
+    it('should call renderHistoryList after clearing', () => {
+      // After clearing, allConversations is set to empty and renderHistoryList is called
+      expect(tsContent).toContain('async function clearAllHistory');
+      expect(tsContent).toContain('allConversations = [];');
+      expect(tsContent).toContain('renderHistoryList(allConversations)');
     });
 
     it('should have showClearAllConfirm function', () => {
@@ -207,7 +210,8 @@ describe('HP-15: Dialog behavior', () => {
 
 describe('HP-15: Empty state after clearing', () => {
   it('should render empty list which triggers empty state display', () => {
-    // Calling renderHistoryList([]) should show empty state
-    expect(tsContent).toContain("renderHistoryList([])");
+    // After clearing, allConversations is set to [] and renderHistoryList is called
+    expect(tsContent).toContain('allConversations = [];');
+    expect(tsContent).toContain('renderHistoryList(allConversations)');
   });
 });

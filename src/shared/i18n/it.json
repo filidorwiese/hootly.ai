@@ -113,7 +113,9 @@
     "importSuccess": "Importazione riuscita!",
     "importFailed": "Importazione fallita",
     "clearAll": "Cancella tutto",
-    "clearAllConfirm": "Eliminare tutte le conversazioni? Questa azione non può essere annullata."
+    "clearAllConfirm": "Eliminare tutte le conversazioni? Questa azione non può essere annullata.",
+    "searchPlaceholder": "Cerca conversazioni...",
+    "noResults": "Nessuna conversazione corrispondente"
   },
   "persona": {
     "selectPersona": "Seleziona persona",

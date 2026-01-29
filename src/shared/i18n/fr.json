@@ -113,7 +113,9 @@
     "importSuccess": "Import réussi!",
     "importFailed": "Échec de l'import",
     "clearAll": "Tout effacer",
-    "clearAllConfirm": "Supprimer toutes les conversations ? Cette action est irréversible."
+    "clearAllConfirm": "Supprimer toutes les conversations ? Cette action est irréversible.",
+    "searchPlaceholder": "Rechercher des conversations...",
+    "noResults": "Aucune conversation correspondante"
   },
   "persona": {
     "selectPersona": "Sélectionner un persona",
