@@ -169,3 +169,29 @@ NOTES FOR NEXT PERSON:
 - All chat-history features (CH-1 through CH-7) now pass
 - All persona features (P-1 through P-6) pass
 - All data/integration tests (DATA-1, DATA-2, INT-1, INT-2) pass
+
+---
+
+2026-01-29 - UI-2: Persona selector compact and unobtrusive
+
+COMPLETED:
+- Made trigger button more compact (smaller padding, transparent bg until hover)
+- Reduced font sizes and spacing throughout selector
+- Made name truncation tighter (80px max)
+- Added visual grouping for custom personas (subtle background wrapper)
+- Reduced dropdown dimensions for cleaner appearance
+- All changes maintain forest theme consistency
+
+FILES CHANGED:
+- src/content/components/PersonaSelector.tsx (styling updates)
+- plans/prd.json (marked UI-2 as passing)
+
+PRD ITEMS COMPLETED:
+- UI-2: Persona selector compact and unobtrusive
+
+NOTES FOR NEXT PERSON:
+- ALL PRD ITEMS NOW PASS
+- All chat-history features (CH-1 through CH-7) pass
+- All persona features (P-1 through P-6) pass
+- All UI features (UI-1 through UI-3) pass
+- All data/integration tests (DATA-1, DATA-2, INT-1, INT-2) pass

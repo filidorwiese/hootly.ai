@@ -184,7 +184,7 @@
       "Check dropdown opens cleanly",
       "Verify built-in vs custom personas visually grouped"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "UI-3",
