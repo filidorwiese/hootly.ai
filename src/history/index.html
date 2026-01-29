@@ -526,6 +526,13 @@
       color: var(--color-accent-success);
       font-size: var(--font-size-sm);
     }
+    .intro-text {
+      color: var(--color-text-secondary);
+      font-size: var(--font-size-base);
+      margin-top: 0;
+      margin-bottom: var(--spacing-5);
+      line-height: 1.5;
+    }
   </style>
 </head>
 <body>
@@ -545,6 +552,8 @@
         </a>
       </div>
     </header>
+
+    <p class="intro-text" data-i18n="history.intro">Browse and manage your conversation history. Search, export, or continue past conversations.</p>
 
     <div class="search-container">
       <input type="text" id="searchInput" class="search-input" data-i18n-placeholder="history.searchPlaceholder" placeholder="Search conversations...">

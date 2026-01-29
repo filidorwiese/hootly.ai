@@ -86,6 +86,7 @@
   },
   "history": {
     "title": "Geschiedenis",
+    "intro": "Blader en beheer je gespreksgeschiedenis. Zoek, exporteer of ga door met eerdere gesprekken.",
     "empty": "Nog geen gesprekken",
     "today": "Vandaag",
     "yesterday": "Gisteren",

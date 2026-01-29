@@ -86,6 +86,7 @@
   },
   "history": {
     "title": "History",
+    "intro": "Browse and manage your conversation history. Search, export, or continue past conversations.",
     "empty": "No conversations yet",
     "today": "Today",
     "yesterday": "Yesterday",

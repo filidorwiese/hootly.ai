@@ -86,6 +86,7 @@
   },
   "history": {
     "title": "Verlauf",
+    "intro": "Durchsuchen und verwalten Sie Ihren Gesprächsverlauf. Suchen, exportieren oder setzen Sie frühere Gespräche fort.",
     "empty": "Noch keine Gespräche",
     "today": "Heute",
     "yesterday": "Gestern",

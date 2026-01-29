@@ -86,6 +86,7 @@
   },
   "history": {
     "title": "Historique",
+    "intro": "Parcourez et gérez votre historique de conversations. Recherchez, exportez ou continuez vos conversations passées.",
     "empty": "Aucune conversation",
     "today": "Aujourd'hui",
     "yesterday": "Hier",

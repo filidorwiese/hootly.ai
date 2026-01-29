@@ -86,6 +86,7 @@
   },
   "history": {
     "title": "Cronologia",
+    "intro": "Sfoglia e gestisci la cronologia delle conversazioni. Cerca, esporta o continua conversazioni precedenti.",
     "empty": "Nessuna conversazione",
     "today": "Oggi",
     "yesterday": "Ieri",

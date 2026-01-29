@@ -1031,6 +1031,6 @@
       "Style consistent with page design",
       "Add i18n translation key"
     ],
-    "passes": false
+    "passes": true
   }
 ]
