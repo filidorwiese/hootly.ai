@@ -147,3 +147,25 @@ PRD ITEMS COMPLETED:
 NOTES FOR NEXT PERSON:
 - UI-2 (persona selector compact/unobtrusive) - may need styling review
 - CH-6 (retentionDays cleanup) still not implemented
+
+---
+
+2026-01-29 - CH-6: Respect retentionDays setting for cleanup
+
+COMPLETED:
+- Added call to Storage.clearOldConversations() when dialog opens
+- Uses retentionDays from settings (default 30 days)
+- Cleanup runs on every dialog open (filters by updatedAt timestamp)
+- Storage.clearOldConversations() method already existed, just needed to be called
+
+FILES CHANGED:
+- src/content/components/Dialog.tsx (added cleanup call in useEffect)
+
+PRD ITEMS COMPLETED:
+- CH-6: Respect retentionDays setting for cleanup
+
+NOTES FOR NEXT PERSON:
+- UI-2 (persona selector compact/unobtrusive) is the only remaining non-passing item
+- All chat-history features (CH-1 through CH-7) now pass
+- All persona features (P-1 through P-6) pass
+- All data/integration tests (DATA-1, DATA-2, INT-1, INT-2) pass

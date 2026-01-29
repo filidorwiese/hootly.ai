@@ -69,7 +69,7 @@
       "Simulate passage of 2 days (or mock timestamp)",
       "Verify old conversation is auto-deleted on next load"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "CH-7",

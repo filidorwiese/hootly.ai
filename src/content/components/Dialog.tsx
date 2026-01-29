@@ -106,6 +106,10 @@ const Dialog: React.FC<DialogProps> = ({ isOpen, onClose }) => {
         if (!currentConversationId) {
           setCurrentPersonaId(settings.defaultPersonaId || 'general');
         }
+        // Clean up old conversations based on retentionDays setting
+        if (settings.retentionDays > 0) {
+          Storage.clearOldConversations(settings.retentionDays);
+        }
       });
       // Request fresh page info from parent (for iframe mode)
       requestPageInfo().then(() => {
