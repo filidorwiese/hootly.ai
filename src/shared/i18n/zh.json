@@ -128,6 +128,7 @@
   },
   "personas": {
     "title": "角色",
+    "intro": "创建自定义角色，为不同的任务和工作流程定制AI响应。",
     "backToSettings": "设置",
     "builtIn": "内置",
     "custom": "自定义",

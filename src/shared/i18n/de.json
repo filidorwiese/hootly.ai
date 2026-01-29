@@ -128,6 +128,7 @@
   },
   "personas": {
     "title": "Personas",
+    "intro": "Erstellen Sie benutzerdefinierte Personas, um KI-Antworten für verschiedene Aufgaben und Arbeitsabläufe anzupassen.",
     "backToSettings": "Einstellungen",
     "builtIn": "Integriert",
     "custom": "Benutzerdefiniert",

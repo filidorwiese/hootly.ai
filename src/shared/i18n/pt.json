@@ -128,6 +128,7 @@
   },
   "personas": {
     "title": "Personas",
+    "intro": "Crie personas personalizados para adaptar as respostas de IA a diferentes tarefas e fluxos de trabalho.",
     "backToSettings": "Configurações",
     "builtIn": "Integrados",
     "custom": "Personalizados",

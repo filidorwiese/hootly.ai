@@ -128,6 +128,7 @@
   },
   "personas": {
     "title": "Persona's",
+    "intro": "Maak aangepaste persona's om AI-reacties aan te passen voor verschillende taken en workflows.",
     "backToSettings": "Instellingen",
     "builtIn": "Ingebouwd",
     "custom": "Aangepast",
