@@ -255,7 +255,6 @@ document.addEventListener('DOMContentLoaded', async () => {
   const personaForm = document.getElementById('personaForm') as HTMLDivElement;
   const editingPersonaId = document.getElementById('editingPersonaId') as HTMLInputElement;
   const personaNameInput = document.getElementById('personaName') as HTMLInputElement;
-  const personaDescInput = document.getElementById('personaDescription') as HTMLInputElement;
   const personaSystemPromptInput = document.getElementById('personaSystemPrompt') as HTMLTextAreaElement;
   const iconPicker = document.getElementById('iconPicker') as HTMLDivElement;
   const savePersonaBtn = document.getElementById('savePersonaBtn') as HTMLButtonElement;
@@ -275,7 +274,6 @@ document.addEventListener('DOMContentLoaded', async () => {
         <span class="persona-icon">${persona.icon}</span>
         <div class="persona-info">
           <div class="persona-name">${persona.name}</div>
-          <div class="persona-desc">${persona.description}</div>
         </div>
       `;
       personaList.appendChild(item);
@@ -289,7 +287,6 @@ document.addEventListener('DOMContentLoaded', async () => {
         <span class="persona-icon">${persona.icon}</span>
         <div class="persona-info">
           <div class="persona-name">${persona.name}</div>
-          <div class="persona-desc">${persona.description}</div>
         </div>
         <div class="persona-actions">
           <button type="button" class="btn-secondary edit-persona" data-id="${persona.id}">${t('settings.edit')}</button>
@@ -325,13 +322,11 @@ document.addEventListener('DOMContentLoaded', async () => {
     if (persona) {
       editingPersonaId.value = persona.id;
       personaNameInput.value = persona.name;
-      personaDescInput.value = persona.description;
       personaSystemPromptInput.value = persona.systemPrompt;
       selectedIcon = persona.icon;
     } else {
       editingPersonaId.value = '';
       personaNameInput.value = '';
-      personaDescInput.value = '';
       personaSystemPromptInput.value = '';
       selectedIcon = '🤖';
     }
@@ -343,7 +338,6 @@ document.addEventListener('DOMContentLoaded', async () => {
     personaForm.classList.remove('visible');
     editingPersonaId.value = '';
     personaNameInput.value = '';
-    personaDescInput.value = '';
     personaSystemPromptInput.value = '';
     selectedIcon = '🤖';
     updateIconSelection();
@@ -382,7 +376,6 @@ document.addEventListener('DOMContentLoaded', async () => {
 
   async function savePersona() {
     const name = personaNameInput.value.trim();
-    const description = personaDescInput.value.trim();
     const systemPrompt = personaSystemPromptInput.value.trim();
 
     if (!name) {
@@ -401,7 +394,6 @@ document.addEventListener('DOMContentLoaded', async () => {
         customPersonas[idx] = {
           ...customPersonas[idx],
           name,
-          description,
           systemPrompt,
           icon: selectedIcon,
         };
@@ -411,7 +403,6 @@ document.addEventListener('DOMContentLoaded', async () => {
       const newPersona: Persona = {
         id: `custom-${Date.now()}`,
         name,
-        description,
         systemPrompt,
         icon: selectedIcon,
         isBuiltIn: false,

@@ -96,7 +96,7 @@ describe('FD-5: Personas page flat design', () => {
       expect(personasHtml).toContain('color: var(--color-text-primary)')
     })
 
-    it('persona descriptions use text secondary color', () => {
+    it('text elements use text colors from design system', () => {
       expect(personasHtml).toContain('color: var(--color-text-secondary)')
     })
   })

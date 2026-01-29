@@ -875,7 +875,7 @@
       "Update built-in personas to remove descriptions",
       "Verify persona still functions with only name"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "P-8",

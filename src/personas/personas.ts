@@ -40,7 +40,6 @@ function renderPersonaItem(persona: Persona, isDefault: boolean, isBuiltIn: bool
             ${escapeHtml(persona.name)}
             ${defaultBadge}
           </div>
-          <div class="persona-desc">${escapeHtml(persona.description)}</div>
         </div>
         <div class="persona-actions">
           ${actions}
@@ -137,21 +136,18 @@ function showModal(persona?: Persona): void {
   const modalTitle = document.getElementById('modalTitle')!;
   const editingId = document.getElementById('editingPersonaId') as HTMLInputElement;
   const nameInput = document.getElementById('personaName') as HTMLInputElement;
-  const descInput = document.getElementById('personaDescription') as HTMLInputElement;
   const promptInput = document.getElementById('personaSystemPrompt') as HTMLTextAreaElement;
 
   if (persona) {
     modalTitle.textContent = t('personas.editPersona') || 'Edit Persona';
     editingId.value = persona.id;
     nameInput.value = persona.name;
-    descInput.value = persona.description;
     promptInput.value = persona.systemPrompt;
     selectedIcon = persona.icon;
   } else {
     modalTitle.textContent = t('personas.addPersona') || 'Add Persona';
     editingId.value = '';
     nameInput.value = '';
-    descInput.value = '';
     promptInput.value = '';
     selectedIcon = '🤖';
   }
@@ -176,7 +172,6 @@ function updateIconSelection(): void {
 async function savePersona(): Promise<void> {
   const editingId = (document.getElementById('editingPersonaId') as HTMLInputElement).value;
   const name = (document.getElementById('personaName') as HTMLInputElement).value.trim();
-  const description = (document.getElementById('personaDescription') as HTMLInputElement).value.trim();
   const systemPrompt = (document.getElementById('personaSystemPrompt') as HTMLTextAreaElement).value.trim();
 
   if (!name) {
@@ -192,7 +187,6 @@ async function savePersona(): Promise<void> {
       customPersonas[idx] = {
         ...customPersonas[idx],
         name,
-        description,
         systemPrompt,
         icon: selectedIcon,
       };
@@ -201,7 +195,6 @@ async function savePersona(): Promise<void> {
     const newPersona: Persona = {
       id: `custom-${Date.now()}`,
       name,
-      description,
       systemPrompt,
       icon: selectedIcon,
       isBuiltIn: false,

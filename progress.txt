@@ -718,3 +718,44 @@ NOTES FOR NEXT PERSON:
 - PP-10 (remove persona list from settings) not started
 - HP-13 through HP-17 (export/import/clear all/search/popup continue) not started
 - INTRO-1 through INTRO-3 (intro text) not started
+
+---
+
+2026-01-29 - P-7: Remove description field from persona
+
+COMPLETED:
+- Removed description field from Persona interface in types.ts
+- Removed description from all DEFAULT_PERSONAS (General, Code Helper, Writer, Researcher, Translator)
+- Removed description input field from personas page form (personas/index.html)
+- Removed persona-desc CSS class and display from personas page list
+- Removed description input field from settings page form (settings/index.html)
+- Removed persona-desc CSS class and display from settings page persona list
+- Updated PersonaSelector component to not show description (simpler layout)
+- Changed title attribute from description to name
+- Updated existing tests to remove description references
+- Added 19 new unit tests verifying description removal across all files
+- All 571 tests pass, TypeScript type checking passes
+
+FILES CHANGED:
+- src/shared/types.ts (removed description from Persona interface and DEFAULT_PERSONAS)
+- src/personas/index.html (removed description input and CSS)
+- src/personas/personas.ts (removed description handling)
+- src/settings/index.html (removed description input and CSS)
+- src/settings/settings.ts (removed description handling)
+- src/content/components/PersonaSelector.tsx (simplified layout, removed description display)
+- src/__tests__/personas/personas-page.test.ts (updated to remove description refs)
+- src/__tests__/flat-design/personas-page.test.ts (updated test description)
+- src/__tests__/personas/persona-description-removal.test.ts (new - 19 tests)
+- plans/prd.json (marked P-7 as passing)
+
+PRD ITEMS COMPLETED:
+- P-7: Remove description field from persona
+
+NOTES FOR NEXT PERSON:
+- P-8 (system prompt maxlength 10000 with counter) not started
+- PP-10 (remove persona list from settings) not started
+- UI-7 (model selector dropdown) not started
+- ICON-1 through ICON-6 (glyphs.fyi icons) not started
+- WS-1 through WS-10 (website) not started
+- HP-13 through HP-17 (export/import/clear all/search/popup continue) not started
+- INTRO-1 through INTRO-3 (intro text) not started

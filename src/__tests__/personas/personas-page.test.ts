@@ -14,7 +14,6 @@ function createMockDOM() {
       <h2 id="modalTitle"></h2>
       <input type="hidden" id="editingPersonaId" value="">
       <input type="text" id="personaName">
-      <input type="text" id="personaDescription">
       <textarea id="personaSystemPrompt"></textarea>
       <div id="iconPicker">
         <div class="icon-option" data-icon="🤖">🤖</div>
@@ -34,7 +33,6 @@ function createCustomPersona(overrides: Partial<Persona> = {}): Persona {
   return {
     id: `custom-${Date.now()}`,
     name: 'Test Persona',
-    description: 'Test description',
     systemPrompt: 'You are a test persona.',
     icon: '🤖',
     isBuiltIn: false,
@@ -70,7 +68,6 @@ describe('Personas Page', () => {
         item.innerHTML = `
           <span class="persona-icon">${persona.icon}</span>
           <div class="persona-name">${persona.name}</div>
-          <div class="persona-desc">${persona.description}</div>
         `;
         builtinList.appendChild(item);
       });
@@ -122,12 +119,11 @@ describe('Personas Page', () => {
       expect(customEmptyState.style.display).toBe('block');
     });
 
-    it('shows icon, name, description for each persona', () => {
+    it('shows icon and name for each persona', () => {
       const persona = DEFAULT_PERSONAS[0];
 
       expect(persona.icon).toBe('🦉');
       expect(persona.name).toBe('General');
-      expect(persona.description).toBeTruthy();
     });
   });
 
@@ -147,14 +143,12 @@ describe('Personas Page', () => {
 
     it('creates persona with form data', async () => {
       const name = 'My New Persona';
-      const description = 'A custom persona for testing';
       const systemPrompt = 'You are a helpful assistant.';
       const icon = '🧠';
 
       const newPersona: Persona = {
         id: `custom-${Date.now()}`,
         name,
-        description,
         systemPrompt,
         icon,
         isBuiltIn: false,
@@ -162,7 +156,6 @@ describe('Personas Page', () => {
       };
 
       expect(newPersona.name).toBe(name);
-      expect(newPersona.description).toBe(description);
       expect(newPersona.systemPrompt).toBe(systemPrompt);
       expect(newPersona.icon).toBe(icon);
       expect(newPersona.isBuiltIn).toBe(false);
@@ -184,13 +177,11 @@ describe('Personas Page', () => {
       const persona = createCustomPersona({ name: 'Original Name' });
       const editingIdInput = document.getElementById('editingPersonaId') as HTMLInputElement;
       const nameInput = document.getElementById('personaName') as HTMLInputElement;
-      const descInput = document.getElementById('personaDescription') as HTMLInputElement;
       const promptInput = document.getElementById('personaSystemPrompt') as HTMLTextAreaElement;
       const modal = document.getElementById('personaModal')!;
 
       editingIdInput.value = persona.id;
       nameInput.value = persona.name;
-      descInput.value = persona.description;
       promptInput.value = persona.systemPrompt;
       modal.classList.add('visible');
 
@@ -422,19 +413,15 @@ describe('Modal Behavior', () => {
 
   it('clears form when opening new persona', () => {
     const nameInput = document.getElementById('personaName') as HTMLInputElement;
-    const descInput = document.getElementById('personaDescription') as HTMLInputElement;
     const editingIdInput = document.getElementById('editingPersonaId') as HTMLInputElement;
 
     nameInput.value = 'Previous Value';
-    descInput.value = 'Previous Desc';
     editingIdInput.value = 'previous-id';
 
     nameInput.value = '';
-    descInput.value = '';
     editingIdInput.value = '';
 
     expect(nameInput.value).toBe('');
-    expect(descInput.value).toBe('');
     expect(editingIdInput.value).toBe('');
   });
 });

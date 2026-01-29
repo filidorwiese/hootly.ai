@@ -47,7 +47,7 @@ const PersonaSelector: React.FC<PersonaSelectorProps> = ({
         className={triggerStyles}
         onClick={() => setIsOpen(!isOpen)}
         aria-label={t('persona.selectPersona')}
-        title={selectedPersona.description}
+        title={selectedPersona.name}
       >
         <span className={iconStyles}>{selectedPersona.icon}</span>
         <span className={nameStyles}>{selectedPersona.name}</span>
@@ -61,13 +61,10 @@ const PersonaSelector: React.FC<PersonaSelectorProps> = ({
               key={persona.id}
               className={`${optionStyles} ${persona.id === selectedPersonaId ? selectedOptionStyles : ''}`}
               onClick={() => handleSelect(persona)}
-              title={persona.description}
+              title={persona.name}
             >
               <span className={optionIconStyles}>{persona.icon}</span>
-              <div className={optionTextStyles}>
-                <span className={optionNameStyles}>{persona.name}</span>
-                <span className={optionDescStyles}>{persona.description}</span>
-              </div>
+              <span className={optionNameStyles}>{persona.name}</span>
             </button>
           ))}
 
@@ -81,13 +78,10 @@ const PersonaSelector: React.FC<PersonaSelectorProps> = ({
                     key={persona.id}
                     className={`${optionStyles} ${persona.id === selectedPersonaId ? selectedOptionStyles : ''}`}
                     onClick={() => handleSelect(persona)}
-                    title={persona.description}
+                    title={persona.name}
                   >
                     <span className={optionIconStyles}>{persona.icon}</span>
-                    <div className={optionTextStyles}>
-                      <span className={optionNameStyles}>{persona.name}</span>
-                      <span className={optionDescStyles}>{persona.description}</span>
-                    </div>
+                    <span className={optionNameStyles}>{persona.name}</span>
                   </button>
                 ))}
               </div>
@@ -162,7 +156,7 @@ const dropdownStyles = css`
 
 const optionStyles = css`
   display: flex;
-  align-items: flex-start;
+  align-items: center;
   gap: ${spacing[2]};
   width: 100%;
   padding: ${spacing[2]};
@@ -190,14 +184,6 @@ const selectedOptionStyles = css`
 const optionIconStyles = css`
   font-size: ${fontSizes.xl};
   flex-shrink: 0;
-  margin-top: 1px;
-`;
-
-const optionTextStyles = css`
-  display: flex;
-  flex-direction: column;
-  gap: 2px;
-  overflow: hidden;
 `;
 
 const optionNameStyles = css`
@@ -205,15 +191,6 @@ const optionNameStyles = css`
   font-size: ${fontSizes.sm};
   font-weight: ${fontWeights.medium};
   color: ${colors.text.primary};
-`;
-
-const optionDescStyles = css`
-  font-family: 'Inter', sans-serif;
-  font-size: ${fontSizes.xs};
-  color: ${colors.text.tertiary};
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
 `;
 
 const dividerStyles = css`
