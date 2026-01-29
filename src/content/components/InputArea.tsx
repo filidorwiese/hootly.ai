@@ -57,14 +57,13 @@ interface InputAreaProps {
   contextMode: 'none' | 'selection' | 'fullpage';
   selectionLength?: number;
   onContextToggle: () => void;
-  tokenCount: number;
   modelId?: string;
   provider?: LLMProvider;
 }
 
 const InputArea: React.FC<InputAreaProps> = ({
   value, onChange, onSubmit, disabled,
-  contextEnabled, contextMode, selectionLength, onContextToggle, tokenCount, modelId, provider
+  contextEnabled, contextMode, selectionLength, onContextToggle, modelId, provider
 }) => {
   const textareaRef = useRef<HTMLTextAreaElement>(null);
 
@@ -134,14 +133,11 @@ const InputArea: React.FC<InputAreaProps> = ({
           selectionLength={selectionLength}
           onToggle={onContextToggle}
         />
-        <div className={rightGroupStyles}>
-          <span className={tokenCountStyles}>{t('input.tokens', { count: tokenCount })}</span>
-          {modelId && (
-            <span className={modelIdStyles}>
-              {formatModelName(modelId, provider)}
-            </span>
-          )}
-        </div>
+        {modelId && (
+          <span className={modelIdStyles}>
+            {formatModelName(modelId, provider)}
+          </span>
+        )}
       </div>
     </div>
   );
@@ -249,18 +245,6 @@ const footerStyles = css`
   display: flex;
   justify-content: space-between;
   align-items: center;
-`;
-
-const rightGroupStyles = css`
-  display: flex;
-  align-items: center;
-  gap: 12px;
-`;
-
-const tokenCountStyles = css`
-  font-size: 11px;
-  color: #8A9A8C;
-  font-weight: 500;
 `;
 
 const modelIdStyles = css`

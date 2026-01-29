@@ -13,7 +13,6 @@ describe('InputArea', () => {
     contextEnabled: false,
     contextMode: 'none' as const,
     onContextToggle: vi.fn(),
-    tokenCount: 0,
   }
 
   beforeEach(() => {
@@ -30,12 +29,6 @@ describe('InputArea', () => {
       expect(textarea).toHaveAttribute('placeholder')
     })
 
-    it('displays token count', () => {
-      render(<InputArea {...defaultProps} tokenCount={150} />)
-
-      expect(screen.getByText('~150 tokens')).toBeInTheDocument()
-    })
-
     it('displays model name when provided', () => {
       render(
         <InputArea
@@ -46,6 +39,12 @@ describe('InputArea', () => {
       )
 
       expect(screen.getByText('Claude Sonnet 4.5')).toBeInTheDocument()
+    })
+
+    it('does not display token count (UI-5)', () => {
+      render(<InputArea {...defaultProps} />)
+
+      expect(screen.queryByText(/tokens/i)).not.toBeInTheDocument()
     })
 
     it('shows clear button when value exists and not disabled', () => {
@@ -172,7 +171,6 @@ describe('formatModelName', () => {
         contextEnabled={false}
         contextMode="none"
         onContextToggle={() => {}}
-        tokenCount={0}
         modelId={modelId}
         provider={provider}
       />

@@ -203,11 +203,11 @@ describe('Dialog', () => {
     })
   })
 
-  describe('token count', () => {
-    it('displays token count in input area', async () => {
+  describe('token count removal (UI-5)', () => {
+    it('does not display token count in input area', async () => {
       await renderDialog({ isOpen: true, onClose: () => {} })
 
-      expect(screen.getByText(/~\d+ tokens/)).toBeInTheDocument()
+      expect(screen.queryByText(/~\d+ tokens/)).not.toBeInTheDocument()
     })
   })
 

@@ -40,11 +40,6 @@ const Dialog: React.FC<DialogProps> = ({ isOpen, onClose }) => {
   const [personas, setPersonas] = useState<Persona[]>(DEFAULT_PERSONAS);
   const [currentPersonaId, setCurrentPersonaId] = useState<string>('general');
 
-  // Estimate token count (rough approximation: ~4 chars per token)
-  const estimateTokens = (text: string): number => {
-    return Math.ceil(text.length / 4);
-  };
-
   // Generate title from first user message (truncate to ~50 chars)
   const generateTitle = (message: string): string => {
     const trimmed = message.trim();
@@ -76,19 +71,6 @@ const Dialog: React.FC<DialogProps> = ({ isOpen, onClose }) => {
 
     await Storage.saveConversation(conversation);
     await Storage.setCurrentConversation(conversation);
-  };
-
-  const getCurrentTokenCount = (): number => {
-    let count = estimateTokens(inputValue);
-
-    if (contextEnabled && contextMode === 'selection' && capturedSelection) {
-      count += estimateTokens(capturedSelection);
-    } else if (contextEnabled && contextMode === 'fullpage') {
-      const pageText = extractPageText({ includeScripts: false, includeStyles: false, maxLength: 50000 });
-      count += estimateTokens(pageText);
-    }
-
-    return count;
   };
 
   // Capture text selection and auto-enable context when dialog opens
@@ -493,7 +475,6 @@ const Dialog: React.FC<DialogProps> = ({ isOpen, onClose }) => {
                 contextMode={contextMode}
                 selectionLength={capturedSelection?.length}
                 onContextToggle={handleContextToggle}
-                tokenCount={getCurrentTokenCount()}
                 modelId={currentModel}
                 provider={currentProvider}
               />

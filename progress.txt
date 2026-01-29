@@ -354,3 +354,30 @@ NOTES FOR NEXT PERSON:
 - HP-11 (context toggle in history) not implemented
 - UI-4, UI-5 (dialog UI tweaks) not started
 - ICON-1 through ICON-6 (glyphs.fyi icons) not started
+
+---
+
+2026-01-29 - UI-5: Token counter removed from footer
+
+COMPLETED:
+- Removed tokenCount prop from InputArea component
+- Removed token count display from dialog footer
+- Removed estimateTokens function from Dialog.tsx (not needed anymore)
+- Removed getCurrentTokenCount function from Dialog.tsx
+- Removed unused tokenCountStyles and rightGroupStyles CSS
+- Updated tests to verify token count is NOT displayed
+
+FILES CHANGED:
+- src/content/components/InputArea.tsx (removed tokenCount prop, display, and styles)
+- src/content/components/Dialog.tsx (removed tokenCount prop usage and token estimation)
+- src/__tests__/components/InputArea.test.tsx (removed token count test, added UI-5 verification)
+- src/__tests__/components/Dialog.test.tsx (updated token count test to verify removal)
+- plans/prd.json (marked UI-5 as passing)
+
+PRD ITEMS COMPLETED:
+- UI-5: Token counter removed from footer
+
+NOTES FOR NEXT PERSON:
+- HP-11 (context toggle in history) not implemented
+- UI-4 (persona selector at bottom of dialog) not started
+- ICON-1 through ICON-6 (glyphs.fyi icons) not started

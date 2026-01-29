@@ -520,7 +520,7 @@
       "Verify no token count displayed in footer/input area",
       "Type message and confirm no token estimation shown"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "ICON-1",
