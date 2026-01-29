@@ -620,7 +620,7 @@
       "Use solid borders instead of shadow effects",
       "Verify flat appearance with clean edges"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "FD-3",
@@ -863,5 +863,174 @@
       "Select text and verify tooltip appears"
     ],
     "passes": true
+  },
+  {
+    "id": "P-7",
+    "category": "personas",
+    "description": "Remove description field from persona",
+    "steps": [
+      "Remove description field from Persona type",
+      "Update persona form to not include description input",
+      "Update persona list display to not show description",
+      "Update built-in personas to remove descriptions",
+      "Verify persona still functions with only name"
+    ],
+    "passes": false
+  },
+  {
+    "id": "P-8",
+    "category": "personas",
+    "description": "System prompt maxlength 10000 with counter",
+    "steps": [
+      "Add maxlength=10000 to system prompt textarea",
+      "Add character counter below field (e.g. 1234 / 10000)",
+      "Update counter on each keystroke",
+      "Disable save button when limit reached",
+      "Re-enable save button when under limit"
+    ],
+    "passes": false
+  },
+  {
+    "id": "PP-10",
+    "category": "personas-page",
+    "description": "Remove persona list from settings page",
+    "steps": [
+      "Remove inline persona list from settings",
+      "Keep only default persona dropdown in settings",
+      "Change 'Manage Personas' button to a link",
+      "Position link below the persona dropdown",
+      "Verify link opens personas page"
+    ],
+    "passes": false
+  },
+  {
+    "id": "UI-6",
+    "category": "ui",
+    "description": "Fix persona selector dropdown cut-off in dialog",
+    "steps": [
+      "Open dialog",
+      "Click persona selector dropdown",
+      "Identify z-index or overflow:hidden causing cut-off",
+      "Fix dropdown to display fully above/below trigger",
+      "Verify all persona options visible"
+    ],
+    "passes": false
+  },
+  {
+    "id": "UI-7",
+    "category": "ui",
+    "description": "Add model selector dropdown to dialog",
+    "steps": [
+      "Add model dropdown to dialog footer near persona selector",
+      "Populate with available models from settings",
+      "Persist model selection per conversation",
+      "Default to settings model for new conversations",
+      "Verify model switch applies to next API call"
+    ],
+    "passes": false
+  },
+  {
+    "id": "HP-13",
+    "category": "history-page",
+    "description": "Export chat history to JSON",
+    "steps": [
+      "Add Export button to history page header",
+      "Clicking exports all conversations to JSON file",
+      "JSON includes all message data and metadata",
+      "File downloads with timestamp in filename",
+      "Verify exported JSON is valid and complete"
+    ],
+    "passes": false
+  },
+  {
+    "id": "HP-14",
+    "category": "history-page",
+    "description": "Import chat history from JSON",
+    "steps": [
+      "Add Import button to history page header",
+      "Clicking opens file picker for JSON",
+      "Validate JSON structure before import",
+      "Merge or replace existing history (user choice)",
+      "Show success/error message after import"
+    ],
+    "passes": false
+  },
+  {
+    "id": "HP-15",
+    "category": "history-page",
+    "description": "Add Clear All button to history page",
+    "steps": [
+      "Add Clear All button to history page header",
+      "Clicking shows confirmation dialog",
+      "On confirm, delete all conversations",
+      "Show empty state after clearing",
+      "Verify storage cleared"
+    ],
+    "passes": false
+  },
+  {
+    "id": "HP-16",
+    "category": "history-page",
+    "description": "Add search to history page",
+    "steps": [
+      "Add search input at top of history page",
+      "Filter conversations by title as user types",
+      "Filter by message content as well",
+      "Show no results state if no matches",
+      "Clear search shows all conversations again"
+    ],
+    "passes": false
+  },
+  {
+    "id": "HP-17",
+    "category": "history-page",
+    "description": "Continue conversation opens in new window",
+    "steps": [
+      "Update Continue button behavior",
+      "Clicking opens Hootly dialog in new popup window",
+      "Pass conversation ID to new window",
+      "Dialog loads conversation and allows continuation",
+      "Remove inline input area from history page"
+    ],
+    "passes": false
+  },
+  {
+    "id": "INTRO-1",
+    "category": "intro-text",
+    "description": "Add intro text to settings page",
+    "steps": [
+      "Add short intro paragraph at top of settings page",
+      "Explain what settings are available",
+      "Keep text concise (1-2 sentences)",
+      "Style consistent with page design",
+      "Add i18n translation key"
+    ],
+    "passes": false
+  },
+  {
+    "id": "INTRO-2",
+    "category": "intro-text",
+    "description": "Add intro text to personas page",
+    "steps": [
+      "Add short intro paragraph at top of personas page",
+      "Explain what personas are and how to use them",
+      "Keep text concise (1-2 sentences)",
+      "Style consistent with page design",
+      "Add i18n translation key"
+    ],
+    "passes": false
+  },
+  {
+    "id": "INTRO-3",
+    "category": "intro-text",
+    "description": "Add intro text to history page",
+    "steps": [
+      "Add short intro paragraph at top of history page",
+      "Explain what history features are available",
+      "Keep text concise (1-2 sentences)",
+      "Style consistent with page design",
+      "Add i18n translation key"
+    ],
+    "passes": false
   }
 ]

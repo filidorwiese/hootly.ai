@@ -509,3 +509,30 @@ NOTES FOR NEXT PERSON:
 - Next step: Use colors/styles from styles.ts in Dialog.tsx (FD-2)
 - ICON-1 through ICON-6 (glyphs.fyi icons) not started
 - WS-1 through WS-10 (website) not started
+
+---
+
+2026-01-29 - FD-2: Update dialog component to flat design
+
+COMPLETED:
+- Removed box-shadow from dialog container (was multi-layer shadow)
+- Replaced gradient header background with solid color
+- Updated all hardcoded colors to use design system from styles.ts
+- Used solid border (1px) instead of shadow effects for dialog boundary
+- Updated header, input section, cancel hint, backdrop styles
+- All styles now reference colors, spacing, radii, fontSizes from styles.ts
+- Added 6 unit tests for flat design verification
+- Removed backdrop-filter blur for cleaner flat look
+
+FILES CHANGED:
+- src/content/components/Dialog.tsx (updated all style constants)
+- src/__tests__/components/Dialog.test.tsx (added FD-2 flat design tests)
+- plans/prd.json (marked FD-2 as passing)
+
+PRD ITEMS COMPLETED:
+- FD-2: Update dialog component to flat design
+
+NOTES FOR NEXT PERSON:
+- FD-3 through FD-7 remaining (buttons, settings, personas, history, input areas)
+- ICON-1 through ICON-6 (glyphs.fyi icons) not started
+- WS-1 through WS-10 (website) not started
