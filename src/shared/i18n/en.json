@@ -93,6 +93,7 @@
     "deleteConfirm": "Delete this conversation?",
     "openHistory": "Open history",
     "view": "View",
+    "continue": "Continue",
     "close": "Close"
   },
   "persona": {

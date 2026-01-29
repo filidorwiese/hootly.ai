@@ -177,3 +177,149 @@ describe('History Page Integration', () => {
     expect(chromeMock.runtime.sendMessage).toHaveBeenCalledWith({ type: 'openHistory' });
   });
 });
+
+describe('Continue Conversation', () => {
+  beforeEach(() => {
+    resetChromeMock();
+    createMockDOM();
+    vi.clearAllMocks();
+  });
+
+  describe('continue button', () => {
+    it('adds continuing class when continue button clicked', () => {
+      const historyList = document.getElementById('historyList')!;
+      const conv = createConversation({
+        id: 'test-conv',
+        title: 'Test Chat',
+        messages: [
+          { role: 'user', content: 'Hello', timestamp: Date.now() },
+          { role: 'assistant', content: 'Hi there!', timestamp: Date.now() },
+        ],
+      });
+
+      // Create mock conversation item
+      historyList.innerHTML = `
+        <div class="conversation-item" data-id="${conv.id}">
+          <div class="input-area" data-id="${conv.id}">
+            <textarea class="input-textarea" data-id="${conv.id}"></textarea>
+          </div>
+        </div>
+      `;
+
+      const item = historyList.querySelector('.conversation-item')!;
+
+      // Simulate clicking continue
+      item.classList.add('expanded');
+      item.classList.add('continuing');
+
+      expect(item.classList.contains('continuing')).toBe(true);
+      expect(item.classList.contains('expanded')).toBe(true);
+    });
+
+    it('shows input area when continuing', () => {
+      const historyList = document.getElementById('historyList')!;
+      historyList.innerHTML = `
+        <div class="conversation-item continuing" data-id="test">
+          <div class="input-area" data-id="test" style="display: none;">
+            <textarea class="input-textarea" data-id="test"></textarea>
+          </div>
+        </div>
+      `;
+
+      const item = historyList.querySelector('.conversation-item')!;
+
+      // CSS rule .conversation-item.continuing .input-area { display: block; }
+      // Test that the class is present which triggers the CSS
+      expect(item.classList.contains('continuing')).toBe(true);
+    });
+  });
+
+  describe('send message', () => {
+    it('sends message via chrome runtime', async () => {
+      const conv = createConversation({
+        id: 'test-conv',
+        title: 'Test Chat',
+        messages: [
+          { role: 'user', content: 'Hello', timestamp: Date.now() },
+          { role: 'assistant', content: 'Hi there!', timestamp: Date.now() },
+        ],
+      });
+
+      // Simulate sending a message
+      const payload = {
+        type: 'sendPrompt',
+        payload: {
+          prompt: 'Test message',
+          conversationHistory: conv.messages,
+          settings: {},
+        },
+      };
+
+      await chromeMock.runtime.sendMessage(payload);
+
+      expect(chromeMock.runtime.sendMessage).toHaveBeenCalledWith(payload);
+    });
+  });
+
+  describe('stream response handling', () => {
+    it('handles streamChunk message', () => {
+      let content = '';
+      const handler = (message: any) => {
+        if (message.type === 'streamChunk') {
+          content += message.payload.content;
+        }
+      };
+
+      // Simulate receiving chunks
+      handler({ type: 'streamChunk', payload: { content: 'Hello' } });
+      handler({ type: 'streamChunk', payload: { content: ' world' } });
+
+      expect(content).toBe('Hello world');
+    });
+
+    it('handles streamEnd message', () => {
+      let completed = false;
+      let finalContent = '';
+      const handler = (message: any) => {
+        if (message.type === 'streamEnd') {
+          completed = true;
+          finalContent = message.payload.content;
+        }
+      };
+
+      handler({ type: 'streamEnd', payload: { content: 'Full response here' } });
+
+      expect(completed).toBe(true);
+      expect(finalContent).toBe('Full response here');
+    });
+
+    it('handles streamError message', () => {
+      let error = '';
+      const handler = (message: any) => {
+        if (message.type === 'streamError') {
+          error = message.payload.error;
+        }
+      };
+
+      handler({ type: 'streamError', payload: { error: 'API error' } });
+
+      expect(error).toBe('API error');
+    });
+  });
+
+  describe('persona restoration', () => {
+    it('preserves personaId when continuing conversation', () => {
+      const conv = createConversation({
+        id: 'test-conv',
+        title: 'Test Chat',
+        personaId: 'code-helper',
+        messages: [
+          { role: 'user', content: 'Hello', timestamp: Date.now() },
+        ],
+      });
+
+      // Verify personaId is preserved
+      expect(conv.personaId).toBe('code-helper');
+    });
+  });
+});

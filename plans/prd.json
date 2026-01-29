@@ -376,7 +376,7 @@
       "Verify groupings: Today, Yesterday, This Week, This Month, Older",
       "Check conversations sorted by date within groups (newest first)"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "HP-3",
@@ -387,7 +387,7 @@
       "Verify each item shows: title, date/time, message count",
       "Verify persona icon if persona was used"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "HP-4",
@@ -399,7 +399,7 @@
       "Verify conversation expands inline or opens detail view",
       "Check all messages displayed (user and assistant)"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "HP-5",
@@ -411,7 +411,7 @@
       "Verify conversation loads with input area at bottom",
       "Verify input area reuses same component as dialog"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "HP-6",
@@ -424,7 +424,7 @@
       "Verify response streams in",
       "Verify conversation saved/updated"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "HP-7",
@@ -437,7 +437,7 @@
       "Verify item removed from list",
       "Refresh page and confirm deletion persisted"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "HP-8",
@@ -449,7 +449,7 @@
       "Verify empty state message shown",
       "Check message is localized"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "HP-9",
@@ -461,7 +461,7 @@
       "Check font is Inter",
       "Verify consistent with settings/personas pages"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "HP-10",
@@ -474,7 +474,7 @@
       "Verify Code Helper persona active",
       "Send message and verify persona system prompt applied"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "HP-11",

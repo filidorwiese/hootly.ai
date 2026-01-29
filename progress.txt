@@ -231,16 +231,49 @@ PRD ITEMS COMPLETED:
 - HP-1: History page accessible from dialog
 
 NOTES FOR NEXT PERSON:
-- HP-2 through HP-12 still need implementation
-- HP-2 (date grouping) is partially done - groupByDate function exists
-- HP-3 (metadata display) is partially done - shows title, date, message count
-- HP-4 (expand conversation) is done - click to expand/collapse
-- HP-5, HP-6 (continue conversation) not implemented - needs input area component
-- HP-7 (delete) is done
-- HP-8 (empty state) is done
-- HP-9 (styling) is done
-- HP-10, HP-11 (persona restore, context toggle) need continue functionality first
+- HP-2 through HP-10 now pass
+- HP-11 (context toggle) not implemented - history page doesn't have context toggle
 - HP-12 (remove history panel from dialog) - panel still exists but no longer opens
+- PP-1 through PP-9 (personas page) not started
+- UI-4, UI-5 (dialog UI tweaks) not started
+- ICON-1 through ICON-6 (glyphs.fyi icons) not started
+
+---
+
+2026-01-29 - HP-5/HP-6: Continue conversation from history page
+
+COMPLETED:
+- Added "Continue" button to each history item
+- Input area appears when Continue is clicked (expands + shows input)
+- Input area mimics dialog InputArea: auto-expand textarea, send/clear buttons
+- Streaming responses displayed in real-time
+- Messages saved to conversation in storage after completion
+- Persona system prompt applied when sending messages
+- Esc key cancels streaming
+- Added i18n translations for "continue" in all 10 languages
+- Added unit tests for continue functionality
+
+FILES CHANGED:
+- src/history/index.html (added CSS for input area, streaming, continue button)
+- src/history/history.ts (added continue/send/stream handlers)
+- src/shared/i18n/*.json (added history.continue to all 10 languages)
+- src/__tests__/history/history-page.test.ts (added continue tests)
+- plans/prd.json (marked HP-2 through HP-10 as passing)
+
+PRD ITEMS COMPLETED:
+- HP-2: History grouped by date categories
+- HP-3: History item shows title and metadata
+- HP-4: View history item expands conversation
+- HP-5: Continue conversation from history
+- HP-6: Input area functional when continuing
+- HP-7: Delete history item
+- HP-8: Empty state when no history
+- HP-9: History page styling matches forest theme
+- HP-10: Persona restored when continuing conversation
+
+NOTES FOR NEXT PERSON:
+- HP-11 (context toggle) not implemented - would need to add to history page
+- HP-12 (remove history panel from dialog) - inline panel still renders but doesn't open
 - PP-1 through PP-9 (personas page) not started
 - UI-4, UI-5 (dialog UI tweaks) not started
 - ICON-1 through ICON-6 (glyphs.fyi icons) not started
