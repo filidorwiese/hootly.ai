@@ -1156,3 +1156,32 @@ NOTES FOR NEXT PERSON:
 - ICON-2 through ICON-6 (settings/personas/history page icons) not started
 - WS-1 through WS-10 (website) not started
 - Icons module (src/shared/icons.tsx) can be reused for other pages
+
+---
+
+2026-01-29 - ICON-2: Replace settings page icons with glyphs.fyi icons
+
+COMPLETED:
+- Replaced gear emoji (⚙️) in settings page title with colorful SVG icon
+- Added colorful persona/user+ SVG icon to "Manage Personas" link
+- Settings icon uses teal color family (#3A7B89, #5BA3B0) matching design system
+- Persona link icon uses green color family (#4A7C54, #A3C4AC) matching design system
+- Icons are properly sized (28px for title, 14px for inline link)
+- Icons have vertical-align: middle for proper alignment with text
+- All icons use multiple colors (not monochrome)
+- 21 unit tests covering icon structure, colors, and forest theme compliance
+
+FILES CHANGED:
+- src/settings/index.html (replaced emoji with SVG icons)
+- src/__tests__/icons/settings-page-icons.test.ts (new - 21 tests)
+- plans/prd.json (marked ICON-2 as passing)
+
+PRD ITEMS COMPLETED:
+- ICON-2: Replace settings page icons with glyphs.fyi icons
+
+NOTES FOR NEXT PERSON:
+- ICON-3 (personas page icons) not started
+- ICON-4 (history page icons) not started
+- ICON-5 (icons are colorful not monochrome) not started
+- ICON-6 (context toggle icons) - already done via ICON-1
+- WS-1 through WS-10 (website) not started

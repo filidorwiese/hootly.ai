@@ -546,7 +546,7 @@
       "Verify navigation icons use glyphs.fyi colorful icons",
       "Verify action button icons use glyphs.fyi colorful icons"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "ICON-3",

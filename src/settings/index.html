@@ -280,7 +280,13 @@
   </style>
 </head>
 <body>
-  <h1>⚙️ <span data-i18n="settings.title">Settings</span></h1>
+  <h1>
+    <svg width="28" height="28" viewBox="0 0 24 24" fill="none" style="vertical-align: middle; margin-right: 8px;">
+      <path d="M12 15a3 3 0 100-6 3 3 0 000 6z" fill="#3A7B89"/>
+      <path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 010 2.83 2 2 0 01-2.83 0l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-2 2 2 2 0 01-2-2v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83 0 2 2 0 010-2.83l.06-.06a1.65 1.65 0 00.33-1.82 1.65 1.65 0 00-1.51-1H3a2 2 0 01-2-2 2 2 0 012-2h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 010-2.83 2 2 0 012.83 0l.06.06a1.65 1.65 0 001.82.33H9a1.65 1.65 0 001-1.51V3a2 2 0 012-2 2 2 0 012 2v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 012.83 0 2 2 0 010 2.83l-.06.06a1.65 1.65 0 00-.33 1.82V9a1.65 1.65 0 001.51 1H21a2 2 0 012 2 2 2 0 01-2 2h-.09a1.65 1.65 0 00-1.51 1z" fill="#5BA3B0"/>
+    </svg>
+    <span data-i18n="settings.title">Settings</span>
+  </h1>
 
   <p class="intro-text" data-i18n="settings.intro">Configure your API keys, model preferences, and personalization options below.</p>
 
@@ -386,7 +392,15 @@
     <small style="margin-top: 5px; display: block;" data-i18n="settings.defaultPersonaHint">
       Persona used for new conversations
     </small>
-    <a href="#" id="managePersonasLink" class="manage-personas-link" data-i18n="settings.managePersonas">Manage Personas</a>
+    <a href="#" id="managePersonasLink" class="manage-personas-link">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" style="vertical-align: middle; margin-right: 4px;">
+        <circle cx="12" cy="8" r="4" fill="#4A7C54"/>
+        <path d="M4 20c0-4 4-6 8-6s8 2 8 6" fill="#A3C4AC"/>
+        <circle cx="19" cy="8" r="3" fill="#E8F0EA" stroke="#4A7C54" stroke-width="1.5"/>
+        <path d="M19 6v4M17 8h4" stroke="#4A7C54" stroke-width="1.5" stroke-linecap="round"/>
+      </svg>
+      <span data-i18n="settings.managePersonas">Manage Personas</span>
+    </a>
   </div>
 
   <button id="saveBtn" data-i18n="settings.save">Save Settings</button>
