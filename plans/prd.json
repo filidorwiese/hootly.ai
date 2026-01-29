@@ -9,7 +9,7 @@
       "Reopen dialog and check history panel",
       "Verify conversation appears in history list"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "CH-2",

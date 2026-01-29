@@ -1,0 +1,19 @@
+2026-01-29 - CH-1: Auto-save conversation after each exchange
+
+COMPLETED:
+- Modified Dialog.tsx to persist conversations to chrome.storage.local
+- Conversations auto-save after each assistant response (streamEnd event)
+- Auto-generates conversation title from first user message (truncated to 50 chars)
+- Generates UUID for new conversations using crypto.randomUUID()
+- Burn button (🔥) now deletes conversation from storage (not just clears state)
+- Conversation ID resets when provider changes or conversation cleared
+
+FILES CHANGED:
+- src/content/components/Dialog.tsx
+
+NOTES FOR NEXT PERSON:
+- CH-1 implemented (auto-save works), but history PANEL UI (CH-2) not yet built
+- Conversations save to storage but no way to VIEW history list yet
+- CH-7 (burn button) is functionally complete but can't be verified without history panel
+- Storage infrastructure already exists for conversations (Storage.getConversations, etc)
+- Next priority: CH-2 (history panel accessible from dialog header) to make saved convos visible

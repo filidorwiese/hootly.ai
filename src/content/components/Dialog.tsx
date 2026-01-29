@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Rnd } from 'react-rnd';
 import { css } from '@emotion/css';
 import { Storage } from '../../shared/storage';
-import type { DialogPosition, Message, ContentMessage, LLMProvider } from '../../shared/types';
+import type { DialogPosition, Message, ContentMessage, LLMProvider, Conversation } from '../../shared/types';
 import { extractSelection, extractPageText, getPageUrl, getPageTitle, requestPageInfo } from '../../shared/utils';
 import { getApiKey } from '../../shared/providers';
 import { t } from '../../shared/i18n';
@@ -34,10 +34,43 @@ const Dialog: React.FC<DialogProps> = ({ isOpen, onClose }) => {
   const [conversationHistory, setConversationHistory] = useState<Message[]>([]);
   const [currentModel, setCurrentModel] = useState<string>('');
   const [currentProvider, setCurrentProvider] = useState<LLMProvider>('claude');
+  const [currentConversationId, setCurrentConversationId] = useState<string | null>(null);
 
   // Estimate token count (rough approximation: ~4 chars per token)
   const estimateTokens = (text: string): number => {
     return Math.ceil(text.length / 4);
+  };
+
+  // Generate title from first user message (truncate to ~50 chars)
+  const generateTitle = (message: string): string => {
+    const trimmed = message.trim();
+    if (trimmed.length <= 50) return trimmed;
+    return trimmed.slice(0, 47) + '...';
+  };
+
+  // Generate UUID for conversation
+  const generateId = (): string => {
+    return crypto.randomUUID();
+  };
+
+  // Save conversation to storage
+  const saveConversationToStorage = async (messages: Message[], convId: string) => {
+    const existing = await Storage.getConversations();
+    const existingConv = existing.find((c) => c.id === convId);
+
+    const firstUserMessage = messages.find((m) => m.role === 'user');
+    const title = existingConv?.title || (firstUserMessage ? generateTitle(firstUserMessage.content) : 'New Conversation');
+
+    const conversation: Conversation = {
+      id: convId,
+      title,
+      createdAt: existingConv?.createdAt || Date.now(),
+      updatedAt: Date.now(),
+      messages,
+    };
+
+    await Storage.saveConversation(conversation);
+    await Storage.setCurrentConversation(conversation);
   };
 
   const getCurrentTokenCount = (): number => {
@@ -109,9 +142,9 @@ const Dialog: React.FC<DialogProps> = ({ isOpen, onClose }) => {
           setCurrentProvider(newProvider);
           setCurrentModel(changes.settings?.newValue?.model || '');
           setConversationHistory([]);
+          setCurrentConversationId(null);
           setResponse('');
           setError(null);
-          // console.log('[Hootly] Provider changed to:', newProvider, '- conversation cleared');
         }
       }
     };
@@ -177,7 +210,7 @@ const Dialog: React.FC<DialogProps> = ({ isOpen, onClose }) => {
 
   // Listen for streaming responses from background
   useEffect(() => {
-    const handleMessage = (message: ContentMessage) => {
+    const handleMessage = async (message: ContentMessage) => {
       if (message.type === 'streamChunk') {
         setResponse((prev) => prev + message.payload.content);
       } else if (message.type === 'streamEnd') {
@@ -188,7 +221,21 @@ const Dialog: React.FC<DialogProps> = ({ isOpen, onClose }) => {
           content: message.payload.content,
           timestamp: Date.now(),
         };
-        setConversationHistory((prev) => [...prev, assistantMessage]);
+
+        // Get current state values via refs/state updater
+        setConversationHistory((prev) => {
+          const newHistory = [...prev, assistantMessage];
+
+          // Save to storage (async, but don't block state update)
+          const convId = currentConversationId || generateId();
+          if (!currentConversationId) {
+            setCurrentConversationId(convId);
+          }
+          saveConversationToStorage(newHistory, convId);
+
+          return newHistory;
+        });
+
         // Clear current response to avoid duplication
         setResponse('');
       } else if (message.type === 'streamError') {
@@ -202,7 +249,7 @@ const Dialog: React.FC<DialogProps> = ({ isOpen, onClose }) => {
 
     chrome.runtime.onMessage.addListener(handleMessage);
     return () => chrome.runtime.onMessage.removeListener(handleMessage);
-  }, []);
+  }, [currentConversationId]);
 
   const handleContextToggle = () => {
     if (!contextEnabled) {
@@ -226,9 +273,15 @@ const Dialog: React.FC<DialogProps> = ({ isOpen, onClose }) => {
     }
   };
 
-  const handleClearConversation = () => {
+  const handleClearConversation = async () => {
     if (conversationHistory.length > 0) {
+      // Delete from storage if we have a conversation ID (burn functionality)
+      if (currentConversationId) {
+        await Storage.deleteConversation(currentConversationId);
+        await Storage.setCurrentConversation(null);
+      }
       setConversationHistory([]);
+      setCurrentConversationId(null);
       setResponse('');
       setError(null);
     }
