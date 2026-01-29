@@ -73,5 +73,9 @@
     "messages": "{{count}}件",
     "delete": "会話を削除",
     "openHistory": "履歴を開く"
+  },
+  "persona": {
+    "selectPersona": "ペルソナを選択",
+    "custom": "カスタム"
   }
 }

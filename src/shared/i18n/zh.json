@@ -73,5 +73,9 @@
     "messages": "{{count}} 条",
     "delete": "删除对话",
     "openHistory": "打开历史"
+  },
+  "persona": {
+    "selectPersona": "选择角色",
+    "custom": "自定义"
   }
 }

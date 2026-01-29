@@ -73,5 +73,9 @@
     "messages": "{{count}}개",
     "delete": "대화 삭제",
     "openHistory": "기록 열기"
+  },
+  "persona": {
+    "selectPersona": "페르소나 선택",
+    "custom": "사용자 지정"
   }
 }

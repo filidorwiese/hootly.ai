@@ -22,6 +22,8 @@ export interface Settings {
   conversationDepth: 1 | 3 | 5 | 999;
   retentionDays: number;
   language: 'auto' | 'en' | 'nl' | 'de' | 'fr' | 'es' | 'it' | 'pt' | 'zh' | 'ja' | 'ko';
+  defaultPersonaId: string;
+  customPersonas: Persona[];
 }
 
 // Re-export ModelConfig from models.ts for convenience
@@ -33,7 +35,61 @@ export interface Conversation {
   createdAt: number;
   updatedAt: number;
   messages: Message[];
+  personaId?: string;
 }
+
+export interface Persona {
+  id: string;
+  name: string;
+  description: string;
+  systemPrompt: string;
+  icon: string;
+  isBuiltIn: boolean;
+  createdAt?: number;
+}
+
+export const DEFAULT_PERSONAS: Persona[] = [
+  {
+    id: 'general',
+    name: 'General',
+    description: 'A helpful, harmless, and honest assistant',
+    systemPrompt: '',
+    icon: '🦉',
+    isBuiltIn: true,
+  },
+  {
+    id: 'code-helper',
+    name: 'Code Helper',
+    description: 'Expert programmer focused on clean, efficient code',
+    systemPrompt: 'You are an expert programmer. Provide clean, efficient, well-documented code. Explain your reasoning briefly. Prefer modern best practices and idiomatic solutions.',
+    icon: '💻',
+    isBuiltIn: true,
+  },
+  {
+    id: 'writer',
+    name: 'Writer',
+    description: 'Creative writer for various content types',
+    systemPrompt: 'You are a skilled writer. Help with drafting, editing, and improving written content. Focus on clarity, engagement, and appropriate tone for the context.',
+    icon: '✍️',
+    isBuiltIn: true,
+  },
+  {
+    id: 'researcher',
+    name: 'Researcher',
+    description: 'Analytical researcher for deep exploration',
+    systemPrompt: 'You are a thorough researcher. Analyze topics in depth, cite sources when possible, present multiple perspectives, and clearly distinguish facts from opinions.',
+    icon: '🔬',
+    isBuiltIn: true,
+  },
+  {
+    id: 'translator',
+    name: 'Translator',
+    description: 'Multilingual translator preserving meaning and tone',
+    systemPrompt: 'You are an expert translator. Translate text accurately while preserving meaning, tone, and cultural nuances. Always specify source and target languages.',
+    icon: '🌐',
+    isBuiltIn: true,
+  },
+];
 
 export interface Message {
   role: 'user' | 'assistant';
@@ -104,4 +160,6 @@ export const DEFAULT_SETTINGS: Settings = {
   conversationDepth: 5,
   retentionDays: 30,
   language: 'auto',
+  defaultPersonaId: 'general',
+  customPersonas: [],
 };

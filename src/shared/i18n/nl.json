@@ -73,5 +73,9 @@
     "messages": "{{count}} ber.",
     "delete": "Gesprek verwijderen",
     "openHistory": "Geschiedenis openen"
+  },
+  "persona": {
+    "selectPersona": "Selecteer persona",
+    "custom": "Aangepast"
   }
 }

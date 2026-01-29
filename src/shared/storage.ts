@@ -1,5 +1,5 @@
-import type { Settings, Conversation, DialogPosition } from './types';
-import { DEFAULT_SETTINGS } from './types';
+import type { Settings, Conversation, DialogPosition, Persona } from './types';
+import { DEFAULT_SETTINGS, DEFAULT_PERSONAS } from './types';
 
 const STORAGE_KEYS = {
   SETTINGS: 'hootly_settings',
@@ -67,5 +67,15 @@ export class Storage {
     const cutoff = Date.now() - retentionDays * 24 * 60 * 60 * 1000;
     const filtered = conversations.filter((c) => c.updatedAt > cutoff);
     await chrome.storage.local.set({ [STORAGE_KEYS.CONVERSATIONS]: filtered });
+  }
+
+  static async getPersonas(): Promise<Persona[]> {
+    const settings = await this.getSettings();
+    return [...DEFAULT_PERSONAS, ...(settings.customPersonas || [])];
+  }
+
+  static async getPersonaById(id: string): Promise<Persona | undefined> {
+    const personas = await this.getPersonas();
+    return personas.find((p) => p.id === id);
   }
 }

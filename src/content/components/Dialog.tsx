@@ -2,13 +2,15 @@ import React, { useState, useEffect } from 'react';
 import { Rnd } from 'react-rnd';
 import { css } from '@emotion/css';
 import { Storage } from '../../shared/storage';
-import type { DialogPosition, Message, ContentMessage, LLMProvider, Conversation } from '../../shared/types';
+import type { DialogPosition, Message, ContentMessage, LLMProvider, Conversation, Persona } from '../../shared/types';
+import { DEFAULT_PERSONAS } from '../../shared/types';
 import { extractSelection, extractPageText, getPageUrl, getPageTitle, requestPageInfo } from '../../shared/utils';
 import { getApiKey } from '../../shared/providers';
 import { t } from '../../shared/i18n';
 import InputArea from './InputArea';
 import Response from './Response';
 import HistoryPanel from './HistoryPanel';
+import PersonaSelector from './PersonaSelector';
 
 interface DialogProps {
   isOpen: boolean;
@@ -38,6 +40,8 @@ const Dialog: React.FC<DialogProps> = ({ isOpen, onClose }) => {
   const [currentConversationId, setCurrentConversationId] = useState<string | null>(null);
   const [isHistoryOpen, setIsHistoryOpen] = useState(false);
   const [savedConversations, setSavedConversations] = useState<Conversation[]>([]);
+  const [personas, setPersonas] = useState<Persona[]>(DEFAULT_PERSONAS);
+  const [currentPersonaId, setCurrentPersonaId] = useState<string>('general');
 
   // Estimate token count (rough approximation: ~4 chars per token)
   const estimateTokens = (text: string): number => {
@@ -57,7 +61,7 @@ const Dialog: React.FC<DialogProps> = ({ isOpen, onClose }) => {
   };
 
   // Save conversation to storage
-  const saveConversationToStorage = async (messages: Message[], convId: string) => {
+  const saveConversationToStorage = async (messages: Message[], convId: string, personaId: string) => {
     const existing = await Storage.getConversations();
     const existingConv = existing.find((c) => c.id === convId);
 
@@ -70,6 +74,7 @@ const Dialog: React.FC<DialogProps> = ({ isOpen, onClose }) => {
       createdAt: existingConv?.createdAt || Date.now(),
       updatedAt: Date.now(),
       messages,
+      personaId,
     };
 
     await Storage.saveConversation(conversation);
@@ -92,10 +97,15 @@ const Dialog: React.FC<DialogProps> = ({ isOpen, onClose }) => {
   // Capture text selection and auto-enable context when dialog opens
   useEffect(() => {
     if (isOpen) {
-      // Load current model and provider
+      // Load current model, provider, and personas
       Storage.getSettings().then((settings) => {
         setCurrentModel(settings.model || '');
         setCurrentProvider(settings.provider || 'claude');
+        const allPersonas = [...DEFAULT_PERSONAS, ...(settings.customPersonas || [])];
+        setPersonas(allPersonas);
+        if (!currentConversationId) {
+          setCurrentPersonaId(settings.defaultPersonaId || 'general');
+        }
       });
       // Request fresh page info from parent (for iframe mode)
       requestPageInfo().then(() => {
@@ -234,7 +244,7 @@ const Dialog: React.FC<DialogProps> = ({ isOpen, onClose }) => {
           if (!currentConversationId) {
             setCurrentConversationId(convId);
           }
-          saveConversationToStorage(newHistory, convId);
+          saveConversationToStorage(newHistory, convId, currentPersonaId);
 
           return newHistory;
         });
@@ -252,7 +262,7 @@ const Dialog: React.FC<DialogProps> = ({ isOpen, onClose }) => {
 
     chrome.runtime.onMessage.addListener(handleMessage);
     return () => chrome.runtime.onMessage.removeListener(handleMessage);
-  }, [currentConversationId]);
+  }, [currentConversationId, currentPersonaId]);
 
   const handleContextToggle = () => {
     if (!contextEnabled) {
@@ -287,7 +297,15 @@ const Dialog: React.FC<DialogProps> = ({ isOpen, onClose }) => {
       setCurrentConversationId(null);
       setResponse('');
       setError(null);
+      // Reset to default persona
+      Storage.getSettings().then((settings) => {
+        setCurrentPersonaId(settings.defaultPersonaId || 'general');
+      });
     }
+  };
+
+  const handlePersonaSelect = (persona: Persona) => {
+    setCurrentPersonaId(persona.id);
   };
 
   const handleOpenHistory = async () => {
@@ -299,6 +317,9 @@ const Dialog: React.FC<DialogProps> = ({ isOpen, onClose }) => {
   const handleSelectConversation = (conversation: Conversation) => {
     setConversationHistory(conversation.messages);
     setCurrentConversationId(conversation.id);
+    if (conversation.personaId) {
+      setCurrentPersonaId(conversation.personaId);
+    }
     setResponse('');
     setError(null);
     setIsHistoryOpen(false);
@@ -383,14 +404,26 @@ const Dialog: React.FC<DialogProps> = ({ isOpen, onClose }) => {
 
       setConversationHistory((prev) => [...prev, userMessage]);
 
-      // Send to background worker
+      // Get current persona's system prompt
+      const currentPersona = personas.find((p) => p.id === currentPersonaId);
+      const personaSystemPrompt = currentPersona?.systemPrompt || '';
+
+      // Combine persona prompt with user's custom system prompt
+      let combinedSystemPrompt = personaSystemPrompt;
+      if (settings.systemPrompt) {
+        combinedSystemPrompt = personaSystemPrompt
+          ? `${personaSystemPrompt}\n\n${settings.systemPrompt}`
+          : settings.systemPrompt;
+      }
+
+      // Send to background worker with combined system prompt
       await chrome.runtime.sendMessage({
         type: 'sendPrompt',
         payload: {
           prompt: currentInput,
           context,
           conversationHistory,
-          settings,
+          settings: { ...settings, systemPrompt: combinedSystemPrompt },
         },
       });
     } catch (err) {
@@ -433,10 +466,17 @@ const Dialog: React.FC<DialogProps> = ({ isOpen, onClose }) => {
         >
         {/* Header */}
         <div className={`${headerStyles} drag-handle`}>
-          <h2>
-            <img src={chrome.runtime.getURL('icons/icon-48.png')} alt="" className={iconStyles} />
-            Hootly <span className={taglineStyles}>- Your wise web companion</span>
-          </h2>
+          <div className={headerLeftStyles}>
+            <h2>
+              <img src={chrome.runtime.getURL('icons/icon-48.png')} alt="" className={iconStyles} />
+              Hootly <span className={taglineStyles}>- Your wise web companion</span>
+            </h2>
+            <PersonaSelector
+              personas={personas}
+              selectedPersonaId={currentPersonaId}
+              onSelectPersona={handlePersonaSelect}
+            />
+          </div>
           <div className={headerButtonsStyles}>
             {conversationHistory.length > 0 && (
               <button onClick={handleClearConversation} aria-label={t('dialog.clearConversation')} title={t('dialog.clearConversation')}>🔥</button>
@@ -573,6 +613,12 @@ const iconStyles = css`
 const taglineStyles = css`
   font-weight: 400;
   color: #8A9A8C;
+`;
+
+const headerLeftStyles = css`
+  display: flex;
+  align-items: center;
+  gap: 16px;
 `;
 
 const headerButtonsStyles = css`

@@ -94,7 +94,7 @@
       "Click persona selector",
       "Verify 5 built-in personas: General, Code Helper, Writer, Researcher, Translator"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "P-2",
@@ -120,7 +120,7 @@
       "Verify persona icon/name updates",
       "Send message and verify system prompt applied"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "P-4",
@@ -133,7 +133,7 @@
       "Load conversation from history",
       "Verify 'Code Helper' persona is auto-selected"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "P-5",
@@ -218,7 +218,7 @@
       "Inspect chrome.storage.local",
       "Verify conversation object includes personaId field"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "INT-1",
@@ -230,7 +230,7 @@
       "Inspect network request to API",
       "Verify system prompt from persona is included"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "INT-2",
@@ -242,6 +242,6 @@
       "Send message",
       "Verify both prompts combined in API call"
     ],
-    "passes": false
+    "passes": true
   }
 ]

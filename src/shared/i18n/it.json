@@ -73,5 +73,9 @@
     "messages": "{{count}} msg",
     "delete": "Elimina conversazione",
     "openHistory": "Apri cronologia"
+  },
+  "persona": {
+    "selectPersona": "Seleziona persona",
+    "custom": "Personalizzato"
   }
 }

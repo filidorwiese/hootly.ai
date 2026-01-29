@@ -73,5 +73,9 @@
     "messages": "{{count}} Nachr.",
     "delete": "Gespräch löschen",
     "openHistory": "Verlauf öffnen"
+  },
+  "persona": {
+    "selectPersona": "Persona auswählen",
+    "custom": "Benutzerdefiniert"
   }
 }

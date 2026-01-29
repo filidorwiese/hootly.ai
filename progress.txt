@@ -52,3 +52,41 @@ NOTES FOR NEXT PERSON:
 - UI-2 (persona selector) not started
 - DATA-1, DATA-2 (persona storage) not started
 - INT-1, INT-2 (persona API integration) not started
+
+---
+
+2026-01-29 - P-1: Default personas available on first run
+
+COMPLETED:
+- Added Persona interface and DEFAULT_PERSONAS constant to types.ts
+- 5 built-in personas: General, Code Helper, Writer, Researcher, Translator
+- Each persona has: id, name, description, systemPrompt, icon, isBuiltIn
+- Created PersonaSelector.tsx dropdown component in dialog header
+- Persona selector shows icon + name, dropdown shows all personas with descriptions
+- Persona's systemPrompt combined with user's custom systemPrompt in API calls
+- Conversation stores personaId, restores when loading from history
+- Added defaultPersonaId and customPersonas to Settings interface
+- Added i18n translations for persona section (all 10 languages)
+
+FILES CHANGED:
+- src/shared/types.ts (Persona interface, DEFAULT_PERSONAS, Settings update)
+- src/shared/storage.ts (getPersonas, getPersonaById methods)
+- src/content/components/Dialog.tsx (import, state, PersonaSelector, system prompt logic)
+- src/content/components/PersonaSelector.tsx (new)
+- src/shared/i18n/*.json (added persona section)
+
+PRD ITEMS COMPLETED:
+- P-1: Default personas available on first run
+- P-3: Persona selector in dialog allows switching
+- P-4: Persona persists when loading conversation from history
+- DATA-2: Conversation stores personaId
+- INT-1: Persona system prompt included in API calls
+- INT-2: User system prompt combines with persona prompt
+
+NOTES FOR NEXT PERSON:
+- P-2 (create custom persona in settings) not implemented - needs settings page UI
+- P-5 (edit/delete custom personas) not implemented - needs settings page UI
+- P-6 (set default persona for new conversations) - settings already has defaultPersonaId field, just needs UI
+- DATA-1 (persona interface stored correctly) - only custom personas need storage, built-in are in code
+- UI-2 (persona selector compact/unobtrusive) - implemented but may need styling review
+- CH-6 (retentionDays cleanup) still not implemented
