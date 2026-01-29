@@ -1,0 +1,319 @@
+{
+  "title": "Chat History & Persona Selection",
+  "version": "0.4.0",
+  "status": "draft",
+  "features": [
+    {
+      "id": "chat-history",
+      "name": "Chat History",
+      "implement": true,
+      "description": "Persistent storage and retrieval of past conversations",
+      "storage": "chrome.storage.local (existing infrastructure)",
+      "requirements": [
+        {
+          "id": "CH-1",
+          "implement": true,
+          "description": "Auto-save conversation after each exchange",
+          "details": "Use existing Conversation interface and Storage.saveConversation()"
+        },
+        {
+          "id": "CH-2",
+          "implement": true,
+          "description": "History panel in dialog header",
+          "details": "Dropdown/sidebar showing past conversations with title, date, preview"
+        },
+        {
+          "id": "CH-3",
+          "implement": true,
+          "description": "Load previous conversation",
+          "details": "Click to restore full conversation history into dialog"
+        },
+        {
+          "id": "CH-4",
+          "implement": true,
+          "description": "Delete individual conversations",
+          "details": "Swipe or button to delete from history"
+        },
+        {
+          "id": "CH-5",
+          "implement": true,
+          "description": "Auto-title generation",
+          "details": "Generate title from first user message (truncated to ~50 chars)"
+        },
+        {
+          "id": "CH-6",
+          "implement": true,
+          "description": "Respect retentionDays setting",
+          "details": "Clear old conversations based on existing setting (default 30 days)"
+        },
+        {
+          "id": "CH-7",
+          "implement": true,
+          "description": "Burn button deletes from history",
+          "details": "Existing 🔥 button clears messages AND removes conversation from storage if it was saved"
+        }
+      ],
+      "ui_changes": [
+        {
+          "component": "Dialog.tsx",
+          "implement": true,
+          "changes": [
+            "Add history icon button in header (📜 or similar)",
+            "History dropdown/panel component",
+            "Track currentConversationId state"
+          ]
+        },
+        {
+          "component": "HistoryPanel.tsx (new)",
+          "implement": true,
+          "changes": [
+            "List of conversations sorted by updatedAt desc",
+            "Each item: title, date, message count",
+            "Click to load, X to delete",
+            "Empty state when no history"
+          ]
+        }
+      ],
+      "data_model": {
+        "note": "Existing Conversation interface already sufficient",
+        "interface": {
+          "id": "string (uuid)",
+          "title": "string (auto-generated from first message)",
+          "createdAt": "number (timestamp)",
+          "updatedAt": "number (timestamp)",
+          "messages": "Message[]"
+        }
+      }
+    },
+    {
+      "id": "personas",
+      "name": "Persona Selection",
+      "implement": true,
+      "description": "Customizable AI personas with different system prompts and behaviors",
+      "storage": "chrome.storage.local (new personas array in Settings)",
+      "requirements": [
+        {
+          "id": "P-1",
+          "implement": true,
+          "description": "Default personas",
+          "details": "Ship with 3-5 built-in personas: General Assistant, Code Helper, Writing Editor, Researcher, Translator"
+        },
+        {
+          "id": "P-2",
+          "implement": true,
+          "description": "Custom persona creation in settings",
+          "details": "Name, description, system prompt, optional icon/emoji"
+        },
+        {
+          "id": "P-3",
+          "implement": true,
+          "description": "Persona selector in dialog",
+          "details": "Dropdown in input area or header to switch personas mid-conversation"
+        },
+        {
+          "id": "P-4",
+          "implement": true,
+          "description": "Persona persists per conversation",
+          "details": "When loading history, restore the persona used"
+        },
+        {
+          "id": "P-5",
+          "implement": true,
+          "description": "Edit/delete custom personas",
+          "details": "Settings page UI for managing personas"
+        },
+        {
+          "id": "P-6",
+          "implement": true,
+          "description": "Default persona selection",
+          "details": "User can set which persona is active by default"
+        }
+      ],
+      "ui_changes": [
+        {
+          "component": "Dialog.tsx / InputArea.tsx",
+          "implement": true,
+          "changes": [
+            "Persona dropdown selector",
+            "Show current persona name/icon",
+            "Quick switch without clearing conversation"
+          ]
+        },
+        {
+          "component": "settings.ts / settings.html",
+          "implement": true,
+          "changes": [
+            "New 'Personas' section",
+            "List of personas (built-in + custom)",
+            "Add/Edit persona modal or inline form",
+            "Delete button for custom personas",
+            "Set default persona checkbox/radio"
+          ]
+        },
+        {
+          "component": "PersonaSelector.tsx (new)",
+          "implement": true,
+          "changes": [
+            "Compact dropdown for dialog",
+            "Shows emoji/icon + name",
+            "Grouped: built-in vs custom"
+          ]
+        }
+      ],
+      "data_model": {
+        "interface_persona": {
+          "id": "string (uuid or slug for built-in)",
+          "name": "string",
+          "description": "string (shown in selector)",
+          "systemPrompt": "string",
+          "icon": "string (emoji)",
+          "isBuiltIn": "boolean",
+          "createdAt": "number (optional)"
+        },
+        "settings_additions": {
+          "personas": "Persona[]",
+          "defaultPersonaId": "string",
+          "activePersonaId": "string"
+        },
+        "conversation_additions": {
+          "personaId": "string (optional, for history restore)"
+        }
+      },
+      "default_personas": [
+        {
+          "id": "general",
+          "name": "General Assistant",
+          "description": "Helpful all-purpose assistant",
+          "systemPrompt": "",
+          "icon": "🦉",
+          "isBuiltIn": true
+        },
+        {
+          "id": "coder",
+          "name": "Code Helper",
+          "description": "Programming & debugging expert",
+          "systemPrompt": "You are an expert programmer. Provide concise, correct code solutions. Explain briefly when needed. Use markdown code blocks with language hints.",
+          "icon": "💻",
+          "isBuiltIn": true
+        },
+        {
+          "id": "writer",
+          "name": "Writing Editor",
+          "description": "Grammar, style, and clarity",
+          "systemPrompt": "You are a skilled editor. Improve writing for clarity, grammar, and style. Preserve the author's voice. Be concise in explanations.",
+          "icon": "✍️",
+          "isBuiltIn": true
+        },
+        {
+          "id": "researcher",
+          "name": "Researcher",
+          "description": "Deep analysis and summaries",
+          "systemPrompt": "You are a research assistant. Analyze content thoroughly, summarize key points, identify gaps, and suggest further inquiry directions.",
+          "icon": "🔍",
+          "isBuiltIn": true
+        },
+        {
+          "id": "translator",
+          "name": "Translator",
+          "description": "Multi-language translation",
+          "systemPrompt": "You are a professional translator. Translate text accurately while preserving tone and nuance. Ask for target language if not specified.",
+          "icon": "🌐",
+          "isBuiltIn": true
+        }
+      ]
+    }
+  ],
+  "implementation_order": [
+    {
+      "step": 1,
+      "implement": true,
+      "task": "Update types.ts",
+      "details": [
+        "Add Persona interface",
+        "Add personaId to Conversation interface",
+        "Add personas, defaultPersonaId to Settings",
+        "Add DEFAULT_PERSONAS constant"
+      ]
+    },
+    {
+      "step": 2,
+      "implement": true,
+      "task": "Update storage.ts",
+      "details": [
+        "Add getPersonas(), savePersonas() methods",
+        "Ensure DEFAULT_PERSONAS loaded on first run"
+      ]
+    },
+    {
+      "step": 3,
+      "implement": true,
+      "task": "Add i18n translations",
+      "details": [
+        "Keys for persona names, descriptions",
+        "Keys for history panel UI",
+        "Keys for settings persona section"
+      ]
+    },
+    {
+      "step": 4,
+      "implement": true,
+      "task": "Create HistoryPanel.tsx component",
+      "details": [
+        "Conversation list with load/delete",
+        "Empty state",
+        "Styling matching forest theme"
+      ]
+    },
+    {
+      "step": 5,
+      "implement": true,
+      "task": "Create PersonaSelector.tsx component",
+      "details": [
+        "Dropdown with emoji + name",
+        "Built-in vs custom grouping"
+      ]
+    },
+    {
+      "step": 6,
+      "implement": true,
+      "task": "Update Dialog.tsx",
+      "details": [
+        "Integrate history button + panel",
+        "Integrate persona selector",
+        "Auto-save conversation on exchange",
+        "Track currentConversationId"
+      ]
+    },
+    {
+      "step": 7,
+      "implement": true,
+      "task": "Update settings.html + settings.ts",
+      "details": [
+        "Add Personas section HTML",
+        "Add persona CRUD functionality",
+        "Set default persona"
+      ]
+    },
+    {
+      "step": 8,
+      "implement": true,
+      "task": "Update background service-worker.ts",
+      "details": [
+        "Include persona systemPrompt in API calls",
+        "Combine with user systemPrompt if both exist"
+      ]
+    }
+  ],
+  "unresolved_questions": [
+    "Should persona change mid-conversation affect previous context? (Proposal: no, only affects new messages)",
+    "Max number of custom personas? (Proposal: unlimited or 20)",
+    "Should conversations be searchable? (Proposal: defer to future version)",
+    "Export/import history as JSON? (Proposal: defer to future version)"
+  ],
+  "out_of_scope": [
+    "Cloud sync of history",
+    "Conversation sharing",
+    "History search",
+    "Conversation branching/forking"
+  ]
+}
