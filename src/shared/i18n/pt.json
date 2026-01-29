@@ -135,5 +135,9 @@
     "editPersona": "Editar persona",
     "setDefault": "Definir como padrão",
     "default": "Padrão"
+  },
+  "popup": {
+    "loading": "Carregando...",
+    "notFound": "Conversa não encontrada"
   }
 }

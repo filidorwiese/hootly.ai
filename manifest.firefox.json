@@ -52,7 +52,8 @@
         "iframe.html",
         "iframe-app.js",
         "history.html",
-        "personas.html"
+        "personas.html",
+        "popup.html"
       ],
       "matches": [
         "<all_urls>"

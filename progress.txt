@@ -999,3 +999,45 @@ NOTES FOR NEXT PERSON:
 - ICON-1 through ICON-6 (glyphs.fyi icons) not started
 - WS-1 through WS-10 (website) not started
 - INTRO-1 through INTRO-3 (intro text) not started
+
+---
+
+2026-01-29 - HP-17: Continue conversation opens in new window
+
+COMPLETED:
+- Created popup page (src/popup/index.html + popup.ts) for continuing conversations
+- Added continueConversation message type to BackgroundMessage in types.ts
+- Service worker handles continueConversation by opening popup window (800x700)
+- Popup reads conversationId from URL params and loads conversation
+- Popup has full input area, context toggle, persona selector, streaming support
+- Removed all inline input area code from history page (~400 lines removed)
+- History page Continue button now sends continueConversation message
+- Updated vite.config.ts to build popup entry point
+- Updated manifest files to include popup.html in web_accessible_resources
+- Added i18n translations for popup section (loading, notFound) in all 10 languages
+- Updated existing flat-design tests to reflect removed inline input
+- 43 unit tests for HP-17 popup functionality
+
+FILES CHANGED:
+- src/popup/index.html (new - full popup page with forest theme styling)
+- src/popup/popup.ts (new - conversation loading, messaging, streaming)
+- src/background/service-worker.ts (added continueConversation handler)
+- src/shared/types.ts (added continueConversation to BackgroundMessage)
+- src/history/history.ts (rewrote - removed inline input, added openContinuePopup)
+- src/history/index.html (removed ~185 lines of input area CSS)
+- vite.config.ts (added popup entry point)
+- manifest.firefox.json (added popup.html to web_accessible_resources)
+- manifest.chrome.json (added popup.html to web_accessible_resources)
+- src/shared/i18n/*.json (added popup section to all 10 languages)
+- src/__tests__/history/hp17-popup-continue.test.ts (new - 43 tests)
+- src/__tests__/flat-design/input-areas.test.ts (updated for HP-17 changes)
+- src/__tests__/flat-design/history-page.test.ts (updated for HP-17 changes)
+- plans/prd.json (marked HP-17 as passing)
+
+PRD ITEMS COMPLETED:
+- HP-17: Continue conversation opens in new window
+
+NOTES FOR NEXT PERSON:
+- ICON-1 through ICON-6 (glyphs.fyi icons) not started
+- WS-1 through WS-10 (website) not started
+- INTRO-1 through INTRO-3 (intro text) not started

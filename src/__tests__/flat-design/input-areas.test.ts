@@ -83,7 +83,10 @@ describe('FD-7: Input areas flat design', () => {
     })
   })
 
-  describe('history page input area', () => {
+  describe('history page (no inline input - moved to popup)', () => {
+    // HP-17: Input area moved from history page to popup window
+    // History page no longer has inline input, only displays conversations
+
     it('does not have box-shadow in any styles', () => {
       const styleMatch = historyHtml.match(/<style[^>]*>([\s\S]*?)<\/style>/i)
       expect(styleMatch).not.toBeNull()
@@ -91,31 +94,23 @@ describe('FD-7: Input areas flat design', () => {
       expect(styleContent).not.toContain('box-shadow')
     })
 
-    it('input textarea has solid border', () => {
-      expect(historyHtml).toContain('.input-textarea')
-      expect(historyHtml).toContain('border: 1px solid var(--color-border-default)')
+    it('no longer has inline input textarea (HP-17)', () => {
+      expect(historyHtml).not.toContain('.input-textarea')
+      expect(historyHtml).not.toContain('.send-btn')
+      expect(historyHtml).not.toContain('.input-area')
     })
 
-    it('focus state only changes border color, not width', () => {
-      const focusBlock = historyHtml.match(/\.input-textarea:focus\s*\{([^}]*)\}/)?.[1] || ''
-      expect(focusBlock).toContain('border-color: var(--color-border-focus)')
-      expect(focusBlock).not.toContain('border-width')
-    })
-
-    it('uses CSS variables for all input styling', () => {
+    it('uses CSS variables for search input styling', () => {
+      expect(historyHtml).toContain('.search-input')
       expect(historyHtml).toContain('background: var(--color-surface-default)')
       expect(historyHtml).toContain('color: var(--color-text-primary)')
     })
 
-    it('disabled state uses surface disabled color', () => {
-      expect(historyHtml).toContain('background: var(--color-surface-disabled)')
-    })
-
-    it('placeholder uses text tertiary color', () => {
+    it('search input uses text tertiary for placeholder', () => {
       expect(historyHtml).toContain('color: var(--color-text-tertiary)')
     })
 
-    it('uses transition for smooth state changes', () => {
+    it('search input uses transition for smooth state changes', () => {
       expect(historyHtml).toContain('transition: border-color var(--transition-default)')
     })
   })

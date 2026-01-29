@@ -135,5 +135,9 @@
     "editPersona": "페르소나 편집",
     "setDefault": "기본값으로 설정",
     "default": "기본값"
+  },
+  "popup": {
+    "loading": "로딩 중...",
+    "notFound": "대화를 찾을 수 없음"
   }
 }

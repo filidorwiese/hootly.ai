@@ -135,5 +135,9 @@
     "editPersona": "编辑角色",
     "setDefault": "设为默认",
     "default": "默认"
+  },
+  "popup": {
+    "loading": "加载中...",
+    "notFound": "对话未找到"
   }
 }

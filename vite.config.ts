@@ -67,6 +67,11 @@ export default defineConfig(({ mode }) => {
           if (existsSync(personasPath)) {
             copyFileSync(personasPath, personasAltPath);
           }
+          const popupPath = `${outDir}/src/popup/index.html`;
+          const popupAltPath = `${outDir}/popup.html`;
+          if (existsSync(popupPath)) {
+            copyFileSync(popupPath, popupAltPath);
+          }
         },
       },
     ],
@@ -76,6 +81,7 @@ export default defineConfig(({ mode }) => {
           settings: resolve(__dirname, 'src/settings/index.html'),
           history: resolve(__dirname, 'src/history/index.html'),
           personas: resolve(__dirname, 'src/personas/index.html'),
+          popup: resolve(__dirname, 'src/popup/index.html'),
         },
         output: {
           entryFileNames: '[name].js',

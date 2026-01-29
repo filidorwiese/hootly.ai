@@ -150,14 +150,7 @@ describe('FD-6: History page flat design', () => {
       expect(historyHtml).toContain('color: var(--color-text-link)')
     })
 
-    it('send button uses design system colors', () => {
-      expect(historyHtml).toContain('background: var(--color-send-default)')
-      expect(historyHtml).toContain('background: var(--color-send-hover)')
-    })
-
-    it('clear button uses surface active color', () => {
-      expect(historyHtml).toContain('background: var(--color-surface-active)')
-    })
+    // HP-17: send button and clear button moved to popup, no longer in history page
 
     it('empty state uses text tertiary color', () => {
       expect(historyHtml).toContain('color: var(--color-text-tertiary)')
@@ -198,29 +191,28 @@ describe('FD-6: History page flat design', () => {
     })
   })
 
-  describe('flat design for input area', () => {
-    it('textarea uses border default color', () => {
+  describe('no inline input area (HP-17: moved to popup)', () => {
+    // HP-17: Input area moved from history page to popup window
+    // History page is now view-only with Continue button opening popup
+
+    it('does not have input-textarea class', () => {
+      expect(historyHtml).not.toContain('.input-textarea')
+    })
+
+    it('does not have send-btn class', () => {
+      expect(historyHtml).not.toContain('.send-btn')
+    })
+
+    it('does not have input-area class', () => {
+      expect(historyHtml).not.toContain('.input-area')
+    })
+
+    it('search input uses border default color', () => {
       expect(historyHtml).toContain('border: 1px solid var(--color-border-default)')
     })
 
-    it('textarea focus uses border focus color', () => {
+    it('search input focus uses border focus color', () => {
       expect(historyHtml).toContain('border-color: var(--color-border-focus)')
-    })
-
-    it('textarea focus uses border color change only (no width change)', () => {
-      // FD-7: True flat design uses consistent border widths
-      // Focus state should only change color, not width (prevents layout shift)
-      const focusBlock = historyHtml.match(/\.input-textarea:focus\s*\{([^}]*)\}/)?.[1] || ''
-      expect(focusBlock).toContain('border-color: var(--color-border-focus)')
-      expect(focusBlock).not.toContain('border-width')
-    })
-
-    it('textarea placeholder uses text tertiary', () => {
-      expect(historyHtml).toContain('color: var(--color-text-tertiary)')
-    })
-
-    it('disabled textarea uses surface disabled', () => {
-      expect(historyHtml).toContain('background: var(--color-surface-disabled)')
     })
   })
 
@@ -262,41 +254,27 @@ describe('FD-6: History page flat design', () => {
     })
   })
 
-  describe('flat design for context toggle', () => {
-    it('context toggle button uses solid border', () => {
-      expect(historyHtml).toContain('border: 1.5px solid var(--color-border-default)')
+  describe('no context toggle (HP-17: moved to popup)', () => {
+    // HP-17: Context toggle moved from history page to popup window
+
+    it('does not have context-toggle class', () => {
+      expect(historyHtml).not.toContain('.context-toggle')
     })
 
-    it('enabled state uses border focus color', () => {
-      expect(historyHtml).toContain('border-color: var(--color-border-focus)')
-    })
-
-    it('context badge uses bg subtle', () => {
-      expect(historyHtml).toContain('background: var(--color-bg-subtle)')
-    })
-
-    it('selection/fullpage badges use primary colors', () => {
-      expect(historyHtml).toContain('background: var(--color-primary-50)')
+    it('does not have context-toggle-btn class', () => {
+      expect(historyHtml).not.toContain('.context-toggle-btn')
     })
   })
 
-  describe('flat design for streaming/cancel', () => {
-    it('streaming indicator uses bg muted', () => {
-      expect(historyHtml).toContain('background: var(--color-bg-muted)')
+  describe('no streaming/cancel UI (HP-17: moved to popup)', () => {
+    // HP-17: Streaming and cancel UI moved from history page to popup window
+
+    it('does not have streaming-indicator class', () => {
+      expect(historyHtml).not.toContain('.streaming-indicator')
     })
 
-    it('streaming indicator has solid border', () => {
-      expect(historyHtml).toContain('border: 1px solid var(--color-border-light)')
-    })
-
-    it('cancel hint uses bg subtle', () => {
-      expect(historyHtml).toContain('background: var(--color-bg-subtle)')
-    })
-
-    it('cancel hint has solid border', () => {
-      const styleContent = historyHtml.match(/<style[^>]*>([\s\S]*?)<\/style>/i)?.[1]
-      expect(styleContent).toContain('.cancel-hint')
-      expect(styleContent).toContain('border: 1px solid var(--color-border-light)')
+    it('does not have cancel-hint class', () => {
+      expect(historyHtml).not.toContain('.cancel-hint')
     })
   })
 

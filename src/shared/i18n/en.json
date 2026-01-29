@@ -135,5 +135,9 @@
     "editPersona": "Edit Persona",
     "setDefault": "Set as default",
     "default": "Default"
+  },
+  "popup": {
+    "loading": "Loading conversation...",
+    "notFound": "Conversation not found"
   }
 }

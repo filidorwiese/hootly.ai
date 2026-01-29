@@ -135,5 +135,9 @@
     "editPersona": "Persona bewerken",
     "setDefault": "Als standaard instellen",
     "default": "Standaard"
+  },
+  "popup": {
+    "loading": "Laden...",
+    "notFound": "Gesprek niet gevonden"
   }
 }

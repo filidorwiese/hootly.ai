@@ -135,5 +135,9 @@
     "editPersona": "Modifier le persona",
     "setDefault": "Définir par défaut",
     "default": "Par défaut"
+  },
+  "popup": {
+    "loading": "Chargement...",
+    "notFound": "Conversation introuvable"
   }
 }

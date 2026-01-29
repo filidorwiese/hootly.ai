@@ -32,6 +32,15 @@ chrome.runtime.onMessage.addListener((message: BackgroundMessage, sender, sendRe
   } else if (message.type === 'openHistory') {
     chrome.tabs.create({ url: chrome.runtime.getURL('history.html') });
     sendResponse({ success: true });
+  } else if (message.type === 'continueConversation') {
+    const convId = message.payload.conversationId;
+    chrome.windows.create({
+      url: chrome.runtime.getURL(`popup.html?conversationId=${encodeURIComponent(convId)}`),
+      type: 'popup',
+      width: 800,
+      height: 700,
+    });
+    sendResponse({ success: true });
   } else if (message.type === 'fetchModels') {
     handleFetchModels().then(sendResponse);
     return true; // Keep channel open for async response

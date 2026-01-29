@@ -120,7 +120,8 @@ export type BackgroundMessage =
   | { type: 'saveSettings'; payload: Settings }
   | { type: 'openSettings' }
   | { type: 'openHistory' }
-  | { type: 'fetchModels' };
+  | { type: 'fetchModels' }
+  | { type: 'continueConversation'; payload: { conversationId: string } };
 
 export interface SendPromptPayload {
   prompt: string;
