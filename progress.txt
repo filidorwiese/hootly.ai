@@ -474,3 +474,38 @@ NOTES FOR NEXT PERSON:
 - ICON-1 through ICON-6 (glyphs.fyi icons) not started
 - FD-1 through FD-7 (flat design) not started
 - WS-1 through WS-10 (website) not started
+
+---
+
+2026-01-29 - FD-1: Define flat design color palette
+
+COMPLETED:
+- Created src/shared/styles.ts with flat design color system
+- Defined colors object with primary (50-900), background, surface, border, text, accent, status, message, send
+- All colors are solid hex values (no gradients)
+- No box-shadow definitions in the style system
+- Defined spacing scale (4px base unit: 0, 4, 8, 12, 16, 20, 24, 32, 40, 48px)
+- Defined border radius scale (none, sm, md, lg, xl, 2xl, 3xl, full)
+- Defined font sizes (xs to 4xl)
+- Defined font weights (normal, medium, semibold, bold)
+- Defined transition durations (fast, default, slow)
+- Created cssVariables string for embedding in HTML pages
+- Created flatButtonStyle() helper for primary/secondary/danger buttons
+- Created flatInputStyle() helper for flat input fields
+- Created flatCardStyle() helper for flat cards
+- WCAG accessible contrast ratios maintained
+- Added 45 unit tests covering all color definitions and style helpers
+
+FILES CHANGED:
+- src/shared/styles.ts (new)
+- src/__tests__/shared/styles.test.ts (new - 45 tests)
+- plans/prd.json (marked FD-1 as passing)
+
+PRD ITEMS COMPLETED:
+- FD-1: Define flat design color palette
+
+NOTES FOR NEXT PERSON:
+- FD-2 through FD-7 not yet applied to components (styles.ts is foundation)
+- Next step: Use colors/styles from styles.ts in Dialog.tsx (FD-2)
+- ICON-1 through ICON-6 (glyphs.fyi icons) not started
+- WS-1 through WS-10 (website) not started

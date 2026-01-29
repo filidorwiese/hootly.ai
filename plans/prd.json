@@ -607,7 +607,7 @@
       "Remove all box-shadow definitions",
       "Verify colors accessible (WCAG contrast)"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "FD-2",
