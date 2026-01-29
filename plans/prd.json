@@ -888,7 +888,7 @@
       "Disable save button when limit reached",
       "Re-enable save button when under limit"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "PP-10",

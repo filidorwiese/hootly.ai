@@ -351,6 +351,17 @@
       width: auto;
       accent-color: var(--color-accent-success);
     }
+
+    .char-counter {
+      font-size: var(--font-size-sm);
+      color: var(--color-text-tertiary);
+      text-align: right;
+      margin-top: var(--spacing-1);
+    }
+
+    .char-counter.warning {
+      color: var(--color-accent-error);
+    }
   </style>
 </head>
 <body>
@@ -493,7 +504,8 @@
     </div>
     <div class="setting">
       <label for="personaSystemPrompt" data-i18n="settings.personaSystemPrompt">System Prompt</label>
-      <textarea id="personaSystemPrompt" placeholder="Instructions for this persona..."></textarea>
+      <textarea id="personaSystemPrompt" placeholder="Instructions for this persona..." maxlength="10000"></textarea>
+      <div class="char-counter" id="systemPromptCounter">0 / 10000</div>
     </div>
     <div class="persona-form-actions">
       <button type="button" id="savePersonaBtn" data-i18n="settings.savePersona">Save Persona</button>

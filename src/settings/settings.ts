@@ -3,6 +3,8 @@ import { Settings, ModelConfig, LLMProvider, DEFAULT_PERSONAS, Persona } from '.
 import { t, initLanguage, setLanguage } from '../shared/i18n';
 import { selectDefaultModel } from '../shared/models';
 
+const SYSTEM_PROMPT_MAX_LENGTH = 10000;
+
 const API_KEY_SECTIONS: Record<LLMProvider, string> = {
   claude: 'claudeApiKeySection',
   openai: 'openaiApiKeySection',
@@ -331,6 +333,7 @@ document.addEventListener('DOMContentLoaded', async () => {
       selectedIcon = '🤖';
     }
     updateIconSelection();
+    updateCharCounter();
     personaNameInput.focus();
   }
 
@@ -348,6 +351,17 @@ document.addEventListener('DOMContentLoaded', async () => {
       const icon = (opt as HTMLDivElement).dataset.icon;
       opt.classList.toggle('selected', icon === selectedIcon);
     });
+  }
+
+  function updateCharCounter() {
+    const counter = document.getElementById('systemPromptCounter')!;
+    const length = personaSystemPromptInput.value.length;
+
+    counter.textContent = `${length} / ${SYSTEM_PROMPT_MAX_LENGTH}`;
+
+    const isAtLimit = length >= SYSTEM_PROMPT_MAX_LENGTH;
+    counter.classList.toggle('warning', isAtLimit);
+    savePersonaBtn.disabled = isAtLimit && length > SYSTEM_PROMPT_MAX_LENGTH;
   }
 
   function editPersona(persona: Persona) {
@@ -439,6 +453,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   addPersonaBtn.addEventListener('click', () => showPersonaForm());
   cancelPersonaBtn.addEventListener('click', hidePersonaForm);
   savePersonaBtn.addEventListener('click', savePersona);
+  personaSystemPromptInput.addEventListener('input', updateCharCounter);
 
   // Manage Personas link - opens dedicated personas page
   const managePersonasLink = document.getElementById('managePersonasLink');

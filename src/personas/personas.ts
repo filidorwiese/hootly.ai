@@ -6,6 +6,7 @@ import { t, initLanguage } from '../shared/i18n';
 let currentSettings: Settings | null = null;
 let pendingDeleteId: string | null = null;
 let selectedIcon = '🤖';
+const SYSTEM_PROMPT_MAX_LENGTH = 10000;
 
 function escapeHtml(text: string): string {
   const div = document.createElement('div');
@@ -153,6 +154,7 @@ function showModal(persona?: Persona): void {
   }
 
   updateIconSelection();
+  updateCharCounter();
   modal.classList.add('visible');
   nameInput.focus();
 }
@@ -167,6 +169,19 @@ function updateIconSelection(): void {
     const icon = (opt as HTMLElement).dataset.icon;
     opt.classList.toggle('selected', icon === selectedIcon);
   });
+}
+
+function updateCharCounter(): void {
+  const promptInput = document.getElementById('personaSystemPrompt') as HTMLTextAreaElement;
+  const counter = document.getElementById('systemPromptCounter')!;
+  const saveBtn = document.getElementById('savePersonaBtn') as HTMLButtonElement;
+  const length = promptInput.value.length;
+
+  counter.textContent = `${length} / ${SYSTEM_PROMPT_MAX_LENGTH}`;
+
+  const isAtLimit = length >= SYSTEM_PROMPT_MAX_LENGTH;
+  counter.classList.toggle('warning', isAtLimit);
+  saveBtn.disabled = isAtLimit && length > SYSTEM_PROMPT_MAX_LENGTH;
 }
 
 async function savePersona(): Promise<void> {
@@ -279,6 +294,9 @@ async function init(): Promise<void> {
 
   document.getElementById('cancelPersonaBtn')!.addEventListener('click', hideModal);
   document.getElementById('savePersonaBtn')!.addEventListener('click', savePersona);
+
+  const systemPromptInput = document.getElementById('personaSystemPrompt') as HTMLTextAreaElement;
+  systemPromptInput.addEventListener('input', updateCharCounter);
 
   document.getElementById('personaModal')!.addEventListener('click', (e) => {
     if (e.target === e.currentTarget) {

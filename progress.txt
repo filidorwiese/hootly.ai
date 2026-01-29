@@ -759,3 +759,36 @@ NOTES FOR NEXT PERSON:
 - WS-1 through WS-10 (website) not started
 - HP-13 through HP-17 (export/import/clear all/search/popup continue) not started
 - INTRO-1 through INTRO-3 (intro text) not started
+
+---
+
+2026-01-29 - P-8: System prompt maxlength 10000 with counter
+
+COMPLETED:
+- Added maxlength="10000" to system prompt textarea on personas page
+- Added maxlength="10000" to system prompt textarea on settings page
+- Added character counter below field showing "X / 10000"
+- Counter updates on every keystroke via input event listener
+- Counter turns warning color (red) when at limit
+- Added .char-counter and .char-counter.warning CSS classes
+- Counter initialized on modal/form open to show correct value
+- 26 unit tests covering all P-8 requirements
+
+FILES CHANGED:
+- src/personas/index.html (added maxlength, counter element, CSS)
+- src/personas/personas.ts (added SYSTEM_PROMPT_MAX_LENGTH, updateCharCounter function)
+- src/settings/index.html (added maxlength, counter element, CSS)
+- src/settings/settings.ts (added SYSTEM_PROMPT_MAX_LENGTH, updateCharCounter function)
+- src/__tests__/personas/system-prompt-maxlength.test.ts (new - 26 tests)
+- plans/prd.json (marked P-8 as passing)
+
+PRD ITEMS COMPLETED:
+- P-8: System prompt maxlength 10000 with counter
+
+NOTES FOR NEXT PERSON:
+- PP-10 (remove persona list from settings) not started
+- UI-7 (model selector dropdown) not started
+- ICON-1 through ICON-6 (glyphs.fyi icons) not started
+- WS-1 through WS-10 (website) not started
+- HP-13 through HP-17 (export/import/clear all/search/popup continue) not started
+- INTRO-1 through INTRO-3 (intro text) not started
