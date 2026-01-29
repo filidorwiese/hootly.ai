@@ -99,7 +99,19 @@
     "continue": "Doorgaan",
     "close": "Sluiten",
     "noOriginalContext": "Geen paginacontext",
-    "export": "Exporteren"
+    "export": "Exporteren",
+    "import": "Importeren",
+    "importTitle": "Geschiedenis importeren",
+    "selectFile": "Selecteer JSON-bestand",
+    "importMerge": "Samenvoegen met bestaande",
+    "importReplace": "Alles vervangen",
+    "importConvCount": "{{count}} gesprek(ken)",
+    "importInvalidJson": "Ongeldig JSON-bestand",
+    "importInvalidFormat": "Ongeldig bestandsformaat",
+    "importEmpty": "Geen gesprekken in bestand",
+    "importReadError": "Kan bestand niet lezen",
+    "importSuccess": "Import succesvol!",
+    "importFailed": "Import mislukt"
   },
   "persona": {
     "selectPersona": "Selecteer persona",

@@ -99,7 +99,19 @@
     "continue": "Continuar",
     "close": "Cerrar",
     "noOriginalContext": "Sin contexto de página",
-    "export": "Exportar"
+    "export": "Exportar",
+    "import": "Importar",
+    "importTitle": "Importar historial",
+    "selectFile": "Seleccionar archivo JSON",
+    "importMerge": "Fusionar con existente",
+    "importReplace": "Reemplazar todo",
+    "importConvCount": "{{count}} conversación(es)",
+    "importInvalidJson": "Archivo JSON inválido",
+    "importInvalidFormat": "Formato de archivo inválido",
+    "importEmpty": "No hay conversaciones en el archivo",
+    "importReadError": "Error al leer el archivo",
+    "importSuccess": "¡Importación exitosa!",
+    "importFailed": "Error en la importación"
   },
   "persona": {
     "selectPersona": "Seleccionar persona",

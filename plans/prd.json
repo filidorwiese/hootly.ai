@@ -953,7 +953,7 @@
       "Merge or replace existing history (user choice)",
       "Show success/error message after import"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "HP-15",

@@ -898,3 +898,39 @@ NOTES FOR NEXT PERSON:
 - ICON-1 through ICON-6 (glyphs.fyi icons) not started
 - WS-1 through WS-10 (website) not started
 - INTRO-1 through INTRO-3 (intro text) not started
+
+---
+
+2026-01-29 - HP-14: Import chat history from JSON
+
+COMPLETED:
+- Added Import button to history page header (next to Export)
+- Created import dialog modal with file picker, merge/replace options
+- Implemented validateImportData() for JSON structure validation
+- Validates conversations array, required fields (id, title, createdAt, updatedAt, messages)
+- Validates each message has role (user/assistant), content, and timestamp
+- handleFileSelect() reads file, parses JSON, validates structure
+- performImport() supports merge (skip duplicates by id) and replace (clear all) modes
+- Shows file info (name, conversation count) after selection
+- Error/success messages for import states
+- Click-outside-to-close for import dialog
+- Added i18n translations for all 10 languages (13 new keys)
+- 174 unit tests covering all HP-14 requirements
+
+FILES CHANGED:
+- src/history/index.html (added Import button, import dialog HTML, CSS styling)
+- src/history/history.ts (added import functions, event handlers, validation)
+- src/shared/i18n/*.json (added 13 import keys to all 10 languages)
+- src/__tests__/history/import-history.test.ts (new - 174 tests)
+- plans/prd.json (marked HP-14 as passing)
+
+PRD ITEMS COMPLETED:
+- HP-14: Import chat history from JSON
+
+NOTES FOR NEXT PERSON:
+- HP-15 (clear all history) not started
+- HP-16 (search history) not started
+- HP-17 (continue conversation in popup window) not started
+- ICON-1 through ICON-6 (glyphs.fyi icons) not started
+- WS-1 through WS-10 (website) not started
+- INTRO-1 through INTRO-3 (intro text) not started

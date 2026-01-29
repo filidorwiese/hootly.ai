@@ -99,7 +99,19 @@
     "continue": "Fortsetzen",
     "close": "Schließen",
     "noOriginalContext": "Kein Seitenkontext",
-    "export": "Exportieren"
+    "export": "Exportieren",
+    "import": "Importieren",
+    "importTitle": "Verlauf importieren",
+    "selectFile": "JSON-Datei auswählen",
+    "importMerge": "Mit vorhandenem zusammenführen",
+    "importReplace": "Alles ersetzen",
+    "importConvCount": "{{count}} Gespräch(e)",
+    "importInvalidJson": "Ungültige JSON-Datei",
+    "importInvalidFormat": "Ungültiges Dateiformat",
+    "importEmpty": "Keine Gespräche in Datei",
+    "importReadError": "Datei konnte nicht gelesen werden",
+    "importSuccess": "Import erfolgreich!",
+    "importFailed": "Import fehlgeschlagen"
   },
   "persona": {
     "selectPersona": "Persona auswählen",

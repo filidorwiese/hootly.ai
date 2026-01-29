@@ -99,7 +99,19 @@
     "continue": "Continua",
     "close": "Chiudi",
     "noOriginalContext": "Nessun contesto di pagina",
-    "export": "Esporta"
+    "export": "Esporta",
+    "import": "Importa",
+    "importTitle": "Importa cronologia",
+    "selectFile": "Seleziona file JSON",
+    "importMerge": "Unisci con esistente",
+    "importReplace": "Sostituisci tutto",
+    "importConvCount": "{{count}} conversazione/i",
+    "importInvalidJson": "File JSON non valido",
+    "importInvalidFormat": "Formato file non valido",
+    "importEmpty": "Nessuna conversazione nel file",
+    "importReadError": "Impossibile leggere il file",
+    "importSuccess": "Importazione riuscita!",
+    "importFailed": "Importazione fallita"
   },
   "persona": {
     "selectPersona": "Seleziona persona",

@@ -99,7 +99,19 @@
     "continue": "继续",
     "close": "关闭",
     "noOriginalContext": "无页面上下文",
-    "export": "导出"
+    "export": "导出",
+    "import": "导入",
+    "importTitle": "导入历史记录",
+    "selectFile": "选择 JSON 文件",
+    "importMerge": "与现有合并",
+    "importReplace": "全部替换",
+    "importConvCount": "{{count}} 个对话",
+    "importInvalidJson": "无效的 JSON 文件",
+    "importInvalidFormat": "无效的文件格式",
+    "importEmpty": "文件中没有对话",
+    "importReadError": "读取文件失败",
+    "importSuccess": "导入成功！",
+    "importFailed": "导入失败"
   },
   "persona": {
     "selectPersona": "选择角色",

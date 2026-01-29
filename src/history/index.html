@@ -550,6 +550,101 @@
       background: var(--color-accent-error-hover);
       border-color: var(--color-accent-error-hover);
     }
+    .confirm-import {
+      background: var(--color-accent-success);
+      color: var(--color-text-inverse);
+      border-color: var(--color-accent-success);
+    }
+    .confirm-import:hover:not(:disabled) {
+      background: var(--color-accent-success-hover);
+      border-color: var(--color-accent-success-hover);
+    }
+    .confirm-import:disabled {
+      background: var(--color-surface-disabled);
+      border-color: var(--color-border-default);
+      color: var(--color-text-tertiary);
+      cursor: not-allowed;
+    }
+    .import-dialog-box {
+      min-width: 350px;
+    }
+    .import-select-btn {
+      display: block;
+      width: 100%;
+      padding: var(--spacing-3) var(--spacing-5);
+      margin-bottom: var(--spacing-4);
+      border-radius: var(--radius-md);
+      font-size: var(--font-size-base);
+      font-weight: var(--font-weight-medium);
+      cursor: pointer;
+      border: 1px dashed var(--color-border-strong);
+      background: var(--color-surface-hover);
+      color: var(--color-text-secondary);
+      transition: all var(--transition-default);
+    }
+    .import-select-btn:hover {
+      border-color: var(--color-border-focus);
+      background: var(--color-primary-50);
+      color: var(--color-text-link);
+    }
+    .import-file-info {
+      display: flex;
+      flex-direction: column;
+      gap: var(--spacing-1);
+      padding: var(--spacing-3);
+      margin-bottom: var(--spacing-4);
+      background: var(--color-primary-50);
+      border-radius: var(--radius-md);
+      border: 1px solid var(--color-border-default);
+      font-size: var(--font-size-sm);
+      color: var(--color-text-secondary);
+    }
+    .import-file-info #importFileName {
+      font-weight: var(--font-weight-medium);
+      color: var(--color-text-primary);
+    }
+    .import-mode-section {
+      display: flex;
+      flex-direction: column;
+      gap: var(--spacing-2);
+      margin-bottom: var(--spacing-4);
+      text-align: left;
+    }
+    .import-mode-label {
+      display: flex;
+      align-items: center;
+      gap: var(--spacing-2);
+      padding: var(--spacing-2) var(--spacing-3);
+      border-radius: var(--radius-md);
+      cursor: pointer;
+      font-size: var(--font-size-base);
+      color: var(--color-text-secondary);
+      transition: background var(--transition-default);
+    }
+    .import-mode-label:hover {
+      background: var(--color-surface-hover);
+    }
+    .import-mode-label input[type="radio"] {
+      accent-color: var(--color-accent-success);
+    }
+    .import-error {
+      padding: var(--spacing-3);
+      margin-bottom: var(--spacing-4);
+      background: rgba(196, 90, 90, 0.1);
+      border: 1px solid var(--color-accent-error);
+      border-radius: var(--radius-md);
+      color: var(--color-accent-error);
+      font-size: var(--font-size-sm);
+    }
+    .import-success {
+      padding: var(--spacing-3);
+      margin-bottom: var(--spacing-4);
+      background: var(--color-primary-50);
+      border: 1px solid var(--color-accent-success);
+      border-radius: var(--radius-md);
+      color: var(--color-accent-success);
+      font-size: var(--font-size-sm);
+    }
   </style>
 </head>
 <body>
@@ -560,6 +655,7 @@
         <span data-i18n="history.title">History</span>
       </h1>
       <div class="header-actions">
+        <button class="header-btn" id="importBtn" data-i18n="history.import">Import</button>
         <button class="header-btn" id="exportBtn" data-i18n="history.export">Export</button>
         <a href="#" class="back-link" id="closeBtn">
           <span>&larr;</span>
@@ -584,6 +680,34 @@
       <div class="confirm-buttons">
         <button class="confirm-cancel" id="cancelDelete" data-i18n="settings.cancel">Cancel</button>
         <button class="confirm-delete" id="confirmDelete" data-i18n="settings.delete">Delete</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="importDialog" class="confirm-dialog">
+    <div class="confirm-box import-dialog-box">
+      <p data-i18n="history.importTitle">Import History</p>
+      <input type="file" id="importFileInput" accept=".json" style="display: none;">
+      <button class="import-select-btn" id="selectFileBtn" data-i18n="history.selectFile">Select JSON File</button>
+      <div id="importFileInfo" class="import-file-info" style="display: none;">
+        <span id="importFileName"></span>
+        <span id="importConvCount"></span>
+      </div>
+      <div id="importModeSection" class="import-mode-section" style="display: none;">
+        <label class="import-mode-label">
+          <input type="radio" name="importMode" value="merge" checked>
+          <span data-i18n="history.importMerge">Merge with existing</span>
+        </label>
+        <label class="import-mode-label">
+          <input type="radio" name="importMode" value="replace">
+          <span data-i18n="history.importReplace">Replace all</span>
+        </label>
+      </div>
+      <div id="importError" class="import-error" style="display: none;"></div>
+      <div id="importSuccess" class="import-success" style="display: none;"></div>
+      <div class="confirm-buttons">
+        <button class="confirm-cancel" id="cancelImport" data-i18n="settings.cancel">Cancel</button>
+        <button class="confirm-import" id="confirmImport" data-i18n="history.import" disabled>Import</button>
       </div>
     </div>
   </div>

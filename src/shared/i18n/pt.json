@@ -99,7 +99,19 @@
     "continue": "Continuar",
     "close": "Fechar",
     "noOriginalContext": "Sem contexto de página",
-    "export": "Exportar"
+    "export": "Exportar",
+    "import": "Importar",
+    "importTitle": "Importar histórico",
+    "selectFile": "Selecionar arquivo JSON",
+    "importMerge": "Mesclar com existente",
+    "importReplace": "Substituir tudo",
+    "importConvCount": "{{count}} conversa(s)",
+    "importInvalidJson": "Arquivo JSON inválido",
+    "importInvalidFormat": "Formato de arquivo inválido",
+    "importEmpty": "Nenhuma conversa no arquivo",
+    "importReadError": "Falha ao ler o arquivo",
+    "importSuccess": "Importação concluída!",
+    "importFailed": "Falha na importação"
   },
   "persona": {
     "selectPersona": "Selecionar persona",

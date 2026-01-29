@@ -16,6 +16,9 @@ let activeConversationId: string | null = null;
 let isStreaming = false;
 let streamingContent = '';
 
+// Import state
+let pendingImportData: Conversation[] | null = null;
+
 // Context toggle state per conversation
 const contextEnabledMap: Map<string, boolean> = new Map();
 
@@ -613,6 +616,176 @@ function applyTranslations(): void {
   });
 }
 
+// Import dialog functions
+function showImportDialog(): void {
+  const dialog = document.getElementById('importDialog')!;
+  dialog.classList.add('visible');
+  resetImportDialog();
+}
+
+function hideImportDialog(): void {
+  const dialog = document.getElementById('importDialog')!;
+  dialog.classList.remove('visible');
+  resetImportDialog();
+}
+
+function resetImportDialog(): void {
+  pendingImportData = null;
+  const fileInput = document.getElementById('importFileInput') as HTMLInputElement;
+  const fileInfo = document.getElementById('importFileInfo')!;
+  const modeSection = document.getElementById('importModeSection')!;
+  const errorEl = document.getElementById('importError')!;
+  const successEl = document.getElementById('importSuccess')!;
+  const confirmBtn = document.getElementById('confirmImport') as HTMLButtonElement;
+  const selectBtn = document.getElementById('selectFileBtn')!;
+
+  fileInput.value = '';
+  fileInfo.style.display = 'none';
+  modeSection.style.display = 'none';
+  errorEl.style.display = 'none';
+  successEl.style.display = 'none';
+  confirmBtn.disabled = true;
+  selectBtn.style.display = 'block';
+}
+
+function showImportError(message: string): void {
+  const errorEl = document.getElementById('importError')!;
+  const successEl = document.getElementById('importSuccess')!;
+  errorEl.textContent = message;
+  errorEl.style.display = 'block';
+  successEl.style.display = 'none';
+}
+
+function showImportSuccess(message: string): void {
+  const errorEl = document.getElementById('importError')!;
+  const successEl = document.getElementById('importSuccess')!;
+  successEl.textContent = message;
+  successEl.style.display = 'block';
+  errorEl.style.display = 'none';
+}
+
+interface ImportExportData {
+  version?: string;
+  exportedAt?: string;
+  conversations: Conversation[];
+}
+
+function validateImportData(data: unknown): data is ImportExportData {
+  if (!data || typeof data !== 'object') return false;
+
+  const obj = data as Record<string, unknown>;
+  if (!Array.isArray(obj.conversations)) return false;
+
+  // Validate each conversation has required fields
+  for (const conv of obj.conversations) {
+    if (typeof conv !== 'object' || !conv) return false;
+    const c = conv as Record<string, unknown>;
+    if (typeof c.id !== 'string' || !c.id) return false;
+    if (typeof c.title !== 'string') return false;
+    if (typeof c.createdAt !== 'number') return false;
+    if (typeof c.updatedAt !== 'number') return false;
+    if (!Array.isArray(c.messages)) return false;
+
+    // Validate each message
+    for (const msg of c.messages) {
+      if (typeof msg !== 'object' || !msg) return false;
+      const m = msg as Record<string, unknown>;
+      if (m.role !== 'user' && m.role !== 'assistant') return false;
+      if (typeof m.content !== 'string') return false;
+      if (typeof m.timestamp !== 'number') return false;
+    }
+  }
+
+  return true;
+}
+
+async function handleFileSelect(file: File): Promise<void> {
+  const fileInfo = document.getElementById('importFileInfo')!;
+  const fileName = document.getElementById('importFileName')!;
+  const convCount = document.getElementById('importConvCount')!;
+  const modeSection = document.getElementById('importModeSection')!;
+  const confirmBtn = document.getElementById('confirmImport') as HTMLButtonElement;
+  const selectBtn = document.getElementById('selectFileBtn')!;
+  const errorEl = document.getElementById('importError')!;
+
+  // Reset error state
+  errorEl.style.display = 'none';
+
+  try {
+    const text = await file.text();
+    let data: unknown;
+
+    try {
+      data = JSON.parse(text);
+    } catch {
+      showImportError(t('history.importInvalidJson') || 'Invalid JSON file');
+      return;
+    }
+
+    if (!validateImportData(data)) {
+      showImportError(t('history.importInvalidFormat') || 'Invalid file format');
+      return;
+    }
+
+    if (data.conversations.length === 0) {
+      showImportError(t('history.importEmpty') || 'No conversations in file');
+      return;
+    }
+
+    // Store data for import
+    pendingImportData = data.conversations;
+
+    // Show file info
+    fileName.textContent = file.name;
+    const countText = t('history.importConvCount', { count: data.conversations.length }) ||
+      `${data.conversations.length} conversation(s)`;
+    convCount.textContent = countText;
+
+    fileInfo.style.display = 'flex';
+    modeSection.style.display = 'flex';
+    selectBtn.style.display = 'none';
+    confirmBtn.disabled = false;
+  } catch (err) {
+    showImportError(t('history.importReadError') || 'Failed to read file');
+  }
+}
+
+async function performImport(mode: 'merge' | 'replace'): Promise<void> {
+  if (!pendingImportData) return;
+
+  const confirmBtn = document.getElementById('confirmImport') as HTMLButtonElement;
+  confirmBtn.disabled = true;
+
+  try {
+    if (mode === 'replace') {
+      // Replace all: clear existing and save new
+      await chrome.storage.local.set({ hootly_conversations: pendingImportData });
+    } else {
+      // Merge: add new conversations, skip duplicates by id
+      const existing = await Storage.getConversations();
+      const existingIds = new Set(existing.map(c => c.id));
+
+      const toAdd = pendingImportData.filter(c => !existingIds.has(c.id));
+      const merged = [...existing, ...toAdd];
+
+      await chrome.storage.local.set({ hootly_conversations: merged });
+    }
+
+    const successMsg = t('history.importSuccess') || 'Import successful!';
+    showImportSuccess(successMsg);
+
+    // Refresh the list after a short delay
+    setTimeout(async () => {
+      hideImportDialog();
+      const conversations = await Storage.getConversations();
+      renderHistoryList(conversations);
+    }, 1500);
+  } catch (err) {
+    showImportError(t('history.importFailed') || 'Import failed');
+    confirmBtn.disabled = false;
+  }
+}
+
 async function exportHistory(): Promise<void> {
   const conversations = await Storage.getConversations();
 
@@ -689,6 +862,38 @@ async function init(): Promise<void> {
   // Export button handler
   document.getElementById('exportBtn')!.addEventListener('click', () => {
     exportHistory();
+  });
+
+  // Import button handler
+  document.getElementById('importBtn')!.addEventListener('click', () => {
+    showImportDialog();
+  });
+
+  // Import dialog handlers
+  document.getElementById('cancelImport')!.addEventListener('click', hideImportDialog);
+
+  document.getElementById('selectFileBtn')!.addEventListener('click', () => {
+    document.getElementById('importFileInput')!.click();
+  });
+
+  document.getElementById('importFileInput')!.addEventListener('change', (e) => {
+    const input = e.target as HTMLInputElement;
+    if (input.files && input.files[0]) {
+      handleFileSelect(input.files[0]);
+    }
+  });
+
+  document.getElementById('confirmImport')!.addEventListener('click', () => {
+    const modeInput = document.querySelector('input[name="importMode"]:checked') as HTMLInputElement;
+    const mode = (modeInput?.value || 'merge') as 'merge' | 'replace';
+    performImport(mode);
+  });
+
+  // Click outside import dialog to cancel
+  document.getElementById('importDialog')!.addEventListener('click', (e) => {
+    if (e.target === e.currentTarget) {
+      hideImportDialog();
+    }
   });
 
   // Delete confirmation handlers

@@ -99,7 +99,19 @@
     "continue": "続ける",
     "close": "閉じる",
     "noOriginalContext": "ページコンテキストなし",
-    "export": "エクスポート"
+    "export": "エクスポート",
+    "import": "インポート",
+    "importTitle": "履歴をインポート",
+    "selectFile": "JSONファイルを選択",
+    "importMerge": "既存とマージ",
+    "importReplace": "すべて置換",
+    "importConvCount": "{{count}} 件の会話",
+    "importInvalidJson": "無効なJSONファイル",
+    "importInvalidFormat": "無効なファイル形式",
+    "importEmpty": "ファイルに会話がありません",
+    "importReadError": "ファイルの読み込みに失敗しました",
+    "importSuccess": "インポート成功！",
+    "importFailed": "インポート失敗"
   },
   "persona": {
     "selectPersona": "ペルソナを選択",
