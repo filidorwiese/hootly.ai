@@ -2,6 +2,7 @@ import React, { useState, useRef, useEffect } from 'react';
 import { css } from '@emotion/css';
 import type { Persona } from '../../shared/types';
 import { t } from '../../shared/i18n';
+import { colors, radii, fontSizes, fontWeights, transitions, spacing } from '../../shared/styles';
 
 interface PersonaSelectorProps {
   personas: Persona[];
@@ -105,29 +106,33 @@ const containerStyles = css`
 const triggerStyles = css`
   display: flex;
   align-items: center;
-  gap: 4px;
-  padding: 4px 8px;
+  gap: ${spacing[1]};
+  padding: ${spacing[1]} ${spacing[2]};
   background: transparent;
   border: 1px solid transparent;
-  border-radius: 6px;
+  border-radius: ${radii.md};
   cursor: pointer;
   font-family: 'Inter', sans-serif;
-  font-size: 12px;
-  color: #3A5A40;
-  transition: all 0.15s ease;
+  font-size: ${fontSizes.sm};
+  color: ${colors.primary[500]};
+  transition: background ${transitions.default}, border-color ${transitions.default};
 
   &:hover {
-    background: rgba(58, 90, 64, 0.08);
-    border-color: rgba(58, 90, 64, 0.15);
+    background: ${colors.surface.hover};
+    border-color: ${colors.border.light};
+  }
+
+  &:active {
+    background: ${colors.surface.active};
   }
 `;
 
 const iconStyles = css`
-  font-size: 13px;
+  font-size: ${fontSizes.md};
 `;
 
 const nameStyles = css`
-  font-weight: 500;
+  font-weight: ${fontWeights.medium};
   max-width: 80px;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -136,50 +141,54 @@ const nameStyles = css`
 
 const chevronStyles = css`
   font-size: 7px;
-  color: #8A9A8C;
+  color: ${colors.text.tertiary};
   margin-left: 1px;
 `;
 
 const dropdownStyles = css`
   position: absolute;
-  top: calc(100% + 4px);
+  bottom: calc(100% + ${spacing[1]});
   left: 0;
   min-width: 220px;
   max-width: 260px;
   max-height: 300px;
   overflow-y: auto;
-  background: #FAFBF9;
-  border: 1px solid #E4E8E2;
-  border-radius: 10px;
-  box-shadow: 0 4px 12px rgba(45, 60, 48, 0.15);
+  background: ${colors.background.base};
+  border: 1px solid ${colors.border.default};
+  border-radius: ${radii.xl};
   z-index: 1000;
-  padding: 4px;
+  padding: ${spacing[1]};
 `;
 
 const optionStyles = css`
   display: flex;
   align-items: flex-start;
-  gap: 8px;
+  gap: ${spacing[2]};
   width: 100%;
-  padding: 8px;
+  padding: ${spacing[2]};
   background: transparent;
   border: none;
-  border-radius: 6px;
+  border-radius: ${radii.md};
   cursor: pointer;
   text-align: left;
-  transition: background 0.1s ease;
+  transition: background ${transitions.fast};
 
   &:hover {
-    background: rgba(58, 90, 64, 0.08);
+    background: ${colors.surface.hover};
+  }
+
+  &:active {
+    background: ${colors.surface.active};
   }
 `;
 
 const selectedOptionStyles = css`
-  background: rgba(58, 90, 64, 0.12);
+  background: ${colors.primary[50]};
+  border: 1px solid ${colors.primary[100]};
 `;
 
 const optionIconStyles = css`
-  font-size: 16px;
+  font-size: ${fontSizes.xl};
   flex-shrink: 0;
   margin-top: 1px;
 `;
@@ -193,15 +202,15 @@ const optionTextStyles = css`
 
 const optionNameStyles = css`
   font-family: 'Inter', sans-serif;
-  font-size: 12px;
-  font-weight: 500;
-  color: #2D3A30;
+  font-size: ${fontSizes.sm};
+  font-weight: ${fontWeights.medium};
+  color: ${colors.text.primary};
 `;
 
 const optionDescStyles = css`
   font-family: 'Inter', sans-serif;
-  font-size: 10px;
-  color: #8A9A8C;
+  font-size: ${fontSizes.xs};
+  color: ${colors.text.tertiary};
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -209,23 +218,23 @@ const optionDescStyles = css`
 
 const dividerStyles = css`
   height: 1px;
-  background: #E4E8E2;
-  margin: 4px 0;
+  background: ${colors.border.light};
+  margin: ${spacing[1]} 0;
 `;
 
 const groupLabelStyles = css`
   font-family: 'Inter', sans-serif;
   font-size: 9px;
-  font-weight: 600;
+  font-weight: ${fontWeights.semibold};
   text-transform: uppercase;
   letter-spacing: 0.5px;
-  color: #8A9A8C;
-  padding: 4px 8px 2px;
+  color: ${colors.text.tertiary};
+  padding: ${spacing[1]} ${spacing[2]} 2px;
 `;
 
 const customGroupStyles = css`
-  background: rgba(58, 90, 64, 0.03);
-  border-radius: 6px;
+  background: ${colors.background.muted};
+  border-radius: ${radii.md};
   margin-top: 2px;
   padding: 2px;
 `;

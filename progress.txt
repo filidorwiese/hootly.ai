@@ -536,3 +536,31 @@ NOTES FOR NEXT PERSON:
 - FD-3 through FD-7 remaining (buttons, settings, personas, history, input areas)
 - ICON-1 through ICON-6 (glyphs.fyi icons) not started
 - WS-1 through WS-10 (website) not started
+
+---
+
+2026-01-29 - FD-3: Update buttons to flat design
+
+COMPLETED:
+- Updated send button to flat style (no shadows, solid colors from design system)
+- Updated clear button to flat style with surface colors
+- Updated context toggle button to flat style with border/background transitions
+- Updated persona selector to flat style (removed dropdown shadow, use border instead)
+- All hover effects now use color changes instead of shadows/transforms
+- All buttons use colors, radii, fontSizes, transitions from styles.ts
+- Added 11 unit tests verifying flat design button colors and styling
+
+FILES CHANGED:
+- src/content/components/InputArea.tsx (updated textarea, send, clear button styles)
+- src/content/components/ContextToggle.tsx (updated toggle button and badge styles)
+- src/content/components/PersonaSelector.tsx (updated trigger, dropdown, option styles)
+- src/__tests__/flat-design/buttons.test.ts (new - 11 tests)
+- plans/prd.json (marked FD-3 as passing)
+
+PRD ITEMS COMPLETED:
+- FD-3: Update buttons to flat design
+
+NOTES FOR NEXT PERSON:
+- FD-4 through FD-7 remaining (settings, personas, history, input areas pages)
+- ICON-1 through ICON-6 (glyphs.fyi icons) not started
+- WS-1 through WS-10 (website) not started

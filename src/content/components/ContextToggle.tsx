@@ -1,6 +1,7 @@
 import React from 'react';
 import { css } from '@emotion/css';
 import { t } from '../../shared/i18n';
+import { colors, radii, fontSizes, fontWeights, transitions, spacing } from '../../shared/styles';
 
 interface ContextToggleProps {
   enabled: boolean;
@@ -49,7 +50,7 @@ const ContextToggle: React.FC<ContextToggleProps> = ({ enabled, mode, selectionL
 const containerStyles = css`
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: ${spacing[2]};
 `;
 
 const toggleButtonStyles = (enabled: boolean) => css`
@@ -58,49 +59,53 @@ const toggleButtonStyles = (enabled: boolean) => css`
   display: flex;
   align-items: center;
   justify-content: center;
-  border: 1.5px solid ${enabled ? '#4A7C54' : '#D4DCD6'};
-  border-radius: 8px;
-  background: ${enabled ? '#E8F0EA' : '#FFFFFF'};
+  border: 1px solid ${enabled ? colors.border.focus : colors.border.default};
+  border-radius: ${radii.lg};
+  background: ${enabled ? colors.primary[50] : colors.surface.default};
   cursor: pointer;
-  font-size: 16px;
-  transition: all 0.15s ease;
+  font-size: ${fontSizes.xl};
+  transition: background ${transitions.default}, border-color ${transitions.default};
 
   &:hover {
-    border-color: ${enabled ? '#3A6A44' : '#B8C4BC'};
-    background: ${enabled ? '#DCE8DE' : '#F5F7F4'};
+    border-color: ${enabled ? colors.primary[500] : colors.border.strong};
+    background: ${enabled ? colors.primary[100] : colors.surface.hover};
   }
 
   &:active {
-    transform: scale(0.95);
+    background: ${enabled ? colors.primary[200] : colors.surface.active};
   }
 `;
 
 const labelStyles = css`
   flex: 1;
-  font-size: 12px;
+  font-size: ${fontSizes.sm};
 `;
 
 const badgeStyles = (type: 'selection' | 'full' | 'off') => css`
   display: inline-block;
-  padding: 4px 10px;
-  border-radius: 6px;
-  font-size: 11px;
-  font-weight: 500;
+  padding: ${spacing[1]} ${spacing[2]};
+  border-radius: ${radii.md};
+  font-size: ${fontSizes.sm};
+  font-weight: ${fontWeights.medium};
   letter-spacing: 0.01em;
+  border: 1px solid transparent;
 
   ${type === 'selection' && `
-    background: #E0EBE8;
-    color: #2A6A5A;
+    background: ${colors.status.infoBg};
+    color: ${colors.status.infoText};
+    border-color: ${colors.status.infoBorder};
   `}
 
   ${type === 'full' && `
-    background: #E8F0EA;
-    color: #3A6A44;
+    background: ${colors.status.successBg};
+    color: ${colors.status.successText};
+    border-color: ${colors.status.successBorder};
   `}
 
   ${type === 'off' && `
-    background: #ECEEED;
-    color: #6B7A6E;
+    background: ${colors.surface.disabled};
+    color: ${colors.text.secondary};
+    border-color: ${colors.border.light};
   `}
 `;
 

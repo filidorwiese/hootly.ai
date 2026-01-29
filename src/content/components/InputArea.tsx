@@ -4,6 +4,7 @@ import ContextToggle from './ContextToggle';
 import PersonaSelector from './PersonaSelector';
 import { t } from '../../shared/i18n';
 import type { LLMProvider, Persona } from '../../shared/types';
+import { colors, radii, fontSizes, transitions, spacing } from '../../shared/styles';
 
 function formatModelName(modelId: string, provider?: LLMProvider): string {
   if (!modelId) return '';
@@ -171,32 +172,31 @@ const textareaWrapperStyles = css`
 
 const textareaStyles = css`
   width: 100%;
-  padding: 12px 70px 12px 14px;
-  border: 1px solid #D4DCD6;
-  border-radius: 10px;
-  font-size: 13.5px;
+  padding: ${spacing[3]} 70px ${spacing[3]} ${spacing[3]};
+  border: 1px solid ${colors.border.default};
+  border-radius: ${radii.xl};
+  font-size: ${fontSizes.md};
   font-family: 'Inter', sans-serif;
   resize: none;
   line-height: 1.55;
   box-sizing: border-box;
   outline: none;
-  background: #FFFFFF;
-  color: #2D3A30;
-  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+  background: ${colors.surface.default};
+  color: ${colors.text.primary};
+  transition: border-color ${transitions.default};
 
   &:focus {
-    border-color: #4A7C54;
-    box-shadow: 0 0 0 3px rgba(74, 124, 84, 0.1);
+    border-color: ${colors.border.focus};
   }
 
   &:disabled {
-    background: #EEF1EC;
+    background: ${colors.surface.disabled};
     cursor: not-allowed;
-    color: #6B7A6E;
+    color: ${colors.text.secondary};
   }
 
   &::placeholder {
-    color: #9AA89C;
+    color: ${colors.text.tertiary};
   }
 `;
 
@@ -209,22 +209,21 @@ const sendIconStyles = css`
   display: flex;
   align-items: center;
   justify-content: center;
-  background: #99cd7e;
+  background: ${colors.send.default};
   border: none;
-  border-radius: 50%;
-  font-size: 9px;
-  color: #FFFFFF;
+  border-radius: ${radii.full};
+  font-size: ${fontSizes.xs};
+  color: ${colors.text.inverse};
   cursor: pointer;
-  transition: all 0.15s ease;
+  transition: background ${transitions.default};
   padding-left: 6px;
 
   &:hover {
-    background: #769d60;
-    transform: scale(1.05);
+    background: ${colors.send.hover};
   }
 
   &:active {
-    transform: scale(0.95);
+    background: ${colors.send.active};
   }
 `;
 
@@ -237,21 +236,21 @@ const clearIconStyles = css`
   display: flex;
   align-items: center;
   justify-content: center;
-  background: #E8ECE9;
+  background: ${colors.surface.hover};
   border: none;
-  border-radius: 50%;
-  font-size: 11px;
-  color: #6B7A6E;
+  border-radius: ${radii.full};
+  font-size: ${fontSizes.sm};
+  color: ${colors.text.secondary};
   cursor: pointer;
-  transition: all 0.15s ease;
+  transition: background ${transitions.default}, color ${transitions.default};
 
   &:hover {
-    background: #D4DCD6;
-    color: #3A4A3C;
+    background: ${colors.surface.active};
+    color: ${colors.text.primary};
   }
 
   &:active {
-    transform: scale(0.9);
+    background: ${colors.border.default};
   }
 `;
 
@@ -268,8 +267,8 @@ const footerLeftStyles = css`
 `;
 
 const modelIdStyles = css`
-  font-size: 10px;
-  color: #B0BAB2;
+  font-size: ${fontSizes.xs};
+  color: ${colors.text.tertiary};
   font-weight: 400;
 `;
 

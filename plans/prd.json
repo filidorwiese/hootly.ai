@@ -633,7 +633,7 @@
       "Remove hover shadows, use color change instead",
       "Verify consistent button styling across extension"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "FD-4",
