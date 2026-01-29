@@ -684,7 +684,7 @@
       "Use solid focus states instead of glow",
       "Verify in dialog and history page continue mode"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "WS-1",

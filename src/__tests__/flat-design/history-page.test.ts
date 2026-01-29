@@ -207,8 +207,12 @@ describe('FD-6: History page flat design', () => {
       expect(historyHtml).toContain('border-color: var(--color-border-focus)')
     })
 
-    it('textarea focus uses thicker border instead of shadow', () => {
-      expect(historyHtml).toContain('border-width: 2px')
+    it('textarea focus uses border color change only (no width change)', () => {
+      // FD-7: True flat design uses consistent border widths
+      // Focus state should only change color, not width (prevents layout shift)
+      const focusBlock = historyHtml.match(/\.input-textarea:focus\s*\{([^}]*)\}/)?.[1] || ''
+      expect(focusBlock).toContain('border-color: var(--color-border-focus)')
+      expect(focusBlock).not.toContain('border-width')
     })
 
     it('textarea placeholder uses text tertiary', () => {

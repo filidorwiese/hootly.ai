@@ -658,3 +658,35 @@ NOTES FOR NEXT PERSON:
 - UI-6, UI-7 (persona dropdown fix, model selector) not started
 - HP-13 through HP-17 (export/import/clear all/search/popup continue) not started
 - INTRO-1 through INTRO-3 (intro text) not started
+
+---
+
+2026-01-29 - FD-7: Update input areas to flat design
+
+COMPLETED:
+- Fixed history page input focus state (removed border-width: 2px that caused layout shift)
+- Verified all input areas use solid focus states (color change only, no glow/shadow)
+- Verified InputArea.tsx uses design system colors from styles.ts
+- Verified settings page inputs have flat design (no shadows, solid borders)
+- Verified personas page inputs have flat design (no shadows, solid borders)
+- Created comprehensive unit tests for FD-7 (36 tests covering all input areas)
+- Updated existing history-page test to verify no border-width change on focus
+
+FILES CHANGED:
+- src/history/index.html (removed border-width: 2px from focus state)
+- src/__tests__/flat-design/history-page.test.ts (updated focus test)
+- src/__tests__/flat-design/input-areas.test.ts (new - 36 tests)
+- plans/prd.json (marked FD-7 as passing)
+
+PRD ITEMS COMPLETED:
+- FD-7: Update input areas to flat design
+
+NOTES FOR NEXT PERSON:
+- All flat design items (FD-1 through FD-7) now pass
+- ICON-1 through ICON-6 (glyphs.fyi icons) not started
+- WS-1 through WS-10 (website) not started
+- P-7, P-8 (persona description removal, system prompt maxlength) not started
+- PP-10 (remove persona list from settings) not started
+- UI-6, UI-7 (persona dropdown fix, model selector) not started
+- HP-13 through HP-17 (export/import/clear all/search/popup continue) not started
+- INTRO-1 through INTRO-3 (intro text) not started
