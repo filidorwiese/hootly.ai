@@ -1,0 +1,247 @@
+[
+  {
+    "id": "CH-1",
+    "category": "chat-history",
+    "description": "Auto-save conversation after each exchange",
+    "steps": [
+      "Send a message and receive a response",
+      "Close the dialog",
+      "Reopen dialog and check history panel",
+      "Verify conversation appears in history list"
+    ],
+    "passes": false
+  },
+  {
+    "id": "CH-2",
+    "category": "chat-history",
+    "description": "History panel accessible from dialog header",
+    "steps": [
+      "Open the dialog",
+      "Click history icon (📜) in header",
+      "Verify history panel opens",
+      "Check panel shows title, date, message count for each conversation"
+    ],
+    "passes": false
+  },
+  {
+    "id": "CH-3",
+    "category": "chat-history",
+    "description": "Load previous conversation from history",
+    "steps": [
+      "Open history panel",
+      "Click on a previous conversation",
+      "Verify conversation messages load into dialog",
+      "Check conversation context is restored"
+    ],
+    "passes": false
+  },
+  {
+    "id": "CH-4",
+    "category": "chat-history",
+    "description": "Delete individual conversations from history",
+    "steps": [
+      "Open history panel",
+      "Click delete button on a conversation",
+      "Verify conversation is removed from list",
+      "Reopen history and confirm deletion persisted"
+    ],
+    "passes": false
+  },
+  {
+    "id": "CH-5",
+    "category": "chat-history",
+    "description": "Auto-generate title from first user message",
+    "steps": [
+      "Start new conversation",
+      "Send first message with 60+ characters",
+      "Open history panel",
+      "Verify title is truncated to ~50 chars with ellipsis"
+    ],
+    "passes": false
+  },
+  {
+    "id": "CH-6",
+    "category": "chat-history",
+    "description": "Respect retentionDays setting for cleanup",
+    "steps": [
+      "Set retentionDays to 1 in settings",
+      "Create a conversation",
+      "Simulate passage of 2 days (or mock timestamp)",
+      "Verify old conversation is auto-deleted on next load"
+    ],
+    "passes": false
+  },
+  {
+    "id": "CH-7",
+    "category": "chat-history",
+    "description": "Burn button clears current chat and deletes from history",
+    "steps": [
+      "Start conversation and send messages",
+      "Verify conversation appears in history",
+      "Click burn button (🔥)",
+      "Verify messages cleared from dialog",
+      "Open history panel and confirm conversation deleted"
+    ],
+    "passes": false
+  },
+  {
+    "id": "P-1",
+    "category": "personas",
+    "description": "Default personas available on first run",
+    "steps": [
+      "Install extension fresh (clear storage)",
+      "Open dialog",
+      "Click persona selector",
+      "Verify 5 built-in personas: General, Code Helper, Writer, Researcher, Translator"
+    ],
+    "passes": false
+  },
+  {
+    "id": "P-2",
+    "category": "personas",
+    "description": "Create custom persona in settings",
+    "steps": [
+      "Open settings page",
+      "Navigate to Personas section",
+      "Click 'Add Persona' button",
+      "Fill name, description, system prompt, icon",
+      "Save and verify persona appears in list"
+    ],
+    "passes": false
+  },
+  {
+    "id": "P-3",
+    "category": "personas",
+    "description": "Persona selector in dialog allows switching",
+    "steps": [
+      "Open dialog",
+      "Locate persona selector dropdown",
+      "Select different persona",
+      "Verify persona icon/name updates",
+      "Send message and verify system prompt applied"
+    ],
+    "passes": false
+  },
+  {
+    "id": "P-4",
+    "category": "personas",
+    "description": "Persona persists when loading conversation from history",
+    "steps": [
+      "Select 'Code Helper' persona",
+      "Have a conversation",
+      "Close dialog",
+      "Load conversation from history",
+      "Verify 'Code Helper' persona is auto-selected"
+    ],
+    "passes": false
+  },
+  {
+    "id": "P-5",
+    "category": "personas",
+    "description": "Edit and delete custom personas in settings",
+    "steps": [
+      "Open settings, go to Personas",
+      "Click edit on custom persona",
+      "Modify name and system prompt, save",
+      "Verify changes persisted",
+      "Click delete on custom persona",
+      "Verify persona removed from list"
+    ],
+    "passes": false
+  },
+  {
+    "id": "P-6",
+    "category": "personas",
+    "description": "Set default persona for new conversations",
+    "steps": [
+      "Open settings, go to Personas",
+      "Set 'Code Helper' as default",
+      "Save settings",
+      "Open dialog for new conversation",
+      "Verify 'Code Helper' is pre-selected"
+    ],
+    "passes": false
+  },
+  {
+    "id": "UI-1",
+    "category": "ui",
+    "description": "History panel styling matches forest theme",
+    "steps": [
+      "Open history panel",
+      "Verify colors match existing dialog (#FAFBF9, #3A5A40, etc)",
+      "Check font is Inter",
+      "Verify hover states and transitions consistent"
+    ],
+    "passes": false
+  },
+  {
+    "id": "UI-2",
+    "category": "ui",
+    "description": "Persona selector compact and unobtrusive",
+    "steps": [
+      "Open dialog",
+      "Verify persona selector doesn't crowd input area",
+      "Check dropdown opens cleanly",
+      "Verify built-in vs custom personas visually grouped"
+    ],
+    "passes": false
+  },
+  {
+    "id": "UI-3",
+    "category": "ui",
+    "description": "Empty history state displayed correctly",
+    "steps": [
+      "Clear all conversations from storage",
+      "Open history panel",
+      "Verify empty state message shown",
+      "Check message is localized"
+    ],
+    "passes": false
+  },
+  {
+    "id": "DATA-1",
+    "category": "data",
+    "description": "Persona interface stored correctly",
+    "steps": [
+      "Create custom persona",
+      "Inspect chrome.storage.local",
+      "Verify persona has: id, name, description, systemPrompt, icon, isBuiltIn, createdAt"
+    ],
+    "passes": false
+  },
+  {
+    "id": "DATA-2",
+    "category": "data",
+    "description": "Conversation stores personaId",
+    "steps": [
+      "Select persona and have conversation",
+      "Inspect chrome.storage.local",
+      "Verify conversation object includes personaId field"
+    ],
+    "passes": false
+  },
+  {
+    "id": "INT-1",
+    "category": "integration",
+    "description": "Persona system prompt included in API calls",
+    "steps": [
+      "Select 'Code Helper' persona",
+      "Send a message",
+      "Inspect network request to API",
+      "Verify system prompt from persona is included"
+    ],
+    "passes": false
+  },
+  {
+    "id": "INT-2",
+    "category": "integration",
+    "description": "User system prompt combines with persona prompt",
+    "steps": [
+      "Set custom system prompt in settings",
+      "Select persona with system prompt",
+      "Send message",
+      "Verify both prompts combined in API call"
+    ],
+    "passes": false
+  }
+]
