@@ -672,7 +672,7 @@
       "Flatten action buttons (view/continue/delete)",
       "Verify consistent flat appearance"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "FD-7",

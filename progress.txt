@@ -623,3 +623,38 @@ NOTES FOR NEXT PERSON:
 - FD-6 and FD-7 remaining (history page, input areas)
 - ICON-1 through ICON-6 (glyphs.fyi icons) not started
 - WS-1 through WS-10 (website) not started
+
+---
+
+2026-01-29 - FD-6: Update history page to flat design
+
+COMPLETED:
+- Replaced all hardcoded colors with CSS custom properties (design system)
+- Added complete CSS variable definitions (:root) matching settings/personas pages
+- Removed all box-shadow definitions (conversation-item hover, confirm-box, input-textarea focus)
+- Used solid borders for conversation items instead of hover shadows
+- Flattened action buttons with border/background color transitions
+- Updated confirm dialog to use border instead of shadow
+- Updated input textarea with flat focus state (thicker border instead of glow)
+- Context toggle and badges use flat design with border-color states
+- Streaming indicator and cancel hint use solid borders
+- Messages use solid borders with message-specific backgrounds
+- Added 58 unit tests verifying flat design CSS implementation
+
+FILES CHANGED:
+- src/history/index.html (complete CSS rewrite to flat design)
+- src/__tests__/flat-design/history-page.test.ts (new - 58 tests)
+- plans/prd.json (marked FD-6 as passing)
+
+PRD ITEMS COMPLETED:
+- FD-6: Update history page to flat design
+
+NOTES FOR NEXT PERSON:
+- FD-7 remaining (input areas - may already be covered by FD-6 changes)
+- ICON-1 through ICON-6 (glyphs.fyi icons) not started
+- WS-1 through WS-10 (website) not started
+- P-7, P-8 (persona description removal, system prompt maxlength) not started
+- PP-10 (remove persona list from settings) not started
+- UI-6, UI-7 (persona dropdown fix, model selector) not started
+- HP-13 through HP-17 (export/import/clear all/search/popup continue) not started
+- INTRO-1 through INTRO-3 (intro text) not started
