@@ -594,3 +594,32 @@ NOTES FOR NEXT PERSON:
 - FD-5 through FD-7 remaining (personas, history, input areas pages)
 - ICON-1 through ICON-6 (glyphs.fyi icons) not started
 - WS-1 through WS-10 (website) not started
+
+---
+
+2026-01-29 - FD-5: Update personas page to flat design
+
+COMPLETED:
+- Replaced all hardcoded colors with CSS custom properties (design system)
+- Added complete CSS variable definitions (:root) matching settings page
+- Removed all box-shadow definitions (modal, confirm-box, persona-item hover)
+- Used solid borders for persona cards instead of hover shadows
+- Flattened action buttons with border/background color transitions
+- Updated modal to use border instead of shadow
+- Updated form inputs with flat focus/hover states (no glow)
+- Icon picker uses flat design with border-color selection
+- Buttons use proper primary/secondary/danger color variants
+- Added 48 unit tests verifying flat design CSS implementation
+
+FILES CHANGED:
+- src/personas/index.html (complete CSS rewrite to flat design)
+- src/__tests__/flat-design/personas-page.test.ts (new - 48 tests)
+- plans/prd.json (marked FD-5 as passing)
+
+PRD ITEMS COMPLETED:
+- FD-5: Update personas page to flat design
+
+NOTES FOR NEXT PERSON:
+- FD-6 and FD-7 remaining (history page, input areas)
+- ICON-1 through ICON-6 (glyphs.fyi icons) not started
+- WS-1 through WS-10 (website) not started

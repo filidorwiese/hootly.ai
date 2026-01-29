@@ -659,7 +659,7 @@
       "Use solid background colors",
       "Verify consistent flat appearance"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "FD-6",
