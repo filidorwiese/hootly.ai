@@ -243,5 +243,357 @@
       "Verify both prompts combined in API call"
     ],
     "passes": true
+  },
+  {
+    "id": "PP-1",
+    "category": "personas-page",
+    "description": "Dedicated personas page accessible from settings",
+    "steps": [
+      "Open settings page",
+      "Locate 'Manage Personas' link in Personas section",
+      "Click link",
+      "Verify personas.html page opens"
+    ],
+    "passes": false
+  },
+  {
+    "id": "PP-2",
+    "category": "personas-page",
+    "description": "Personas page lists all personas",
+    "steps": [
+      "Open personas page",
+      "Verify built-in personas displayed (General, Code Helper, Writer, Researcher, Translator)",
+      "Verify custom personas displayed if any",
+      "Check each shows icon, name, description"
+    ],
+    "passes": false
+  },
+  {
+    "id": "PP-3",
+    "category": "personas-page",
+    "description": "Create new persona from personas page",
+    "steps": [
+      "Open personas page",
+      "Click 'Add Persona' button",
+      "Fill form: name, description, system prompt, icon",
+      "Click Save",
+      "Verify new persona appears in list"
+    ],
+    "passes": false
+  },
+  {
+    "id": "PP-4",
+    "category": "personas-page",
+    "description": "Edit custom persona from personas page",
+    "steps": [
+      "Open personas page with existing custom persona",
+      "Click edit button on custom persona",
+      "Modify name and system prompt",
+      "Click Save",
+      "Verify changes persisted",
+      "Reopen page and confirm changes saved"
+    ],
+    "passes": false
+  },
+  {
+    "id": "PP-5",
+    "category": "personas-page",
+    "description": "Delete custom persona from personas page",
+    "steps": [
+      "Open personas page with existing custom persona",
+      "Click delete button on custom persona",
+      "Confirm deletion in dialog",
+      "Verify persona removed from list",
+      "Verify persona no longer available in dialog selector"
+    ],
+    "passes": false
+  },
+  {
+    "id": "PP-6",
+    "category": "personas-page",
+    "description": "Built-in personas not editable or deletable",
+    "steps": [
+      "Open personas page",
+      "Locate built-in persona (e.g., General)",
+      "Verify no edit/delete buttons visible",
+      "Or verify edit/delete buttons disabled"
+    ],
+    "passes": false
+  },
+  {
+    "id": "PP-7",
+    "category": "personas-page",
+    "description": "Set default persona from personas page",
+    "steps": [
+      "Open personas page",
+      "Click 'Set as default' on a persona",
+      "Verify default indicator shows",
+      "Open new conversation in dialog",
+      "Verify selected persona is pre-selected"
+    ],
+    "passes": false
+  },
+  {
+    "id": "PP-8",
+    "category": "personas-page",
+    "description": "Personas page styling matches forest theme",
+    "steps": [
+      "Open personas page",
+      "Verify colors match settings page (#FAFBF9, #3A5A40, etc)",
+      "Check font is Inter",
+      "Verify consistent styling with rest of extension"
+    ],
+    "passes": false
+  },
+  {
+    "id": "PP-9",
+    "category": "personas-page",
+    "description": "Back navigation to settings",
+    "steps": [
+      "Open personas page from settings",
+      "Click back button or link",
+      "Verify returns to settings page"
+    ],
+    "passes": false
+  },
+  {
+    "id": "HP-1",
+    "category": "history-page",
+    "description": "History page accessible from dialog",
+    "steps": [
+      "Open dialog",
+      "Click history icon in header",
+      "Verify history.html page opens in new tab"
+    ],
+    "passes": false
+  },
+  {
+    "id": "HP-2",
+    "category": "history-page",
+    "description": "History grouped by date categories",
+    "steps": [
+      "Open history page with conversations from various dates",
+      "Verify groupings: Today, Yesterday, This Week, This Month, Older",
+      "Check conversations sorted by date within groups (newest first)"
+    ],
+    "passes": false
+  },
+  {
+    "id": "HP-3",
+    "category": "history-page",
+    "description": "History item shows title and metadata",
+    "steps": [
+      "Open history page",
+      "Verify each item shows: title, date/time, message count",
+      "Verify persona icon if persona was used"
+    ],
+    "passes": false
+  },
+  {
+    "id": "HP-4",
+    "category": "history-page",
+    "description": "View history item expands conversation",
+    "steps": [
+      "Open history page",
+      "Click on history item or 'View' button",
+      "Verify conversation expands inline or opens detail view",
+      "Check all messages displayed (user and assistant)"
+    ],
+    "passes": false
+  },
+  {
+    "id": "HP-5",
+    "category": "history-page",
+    "description": "Continue conversation from history",
+    "steps": [
+      "Open history page",
+      "Click 'Continue' button on history item",
+      "Verify conversation loads with input area at bottom",
+      "Verify input area reuses same component as dialog"
+    ],
+    "passes": false
+  },
+  {
+    "id": "HP-6",
+    "category": "history-page",
+    "description": "Input area functional when continuing",
+    "steps": [
+      "Continue a conversation from history",
+      "Type message in input area",
+      "Send message",
+      "Verify response streams in",
+      "Verify conversation saved/updated"
+    ],
+    "passes": false
+  },
+  {
+    "id": "HP-7",
+    "category": "history-page",
+    "description": "Delete history item",
+    "steps": [
+      "Open history page",
+      "Click delete button on history item",
+      "Confirm deletion in dialog",
+      "Verify item removed from list",
+      "Refresh page and confirm deletion persisted"
+    ],
+    "passes": false
+  },
+  {
+    "id": "HP-8",
+    "category": "history-page",
+    "description": "Empty state when no history",
+    "steps": [
+      "Clear all conversations from storage",
+      "Open history page",
+      "Verify empty state message shown",
+      "Check message is localized"
+    ],
+    "passes": false
+  },
+  {
+    "id": "HP-9",
+    "category": "history-page",
+    "description": "History page styling matches forest theme",
+    "steps": [
+      "Open history page",
+      "Verify colors match (#FAFBF9, #3A5A40, etc)",
+      "Check font is Inter",
+      "Verify consistent with settings/personas pages"
+    ],
+    "passes": false
+  },
+  {
+    "id": "HP-10",
+    "category": "history-page",
+    "description": "Persona restored when continuing conversation",
+    "steps": [
+      "Create conversation with Code Helper persona",
+      "Close dialog",
+      "Open history page and continue that conversation",
+      "Verify Code Helper persona active",
+      "Send message and verify persona system prompt applied"
+    ],
+    "passes": false
+  },
+  {
+    "id": "HP-11",
+    "category": "history-page",
+    "description": "Context toggle available when continuing",
+    "steps": [
+      "Continue conversation from history page",
+      "Verify context toggle present in input area",
+      "Toggle context mode",
+      "Verify context included in next message"
+    ],
+    "passes": false
+  },
+  {
+    "id": "HP-12",
+    "category": "history-page",
+    "description": "Remove history panel from dialog",
+    "steps": [
+      "Open dialog",
+      "Verify no inline history panel exists",
+      "Verify history icon opens history page instead"
+    ],
+    "passes": false
+  },
+  {
+    "id": "UI-4",
+    "category": "ui",
+    "description": "Persona selector at bottom of dialog",
+    "steps": [
+      "Open dialog",
+      "Verify persona selector is in footer/input area, not header",
+      "Verify selector still functional",
+      "Check positioning doesn't crowd input controls"
+    ],
+    "passes": false
+  },
+  {
+    "id": "UI-5",
+    "category": "ui",
+    "description": "Token counter removed from footer",
+    "steps": [
+      "Open dialog",
+      "Verify no token count displayed in footer/input area",
+      "Type message and confirm no token estimation shown"
+    ],
+    "passes": false
+  },
+  {
+    "id": "ICON-1",
+    "category": "icons",
+    "description": "Replace dialog icons with glyphs.fyi icons",
+    "steps": [
+      "Open dialog",
+      "Verify history icon uses glyphs.fyi colorful icon",
+      "Verify settings icon uses glyphs.fyi colorful icon",
+      "Verify close icon uses glyphs.fyi colorful icon",
+      "Verify send button icon uses glyphs.fyi colorful icon",
+      "Verify clear/burn button icon uses glyphs.fyi colorful icon"
+    ],
+    "passes": false
+  },
+  {
+    "id": "ICON-2",
+    "category": "icons",
+    "description": "Replace settings page icons with glyphs.fyi icons",
+    "steps": [
+      "Open settings page",
+      "Verify section icons use glyphs.fyi colorful icons",
+      "Verify navigation icons use glyphs.fyi colorful icons",
+      "Verify action button icons use glyphs.fyi colorful icons"
+    ],
+    "passes": false
+  },
+  {
+    "id": "ICON-3",
+    "category": "icons",
+    "description": "Replace personas page icons with glyphs.fyi icons",
+    "steps": [
+      "Open personas page",
+      "Verify add persona button uses glyphs.fyi icon",
+      "Verify edit button uses glyphs.fyi icon",
+      "Verify delete button uses glyphs.fyi icon",
+      "Verify back navigation uses glyphs.fyi icon"
+    ],
+    "passes": false
+  },
+  {
+    "id": "ICON-4",
+    "category": "icons",
+    "description": "Replace history page icons with glyphs.fyi icons",
+    "steps": [
+      "Open history page",
+      "Verify view button uses glyphs.fyi icon",
+      "Verify continue button uses glyphs.fyi icon",
+      "Verify delete button uses glyphs.fyi icon",
+      "Verify date group icons (if any) use glyphs.fyi icons"
+    ],
+    "passes": false
+  },
+  {
+    "id": "ICON-5",
+    "category": "icons",
+    "description": "Icons are colorful not monochrome",
+    "steps": [
+      "Review all glyphs.fyi icons in extension",
+      "Verify icons use color variants, not grayscale",
+      "Verify colors complement forest theme"
+    ],
+    "passes": false
+  },
+  {
+    "id": "ICON-6",
+    "category": "icons",
+    "description": "Context toggle icons updated",
+    "steps": [
+      "Open dialog",
+      "Cycle through context modes",
+      "Verify selection/full-page/disabled icons are glyphs.fyi colorful icons"
+    ],
+    "passes": false
   }
 ]
