@@ -437,3 +437,40 @@ PRD ITEMS COMPLETED:
 NOTES FOR NEXT PERSON:
 - ICON-1 through ICON-6 (glyphs.fyi icons) not started
 - These are the only remaining non-passing items
+
+---
+
+2026-01-29 - ST-1 through ST-4: Selection Tooltip Toggle
+
+COMPLETED:
+- Added showSelectionTooltip boolean to Settings interface (defaults to true)
+- Added checkbox toggle in settings page below keyboard shortcut setting
+- Settings.ts loads/saves the toggle state
+- SelectionTooltip.tsx respects the setting and listens for storage changes
+- Toggle works without page reload (real-time updates via chrome.storage.onChanged)
+- Added i18n translations for all 10 languages (showSelectionTooltip, showSelectionTooltipHint)
+- Added triggerStorageChange helper to chrome mock for testing
+- Updated settings fixture with new fields (defaultPersonaId, customPersonas, showSelectionTooltip)
+- Added 13 unit tests covering all ST-1 through ST-4 requirements
+
+FILES CHANGED:
+- src/shared/types.ts (added showSelectionTooltip to Settings, DEFAULT_SETTINGS)
+- src/settings/index.html (added checkbox toggle)
+- src/settings/settings.ts (load/save showSelectionTooltip)
+- src/content/components/SelectionTooltip.tsx (respects setting, listens for changes)
+- src/shared/i18n/*.json (added translations to all 10 languages)
+- src/__tests__/__mocks__/chrome.ts (added triggerStorageChange helper)
+- src/__tests__/fixtures/settings.ts (updated with new Settings fields)
+- src/__tests__/selection-tooltip/selection-tooltip.test.ts (new - 13 tests)
+- plans/prd.json (marked ST-1 through ST-4 as passing)
+
+PRD ITEMS COMPLETED:
+- ST-1: Add showSelectionTooltip setting to storage
+- ST-2: Add toggle in settings near keyboard shortcut
+- ST-3: Content script respects tooltip setting
+- ST-4: Tooltip toggle works without reload
+
+NOTES FOR NEXT PERSON:
+- ICON-1 through ICON-6 (glyphs.fyi icons) not started
+- FD-1 through FD-7 (flat design) not started
+- WS-1 through WS-10 (website) not started

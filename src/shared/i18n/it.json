@@ -20,6 +20,8 @@
     "temperature": "Temperatura (0-1)",
     "shortcut": "Scorciatoia da tastiera",
     "shortcutHint": "Formato: Modificatore+Tasto (es: Alt+C, Ctrl+Shift+K, Meta+Spazio)",
+    "showSelectionTooltip": "Mostra tooltip selezione",
+    "showSelectionTooltipHint": "Mostra un tooltip quando viene selezionato del testo su una pagina",
     "language": "Lingua",
     "languageAuto": "Rilevamento automatico",
     "save": "Salva impostazioni",

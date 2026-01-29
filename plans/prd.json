@@ -824,7 +824,7 @@
       "Default to true (tooltip enabled)",
       "Update storage wrapper if needed"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "ST-2",
@@ -837,7 +837,7 @@
       "Position below or near shortcut setting",
       "Verify toggle saves to storage"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "ST-3",
@@ -849,7 +849,7 @@
       "If enabled, show tooltip as normal",
       "Listen for storage changes to update behavior"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "ST-4",
@@ -862,6 +862,6 @@
       "Enable tooltip in settings",
       "Select text and verify tooltip appears"
     ],
-    "passes": false
+    "passes": true
   }
 ]

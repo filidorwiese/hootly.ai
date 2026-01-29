@@ -20,6 +20,8 @@
     "temperature": "温度 (0-1)",
     "shortcut": "キーボードショートカット",
     "shortcutHint": "形式：修飾キー+キー（例：Alt+C、Ctrl+Shift+K、Meta+Space）",
+    "showSelectionTooltip": "選択ツールチップを表示",
+    "showSelectionTooltipHint": "ページでテキストを選択した時にツールチップを表示",
     "language": "言語",
     "languageAuto": "自動検出",
     "save": "設定を保存",

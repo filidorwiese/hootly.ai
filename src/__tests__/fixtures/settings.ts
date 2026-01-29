@@ -24,6 +24,9 @@ export const defaultSettings: Settings = {
   conversationDepth: 5,
   retentionDays: 30,
   language: 'auto',
+  defaultPersonaId: 'general',
+  customPersonas: [],
+  showSelectionTooltip: true,
 }
 
 export const configuredSettings: Settings = {

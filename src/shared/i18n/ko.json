@@ -20,6 +20,8 @@
     "temperature": "온도 (0-1)",
     "shortcut": "키보드 단축키",
     "shortcutHint": "형식: 수정자+키 (예: Alt+C, Ctrl+Shift+K, Meta+Space)",
+    "showSelectionTooltip": "선택 툴팁 표시",
+    "showSelectionTooltipHint": "페이지에서 텍스트를 선택할 때 툴팁 표시",
     "language": "언어",
     "languageAuto": "자동 감지",
     "save": "설정 저장",

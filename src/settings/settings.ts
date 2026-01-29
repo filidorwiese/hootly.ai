@@ -107,6 +107,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   const maxTokensInput = document.getElementById('maxTokens') as HTMLInputElement;
   const temperatureInput = document.getElementById('temperature') as HTMLInputElement;
   const shortcutInput = document.getElementById('shortcut') as HTMLInputElement;
+  const showSelectionTooltipInput = document.getElementById('showSelectionTooltip') as HTMLInputElement;
   const languageSelect = document.getElementById('language') as HTMLSelectElement;
   const defaultPersonaSelect = document.getElementById('defaultPersona') as HTMLSelectElement;
   const saveBtn = document.getElementById('saveBtn') as HTMLButtonElement;
@@ -136,6 +137,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   maxTokensInput.value = settings.maxTokens.toString();
   temperatureInput.value = settings.temperature.toString();
   shortcutInput.value = settings.shortcut;
+  showSelectionTooltipInput.checked = settings.showSelectionTooltip !== false;
   languageSelect.value = settings.language;
 
   // Populate default persona select
@@ -231,6 +233,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         maxTokens: parseInt(maxTokensInput.value),
         temperature: parseFloat(temperatureInput.value),
         shortcut: shortcutInput.value.trim() || 'Alt+C',
+        showSelectionTooltip: showSelectionTooltipInput.checked,
         language: languageSelect.value as Settings['language'],
         defaultPersonaId: defaultPersonaSelect.value,
       });

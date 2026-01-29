@@ -20,6 +20,8 @@
     "temperature": "Temperatur (0-1)",
     "shortcut": "Tastenkürzel",
     "shortcutHint": "Format: Modifikator+Taste (z.B. Alt+C, Ctrl+Shift+K, Meta+Leertaste)",
+    "showSelectionTooltip": "Auswahl-Tooltip anzeigen",
+    "showSelectionTooltipHint": "Zeige einen Tooltip wenn Text auf einer Seite ausgewählt wird",
     "language": "Sprache",
     "languageAuto": "Automatisch erkennen",
     "save": "Einstellungen speichern",

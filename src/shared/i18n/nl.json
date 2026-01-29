@@ -20,6 +20,8 @@
     "temperature": "Temperatuur (0-1)",
     "shortcut": "Sneltoets",
     "shortcutHint": "Formaat: Modifier+Toets (bijv. Alt+C, Ctrl+Shift+K, Meta+Spatie)",
+    "showSelectionTooltip": "Selectie-tooltip tonen",
+    "showSelectionTooltipHint": "Toon een tooltip wanneer tekst op een pagina is geselecteerd",
     "language": "Taal",
     "languageAuto": "Automatisch detecteren",
     "save": "Instellingen opslaan",

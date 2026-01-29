@@ -9,19 +9,25 @@ interface SelectionTooltipProps {
 const SelectionTooltip: React.FC<SelectionTooltipProps> = ({ onOpenWithSelection }) => {
   const [isVisible, setIsVisible] = useState(false);
   const [shortcut, setShortcut] = useState('Alt+C');
+  const [isEnabled, setIsEnabled] = useState(true);
 
   useEffect(() => {
-    // Load shortcut from settings
+    // Load settings
     Storage.getSettings().then((settings) => {
       setShortcut(settings.shortcut);
+      setIsEnabled(settings.showSelectionTooltip !== false);
     });
 
-    // Listen for shortcut updates
-    chrome.storage.onChanged.addListener((changes) => {
-      if (changes.settings?.newValue?.shortcut) {
+    // Listen for settings updates
+    const handleStorageChange = (changes: { [key: string]: chrome.storage.StorageChange }) => {
+      if (changes.settings?.newValue?.shortcut !== undefined) {
         setShortcut(changes.settings.newValue.shortcut);
       }
-    });
+      if (changes.settings?.newValue?.showSelectionTooltip !== undefined) {
+        setIsEnabled(changes.settings.newValue.showSelectionTooltip);
+      }
+    };
+    chrome.storage.onChanged.addListener(handleStorageChange);
 
     // Listen for selection changes from parent window (content script)
     const handleMessage = (event: MessageEvent) => {
@@ -33,11 +39,12 @@ const SelectionTooltip: React.FC<SelectionTooltipProps> = ({ onOpenWithSelection
     window.addEventListener('message', handleMessage);
 
     return () => {
+      chrome.storage.onChanged.removeListener(handleStorageChange);
       window.removeEventListener('message', handleMessage);
     };
   }, []);
 
-  if (!isVisible) return null;
+  if (!isEnabled || !isVisible) return null;
 
   return (
     <div className={tooltipStyles} onClick={onOpenWithSelection}>

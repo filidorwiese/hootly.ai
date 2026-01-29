@@ -24,6 +24,7 @@ export interface Settings {
   language: 'auto' | 'en' | 'nl' | 'de' | 'fr' | 'es' | 'it' | 'pt' | 'zh' | 'ja' | 'ko';
   defaultPersonaId: string;
   customPersonas: Persona[];
+  showSelectionTooltip: boolean;
 }
 
 // Re-export ModelConfig from models.ts for convenience
@@ -163,4 +164,5 @@ export const DEFAULT_SETTINGS: Settings = {
   language: 'auto',
   defaultPersonaId: 'general',
   customPersonas: [],
+  showSelectionTooltip: true,
 };

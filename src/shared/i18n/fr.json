@@ -20,6 +20,8 @@
     "temperature": "Température (0-1)",
     "shortcut": "Raccourci clavier",
     "shortcutHint": "Format: Modificateur+Touche (ex: Alt+C, Ctrl+Shift+K, Meta+Espace)",
+    "showSelectionTooltip": "Afficher l'info-bulle de sélection",
+    "showSelectionTooltipHint": "Afficher une info-bulle lorsque du texte est sélectionné sur une page",
     "language": "Langue",
     "languageAuto": "Détection automatique",
     "save": "Enregistrer les paramètres",

@@ -94,6 +94,10 @@ export function getMockStorage(): StorageData {
   return { ...storage }
 }
 
+export function triggerStorageChange(changes: Record<string, { oldValue?: unknown; newValue?: unknown }>) {
+  storageListeners.forEach(listener => listener(changes, 'local'))
+}
+
 // Install mock globally
 export function installChromeMock() {
   ;(globalThis as unknown as { chrome: typeof chromeMock }).chrome = chromeMock
