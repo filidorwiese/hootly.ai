@@ -901,7 +901,7 @@
       "Position link below the persona dropdown",
       "Verify link opens personas page"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "UI-6",

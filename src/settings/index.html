@@ -249,118 +249,24 @@
       border-color: var(--color-accent-error-hover);
     }
 
-    .persona-list {
-      margin-bottom: var(--spacing-5);
+    .manage-personas-link {
+      display: inline-block;
+      margin-top: var(--spacing-2);
+      color: var(--color-text-link);
+      text-decoration: none;
+      font-size: var(--font-size-sm);
+      transition: color var(--transition-default);
     }
 
-    .persona-item {
-      display: flex;
-      align-items: center;
-      gap: var(--spacing-3);
-      padding: var(--spacing-3);
-      border: 1px solid var(--color-border-light);
-      border-radius: var(--radius-md);
-      margin-bottom: var(--spacing-2);
-      background: var(--color-bg-muted);
-      transition: border-color var(--transition-default);
-    }
-
-    .persona-item:hover {
-      border-color: var(--color-border-strong);
-    }
-
-    .persona-item.builtin {
-      background: var(--color-primary-50);
-      border-color: var(--color-primary-100);
-    }
-
-    .persona-icon {
-      font-size: 24px;
-      width: 32px;
-      text-align: center;
-    }
-
-    .persona-info {
-      flex: 1;
-    }
-
-    .persona-name {
-      font-weight: 500;
-      color: var(--color-text-primary);
-    }
-
-    .persona-actions {
-      display: flex;
-      gap: var(--spacing-2);
-    }
-
-    .persona-form {
-      display: none;
-      border: 1px solid var(--color-border-focus);
-      border-radius: var(--radius-md);
-      padding: var(--spacing-4);
-      margin-bottom: var(--spacing-5);
-      background: var(--color-primary-50);
-    }
-
-    .persona-form.visible {
-      display: block;
-    }
-
-    .persona-form .setting {
-      margin-bottom: var(--spacing-3);
-    }
-
-    .persona-form-actions {
-      display: flex;
-      gap: var(--spacing-3);
-      margin-top: var(--spacing-4);
-    }
-
-    .icon-picker {
-      display: flex;
-      gap: var(--spacing-2);
-      flex-wrap: wrap;
-    }
-
-    .icon-option {
-      width: 36px;
-      height: 36px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      border: 2px solid var(--color-border-default);
-      border-radius: var(--radius-sm);
-      cursor: pointer;
-      font-size: 20px;
-      background: var(--color-surface-default);
-      transition: border-color var(--transition-default), background var(--transition-default);
-    }
-
-    .icon-option:hover {
-      border-color: var(--color-border-focus);
-    }
-
-    .icon-option.selected {
-      border-color: var(--color-border-focus);
-      background: var(--color-primary-50);
+    .manage-personas-link:hover {
+      color: var(--color-text-link-hover);
+      text-decoration: underline;
     }
 
     /* Checkbox styling */
     input[type="checkbox"] {
       width: auto;
       accent-color: var(--color-accent-success);
-    }
-
-    .char-counter {
-      font-size: var(--font-size-sm);
-      color: var(--color-text-tertiary);
-      text-align: right;
-      margin-top: var(--spacing-1);
-    }
-
-    .char-counter.warning {
-      color: var(--color-accent-error);
     }
   </style>
 </head>
@@ -469,52 +375,7 @@
     <small style="margin-top: 5px; display: block;" data-i18n="settings.defaultPersonaHint">
       Persona used for new conversations
     </small>
-  </div>
-
-  <div class="section-header">
-    <h2 data-i18n="settings.personasSection">Personas</h2>
-    <div style="display: flex; gap: 10px;">
-      <a href="#" id="managePersonasLink" class="btn-secondary" style="text-decoration: none; display: inline-flex; align-items: center;" data-i18n="settings.managePersonas">Manage Personas</a>
-      <button type="button" class="btn-secondary" id="addPersonaBtn" data-i18n="settings.addPersona">Add Persona</button>
-    </div>
-  </div>
-
-  <div id="personaForm" class="persona-form">
-    <input type="hidden" id="editingPersonaId" value="">
-    <div class="setting">
-      <label for="personaName" data-i18n="settings.personaName">Name</label>
-      <input type="text" id="personaName" placeholder="My Assistant" maxlength="30">
-    </div>
-    <div class="setting">
-      <label data-i18n="settings.personaIcon">Icon</label>
-      <div class="icon-picker" id="iconPicker">
-        <div class="icon-option" data-icon="🤖">🤖</div>
-        <div class="icon-option" data-icon="🧠">🧠</div>
-        <div class="icon-option" data-icon="📚">📚</div>
-        <div class="icon-option" data-icon="🎨">🎨</div>
-        <div class="icon-option" data-icon="🔧">🔧</div>
-        <div class="icon-option" data-icon="💡">💡</div>
-        <div class="icon-option" data-icon="🎯">🎯</div>
-        <div class="icon-option" data-icon="⚡">⚡</div>
-        <div class="icon-option" data-icon="🌟">🌟</div>
-        <div class="icon-option" data-icon="🦊">🦊</div>
-        <div class="icon-option" data-icon="🐱">🐱</div>
-        <div class="icon-option" data-icon="🦋">🦋</div>
-      </div>
-    </div>
-    <div class="setting">
-      <label for="personaSystemPrompt" data-i18n="settings.personaSystemPrompt">System Prompt</label>
-      <textarea id="personaSystemPrompt" placeholder="Instructions for this persona..." maxlength="10000"></textarea>
-      <div class="char-counter" id="systemPromptCounter">0 / 10000</div>
-    </div>
-    <div class="persona-form-actions">
-      <button type="button" id="savePersonaBtn" data-i18n="settings.savePersona">Save Persona</button>
-      <button type="button" class="btn-secondary" id="cancelPersonaBtn" data-i18n="settings.cancel">Cancel</button>
-    </div>
-  </div>
-
-  <div id="personaList" class="persona-list">
-    <!-- Populated dynamically -->
+    <a href="#" id="managePersonasLink" class="manage-personas-link" data-i18n="settings.managePersonas">Manage Personas</a>
   </div>
 
   <button id="saveBtn" data-i18n="settings.save">Save Settings</button>

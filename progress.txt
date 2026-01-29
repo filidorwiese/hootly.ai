@@ -830,3 +830,37 @@ NOTES FOR NEXT PERSON:
 - WS-1 through WS-10 (website) not started
 - HP-13 through HP-17 (export/import/clear all/search/popup continue) not started
 - INTRO-1 through INTRO-3 (intro text) not started
+
+---
+
+2026-01-29 - PP-10: Remove persona list from settings page
+
+COMPLETED:
+- Removed inline persona list and form from settings page
+- Removed Add Persona button from settings
+- Removed persona item/form CSS styles (.persona-item, .persona-form, .icon-picker, etc.)
+- Removed char-counter CSS (no longer needed without persona form)
+- Removed persona management JS (renderPersonaList, savePersona, editPersona, deletePersona, etc.)
+- Removed SYSTEM_PROMPT_MAX_LENGTH constant from settings.ts
+- Kept default persona dropdown in settings
+- Changed "Manage Personas" from button to link positioned below dropdown
+- Link still opens dedicated personas page in new tab
+- Updated P-8 and FD-4 tests to reflect settings page no longer has persona form
+- Created 28 unit tests for PP-10 verifying removal
+
+FILES CHANGED:
+- src/settings/index.html (removed persona form, list, CSS; added manage-personas-link style)
+- src/settings/settings.ts (removed all persona form management code)
+- src/__tests__/settings/pp10-remove-persona-list.test.ts (new - 28 tests)
+- src/__tests__/personas/system-prompt-maxlength.test.ts (updated for PP-10)
+- src/__tests__/flat-design/settings-page.test.ts (updated for PP-10)
+- plans/prd.json (marked PP-10 as passing)
+
+PRD ITEMS COMPLETED:
+- PP-10: Remove persona list from settings page
+
+NOTES FOR NEXT PERSON:
+- ICON-1 through ICON-6 (glyphs.fyi icons) not started
+- WS-1 through WS-10 (website) not started
+- HP-13 through HP-17 (export/import/clear all/search/popup continue) not started
+- INTRO-1 through INTRO-3 (intro text) not started

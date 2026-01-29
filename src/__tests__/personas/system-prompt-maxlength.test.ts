@@ -104,82 +104,12 @@ describe('P-8: System prompt maxlength with counter', () => {
     })
   })
 
-  describe('Settings page', () => {
-    describe('HTML structure', () => {
-      it('system prompt textarea has maxlength=10000', () => {
-        expect(settingsHtml).toContain('id="personaSystemPrompt"')
-        expect(settingsHtml).toContain('maxlength="10000"')
-        expect(settingsHtml).toMatch(/<textarea[^>]*id="personaSystemPrompt"[^>]*maxlength="10000"/)
-      })
-
-      it('has character counter element', () => {
-        expect(settingsHtml).toContain('id="systemPromptCounter"')
-        expect(settingsHtml).toContain('class="char-counter"')
-      })
-
-      it('counter displays initial value', () => {
-        expect(settingsHtml).toContain('0 / 10000')
-      })
-    })
-
-    describe('CSS styling', () => {
-      it('defines char-counter class', () => {
-        expect(settingsHtml).toContain('.char-counter {')
-      })
-
-      it('defines warning class for limit reached', () => {
-        expect(settingsHtml).toContain('.char-counter.warning')
-        expect(settingsHtml).toContain('--color-accent-error')
-      })
-    })
-
-    describe('TypeScript implementation', () => {
-      it('defines SYSTEM_PROMPT_MAX_LENGTH constant', () => {
-        expect(settingsTs).toContain('SYSTEM_PROMPT_MAX_LENGTH = 10000')
-      })
-
-      it('has updateCharCounter function', () => {
-        expect(settingsTs).toContain('function updateCharCounter')
-      })
-
-      it('adds input event listener for counter updates', () => {
-        expect(settingsTs).toContain("addEventListener('input', updateCharCounter)")
-      })
-
-      it('calls updateCharCounter when form opens', () => {
-        expect(settingsTs).toContain('updateCharCounter()')
-      })
-
-      it('toggles warning class when at limit', () => {
-        expect(settingsTs).toContain("classList.toggle('warning'")
-      })
-    })
-  })
-
-  describe('Consistency between pages', () => {
-    it('both pages use same max length', () => {
-      const personasMatch = personasTs.match(/SYSTEM_PROMPT_MAX_LENGTH\s*=\s*(\d+)/)
-      const settingsMatch = settingsTs.match(/SYSTEM_PROMPT_MAX_LENGTH\s*=\s*(\d+)/)
-
-      expect(personasMatch).not.toBeNull()
-      expect(settingsMatch).not.toBeNull()
-      expect(personasMatch![1]).toBe('10000')
-      expect(settingsMatch![1]).toBe('10000')
-    })
-
-    it('both HTML textareas use same maxlength attribute', () => {
-      const personasMaxlength = personasHtml.match(/id="personaSystemPrompt"[^>]*maxlength="(\d+)"/)
-      const settingsMaxlength = settingsHtml.match(/id="personaSystemPrompt"[^>]*maxlength="(\d+)"/)
-
-      expect(personasMaxlength).not.toBeNull()
-      expect(settingsMaxlength).not.toBeNull()
-      expect(personasMaxlength![1]).toBe('10000')
-      expect(settingsMaxlength![1]).toBe('10000')
-    })
-
-    it('both pages have warning styling for limit', () => {
-      expect(personasHtml).toContain('.char-counter.warning')
-      expect(settingsHtml).toContain('.char-counter.warning')
+  // Note: Settings page no longer has persona form (removed per PP-10)
+  // Persona management is now done exclusively on the dedicated personas page
+  describe('Settings page (PP-10 removes persona form)', () => {
+    it('does not have persona form - managed on dedicated page', () => {
+      expect(settingsHtml).not.toContain('id="personaSystemPrompt"')
+      expect(settingsHtml).not.toContain('id="personaForm"')
     })
   })
 })

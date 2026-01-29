@@ -87,17 +87,11 @@ describe('FD-4: Settings page flat design', () => {
   })
 
   describe('solid borders for separation', () => {
-    it('section header uses solid border', () => {
-      expect(settingsHtml).toContain('border-bottom: 1px solid var(--color-border-default)')
+    it('inputs use solid borders', () => {
+      expect(settingsHtml).toContain('border: 1px solid var(--color-border-default)')
     })
 
-    it('persona items use solid borders', () => {
-      expect(settingsHtml).toContain('border: 1px solid var(--color-border-light)')
-    })
-
-    it('persona form uses solid border', () => {
-      expect(settingsHtml).toContain('border: 1px solid var(--color-border-focus)')
-    })
+    // Note: Persona form moved to dedicated personas page per PP-10
   })
 
   describe('status messages use design system', () => {
