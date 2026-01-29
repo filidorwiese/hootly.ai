@@ -2,6 +2,7 @@
   "appName": "Hootly",
   "settings": {
     "title": "設定",
+    "intro": "以下でAPIキー、モデル設定、パーソナライズオプションを設定してください。",
     "provider": "プロバイダー",
     "claudeApiKey": "Claude APIキー",
     "claudeApiKeyHint": "Claude APIキーを取得",

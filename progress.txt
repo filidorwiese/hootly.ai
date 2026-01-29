@@ -1041,3 +1041,30 @@ NOTES FOR NEXT PERSON:
 - ICON-1 through ICON-6 (glyphs.fyi icons) not started
 - WS-1 through WS-10 (website) not started
 - INTRO-1 through INTRO-3 (intro text) not started
+
+---
+
+2026-01-29 - INTRO-1: Add intro text to settings page
+
+COMPLETED:
+- Added intro paragraph below h1 title on settings page
+- Intro text: "Configure your API keys, model preferences, and personalization options below."
+- Added .intro-text CSS class with secondary text color, base font size, proper margins
+- Added data-i18n="settings.intro" for localization
+- Added i18n translations for all 10 languages (en, nl, de, fr, es, it, pt, zh, ja, ko)
+- 21 unit tests verifying HTML structure, CSS styling, and translations
+
+FILES CHANGED:
+- src/settings/index.html (added intro paragraph, CSS styling)
+- src/shared/i18n/*.json (added settings.intro to all 10 languages)
+- src/__tests__/intro-text/settings-intro.test.ts (new - 21 tests)
+- plans/prd.json (marked INTRO-1 as passing)
+
+PRD ITEMS COMPLETED:
+- INTRO-1: Add intro text to settings page
+
+NOTES FOR NEXT PERSON:
+- INTRO-2 (personas page intro) not started
+- INTRO-3 (history page intro) not started
+- ICON-1 through ICON-6 (glyphs.fyi icons) not started
+- WS-1 through WS-10 (website) not started

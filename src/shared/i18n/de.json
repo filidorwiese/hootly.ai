@@ -2,6 +2,7 @@
   "appName": "Hootly",
   "settings": {
     "title": "Einstellungen",
+    "intro": "Konfigurieren Sie unten Ihre API-Schlüssel, Modelleinstellungen und Personalisierungsoptionen.",
     "provider": "Anbieter",
     "claudeApiKey": "Claude API-Schlüssel",
     "claudeApiKeyHint": "Hol dir deinen Claude API-Schlüssel",
