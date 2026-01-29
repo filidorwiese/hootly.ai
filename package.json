@@ -13,6 +13,7 @@
     "release": "rimraf dist/*.zip && node scripts/release.js",
     "preview": "vite preview",
     "test": "vitest",
+    "typecheck": "tsc --noEmit",
     "prepare": "husky",
     "postversion": "git push --follow-tags"
   },
