@@ -42,7 +42,8 @@
     "edit": "Editar",
     "delete": "Eliminar",
     "deletePersonaConfirm": "¿Eliminar esta persona?",
-    "personaSaved": "¡Persona guardada!"
+    "personaSaved": "¡Persona guardada!",
+    "managePersonas": "Gestionar personas"
   },
   "dialog": {
     "clearConversation": "Borrar conversación",
@@ -99,5 +100,16 @@
   "persona": {
     "selectPersona": "Seleccionar persona",
     "custom": "Personalizado"
+  },
+  "personas": {
+    "title": "Personas",
+    "backToSettings": "Configuración",
+    "builtIn": "Integrados",
+    "custom": "Personalizados",
+    "noCustom": "Aún no hay personas personalizados",
+    "addPersona": "Añadir persona",
+    "editPersona": "Editar persona",
+    "setDefault": "Establecer como predeterminado",
+    "default": "Predeterminado"
   }
 }

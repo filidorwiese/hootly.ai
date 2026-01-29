@@ -446,6 +446,15 @@ document.addEventListener('DOMContentLoaded', async () => {
   cancelPersonaBtn.addEventListener('click', hidePersonaForm);
   savePersonaBtn.addEventListener('click', savePersona);
 
+  // Manage Personas link - opens dedicated personas page
+  const managePersonasLink = document.getElementById('managePersonasLink');
+  if (managePersonasLink) {
+    managePersonasLink.addEventListener('click', (e) => {
+      e.preventDefault();
+      chrome.tabs.create({ url: chrome.runtime.getURL('personas.html') });
+    });
+  }
+
   // Initial render of persona list
   renderPersonaList(settings.customPersonas || []);
 

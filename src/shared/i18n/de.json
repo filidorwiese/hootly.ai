@@ -42,7 +42,8 @@
     "edit": "Bearbeiten",
     "delete": "Löschen",
     "deletePersonaConfirm": "Diese Persona löschen?",
-    "personaSaved": "Persona gespeichert!"
+    "personaSaved": "Persona gespeichert!",
+    "managePersonas": "Personas verwalten"
   },
   "dialog": {
     "clearConversation": "Gespräch löschen",
@@ -99,5 +100,16 @@
   "persona": {
     "selectPersona": "Persona auswählen",
     "custom": "Benutzerdefiniert"
+  },
+  "personas": {
+    "title": "Personas",
+    "backToSettings": "Einstellungen",
+    "builtIn": "Integriert",
+    "custom": "Benutzerdefiniert",
+    "noCustom": "Noch keine benutzerdefinierten Personas",
+    "addPersona": "Persona hinzufügen",
+    "editPersona": "Persona bearbeiten",
+    "setDefault": "Als Standard festlegen",
+    "default": "Standard"
   }
 }

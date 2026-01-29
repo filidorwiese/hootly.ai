@@ -51,7 +51,8 @@
         "icons/*.png",
         "iframe.html",
         "iframe-app.js",
-        "history.html"
+        "history.html",
+        "personas.html"
       ],
       "matches": [
         "<all_urls>"

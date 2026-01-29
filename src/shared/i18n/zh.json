@@ -42,7 +42,8 @@
     "edit": "编辑",
     "delete": "删除",
     "deletePersonaConfirm": "删除此角色？",
-    "personaSaved": "角色已保存！"
+    "personaSaved": "角色已保存！",
+    "managePersonas": "管理角色"
   },
   "dialog": {
     "clearConversation": "清除对话",
@@ -99,5 +100,16 @@
   "persona": {
     "selectPersona": "选择角色",
     "custom": "自定义"
+  },
+  "personas": {
+    "title": "角色",
+    "backToSettings": "设置",
+    "builtIn": "内置",
+    "custom": "自定义",
+    "noCustom": "暂无自定义角色",
+    "addPersona": "添加角色",
+    "editPersona": "编辑角色",
+    "setDefault": "设为默认",
+    "default": "默认"
   }
 }

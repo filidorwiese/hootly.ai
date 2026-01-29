@@ -62,6 +62,11 @@ export default defineConfig(({ mode }) => {
           if (existsSync(historyPath)) {
             copyFileSync(historyPath, historyAltPath);
           }
+          const personasPath = `${outDir}/src/personas/index.html`;
+          const personasAltPath = `${outDir}/personas.html`;
+          if (existsSync(personasPath)) {
+            copyFileSync(personasPath, personasAltPath);
+          }
         },
       },
     ],
@@ -70,6 +75,7 @@ export default defineConfig(({ mode }) => {
         input: {
           settings: resolve(__dirname, 'src/settings/index.html'),
           history: resolve(__dirname, 'src/history/index.html'),
+          personas: resolve(__dirname, 'src/personas/index.html'),
         },
         output: {
           entryFileNames: '[name].js',

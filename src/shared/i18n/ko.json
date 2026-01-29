@@ -42,7 +42,8 @@
     "edit": "편집",
     "delete": "삭제",
     "deletePersonaConfirm": "이 페르소나를 삭제하시겠습니까?",
-    "personaSaved": "페르소나 저장됨!"
+    "personaSaved": "페르소나 저장됨!",
+    "managePersonas": "페르소나 관리"
   },
   "dialog": {
     "clearConversation": "대화 지우기",
@@ -99,5 +100,16 @@
   "persona": {
     "selectPersona": "페르소나 선택",
     "custom": "사용자 지정"
+  },
+  "personas": {
+    "title": "페르소나",
+    "backToSettings": "설정",
+    "builtIn": "기본 제공",
+    "custom": "사용자 지정",
+    "noCustom": "사용자 지정 페르소나가 없습니다",
+    "addPersona": "페르소나 추가",
+    "editPersona": "페르소나 편집",
+    "setDefault": "기본값으로 설정",
+    "default": "기본값"
   }
 }

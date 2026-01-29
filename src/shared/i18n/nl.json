@@ -42,7 +42,8 @@
     "edit": "Bewerken",
     "delete": "Verwijderen",
     "deletePersonaConfirm": "Deze persona verwijderen?",
-    "personaSaved": "Persona opgeslagen!"
+    "personaSaved": "Persona opgeslagen!",
+    "managePersonas": "Persona's beheren"
   },
   "dialog": {
     "clearConversation": "Gesprek wissen",
@@ -99,5 +100,16 @@
   "persona": {
     "selectPersona": "Selecteer persona",
     "custom": "Aangepast"
+  },
+  "personas": {
+    "title": "Persona's",
+    "backToSettings": "Instellingen",
+    "builtIn": "Ingebouwd",
+    "custom": "Aangepast",
+    "noCustom": "Nog geen aangepaste persona's",
+    "addPersona": "Persona toevoegen",
+    "editPersona": "Persona bewerken",
+    "setDefault": "Als standaard instellen",
+    "default": "Standaard"
   }
 }

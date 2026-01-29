@@ -254,7 +254,7 @@
       "Click link",
       "Verify personas.html page opens"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "PP-2",
@@ -266,7 +266,7 @@
       "Verify custom personas displayed if any",
       "Check each shows icon, name, description"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "PP-3",
@@ -279,7 +279,7 @@
       "Click Save",
       "Verify new persona appears in list"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "PP-4",
@@ -293,7 +293,7 @@
       "Verify changes persisted",
       "Reopen page and confirm changes saved"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "PP-5",
@@ -306,7 +306,7 @@
       "Verify persona removed from list",
       "Verify persona no longer available in dialog selector"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "PP-6",
@@ -318,7 +318,7 @@
       "Verify no edit/delete buttons visible",
       "Or verify edit/delete buttons disabled"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "PP-7",
@@ -331,7 +331,7 @@
       "Open new conversation in dialog",
       "Verify selected persona is pre-selected"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "PP-8",
@@ -343,7 +343,7 @@
       "Check font is Inter",
       "Verify consistent styling with rest of extension"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "PP-9",
@@ -354,7 +354,7 @@
       "Click back button or link",
       "Verify returns to settings page"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "HP-1",

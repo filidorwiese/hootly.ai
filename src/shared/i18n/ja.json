@@ -42,7 +42,8 @@
     "edit": "編集",
     "delete": "削除",
     "deletePersonaConfirm": "このペルソナを削除しますか？",
-    "personaSaved": "ペルソナを保存しました！"
+    "personaSaved": "ペルソナを保存しました！",
+    "managePersonas": "ペルソナを管理"
   },
   "dialog": {
     "clearConversation": "会話をクリア",
@@ -99,5 +100,16 @@
   "persona": {
     "selectPersona": "ペルソナを選択",
     "custom": "カスタム"
+  },
+  "personas": {
+    "title": "ペルソナ",
+    "backToSettings": "設定",
+    "builtIn": "組み込み",
+    "custom": "カスタム",
+    "noCustom": "カスタムペルソナはまだありません",
+    "addPersona": "ペルソナを追加",
+    "editPersona": "ペルソナを編集",
+    "setDefault": "デフォルトに設定",
+    "default": "デフォルト"
   }
 }

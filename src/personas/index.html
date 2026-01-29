@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hootly Personas</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap">
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+    body {
+      font-family: 'Inter', sans-serif;
+      margin: 0;
+      padding: 0;
+      background: #FAFBF9;
+      color: #2D3A30;
+      line-height: 1.6;
+    }
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 40px 20px;
+    }
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 30px;
+      padding-bottom: 20px;
+      border-bottom: 1px solid #E4E8E2;
+    }
+    h1 {
+      margin: 0;
+      font-size: 24px;
+      font-weight: 600;
+      color: #2D3A30;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    h1 img {
+      width: 32px;
+      height: 32px;
+    }
+    .header-actions {
+      display: flex;
+      gap: 12px;
+      align-items: center;
+    }
+    .back-link {
+      color: #3A5A40;
+      text-decoration: none;
+      font-size: 14px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      padding: 8px 12px;
+      border-radius: 6px;
+      transition: background 0.15s;
+    }
+    .back-link:hover {
+      background: rgba(58, 90, 64, 0.08);
+    }
+    .add-btn {
+      background: #3A5A40;
+      color: #fff;
+      border: none;
+      padding: 8px 16px;
+      border-radius: 6px;
+      font-size: 14px;
+      font-weight: 500;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      transition: background 0.15s;
+    }
+    .add-btn:hover {
+      background: #2D4830;
+    }
+    .persona-section {
+      margin-bottom: 32px;
+    }
+    .section-header {
+      font-size: 13px;
+      font-weight: 600;
+      color: #6B7A6E;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 12px;
+      padding-left: 4px;
+    }
+    .persona-item {
+      background: #fff;
+      border: 1px solid #E4E8E2;
+      border-radius: 10px;
+      padding: 16px;
+      margin-bottom: 10px;
+      transition: all 0.15s;
+    }
+    .persona-item:hover {
+      border-color: #3A5A40;
+      box-shadow: 0 2px 8px rgba(45, 60, 48, 0.08);
+    }
+    .persona-item.builtin {
+      background: #F5F9F5;
+    }
+    .persona-item.default {
+      border-color: #3A5A40;
+      border-width: 2px;
+    }
+    .persona-header {
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+    }
+    .persona-icon {
+      font-size: 32px;
+      line-height: 1;
+    }
+    .persona-info {
+      flex: 1;
+      min-width: 0;
+    }
+    .persona-name {
+      font-weight: 600;
+      color: #2D3A30;
+      font-size: 16px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .default-badge {
+      background: #3A5A40;
+      color: #fff;
+      font-size: 10px;
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-weight: 500;
+    }
+    .persona-desc {
+      font-size: 14px;
+      color: #6B7A6E;
+      margin-top: 4px;
+    }
+    .persona-prompt {
+      font-size: 13px;
+      color: #8A9A8C;
+      margin-top: 8px;
+      padding-top: 8px;
+      border-top: 1px solid #E4E8E2;
+      white-space: pre-wrap;
+      display: none;
+    }
+    .persona-item.expanded .persona-prompt {
+      display: block;
+    }
+    .persona-actions {
+      display: flex;
+      gap: 6px;
+      flex-shrink: 0;
+    }
+    .action-btn {
+      background: transparent;
+      border: none;
+      padding: 6px 10px;
+      border-radius: 6px;
+      font-size: 12px;
+      cursor: pointer;
+      color: #6B7A6E;
+      transition: all 0.15s;
+    }
+    .action-btn:hover {
+      background: rgba(58, 90, 64, 0.08);
+      color: #3A5A40;
+    }
+    .action-btn.delete:hover {
+      background: rgba(220, 53, 69, 0.08);
+      color: #dc3545;
+    }
+    .action-btn.set-default {
+      background: rgba(58, 90, 64, 0.08);
+      color: #3A5A40;
+    }
+    .action-btn.set-default:hover {
+      background: rgba(58, 90, 64, 0.16);
+    }
+    .empty-state {
+      text-align: center;
+      padding: 40px 20px;
+      color: #8A9A8C;
+      background: #fff;
+      border: 1px dashed #E4E8E2;
+      border-radius: 10px;
+    }
+    .empty-state-icon {
+      font-size: 48px;
+      margin-bottom: 12px;
+    }
+    .empty-state-text {
+      font-size: 14px;
+    }
+    /* Modal */
+    .modal-overlay {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(30, 40, 32, 0.5);
+      z-index: 1000;
+      justify-content: center;
+      align-items: center;
+    }
+    .modal-overlay.visible {
+      display: flex;
+    }
+    .modal {
+      background: #fff;
+      border-radius: 12px;
+      padding: 24px;
+      width: 100%;
+      max-width: 500px;
+      max-height: 90vh;
+      overflow-y: auto;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+    }
+    .modal h2 {
+      margin: 0 0 20px 0;
+      font-size: 18px;
+      color: #2D3A30;
+    }
+    .form-group {
+      margin-bottom: 16px;
+    }
+    .form-group label {
+      display: block;
+      font-size: 13px;
+      font-weight: 500;
+      color: #2D3A30;
+      margin-bottom: 6px;
+    }
+    .form-group input,
+    .form-group textarea {
+      width: 100%;
+      padding: 10px 12px;
+      border: 1px solid #D4DCD6;
+      border-radius: 6px;
+      font-size: 14px;
+      font-family: 'Inter', sans-serif;
+      color: #2D3A30;
+      background: #fff;
+    }
+    .form-group input:focus,
+    .form-group textarea:focus {
+      outline: none;
+      border-color: #3A5A40;
+      box-shadow: 0 0 0 3px rgba(58, 90, 64, 0.1);
+    }
+    .form-group textarea {
+      min-height: 100px;
+      resize: vertical;
+    }
+    .icon-picker {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+    .icon-option {
+      width: 40px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 2px solid #E4E8E2;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 22px;
+      background: #fff;
+      transition: all 0.15s;
+    }
+    .icon-option:hover {
+      border-color: #3A5A40;
+    }
+    .icon-option.selected {
+      border-color: #3A5A40;
+      background: #F5F9F5;
+    }
+    .modal-actions {
+      display: flex;
+      gap: 12px;
+      justify-content: flex-end;
+      margin-top: 20px;
+    }
+    .btn {
+      padding: 10px 20px;
+      border-radius: 6px;
+      font-size: 14px;
+      font-weight: 500;
+      cursor: pointer;
+      border: none;
+      transition: all 0.15s;
+    }
+    .btn-primary {
+      background: #3A5A40;
+      color: #fff;
+    }
+    .btn-primary:hover {
+      background: #2D4830;
+    }
+    .btn-secondary {
+      background: #E4E8E2;
+      color: #2D3A30;
+    }
+    .btn-secondary:hover {
+      background: #D4D8D2;
+    }
+    .btn-danger {
+      background: #dc3545;
+      color: #fff;
+    }
+    .btn-danger:hover {
+      background: #c82333;
+    }
+    /* Confirm dialog */
+    .confirm-box {
+      background: #fff;
+      border-radius: 12px;
+      padding: 24px;
+      max-width: 400px;
+      text-align: center;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+    }
+    .confirm-box p {
+      margin: 0 0 20px 0;
+      font-size: 15px;
+      color: #2D3A30;
+    }
+    .confirm-buttons {
+      display: flex;
+      gap: 12px;
+      justify-content: center;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>
+        <img src="" id="logo" alt="">
+        <span data-i18n="personas.title">Personas</span>
+      </h1>
+      <div class="header-actions">
+        <button class="add-btn" id="addPersonaBtn">
+          <span>+</span>
+          <span data-i18n="settings.addPersona">Add Persona</span>
+        </button>
+        <a href="#" class="back-link" id="backBtn">
+          <span>&larr;</span>
+          <span data-i18n="personas.backToSettings">Settings</span>
+        </a>
+      </div>
+    </header>
+
+    <div class="persona-section" id="builtinSection">
+      <div class="section-header" data-i18n="personas.builtIn">Built-in</div>
+      <div id="builtinList"></div>
+    </div>
+
+    <div class="persona-section" id="customSection">
+      <div class="section-header" data-i18n="personas.custom">Custom</div>
+      <div id="customList"></div>
+      <div id="customEmptyState" class="empty-state" style="display: none;">
+        <div class="empty-state-icon">🎭</div>
+        <div class="empty-state-text" data-i18n="personas.noCustom">No custom personas yet</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Add/Edit Modal -->
+  <div id="personaModal" class="modal-overlay">
+    <div class="modal">
+      <h2 id="modalTitle" data-i18n="personas.addPersona">Add Persona</h2>
+      <input type="hidden" id="editingPersonaId" value="">
+      <div class="form-group">
+        <label for="personaName" data-i18n="settings.personaName">Name</label>
+        <input type="text" id="personaName" maxlength="30">
+      </div>
+      <div class="form-group">
+        <label for="personaDescription" data-i18n="settings.personaDescription">Description</label>
+        <input type="text" id="personaDescription" maxlength="60">
+      </div>
+      <div class="form-group">
+        <label data-i18n="settings.personaIcon">Icon</label>
+        <div class="icon-picker" id="iconPicker">
+          <div class="icon-option" data-icon="🤖">🤖</div>
+          <div class="icon-option" data-icon="🧠">🧠</div>
+          <div class="icon-option" data-icon="📚">📚</div>
+          <div class="icon-option" data-icon="🎨">🎨</div>
+          <div class="icon-option" data-icon="🔧">🔧</div>
+          <div class="icon-option" data-icon="💡">💡</div>
+          <div class="icon-option" data-icon="🎯">🎯</div>
+          <div class="icon-option" data-icon="⚡">⚡</div>
+          <div class="icon-option" data-icon="🌟">🌟</div>
+          <div class="icon-option" data-icon="🦊">🦊</div>
+          <div class="icon-option" data-icon="🐱">🐱</div>
+          <div class="icon-option" data-icon="🦋">🦋</div>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="personaSystemPrompt" data-i18n="settings.personaSystemPrompt">System Prompt</label>
+        <textarea id="personaSystemPrompt"></textarea>
+      </div>
+      <div class="modal-actions">
+        <button class="btn btn-secondary" id="cancelPersonaBtn" data-i18n="settings.cancel">Cancel</button>
+        <button class="btn btn-primary" id="savePersonaBtn" data-i18n="settings.savePersona">Save</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Delete Confirm Dialog -->
+  <div id="confirmDialog" class="modal-overlay">
+    <div class="confirm-box">
+      <p data-i18n="settings.deletePersonaConfirm">Delete this persona?</p>
+      <div class="confirm-buttons">
+        <button class="btn btn-secondary" id="cancelDelete" data-i18n="settings.cancel">Cancel</button>
+        <button class="btn btn-danger" id="confirmDelete" data-i18n="settings.delete">Delete</button>
+      </div>
+    </div>
+  </div>
+
+  <script type="module" src="./personas.ts"></script>
+</body>
+</html>

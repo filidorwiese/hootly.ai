@@ -282,7 +282,10 @@
 
   <div class="section-header">
     <h2 data-i18n="settings.personasSection">Personas</h2>
-    <button type="button" class="btn-secondary" id="addPersonaBtn" data-i18n="settings.addPersona">Add Persona</button>
+    <div style="display: flex; gap: 10px;">
+      <a href="#" id="managePersonasLink" class="btn-secondary" style="text-decoration: none; display: inline-flex; align-items: center;" data-i18n="settings.managePersonas">Manage Personas</a>
+      <button type="button" class="btn-secondary" id="addPersonaBtn" data-i18n="settings.addPersona">Add Persona</button>
+    </div>
   </div>
 
   <div id="personaForm" class="persona-form">

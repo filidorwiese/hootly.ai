@@ -305,3 +305,52 @@ NOTES FOR NEXT PERSON:
 - PP-1 through PP-9 (personas page) not started
 - UI-4, UI-5 (dialog UI tweaks) not started
 - ICON-1 through ICON-6 (glyphs.fyi icons) not started
+
+---
+
+2026-01-29 - PP-1 through PP-9: Dedicated Personas Page
+
+COMPLETED:
+- Created dedicated personas page (src/personas/index.html + personas.ts)
+- Settings page has "Manage Personas" link that opens personas.html
+- Page lists built-in personas (General, Code Helper, Writer, Researcher, Translator)
+- Page lists custom personas with edit/delete buttons
+- Add Persona modal with name, description, icon picker, system prompt
+- Edit existing custom personas
+- Delete custom personas with confirmation dialog
+- Set default persona from personas page (shows "Default" badge)
+- Built-in personas have no edit/delete buttons (read-only)
+- Back button returns to settings page
+- Forest theme styling consistent with extension
+- Added i18n translations for all 10 languages
+- Added unit tests for all persona page functionality
+- Updated vite.config.ts to build personas page
+- Updated manifests to include personas.html in web_accessible_resources
+
+FILES CHANGED:
+- src/personas/index.html (new)
+- src/personas/personas.ts (new)
+- src/settings/index.html (added Manage Personas link)
+- src/settings/settings.ts (added link handler)
+- vite.config.ts (added personas entry point)
+- manifest.firefox.json (added personas.html)
+- manifest.chrome.json (added personas.html)
+- src/shared/i18n/*.json (added personas section to all 10 languages)
+- src/__tests__/personas/personas-page.test.ts (new)
+- plans/prd.json (marked PP-1 through PP-9 as passing)
+
+PRD ITEMS COMPLETED:
+- PP-1: Dedicated personas page accessible from settings
+- PP-2: Personas page lists all personas
+- PP-3: Create new persona from personas page
+- PP-4: Edit custom persona from personas page
+- PP-5: Delete custom persona from personas page
+- PP-6: Built-in personas not editable or deletable
+- PP-7: Set default persona from personas page
+- PP-8: Personas page styling matches forest theme
+- PP-9: Back navigation to settings
+
+NOTES FOR NEXT PERSON:
+- HP-11 (context toggle in history) not implemented
+- UI-4, UI-5 (dialog UI tweaks) not started
+- ICON-1 through ICON-6 (glyphs.fyi icons) not started
