@@ -6,180 +6,356 @@
   <title>Hootly Settings</title>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap">
   <style>
+    /* Flat Design Color System */
+    :root {
+      /* Primary - Forest Green spectrum */
+      --color-primary-50: #E8F0EA;
+      --color-primary-100: #D1E1D6;
+      --color-primary-200: #A3C4AC;
+      --color-primary-300: #75A683;
+      --color-primary-400: #4A7C54;
+      --color-primary-500: #3A5A40;
+      --color-primary-600: #2D4733;
+      --color-primary-700: #203326;
+
+      /* Backgrounds */
+      --color-bg-base: #FAFBF9;
+      --color-bg-elevated: #FFFFFF;
+      --color-bg-muted: #F5F7F4;
+      --color-bg-subtle: #EEF1EC;
+
+      /* Surfaces */
+      --color-surface-default: #FFFFFF;
+      --color-surface-hover: #F5F7F4;
+      --color-surface-active: #EEF1EC;
+      --color-surface-disabled: #F0F2EF;
+
+      /* Borders */
+      --color-border-light: #E4E8E2;
+      --color-border-default: #D4DCD6;
+      --color-border-strong: #B8C4BC;
+      --color-border-focus: #4A7C54;
+
+      /* Text */
+      --color-text-primary: #2D3A30;
+      --color-text-secondary: #6B7A6E;
+      --color-text-tertiary: #8A9A8C;
+      --color-text-inverse: #FFFFFF;
+      --color-text-link: #3A5A40;
+      --color-text-link-hover: #2D4733;
+
+      /* Accent */
+      --color-accent-success: #4A7C54;
+      --color-accent-success-hover: #3A6A44;
+      --color-accent-error: #C45A5A;
+      --color-accent-error-hover: #A54444;
+
+      /* Status */
+      --color-status-success-bg: #E8F0EA;
+      --color-status-success-text: #2D4733;
+      --color-status-error-bg: #FDF5F5;
+      --color-status-error-text: #8B3A3A;
+
+      /* Spacing */
+      --spacing-1: 4px;
+      --spacing-2: 8px;
+      --spacing-3: 12px;
+      --spacing-4: 16px;
+      --spacing-5: 20px;
+      --spacing-6: 24px;
+      --spacing-8: 32px;
+      --spacing-10: 40px;
+
+      /* Border Radius */
+      --radius-sm: 4px;
+      --radius-md: 6px;
+      --radius-lg: 8px;
+
+      /* Font Sizes */
+      --font-size-xs: 10px;
+      --font-size-sm: 12px;
+      --font-size-md: 13px;
+      --font-size-base: 14px;
+      --font-size-lg: 15px;
+      --font-size-xl: 16px;
+      --font-size-2xl: 18px;
+      --font-size-3xl: 20px;
+
+      /* Transitions */
+      --transition-fast: 0.1s ease;
+      --transition-default: 0.15s ease;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
     body {
       font-family: 'Inter', sans-serif;
       max-width: 600px;
-      margin: 40px auto;
-      padding: 20px;
+      margin: var(--spacing-10) auto;
+      padding: var(--spacing-5);
       line-height: 1.6;
+      background: var(--color-bg-base);
+      color: var(--color-text-primary);
     }
+
     h1 {
-      color: #333;
-      margin-bottom: 30px;
+      color: var(--color-text-primary);
+      margin-bottom: var(--spacing-8);
+      font-size: var(--font-size-3xl);
+      font-weight: 600;
     }
+
     .setting {
-      margin-bottom: 20px;
+      margin-bottom: var(--spacing-5);
     }
+
     label {
       display: block;
-      margin-bottom: 5px;
+      margin-bottom: var(--spacing-1);
       font-weight: 500;
-      color: #555;
+      color: var(--color-text-secondary);
+      font-size: var(--font-size-base);
     }
+
     input, select, textarea {
       width: 100%;
-      padding: 8px 12px;
-      border: 1px solid #ddd;
-      border-radius: 4px;
-      font-size: 14px;
-      box-sizing: border-box;
+      padding: var(--spacing-2) var(--spacing-3);
+      border: 1px solid var(--color-border-default);
+      border-radius: var(--radius-md);
+      font-size: var(--font-size-base);
+      background: var(--color-surface-default);
+      color: var(--color-text-primary);
+      transition: border-color var(--transition-default);
     }
+
+    input:hover, select:hover, textarea:hover {
+      border-color: var(--color-border-strong);
+    }
+
+    input:focus, select:focus, textarea:focus {
+      border-color: var(--color-border-focus);
+      outline: none;
+    }
+
+    input::placeholder, textarea::placeholder {
+      color: var(--color-text-tertiary);
+    }
+
     textarea {
       resize: vertical;
       min-height: 80px;
     }
+
+    small {
+      color: var(--color-text-secondary);
+      font-size: var(--font-size-sm);
+    }
+
+    small a {
+      color: var(--color-text-link);
+      text-decoration: none;
+      transition: color var(--transition-default);
+    }
+
+    small a:hover {
+      color: var(--color-text-link-hover);
+    }
+
     button {
-      background: #4CAF50;
-      color: white;
-      border: none;
-      padding: 10px 20px;
-      border-radius: 4px;
+      background: var(--color-accent-success);
+      color: var(--color-text-inverse);
+      border: 1px solid var(--color-accent-success);
+      padding: var(--spacing-2) var(--spacing-5);
+      border-radius: var(--radius-md);
       cursor: pointer;
-      font-size: 14px;
+      font-size: var(--font-size-base);
       font-weight: 500;
+      transition: background var(--transition-default), border-color var(--transition-default);
     }
+
     button:hover {
-      background: #45a049;
+      background: var(--color-accent-success-hover);
+      border-color: var(--color-accent-success-hover);
     }
+
     .status {
-      margin-top: 10px;
-      padding: 10px;
-      border-radius: 4px;
+      margin-top: var(--spacing-3);
+      padding: var(--spacing-3);
+      border-radius: var(--radius-md);
       display: none;
+      font-size: var(--font-size-base);
     }
+
     .status.success {
-      background: #d4edda;
-      color: #155724;
+      background: var(--color-status-success-bg);
+      color: var(--color-status-success-text);
+      border: 1px solid var(--color-primary-200);
       display: block;
     }
+
     .status.error {
-      background: #f8d7da;
-      color: #721c24;
+      background: var(--color-status-error-bg);
+      color: var(--color-status-error-text);
+      border: 1px solid #D4A0A0;
       display: block;
     }
+
     .section-header {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin-top: 30px;
-      margin-bottom: 15px;
-      padding-bottom: 10px;
-      border-bottom: 1px solid #ddd;
+      margin-top: var(--spacing-8);
+      margin-bottom: var(--spacing-4);
+      padding-bottom: var(--spacing-3);
+      border-bottom: 1px solid var(--color-border-default);
     }
+
     .section-header h2 {
       margin: 0;
-      font-size: 18px;
-      color: #333;
+      font-size: var(--font-size-2xl);
+      color: var(--color-text-primary);
+      font-weight: 600;
     }
+
     .btn-secondary {
-      background: #6c757d;
-      color: white;
-      border: none;
-      padding: 6px 12px;
-      border-radius: 4px;
+      background: var(--color-surface-default);
+      color: var(--color-text-primary);
+      border: 1px solid var(--color-border-default);
+      padding: var(--spacing-2) var(--spacing-3);
+      border-radius: var(--radius-md);
       cursor: pointer;
-      font-size: 13px;
+      font-size: var(--font-size-md);
+      font-weight: 500;
+      transition: background var(--transition-default), border-color var(--transition-default);
     }
+
     .btn-secondary:hover {
-      background: #5a6268;
+      background: var(--color-surface-hover);
+      border-color: var(--color-border-strong);
     }
+
     .btn-danger {
-      background: #dc3545;
-      padding: 4px 8px;
-      font-size: 12px;
+      background: var(--color-accent-error);
+      color: var(--color-text-inverse);
+      border: 1px solid var(--color-accent-error);
+      padding: var(--spacing-1) var(--spacing-2);
+      font-size: var(--font-size-sm);
     }
+
     .btn-danger:hover {
-      background: #c82333;
+      background: var(--color-accent-error-hover);
+      border-color: var(--color-accent-error-hover);
     }
+
     .persona-list {
-      margin-bottom: 20px;
+      margin-bottom: var(--spacing-5);
     }
+
     .persona-item {
       display: flex;
       align-items: center;
-      gap: 12px;
-      padding: 10px;
-      border: 1px solid #ddd;
-      border-radius: 4px;
-      margin-bottom: 8px;
-      background: #fafafa;
+      gap: var(--spacing-3);
+      padding: var(--spacing-3);
+      border: 1px solid var(--color-border-light);
+      border-radius: var(--radius-md);
+      margin-bottom: var(--spacing-2);
+      background: var(--color-bg-muted);
+      transition: border-color var(--transition-default);
     }
+
+    .persona-item:hover {
+      border-color: var(--color-border-strong);
+    }
+
     .persona-item.builtin {
-      background: #f0f7f0;
+      background: var(--color-primary-50);
+      border-color: var(--color-primary-100);
     }
+
     .persona-icon {
       font-size: 24px;
       width: 32px;
       text-align: center;
     }
+
     .persona-info {
       flex: 1;
     }
+
     .persona-name {
       font-weight: 500;
-      color: #333;
+      color: var(--color-text-primary);
     }
+
     .persona-desc {
-      font-size: 12px;
-      color: #666;
+      font-size: var(--font-size-sm);
+      color: var(--color-text-secondary);
       margin-top: 2px;
     }
+
     .persona-actions {
       display: flex;
-      gap: 6px;
+      gap: var(--spacing-2);
     }
+
     .persona-form {
       display: none;
-      border: 1px solid #4CAF50;
-      border-radius: 4px;
-      padding: 15px;
-      margin-bottom: 20px;
-      background: #f9fff9;
+      border: 1px solid var(--color-border-focus);
+      border-radius: var(--radius-md);
+      padding: var(--spacing-4);
+      margin-bottom: var(--spacing-5);
+      background: var(--color-primary-50);
     }
+
     .persona-form.visible {
       display: block;
     }
+
     .persona-form .setting {
-      margin-bottom: 12px;
+      margin-bottom: var(--spacing-3);
     }
+
     .persona-form-actions {
       display: flex;
-      gap: 10px;
-      margin-top: 15px;
+      gap: var(--spacing-3);
+      margin-top: var(--spacing-4);
     }
+
     .icon-picker {
       display: flex;
-      gap: 8px;
+      gap: var(--spacing-2);
       flex-wrap: wrap;
     }
+
     .icon-option {
       width: 36px;
       height: 36px;
       display: flex;
       align-items: center;
       justify-content: center;
-      border: 2px solid #ddd;
-      border-radius: 4px;
+      border: 2px solid var(--color-border-default);
+      border-radius: var(--radius-sm);
       cursor: pointer;
       font-size: 20px;
-      background: white;
+      background: var(--color-surface-default);
+      transition: border-color var(--transition-default), background var(--transition-default);
     }
+
     .icon-option:hover {
-      border-color: #4CAF50;
+      border-color: var(--color-border-focus);
     }
+
     .icon-option.selected {
-      border-color: #4CAF50;
-      background: #e8f5e9;
+      border-color: var(--color-border-focus);
+      background: var(--color-primary-50);
+    }
+
+    /* Checkbox styling */
+    input[type="checkbox"] {
+      width: auto;
+      accent-color: var(--color-accent-success);
     }
   </style>
 </head>
@@ -199,32 +375,32 @@
   <div class="setting" id="claudeApiKeySection">
     <label for="claudeApiKey" data-i18n="settings.claudeApiKey">Claude API Key</label>
     <input type="password" id="claudeApiKey" placeholder="sk-ant-...">
-    <small style="color: #666; margin-top: 5px; display: block;">
-      <span data-i18n="settings.claudeApiKeyHint">Get your Claude API key</span> <a href="https://console.anthropic.com/settings/keys" target="_blank" style="color: #4CAF50; text-decoration: none;" data-i18n="settings.apiKeyHintLink">here</a>
+    <small style="margin-top: 5px; display: block;">
+      <span data-i18n="settings.claudeApiKeyHint">Get your Claude API key</span> <a href="https://console.anthropic.com/settings/keys" target="_blank" data-i18n="settings.apiKeyHintLink">here</a>
     </small>
   </div>
 
   <div class="setting" id="openaiApiKeySection" style="display: none;">
     <label for="openaiApiKey" data-i18n="settings.openaiApiKey">OpenAI API Key</label>
     <input type="password" id="openaiApiKey" placeholder="sk-...">
-    <small style="color: #666; margin-top: 5px; display: block;">
-      <span data-i18n="settings.openaiApiKeyHint">Get your OpenAI API key</span> <a href="https://platform.openai.com/api-keys" target="_blank" style="color: #4CAF50; text-decoration: none;" data-i18n="settings.apiKeyHintLink">here</a>
+    <small style="margin-top: 5px; display: block;">
+      <span data-i18n="settings.openaiApiKeyHint">Get your OpenAI API key</span> <a href="https://platform.openai.com/api-keys" target="_blank" data-i18n="settings.apiKeyHintLink">here</a>
     </small>
   </div>
 
   <div class="setting" id="geminiApiKeySection" style="display: none;">
     <label for="geminiApiKey" data-i18n="settings.geminiApiKey">Gemini API Key</label>
     <input type="password" id="geminiApiKey" placeholder="...">
-    <small style="color: #666; margin-top: 5px; display: block;">
-      <span data-i18n="settings.geminiApiKeyHint">Get your Gemini API key</span> <a href="https://aistudio.google.com/apikey" target="_blank" style="color: #4CAF50; text-decoration: none;" data-i18n="settings.apiKeyHintLink">here</a>
+    <small style="margin-top: 5px; display: block;">
+      <span data-i18n="settings.geminiApiKeyHint">Get your Gemini API key</span> <a href="https://aistudio.google.com/apikey" target="_blank" data-i18n="settings.apiKeyHintLink">here</a>
     </small>
   </div>
 
   <div class="setting" id="openrouterApiKeySection" style="display: none;">
     <label for="openrouterApiKey" data-i18n="settings.openrouterApiKey">OpenRouter API Key</label>
     <input type="password" id="openrouterApiKey" placeholder="sk-or-...">
-    <small style="color: #666; margin-top: 5px; display: block;">
-      <span data-i18n="settings.openrouterApiKeyHint">Get your OpenRouter API key</span> <a href="https://openrouter.ai/keys" target="_blank" style="color: #4CAF50; text-decoration: none;" data-i18n="settings.apiKeyHintLink">here</a>
+    <small style="margin-top: 5px; display: block;">
+      <span data-i18n="settings.openrouterApiKeyHint">Get your OpenRouter API key</span> <a href="https://openrouter.ai/keys" target="_blank" data-i18n="settings.apiKeyHintLink">here</a>
     </small>
   </div>
 
@@ -248,7 +424,7 @@
   <div class="setting">
     <label for="shortcut" data-i18n="settings.shortcut">Keyboard Shortcut</label>
     <input type="text" id="shortcut" placeholder="Alt+C">
-    <small style="color: #666; margin-top: 5px; display: block;" data-i18n="settings.shortcutHint">
+    <small style="margin-top: 5px; display: block;" data-i18n="settings.shortcutHint">
       Format: Modifier+Key (e.g., Alt+C, Ctrl+Shift+K, Meta+Space)
     </small>
   </div>
@@ -258,7 +434,7 @@
       <input type="checkbox" id="showSelectionTooltip" style="width: auto; margin: 0;">
       <span data-i18n="settings.showSelectionTooltip">Show Selection Tooltip</span>
     </label>
-    <small style="color: #666; margin-top: 5px; display: block;" data-i18n="settings.showSelectionTooltipHint">
+    <small style="margin-top: 5px; display: block;" data-i18n="settings.showSelectionTooltipHint">
       Show a tooltip when text is selected on a page
     </small>
   </div>
@@ -285,7 +461,7 @@
     <select id="defaultPersona">
       <!-- Populated dynamically from DEFAULT_PERSONAS -->
     </select>
-    <small style="color: #666; margin-top: 5px; display: block;" data-i18n="settings.defaultPersonaHint">
+    <small style="margin-top: 5px; display: block;" data-i18n="settings.defaultPersonaHint">
       Persona used for new conversations
     </small>
   </div>

@@ -564,3 +564,33 @@ NOTES FOR NEXT PERSON:
 - FD-4 through FD-7 remaining (settings, personas, history, input areas pages)
 - ICON-1 through ICON-6 (glyphs.fyi icons) not started
 - WS-1 through WS-10 (website) not started
+
+---
+
+2026-01-29 - FD-4: Update settings page to flat design
+
+COMPLETED:
+- Replaced all hardcoded colors with CSS custom properties (design system)
+- Added complete CSS variable definitions for colors, spacing, radius, transitions
+- Removed all inline color styles from HTML elements
+- Used solid borders for section separation (section-header, persona items)
+- Flattened input fields and dropdowns (no shadows, solid border styling)
+- Updated button styles to use accent colors from design system
+- Added hover/focus states using border color changes
+- Status messages use design system status colors
+- Persona form/list items use flat styling with solid backgrounds
+- Icon picker uses flat design with border-color hover effects
+- Added 25 unit tests verifying flat design CSS implementation
+
+FILES CHANGED:
+- src/settings/index.html (complete CSS rewrite to flat design)
+- src/__tests__/flat-design/settings-page.test.ts (new - 25 tests)
+- plans/prd.json (marked FD-4 as passing)
+
+PRD ITEMS COMPLETED:
+- FD-4: Update settings page to flat design
+
+NOTES FOR NEXT PERSON:
+- FD-5 through FD-7 remaining (personas, history, input areas pages)
+- ICON-1 through ICON-6 (glyphs.fyi icons) not started
+- WS-1 through WS-10 (website) not started
