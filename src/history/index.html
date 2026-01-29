@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hootly History</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap">
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+    body {
+      font-family: 'Inter', sans-serif;
+      margin: 0;
+      padding: 0;
+      background: #FAFBF9;
+      color: #2D3A30;
+      line-height: 1.6;
+    }
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 40px 20px;
+    }
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 30px;
+      padding-bottom: 20px;
+      border-bottom: 1px solid #E4E8E2;
+    }
+    h1 {
+      margin: 0;
+      font-size: 24px;
+      font-weight: 600;
+      color: #2D3A30;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    h1 img {
+      width: 32px;
+      height: 32px;
+    }
+    .back-link {
+      color: #3A5A40;
+      text-decoration: none;
+      font-size: 14px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      padding: 8px 12px;
+      border-radius: 6px;
+      transition: background 0.15s;
+    }
+    .back-link:hover {
+      background: rgba(58, 90, 64, 0.08);
+    }
+    .date-group {
+      margin-bottom: 24px;
+    }
+    .date-group-header {
+      font-size: 13px;
+      font-weight: 600;
+      color: #6B7A6E;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 12px;
+      padding-left: 4px;
+    }
+    .conversation-item {
+      background: #fff;
+      border: 1px solid #E4E8E2;
+      border-radius: 10px;
+      padding: 14px 16px;
+      margin-bottom: 10px;
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+    .conversation-item:hover {
+      border-color: #3A5A40;
+      box-shadow: 0 2px 8px rgba(45, 60, 48, 0.08);
+    }
+    .conversation-item.expanded {
+      border-color: #3A5A40;
+    }
+    .conversation-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 12px;
+    }
+    .conversation-title {
+      font-weight: 500;
+      color: #2D3A30;
+      flex: 1;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+    .conversation-meta {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 12px;
+      color: #8A9A8C;
+      flex-shrink: 0;
+    }
+    .conversation-meta .persona-icon {
+      font-size: 16px;
+    }
+    .conversation-actions {
+      display: flex;
+      gap: 6px;
+      margin-left: 8px;
+    }
+    .action-btn {
+      background: transparent;
+      border: none;
+      padding: 6px 10px;
+      border-radius: 6px;
+      font-size: 12px;
+      cursor: pointer;
+      color: #6B7A6E;
+      transition: all 0.15s;
+    }
+    .action-btn:hover {
+      background: rgba(58, 90, 64, 0.08);
+      color: #3A5A40;
+    }
+    .action-btn.delete:hover {
+      background: rgba(220, 53, 69, 0.08);
+      color: #dc3545;
+    }
+    .conversation-messages {
+      display: none;
+      margin-top: 16px;
+      padding-top: 16px;
+      border-top: 1px solid #E4E8E2;
+    }
+    .conversation-item.expanded .conversation-messages {
+      display: block;
+    }
+    .message {
+      margin-bottom: 14px;
+      padding: 10px 12px;
+      border-radius: 8px;
+    }
+    .message.user {
+      background: #E8F5E9;
+    }
+    .message.assistant {
+      background: #F5F7F4;
+    }
+    .message-role {
+      font-size: 11px;
+      font-weight: 600;
+      color: #6B7A6E;
+      margin-bottom: 4px;
+      text-transform: uppercase;
+    }
+    .message-content {
+      font-size: 14px;
+      color: #2D3A30;
+      white-space: pre-wrap;
+      word-break: break-word;
+    }
+    .empty-state {
+      text-align: center;
+      padding: 60px 20px;
+      color: #8A9A8C;
+    }
+    .empty-state-icon {
+      font-size: 48px;
+      margin-bottom: 16px;
+    }
+    .empty-state-text {
+      font-size: 16px;
+    }
+    .confirm-dialog {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(30, 40, 32, 0.5);
+      z-index: 1000;
+      justify-content: center;
+      align-items: center;
+    }
+    .confirm-dialog.visible {
+      display: flex;
+    }
+    .confirm-box {
+      background: #fff;
+      border-radius: 12px;
+      padding: 24px;
+      max-width: 400px;
+      text-align: center;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+    }
+    .confirm-box p {
+      margin: 0 0 20px 0;
+      font-size: 15px;
+      color: #2D3A30;
+    }
+    .confirm-buttons {
+      display: flex;
+      gap: 12px;
+      justify-content: center;
+    }
+    .confirm-buttons button {
+      padding: 10px 20px;
+      border-radius: 6px;
+      font-size: 14px;
+      font-weight: 500;
+      cursor: pointer;
+      border: none;
+    }
+    .confirm-cancel {
+      background: #E4E8E2;
+      color: #2D3A30;
+    }
+    .confirm-cancel:hover {
+      background: #d4d8d2;
+    }
+    .confirm-delete {
+      background: #dc3545;
+      color: #fff;
+    }
+    .confirm-delete:hover {
+      background: #c82333;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>
+        <img src="" id="logo" alt="">
+        <span data-i18n="history.title">History</span>
+      </h1>
+      <a href="#" class="back-link" id="closeBtn">
+        <span>&larr;</span>
+        <span data-i18n="history.close">Close</span>
+      </a>
+    </header>
+
+    <div id="historyList">
+      <!-- Populated dynamically -->
+    </div>
+
+    <div id="emptyState" class="empty-state" style="display: none;">
+      <div class="empty-state-icon">📜</div>
+      <div class="empty-state-text" data-i18n="history.empty">No conversations yet</div>
+    </div>
+  </div>
+
+  <div id="confirmDialog" class="confirm-dialog">
+    <div class="confirm-box">
+      <p data-i18n="history.deleteConfirm">Delete this conversation?</p>
+      <div class="confirm-buttons">
+        <button class="confirm-cancel" id="cancelDelete" data-i18n="settings.cancel">Cancel</button>
+        <button class="confirm-delete" id="confirmDelete" data-i18n="settings.delete">Delete</button>
+      </div>
+    </div>
+  </div>
+
+  <script type="module" src="./history.ts"></script>
+</body>
+</html>

@@ -83,10 +83,17 @@
   "history": {
     "title": "Geschiedenis",
     "empty": "Nog geen gesprekken",
+    "today": "Vandaag",
     "yesterday": "Gisteren",
+    "thisWeek": "Deze week",
+    "thisMonth": "Deze maand",
+    "older": "Ouder",
     "messages": "{{count}} ber.",
     "delete": "Gesprek verwijderen",
-    "openHistory": "Geschiedenis openen"
+    "deleteConfirm": "Dit gesprek verwijderen?",
+    "openHistory": "Geschiedenis openen",
+    "view": "Bekijken",
+    "close": "Sluiten"
   },
   "persona": {
     "selectPersona": "Selecteer persona",

@@ -83,10 +83,17 @@
   "history": {
     "title": "History",
     "empty": "No conversations yet",
+    "today": "Today",
     "yesterday": "Yesterday",
+    "thisWeek": "This Week",
+    "thisMonth": "This Month",
+    "older": "Older",
     "messages": "{{count}} msgs",
     "delete": "Delete conversation",
-    "openHistory": "Open history"
+    "deleteConfirm": "Delete this conversation?",
+    "openHistory": "Open history",
+    "view": "View",
+    "close": "Close"
   },
   "persona": {
     "selectPersona": "Select persona",

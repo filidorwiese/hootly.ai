@@ -43,7 +43,7 @@
   },
   "web_accessible_resources": [
     {
-      "resources": ["icons/*.png", "iframe.html", "iframe-app.js"],
+      "resources": ["icons/*.png", "iframe.html", "iframe-app.js", "history.html"],
       "matches": ["<all_urls>"]
     }
   ]

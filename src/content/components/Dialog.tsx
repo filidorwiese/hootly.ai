@@ -312,10 +312,9 @@ const Dialog: React.FC<DialogProps> = ({ isOpen, onClose }) => {
     setCurrentPersonaId(persona.id);
   };
 
-  const handleOpenHistory = async () => {
-    const conversations = await Storage.getConversations();
-    setSavedConversations(conversations);
-    setIsHistoryOpen(true);
+  const handleOpenHistory = () => {
+    // Open history page in a new tab
+    chrome.runtime.sendMessage({ type: 'openHistory' });
   };
 
   const handleSelectConversation = (conversation: Conversation) => {

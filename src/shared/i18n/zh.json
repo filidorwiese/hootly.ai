@@ -83,10 +83,17 @@
   "history": {
     "title": "历史记录",
     "empty": "暂无对话",
+    "today": "今天",
     "yesterday": "昨天",
+    "thisWeek": "本周",
+    "thisMonth": "本月",
+    "older": "更早",
     "messages": "{{count}} 条",
     "delete": "删除对话",
-    "openHistory": "打开历史"
+    "deleteConfirm": "删除此对话？",
+    "openHistory": "打开历史",
+    "view": "查看",
+    "close": "关闭"
   },
   "persona": {
     "selectPersona": "选择角色",

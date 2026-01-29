@@ -83,10 +83,17 @@
   "history": {
     "title": "기록",
     "empty": "대화 없음",
+    "today": "오늘",
     "yesterday": "어제",
+    "thisWeek": "이번 주",
+    "thisMonth": "이번 달",
+    "older": "이전",
     "messages": "{{count}}개",
     "delete": "대화 삭제",
-    "openHistory": "기록 열기"
+    "deleteConfirm": "이 대화를 삭제하시겠습니까?",
+    "openHistory": "기록 열기",
+    "view": "보기",
+    "close": "닫기"
   },
   "persona": {
     "selectPersona": "페르소나 선택",

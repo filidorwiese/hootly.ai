@@ -83,10 +83,17 @@
   "history": {
     "title": "Historial",
     "empty": "Sin conversaciones",
+    "today": "Hoy",
     "yesterday": "Ayer",
+    "thisWeek": "Esta semana",
+    "thisMonth": "Este mes",
+    "older": "Más antiguo",
     "messages": "{{count}} msgs",
     "delete": "Eliminar conversación",
-    "openHistory": "Abrir historial"
+    "deleteConfirm": "¿Eliminar esta conversación?",
+    "openHistory": "Abrir historial",
+    "view": "Ver",
+    "close": "Cerrar"
   },
   "persona": {
     "selectPersona": "Seleccionar persona",

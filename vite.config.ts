@@ -57,6 +57,11 @@ export default defineConfig(({ mode }) => {
           } else if (existsSync(`${outDir}/index.html`)) {
             copyFileSync(`${outDir}/index.html`, settingsAltPath);
           }
+          const historyPath = `${outDir}/src/history/index.html`;
+          const historyAltPath = `${outDir}/history.html`;
+          if (existsSync(historyPath)) {
+            copyFileSync(historyPath, historyAltPath);
+          }
         },
       },
     ],
@@ -64,6 +69,7 @@ export default defineConfig(({ mode }) => {
       rollupOptions: {
         input: {
           settings: resolve(__dirname, 'src/settings/index.html'),
+          history: resolve(__dirname, 'src/history/index.html'),
         },
         output: {
           entryFileNames: '[name].js',

@@ -83,10 +83,17 @@
   "history": {
     "title": "Verlauf",
     "empty": "Noch keine Gespräche",
+    "today": "Heute",
     "yesterday": "Gestern",
+    "thisWeek": "Diese Woche",
+    "thisMonth": "Dieser Monat",
+    "older": "Älter",
     "messages": "{{count}} Nachr.",
     "delete": "Gespräch löschen",
-    "openHistory": "Verlauf öffnen"
+    "deleteConfirm": "Dieses Gespräch löschen?",
+    "openHistory": "Verlauf öffnen",
+    "view": "Anzeigen",
+    "close": "Schließen"
   },
   "persona": {
     "selectPersona": "Persona auswählen",

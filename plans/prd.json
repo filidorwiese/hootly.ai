@@ -365,7 +365,7 @@
       "Click history icon in header",
       "Verify history.html page opens in new tab"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "HP-2",

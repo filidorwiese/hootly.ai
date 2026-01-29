@@ -29,6 +29,9 @@ chrome.runtime.onMessage.addListener((message: BackgroundMessage, sender, sendRe
   } else if (message.type === 'openSettings') {
     chrome.tabs.create({ url: chrome.runtime.getURL('settings.html') });
     sendResponse({ success: true });
+  } else if (message.type === 'openHistory') {
+    chrome.tabs.create({ url: chrome.runtime.getURL('history.html') });
+    sendResponse({ success: true });
   } else if (message.type === 'fetchModels') {
     handleFetchModels().then(sendResponse);
     return true; // Keep channel open for async response

@@ -123,6 +123,7 @@ export type BackgroundMessage =
   | { type: 'getSettings' }
   | { type: 'saveSettings'; payload: Settings }
   | { type: 'openSettings' }
+  | { type: 'openHistory' }
   | { type: 'fetchModels' };
 
 export interface SendPromptPayload {

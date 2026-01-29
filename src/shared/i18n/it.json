@@ -83,10 +83,17 @@
   "history": {
     "title": "Cronologia",
     "empty": "Nessuna conversazione",
+    "today": "Oggi",
     "yesterday": "Ieri",
+    "thisWeek": "Questa settimana",
+    "thisMonth": "Questo mese",
+    "older": "Più vecchio",
     "messages": "{{count}} msg",
     "delete": "Elimina conversazione",
-    "openHistory": "Apri cronologia"
+    "deleteConfirm": "Eliminare questa conversazione?",
+    "openHistory": "Apri cronologia",
+    "view": "Visualizza",
+    "close": "Chiudi"
   },
   "persona": {
     "selectPersona": "Seleziona persona",

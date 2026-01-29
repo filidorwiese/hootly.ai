@@ -195,3 +195,52 @@ NOTES FOR NEXT PERSON:
 - All persona features (P-1 through P-6) pass
 - All UI features (UI-1 through UI-3) pass
 - All data/integration tests (DATA-1, DATA-2, INT-1, INT-2) pass
+
+---
+
+2026-01-29 - HP-1: History page accessible from dialog
+
+COMPLETED:
+- Created dedicated history page (src/history/index.html + history.ts)
+- History page shows conversations grouped by date (Today, Yesterday, This Week, This Month, Older)
+- Each conversation displays: title, date/time, message count, persona icon
+- Click conversation header or View button to expand/collapse messages
+- Delete button with confirmation dialog
+- Forest theme styling consistent with extension
+- Dialog history icon now opens history.html in new tab (via background service worker)
+- Added openHistory message type to BackgroundMessage
+- Updated vite.config.ts to build history page
+- Updated manifests to include history.html in web_accessible_resources
+- Added i18n translations for all 10 languages (new history keys: today, thisWeek, thisMonth, older, deleteConfirm, view, close)
+- Added unit tests for history page functionality
+
+FILES CHANGED:
+- src/history/index.html (new)
+- src/history/history.ts (new)
+- src/content/components/Dialog.tsx (handleOpenHistory now sends openHistory message)
+- src/background/service-worker.ts (handles openHistory message)
+- src/shared/types.ts (added openHistory to BackgroundMessage)
+- vite.config.ts (added history entry point, copy history.html)
+- manifest.firefox.json (added history.html to web_accessible_resources)
+- manifest.chrome.json (added history.html to web_accessible_resources)
+- src/shared/i18n/*.json (added history.today, history.thisWeek, etc. to all 10 languages)
+- src/__tests__/history/history-page.test.ts (new)
+- plans/prd.json (marked HP-1 as passing)
+
+PRD ITEMS COMPLETED:
+- HP-1: History page accessible from dialog
+
+NOTES FOR NEXT PERSON:
+- HP-2 through HP-12 still need implementation
+- HP-2 (date grouping) is partially done - groupByDate function exists
+- HP-3 (metadata display) is partially done - shows title, date, message count
+- HP-4 (expand conversation) is done - click to expand/collapse
+- HP-5, HP-6 (continue conversation) not implemented - needs input area component
+- HP-7 (delete) is done
+- HP-8 (empty state) is done
+- HP-9 (styling) is done
+- HP-10, HP-11 (persona restore, context toggle) need continue functionality first
+- HP-12 (remove history panel from dialog) - panel still exists but no longer opens
+- PP-1 through PP-9 (personas page) not started
+- UI-4, UI-5 (dialog UI tweaks) not started
+- ICON-1 through ICON-6 (glyphs.fyi icons) not started

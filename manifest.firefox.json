@@ -50,7 +50,8 @@
       "resources": [
         "icons/*.png",
         "iframe.html",
-        "iframe-app.js"
+        "iframe-app.js",
+        "history.html"
       ],
       "matches": [
         "<all_urls>"
