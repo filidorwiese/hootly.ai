@@ -864,3 +864,37 @@ NOTES FOR NEXT PERSON:
 - WS-1 through WS-10 (website) not started
 - HP-13 through HP-17 (export/import/clear all/search/popup continue) not started
 - INTRO-1 through INTRO-3 (intro text) not started
+
+---
+
+2026-01-29 - HP-13: Export chat history to JSON
+
+COMPLETED:
+- Added Export button to history page header
+- Created exportHistory() function in history.ts
+- Exports all conversations as JSON with version and timestamp
+- JSON structure: { version: "1.0", exportedAt: ISO timestamp, conversations: [] }
+- File downloads as hootly-history-YYYY-MM-DD.json
+- Uses Blob and URL.createObjectURL for download mechanism
+- Added header-actions container with proper styling
+- Added i18n translations for all 10 languages (history.export)
+- 39 unit tests covering all HP-13 requirements
+
+FILES CHANGED:
+- src/history/index.html (added Export button, header-actions, CSS)
+- src/history/history.ts (added exportHistory function, event handler)
+- src/shared/i18n/*.json (added history.export to all 10 languages)
+- src/__tests__/history/export-history.test.ts (new - 39 tests)
+- plans/prd.json (marked HP-13 as passing)
+
+PRD ITEMS COMPLETED:
+- HP-13: Export chat history to JSON
+
+NOTES FOR NEXT PERSON:
+- HP-14 (import history from JSON) not started
+- HP-15 (clear all history) not started
+- HP-16 (search history) not started
+- HP-17 (continue conversation in popup window) not started
+- ICON-1 through ICON-6 (glyphs.fyi icons) not started
+- WS-1 through WS-10 (website) not started
+- INTRO-1 through INTRO-3 (intro text) not started

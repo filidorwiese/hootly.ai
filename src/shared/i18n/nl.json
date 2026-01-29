@@ -98,7 +98,8 @@
     "view": "Bekijken",
     "continue": "Doorgaan",
     "close": "Sluiten",
-    "noOriginalContext": "Geen paginacontext"
+    "noOriginalContext": "Geen paginacontext",
+    "export": "Exporteren"
   },
   "persona": {
     "selectPersona": "Selecteer persona",

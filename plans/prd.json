@@ -940,7 +940,7 @@
       "File downloads with timestamp in filename",
       "Verify exported JSON is valid and complete"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "HP-14",

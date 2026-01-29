@@ -98,7 +98,8 @@
     "view": "Ver",
     "continue": "Continuar",
     "close": "Fechar",
-    "noOriginalContext": "Sem contexto de página"
+    "noOriginalContext": "Sem contexto de página",
+    "export": "Exportar"
   },
   "persona": {
     "selectPersona": "Selecionar persona",

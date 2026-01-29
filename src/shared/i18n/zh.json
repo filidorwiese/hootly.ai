@@ -98,7 +98,8 @@
     "view": "查看",
     "continue": "继续",
     "close": "关闭",
-    "noOriginalContext": "无页面上下文"
+    "noOriginalContext": "无页面上下文",
+    "export": "导出"
   },
   "persona": {
     "selectPersona": "选择角色",

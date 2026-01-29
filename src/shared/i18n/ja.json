@@ -98,7 +98,8 @@
     "view": "表示",
     "continue": "続ける",
     "close": "閉じる",
-    "noOriginalContext": "ページコンテキストなし"
+    "noOriginalContext": "ページコンテキストなし",
+    "export": "エクスポート"
   },
   "persona": {
     "selectPersona": "ペルソナを選択",

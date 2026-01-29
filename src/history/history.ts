@@ -613,6 +613,32 @@ function applyTranslations(): void {
   });
 }
 
+async function exportHistory(): Promise<void> {
+  const conversations = await Storage.getConversations();
+
+  const exportData = {
+    version: '1.0',
+    exportedAt: new Date().toISOString(),
+    conversations,
+  };
+
+  const jsonString = JSON.stringify(exportData, null, 2);
+  const blob = new Blob([jsonString], { type: 'application/json' });
+  const url = URL.createObjectURL(blob);
+
+  const timestamp = new Date().toISOString().split('T')[0];
+  const filename = `hootly-history-${timestamp}.json`;
+
+  const link = document.createElement('a');
+  link.href = url;
+  link.download = filename;
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
+
+  URL.revokeObjectURL(url);
+}
+
 async function init(): Promise<void> {
   // Initialize language
   await initLanguage();
@@ -658,6 +684,11 @@ async function init(): Promise<void> {
   document.getElementById('closeBtn')!.addEventListener('click', (e) => {
     e.preventDefault();
     window.close();
+  });
+
+  // Export button handler
+  document.getElementById('exportBtn')!.addEventListener('click', () => {
+    exportHistory();
   });
 
   // Delete confirmation handlers

@@ -98,7 +98,8 @@
     "view": "Visualizza",
     "continue": "Continua",
     "close": "Chiudi",
-    "noOriginalContext": "Nessun contesto di pagina"
+    "noOriginalContext": "Nessun contesto di pagina",
+    "export": "Esporta"
   },
   "persona": {
     "selectPersona": "Seleziona persona",
