@@ -37,6 +37,7 @@ export interface Conversation {
   updatedAt: number;
   messages: Message[];
   personaId?: string;
+  modelId?: string;
 }
 
 export interface Persona {

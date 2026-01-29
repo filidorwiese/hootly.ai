@@ -104,6 +104,10 @@
     "selectPersona": "选择角色",
     "custom": "自定义"
   },
+  "model": {
+    "selectModel": "选择模型",
+    "loading": "加载中..."
+  },
   "personas": {
     "title": "角色",
     "backToSettings": "设置",

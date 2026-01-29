@@ -927,7 +927,7 @@
       "Default to settings model for new conversations",
       "Verify model switch applies to next API call"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "HP-13",

@@ -3,6 +3,7 @@ import { Rnd } from 'react-rnd';
 import { css } from '@emotion/css';
 import { Storage } from '../../shared/storage';
 import type { DialogPosition, Message, ContentMessage, LLMProvider, Persona, Conversation } from '../../shared/types';
+import type { ModelConfig } from '../../shared/models';
 import { DEFAULT_PERSONAS } from '../../shared/types';
 import { extractSelection, extractPageText, getPageUrl, getPageTitle, requestPageInfo } from '../../shared/utils';
 import { getApiKey } from '../../shared/providers';
@@ -39,6 +40,8 @@ const Dialog: React.FC<DialogProps> = ({ isOpen, onClose }) => {
   const [currentConversationId, setCurrentConversationId] = useState<string | null>(null);
   const [personas, setPersonas] = useState<Persona[]>(DEFAULT_PERSONAS);
   const [currentPersonaId, setCurrentPersonaId] = useState<string>('general');
+  const [models, setModels] = useState<ModelConfig[]>([]);
+  const [isLoadingModels, setIsLoadingModels] = useState(false);
 
   // Generate title from first user message (truncate to ~50 chars)
   const generateTitle = (message: string): string => {
@@ -53,7 +56,7 @@ const Dialog: React.FC<DialogProps> = ({ isOpen, onClose }) => {
   };
 
   // Save conversation to storage
-  const saveConversationToStorage = async (messages: Message[], convId: string, personaId: string) => {
+  const saveConversationToStorage = async (messages: Message[], convId: string, personaId: string, modelId: string) => {
     const existing = await Storage.getConversations();
     const existingConv = existing.find((c) => c.id === convId);
 
@@ -67,10 +70,26 @@ const Dialog: React.FC<DialogProps> = ({ isOpen, onClose }) => {
       updatedAt: Date.now(),
       messages,
       personaId,
+      modelId,
     };
 
     await Storage.saveConversation(conversation);
     await Storage.setCurrentConversation(conversation);
+  };
+
+  // Fetch available models from background
+  const fetchModels = async () => {
+    setIsLoadingModels(true);
+    try {
+      const response = await chrome.runtime.sendMessage({ type: 'fetchModels' });
+      if (response?.success && response.models) {
+        setModels(response.models);
+      }
+    } catch (err) {
+      // Silently fail - models list will just be empty
+    } finally {
+      setIsLoadingModels(false);
+    }
   };
 
   // Capture text selection and auto-enable context when dialog opens
@@ -88,6 +107,11 @@ const Dialog: React.FC<DialogProps> = ({ isOpen, onClose }) => {
         // Clean up old conversations based on retentionDays setting
         if (settings.retentionDays > 0) {
           Storage.clearOldConversations(settings.retentionDays);
+        }
+        // Fetch models if API key is set
+        const apiKey = getApiKey(settings);
+        if (apiKey) {
+          fetchModels();
         }
       });
       // Request fresh page info from parent (for iframe mode)
@@ -137,10 +161,13 @@ const Dialog: React.FC<DialogProps> = ({ isOpen, onClose }) => {
         if (newProvider && newProvider !== currentProvider) {
           setCurrentProvider(newProvider);
           setCurrentModel(changes.settings?.newValue?.model || '');
+          setModels([]); // Clear models when provider changes
           setConversationHistory([]);
           setCurrentConversationId(null);
           setResponse('');
           setError(null);
+          // Refetch models for new provider
+          fetchModels();
         }
       }
     };
@@ -227,7 +254,7 @@ const Dialog: React.FC<DialogProps> = ({ isOpen, onClose }) => {
           if (!currentConversationId) {
             setCurrentConversationId(convId);
           }
-          saveConversationToStorage(newHistory, convId, currentPersonaId);
+          saveConversationToStorage(newHistory, convId, currentPersonaId, currentModel);
 
           return newHistory;
         });
@@ -245,7 +272,7 @@ const Dialog: React.FC<DialogProps> = ({ isOpen, onClose }) => {
 
     chrome.runtime.onMessage.addListener(handleMessage);
     return () => chrome.runtime.onMessage.removeListener(handleMessage);
-  }, [currentConversationId, currentPersonaId]);
+  }, [currentConversationId, currentPersonaId, currentModel]);
 
   const handleContextToggle = () => {
     if (!contextEnabled) {
@@ -291,6 +318,12 @@ const Dialog: React.FC<DialogProps> = ({ isOpen, onClose }) => {
     setCurrentPersonaId(persona.id);
   };
 
+  const handleModelSelect = async (modelId: string) => {
+    setCurrentModel(modelId);
+    // Save to settings so it persists
+    await Storage.saveSettings({ model: modelId });
+  };
+
   const handleOpenHistory = () => {
     // Open history page in a new tab
     chrome.runtime.sendMessage({ type: 'openHistory' });
@@ -318,8 +351,8 @@ const Dialog: React.FC<DialogProps> = ({ isOpen, onClose }) => {
         return;
       }
 
-      // Check if model is selected
-      if (!settings.model || settings.model.trim() === '') {
+      // Check if model is selected (use current state which may differ from settings)
+      if (!currentModel || currentModel.trim() === '') {
         setError(t('dialog.noModelSelected'));
         setIsLoading(false);
         return;
@@ -376,14 +409,14 @@ const Dialog: React.FC<DialogProps> = ({ isOpen, onClose }) => {
           : settings.systemPrompt;
       }
 
-      // Send to background worker with combined system prompt
+      // Send to background worker with combined system prompt and current model
       await chrome.runtime.sendMessage({
         type: 'sendPrompt',
         payload: {
           prompt: currentInput,
           context,
           conversationHistory,
-          settings: { ...settings, systemPrompt: combinedSystemPrompt },
+          settings: { ...settings, model: currentModel, systemPrompt: combinedSystemPrompt },
         },
       });
     } catch (err) {
@@ -475,6 +508,9 @@ const Dialog: React.FC<DialogProps> = ({ isOpen, onClose }) => {
                 personas={personas}
                 selectedPersonaId={currentPersonaId}
                 onSelectPersona={handlePersonaSelect}
+                models={models}
+                onSelectModel={handleModelSelect}
+                isLoadingModels={isLoadingModels}
               />
             ) : (
               <div className={cancelHintStyles} dangerouslySetInnerHTML={{ __html: t('dialog.cancelHint') }} />

@@ -30,7 +30,26 @@ describe('InputArea', () => {
       expect(textarea).toHaveAttribute('placeholder')
     })
 
-    it('displays model name when provided', () => {
+    it('displays model selector when models and onSelectModel provided', () => {
+      const models = [
+        { id: 'claude-sonnet-4-5-20250514', name: 'Claude Sonnet 4.5', description: 'Latest Sonnet' }
+      ]
+      render(
+        <InputArea
+          {...defaultProps}
+          modelId="claude-sonnet-4-5-20250514"
+          provider="claude"
+          models={models}
+          onSelectModel={vi.fn()}
+        />
+      )
+
+      // Model selector should render with formatted model name
+      expect(screen.getByLabelText('Select model')).toBeInTheDocument()
+      expect(screen.getByText('Claude Sonnet 4.5')).toBeInTheDocument()
+    })
+
+    it('does not display model selector when models not provided', () => {
       render(
         <InputArea
           {...defaultProps}
@@ -39,7 +58,8 @@ describe('InputArea', () => {
         />
       )
 
-      expect(screen.getByText('Claude Sonnet 4.5')).toBeInTheDocument()
+      // Model selector should not be visible without models
+      expect(screen.queryByLabelText('Select model')).not.toBeInTheDocument()
     })
 
     it('does not display token count (UI-5)', () => {
@@ -256,9 +276,10 @@ describe('InputArea', () => {
   })
 })
 
-describe('formatModelName', () => {
-  // Test model name formatting through the component
-  const renderWithModel = (modelId: string, provider?: 'claude' | 'openai' | 'gemini' | 'openrouter') => {
+describe('formatModelName via ModelSelector', () => {
+  // Test model name formatting through the ModelSelector component in InputArea
+  const renderWithModel = (modelId: string, provider: 'claude' | 'openai' | 'gemini' | 'openrouter') => {
+    const models = [{ id: modelId, name: modelId, description: modelId }]
     render(
       <InputArea
         value=""
@@ -269,6 +290,8 @@ describe('formatModelName', () => {
         onContextToggle={() => {}}
         modelId={modelId}
         provider={provider}
+        models={models}
+        onSelectModel={() => {}}
       />
     )
   }

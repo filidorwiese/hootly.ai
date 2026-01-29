@@ -792,3 +792,41 @@ NOTES FOR NEXT PERSON:
 - WS-1 through WS-10 (website) not started
 - HP-13 through HP-17 (export/import/clear all/search/popup continue) not started
 - INTRO-1 through INTRO-3 (intro text) not started
+
+---
+
+2026-01-29 - UI-7: Add model selector dropdown to dialog
+
+COMPLETED:
+- Created ModelSelector.tsx component with dropdown UI
+- Displays formatted model names (Claude Sonnet 4.5, GPT-4o, Gemini 1.5 Pro, etc.)
+- Fetches models from background script when dialog opens
+- Model selection saves to settings and applies to next API call
+- Added models state and fetchModels function to Dialog.tsx
+- Added modelId to Conversation interface for persistence
+- Model selector renders in footer alongside persona selector
+- Click-outside closes dropdown
+- Disabled state when loading models
+- Added i18n translations for all 10 languages (model.selectModel, model.loading)
+- Updated InputArea to accept models/onSelectModel/isLoadingModels props
+- 40 unit tests covering all UI-7 requirements
+
+FILES CHANGED:
+- src/content/components/ModelSelector.tsx (new)
+- src/content/components/InputArea.tsx (added ModelSelector import, props, rendering)
+- src/content/components/Dialog.tsx (added models state, fetchModels, handleModelSelect)
+- src/shared/types.ts (added modelId to Conversation interface)
+- src/shared/i18n/*.json (added model section to all 10 languages)
+- src/__tests__/components/ModelSelector.test.ts (new - 40 tests)
+- src/__tests__/components/InputArea.test.tsx (updated to handle new model selector)
+- plans/prd.json (marked UI-7 as passing)
+
+PRD ITEMS COMPLETED:
+- UI-7: Add model selector dropdown to dialog
+
+NOTES FOR NEXT PERSON:
+- PP-10 (remove persona list from settings) not started
+- ICON-1 through ICON-6 (glyphs.fyi icons) not started
+- WS-1 through WS-10 (website) not started
+- HP-13 through HP-17 (export/import/clear all/search/popup continue) not started
+- INTRO-1 through INTRO-3 (intro text) not started

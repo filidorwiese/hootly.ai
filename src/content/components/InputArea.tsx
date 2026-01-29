@@ -2,53 +2,11 @@ import React, { useRef, useEffect } from 'react';
 import { css } from '@emotion/css';
 import ContextToggle from './ContextToggle';
 import PersonaSelector from './PersonaSelector';
+import ModelSelector from './ModelSelector';
 import { t } from '../../shared/i18n';
 import type { LLMProvider, Persona } from '../../shared/types';
+import type { ModelConfig } from '../../shared/models';
 import { colors, radii, fontSizes, transitions, spacing } from '../../shared/styles';
-
-function formatModelName(modelId: string, provider?: LLMProvider): string {
-  if (!modelId) return '';
-
-  // Claude models: claude-sonnet-4-5-20250514 -> Claude Sonnet 4.5
-  if (provider === 'claude' || modelId.startsWith('claude')) {
-    const match = modelId.match(/claude[- ](sonnet|opus|haiku)[- ]?(\d+)?[- ]?(\d+)?/i);
-    if (match) {
-      const variant = match[1].charAt(0).toUpperCase() + match[1].slice(1);
-      const version = match[2] && match[3] ? `${match[2]}.${match[3]}` : match[2] || '';
-      return `Claude ${variant}${version ? ' ' + version : ''}`;
-    }
-    return modelId;
-  }
-
-  // OpenAI models: gpt-4o, gpt-4-turbo, o1-preview -> GPT-4o, GPT-4 Turbo, O1 Preview
-  if (provider === 'openai' || modelId.startsWith('gpt') || modelId.startsWith('o1') || modelId.startsWith('o3')) {
-    return modelId
-      .replace(/^gpt-/, 'GPT-')
-      .replace(/^o(\d)/, 'O$1')
-      .replace(/-/g, ' ')
-      .replace(/\b\w/g, c => c.toUpperCase());
-  }
-
-  // Gemini models: gemini-1.5-pro -> Gemini 1.5 Pro
-  if (provider === 'gemini' || modelId.startsWith('gemini')) {
-    return modelId
-      .replace(/^gemini-/, 'Gemini ')
-      .replace(/-/g, ' ')
-      .replace(/\b\w/g, c => c.toUpperCase());
-  }
-
-  // OpenRouter: various formats, just clean up
-  if (provider === 'openrouter') {
-    // Format: provider/model-name -> Model Name
-    const parts = modelId.split('/');
-    const model = parts[parts.length - 1];
-    return model
-      .replace(/-/g, ' ')
-      .replace(/\b\w/g, c => c.toUpperCase());
-  }
-
-  return modelId;
-}
 
 interface InputAreaProps {
   value: string;
@@ -64,12 +22,16 @@ interface InputAreaProps {
   personas?: Persona[];
   selectedPersonaId?: string;
   onSelectPersona?: (persona: Persona) => void;
+  models?: ModelConfig[];
+  onSelectModel?: (modelId: string) => void;
+  isLoadingModels?: boolean;
 }
 
 const InputArea: React.FC<InputAreaProps> = ({
   value, onChange, onSubmit, disabled,
   contextEnabled, contextMode, selectionLength, onContextToggle, modelId, provider,
-  personas, selectedPersonaId, onSelectPersona
+  personas, selectedPersonaId, onSelectPersona,
+  models, onSelectModel, isLoadingModels
 }) => {
   const textareaRef = useRef<HTMLTextAreaElement>(null);
 
@@ -148,10 +110,14 @@ const InputArea: React.FC<InputAreaProps> = ({
             />
           )}
         </div>
-        {modelId && (
-          <span className={modelIdStyles}>
-            {formatModelName(modelId, provider)}
-          </span>
+        {models && modelId && provider && onSelectModel && (
+          <ModelSelector
+            models={models}
+            selectedModelId={modelId}
+            provider={provider}
+            onSelectModel={onSelectModel}
+            isLoading={isLoadingModels}
+          />
         )}
       </div>
     </div>
@@ -264,12 +230,6 @@ const footerLeftStyles = css`
   display: flex;
   align-items: center;
   gap: 8px;
-`;
-
-const modelIdStyles = css`
-  font-size: ${fontSizes.xs};
-  color: ${colors.text.tertiary};
-  font-weight: 400;
 `;
 
 export default InputArea;

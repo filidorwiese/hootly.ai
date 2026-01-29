@@ -104,6 +104,10 @@
     "selectPersona": "Sélectionner un persona",
     "custom": "Personnalisé"
   },
+  "model": {
+    "selectModel": "Sélectionner un modèle",
+    "loading": "Chargement..."
+  },
   "personas": {
     "title": "Personas",
     "backToSettings": "Paramètres",

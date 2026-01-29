@@ -104,6 +104,10 @@
     "selectPersona": "Selecteer persona",
     "custom": "Aangepast"
   },
+  "model": {
+    "selectModel": "Selecteer model",
+    "loading": "Laden..."
+  },
   "personas": {
     "title": "Persona's",
     "backToSettings": "Instellingen",

@@ -104,6 +104,10 @@
     "selectPersona": "페르소나 선택",
     "custom": "사용자 지정"
   },
+  "model": {
+    "selectModel": "모델 선택",
+    "loading": "로딩 중..."
+  },
   "personas": {
     "title": "페르소나",
     "backToSettings": "설정",
