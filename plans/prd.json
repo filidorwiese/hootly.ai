@@ -107,7 +107,7 @@
       "Fill name, description, system prompt, icon",
       "Save and verify persona appears in list"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "P-3",
@@ -147,7 +147,7 @@
       "Click delete on custom persona",
       "Verify persona removed from list"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "P-6",
@@ -207,7 +207,7 @@
       "Inspect chrome.storage.local",
       "Verify persona has: id, name, description, systemPrompt, icon, isBuiltIn, createdAt"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "DATA-2",

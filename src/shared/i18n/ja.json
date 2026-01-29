@@ -30,7 +30,19 @@
     "fetchModelsFailed": "モデルの読み込みに失敗しました",
     "noModels": "利用可能なモデルがありません",
     "defaultPersona": "デフォルトペルソナ",
-    "defaultPersonaHint": "新しい会話で使用するペルソナ"
+    "defaultPersonaHint": "新しい会話で使用するペルソナ",
+    "personasSection": "ペルソナ",
+    "addPersona": "ペルソナを追加",
+    "personaName": "名前",
+    "personaDescription": "説明",
+    "personaIcon": "アイコン",
+    "personaSystemPrompt": "システムプロンプト",
+    "savePersona": "ペルソナを保存",
+    "cancel": "キャンセル",
+    "edit": "編集",
+    "delete": "削除",
+    "deletePersonaConfirm": "このペルソナを削除しますか？",
+    "personaSaved": "ペルソナを保存しました！"
   },
   "dialog": {
     "clearConversation": "会話をクリア",

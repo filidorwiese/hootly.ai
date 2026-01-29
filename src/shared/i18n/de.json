@@ -30,7 +30,19 @@
     "fetchModelsFailed": "Modelle konnten nicht abgerufen werden",
     "noModels": "Keine Modelle verfügbar",
     "defaultPersona": "Standard-Persona",
-    "defaultPersonaHint": "Persona für neue Gespräche"
+    "defaultPersonaHint": "Persona für neue Gespräche",
+    "personasSection": "Personas",
+    "addPersona": "Persona hinzufügen",
+    "personaName": "Name",
+    "personaDescription": "Beschreibung",
+    "personaIcon": "Symbol",
+    "personaSystemPrompt": "Systemprompt",
+    "savePersona": "Persona speichern",
+    "cancel": "Abbrechen",
+    "edit": "Bearbeiten",
+    "delete": "Löschen",
+    "deletePersonaConfirm": "Diese Persona löschen?",
+    "personaSaved": "Persona gespeichert!"
   },
   "dialog": {
     "clearConversation": "Gespräch löschen",

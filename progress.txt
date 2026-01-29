@@ -116,3 +116,34 @@ NOTES FOR NEXT PERSON:
 - DATA-1 (persona interface stored correctly) - only custom personas need storage
 - UI-2 (persona selector compact/unobtrusive) - may need styling review
 - CH-6 (retentionDays cleanup) still not implemented
+
+---
+
+2026-01-29 - P-2: Create custom persona in settings
+
+COMPLETED:
+- Added Personas section to settings page with "Add Persona" button
+- Persona form with name, description, icon picker (12 icons), system prompt fields
+- Icon picker with visual selection (click to select)
+- Save/Cancel buttons for form
+- Persona list shows built-in (green bg) and custom personas
+- Edit/Delete buttons on custom personas
+- Delete confirmation dialog
+- Custom personas stored in settings.customPersonas array
+- Custom personas automatically added to default persona dropdown
+- Handles deletion of persona that's currently set as default
+- Added i18n translations for all 10 languages
+
+FILES CHANGED:
+- src/settings/index.html (added styles, persona section HTML)
+- src/settings/settings.ts (persona management logic)
+- src/shared/i18n/*.json (added persona management translations)
+
+PRD ITEMS COMPLETED:
+- P-2: Create custom persona in settings
+- P-5: Edit and delete custom personas in settings
+- DATA-1: Persona interface stored correctly
+
+NOTES FOR NEXT PERSON:
+- UI-2 (persona selector compact/unobtrusive) - may need styling review
+- CH-6 (retentionDays cleanup) still not implemented

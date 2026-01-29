@@ -30,7 +30,19 @@
     "fetchModelsFailed": "모델 로드 실패",
     "noModels": "사용 가능한 모델 없음",
     "defaultPersona": "기본 페르소나",
-    "defaultPersonaHint": "새 대화에 사용되는 페르소나"
+    "defaultPersonaHint": "새 대화에 사용되는 페르소나",
+    "personasSection": "페르소나",
+    "addPersona": "페르소나 추가",
+    "personaName": "이름",
+    "personaDescription": "설명",
+    "personaIcon": "아이콘",
+    "personaSystemPrompt": "시스템 프롬프트",
+    "savePersona": "페르소나 저장",
+    "cancel": "취소",
+    "edit": "편집",
+    "delete": "삭제",
+    "deletePersonaConfirm": "이 페르소나를 삭제하시겠습니까?",
+    "personaSaved": "페르소나 저장됨!"
   },
   "dialog": {
     "clearConversation": "대화 지우기",

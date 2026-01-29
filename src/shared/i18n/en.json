@@ -30,7 +30,19 @@
     "fetchModelsFailed": "Failed to fetch models",
     "noModels": "No models available",
     "defaultPersona": "Default Persona",
-    "defaultPersonaHint": "Persona used for new conversations"
+    "defaultPersonaHint": "Persona used for new conversations",
+    "personasSection": "Personas",
+    "addPersona": "Add Persona",
+    "personaName": "Name",
+    "personaDescription": "Description",
+    "personaIcon": "Icon",
+    "personaSystemPrompt": "System Prompt",
+    "savePersona": "Save Persona",
+    "cancel": "Cancel",
+    "edit": "Edit",
+    "delete": "Delete",
+    "deletePersonaConfirm": "Delete this persona?",
+    "personaSaved": "Persona saved!"
   },
   "dialog": {
     "clearConversation": "Clear conversation",

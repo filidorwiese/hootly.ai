@@ -67,6 +67,120 @@
       color: #721c24;
       display: block;
     }
+    .section-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 30px;
+      margin-bottom: 15px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid #ddd;
+    }
+    .section-header h2 {
+      margin: 0;
+      font-size: 18px;
+      color: #333;
+    }
+    .btn-secondary {
+      background: #6c757d;
+      color: white;
+      border: none;
+      padding: 6px 12px;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 13px;
+    }
+    .btn-secondary:hover {
+      background: #5a6268;
+    }
+    .btn-danger {
+      background: #dc3545;
+      padding: 4px 8px;
+      font-size: 12px;
+    }
+    .btn-danger:hover {
+      background: #c82333;
+    }
+    .persona-list {
+      margin-bottom: 20px;
+    }
+    .persona-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 10px;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      margin-bottom: 8px;
+      background: #fafafa;
+    }
+    .persona-item.builtin {
+      background: #f0f7f0;
+    }
+    .persona-icon {
+      font-size: 24px;
+      width: 32px;
+      text-align: center;
+    }
+    .persona-info {
+      flex: 1;
+    }
+    .persona-name {
+      font-weight: 500;
+      color: #333;
+    }
+    .persona-desc {
+      font-size: 12px;
+      color: #666;
+      margin-top: 2px;
+    }
+    .persona-actions {
+      display: flex;
+      gap: 6px;
+    }
+    .persona-form {
+      display: none;
+      border: 1px solid #4CAF50;
+      border-radius: 4px;
+      padding: 15px;
+      margin-bottom: 20px;
+      background: #f9fff9;
+    }
+    .persona-form.visible {
+      display: block;
+    }
+    .persona-form .setting {
+      margin-bottom: 12px;
+    }
+    .persona-form-actions {
+      display: flex;
+      gap: 10px;
+      margin-top: 15px;
+    }
+    .icon-picker {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+    .icon-option {
+      width: 36px;
+      height: 36px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 2px solid #ddd;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 20px;
+      background: white;
+    }
+    .icon-option:hover {
+      border-color: #4CAF50;
+    }
+    .icon-option.selected {
+      border-color: #4CAF50;
+      background: #e8f5e9;
+    }
   </style>
 </head>
 <body>
@@ -164,6 +278,52 @@
     <small style="color: #666; margin-top: 5px; display: block;" data-i18n="settings.defaultPersonaHint">
       Persona used for new conversations
     </small>
+  </div>
+
+  <div class="section-header">
+    <h2 data-i18n="settings.personasSection">Personas</h2>
+    <button type="button" class="btn-secondary" id="addPersonaBtn" data-i18n="settings.addPersona">Add Persona</button>
+  </div>
+
+  <div id="personaForm" class="persona-form">
+    <input type="hidden" id="editingPersonaId" value="">
+    <div class="setting">
+      <label for="personaName" data-i18n="settings.personaName">Name</label>
+      <input type="text" id="personaName" placeholder="My Assistant" maxlength="30">
+    </div>
+    <div class="setting">
+      <label for="personaDescription" data-i18n="settings.personaDescription">Description</label>
+      <input type="text" id="personaDescription" placeholder="Brief description" maxlength="60">
+    </div>
+    <div class="setting">
+      <label data-i18n="settings.personaIcon">Icon</label>
+      <div class="icon-picker" id="iconPicker">
+        <div class="icon-option" data-icon="🤖">🤖</div>
+        <div class="icon-option" data-icon="🧠">🧠</div>
+        <div class="icon-option" data-icon="📚">📚</div>
+        <div class="icon-option" data-icon="🎨">🎨</div>
+        <div class="icon-option" data-icon="🔧">🔧</div>
+        <div class="icon-option" data-icon="💡">💡</div>
+        <div class="icon-option" data-icon="🎯">🎯</div>
+        <div class="icon-option" data-icon="⚡">⚡</div>
+        <div class="icon-option" data-icon="🌟">🌟</div>
+        <div class="icon-option" data-icon="🦊">🦊</div>
+        <div class="icon-option" data-icon="🐱">🐱</div>
+        <div class="icon-option" data-icon="🦋">🦋</div>
+      </div>
+    </div>
+    <div class="setting">
+      <label for="personaSystemPrompt" data-i18n="settings.personaSystemPrompt">System Prompt</label>
+      <textarea id="personaSystemPrompt" placeholder="Instructions for this persona..."></textarea>
+    </div>
+    <div class="persona-form-actions">
+      <button type="button" id="savePersonaBtn" data-i18n="settings.savePersona">Save Persona</button>
+      <button type="button" class="btn-secondary" id="cancelPersonaBtn" data-i18n="settings.cancel">Cancel</button>
+    </div>
+  </div>
+
+  <div id="personaList" class="persona-list">
+    <!-- Populated dynamically -->
   </div>
 
   <button id="saveBtn" data-i18n="settings.save">Save Settings</button>

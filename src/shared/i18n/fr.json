@@ -30,7 +30,19 @@
     "fetchModelsFailed": "Échec du chargement des modèles",
     "noModels": "Aucun modèle disponible",
     "defaultPersona": "Persona par défaut",
-    "defaultPersonaHint": "Persona pour les nouvelles conversations"
+    "defaultPersonaHint": "Persona pour les nouvelles conversations",
+    "personasSection": "Personas",
+    "addPersona": "Ajouter un persona",
+    "personaName": "Nom",
+    "personaDescription": "Description",
+    "personaIcon": "Icône",
+    "personaSystemPrompt": "Prompt système",
+    "savePersona": "Enregistrer le persona",
+    "cancel": "Annuler",
+    "edit": "Modifier",
+    "delete": "Supprimer",
+    "deletePersonaConfirm": "Supprimer ce persona?",
+    "personaSaved": "Persona enregistré!"
   },
   "dialog": {
     "clearConversation": "Effacer la conversation",

@@ -30,7 +30,19 @@
     "fetchModelsFailed": "Modellen ophalen mislukt",
     "noModels": "Geen modellen beschikbaar",
     "defaultPersona": "Standaard persona",
-    "defaultPersonaHint": "Persona voor nieuwe gesprekken"
+    "defaultPersonaHint": "Persona voor nieuwe gesprekken",
+    "personasSection": "Persona's",
+    "addPersona": "Persona toevoegen",
+    "personaName": "Naam",
+    "personaDescription": "Beschrijving",
+    "personaIcon": "Icoon",
+    "personaSystemPrompt": "Systeemprompt",
+    "savePersona": "Persona opslaan",
+    "cancel": "Annuleren",
+    "edit": "Bewerken",
+    "delete": "Verwijderen",
+    "deletePersonaConfirm": "Deze persona verwijderen?",
+    "personaSaved": "Persona opgeslagen!"
   },
   "dialog": {
     "clearConversation": "Gesprek wissen",

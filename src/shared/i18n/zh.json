@@ -30,7 +30,19 @@
     "fetchModelsFailed": "加载模型失败",
     "noModels": "无可用模型",
     "defaultPersona": "默认角色",
-    "defaultPersonaHint": "新对话使用的角色"
+    "defaultPersonaHint": "新对话使用的角色",
+    "personasSection": "角色",
+    "addPersona": "添加角色",
+    "personaName": "名称",
+    "personaDescription": "描述",
+    "personaIcon": "图标",
+    "personaSystemPrompt": "系统提示",
+    "savePersona": "保存角色",
+    "cancel": "取消",
+    "edit": "编辑",
+    "delete": "删除",
+    "deletePersonaConfirm": "删除此角色？",
+    "personaSaved": "角色已保存！"
   },
   "dialog": {
     "clearConversation": "清除对话",
