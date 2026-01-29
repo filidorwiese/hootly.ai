@@ -203,6 +203,50 @@ describe('Dialog', () => {
     })
   })
 
+  describe('persona selector position (UI-4)', () => {
+    it('persona selector is in footer/input area, not header', async () => {
+      await renderDialog({ isOpen: true, onClose: () => {} })
+
+      // Default persona (General) should be visible
+      expect(screen.getByText('General')).toBeInTheDocument()
+
+      // Header should only contain title and buttons, not persona selector
+      const header = screen.getByRole('heading')
+      expect(header.textContent).toContain('Hootly')
+
+      // Persona selector should be near context toggle (in footer)
+      const contextToggle = screen.getByText('🌐')
+      const personaSelector = screen.getByText('General')
+
+      // Both should be in the input section area
+      const contextParent = contextToggle.closest('[class*="footer"]') || contextToggle.closest('div')
+      const personaParent = personaSelector.closest('[class*="footer"]') || personaSelector.closest('button')?.parentElement
+
+      // Verify they share a common parent (footer left group)
+      expect(contextParent?.parentElement).toBe(personaParent?.parentElement)
+    })
+
+    it('persona dropdown opens and allows selection', async () => {
+      await renderDialog({ isOpen: true, onClose: () => {} })
+
+      // Click persona selector
+      await act(async () => {
+        fireEvent.click(screen.getByText('General'))
+      })
+
+      // Dropdown should show other personas
+      expect(screen.getByText('Code Helper')).toBeInTheDocument()
+
+      // Select Code Helper
+      await act(async () => {
+        fireEvent.click(screen.getByText('Code Helper'))
+      })
+
+      // Should now show Code Helper as selected (icon should be visible)
+      expect(screen.getByText('💻')).toBeInTheDocument()
+    })
+  })
+
   describe('token count removal (UI-5)', () => {
     it('does not display token count in input area', async () => {
       await renderDialog({ isOpen: true, onClose: () => {} })

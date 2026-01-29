@@ -4,6 +4,7 @@ import { render, screen, fireEvent } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import InputArea from '../../content/components/InputArea'
 import { setLanguage } from '../../shared/i18n'
+import { DEFAULT_PERSONAS } from '../../shared/types'
 
 describe('InputArea', () => {
   const defaultProps = {
@@ -156,6 +157,101 @@ describe('InputArea', () => {
       )
 
       expect(screen.getByText('Full page')).toBeInTheDocument()
+    })
+  })
+
+  describe('persona selector in footer (UI-4)', () => {
+    it('renders persona selector when persona props provided', () => {
+      const onSelectPersona = vi.fn()
+      render(
+        <InputArea
+          {...defaultProps}
+          personas={DEFAULT_PERSONAS}
+          selectedPersonaId="general"
+          onSelectPersona={onSelectPersona}
+        />
+      )
+
+      // Should show the General persona icon and name
+      expect(screen.getByText('🦉')).toBeInTheDocument()
+      expect(screen.getByText('General')).toBeInTheDocument()
+    })
+
+    it('does not render persona selector when persona props not provided', () => {
+      render(<InputArea {...defaultProps} />)
+
+      // Should not find any persona-specific elements
+      expect(screen.queryByText('General')).not.toBeInTheDocument()
+      expect(screen.queryByLabelText('Select persona')).not.toBeInTheDocument()
+    })
+
+    it('persona selector is in footer area not header', () => {
+      const onSelectPersona = vi.fn()
+      const { container } = render(
+        <InputArea
+          {...defaultProps}
+          personas={DEFAULT_PERSONAS}
+          selectedPersonaId="code-helper"
+          onSelectPersona={onSelectPersona}
+        />
+      )
+
+      // Persona selector should be rendered alongside context toggle in footer
+      expect(screen.getByText('💻')).toBeInTheDocument()
+      expect(screen.getByText('Code Helper')).toBeInTheDocument()
+
+      // Both context toggle and persona selector should be siblings in the footer left group
+      const contextToggle = screen.getByText('🌐')
+      const personaButton = screen.getByLabelText('Select persona')
+
+      // They should share a common ancestor (the footer left group)
+      const contextAncestor = contextToggle.closest('button')?.parentElement?.parentElement
+      const personaAncestor = personaButton.parentElement?.parentElement
+
+      expect(contextAncestor).toBe(personaAncestor)
+    })
+
+    it('calls onSelectPersona when persona is selected', () => {
+      const onSelectPersona = vi.fn()
+      render(
+        <InputArea
+          {...defaultProps}
+          personas={DEFAULT_PERSONAS}
+          selectedPersonaId="general"
+          onSelectPersona={onSelectPersona}
+        />
+      )
+
+      // Click on persona selector to open dropdown
+      fireEvent.click(screen.getByText('General'))
+
+      // Click on Code Helper persona
+      fireEvent.click(screen.getByText('Code Helper'))
+
+      expect(onSelectPersona).toHaveBeenCalledWith(
+        expect.objectContaining({ id: 'code-helper', name: 'Code Helper' })
+      )
+    })
+
+    it('shows all built-in personas in dropdown', () => {
+      const onSelectPersona = vi.fn()
+      render(
+        <InputArea
+          {...defaultProps}
+          personas={DEFAULT_PERSONAS}
+          selectedPersonaId="general"
+          onSelectPersona={onSelectPersona}
+        />
+      )
+
+      // Open dropdown
+      fireEvent.click(screen.getByText('General'))
+
+      // All 5 built-in personas should be visible
+      expect(screen.getByText('Code Helper')).toBeInTheDocument()
+      expect(screen.getByText('Writer')).toBeInTheDocument()
+      expect(screen.getByText('Researcher')).toBeInTheDocument()
+      expect(screen.getByText('Translator')).toBeInTheDocument()
     })
   })
 })

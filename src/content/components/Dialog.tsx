@@ -9,7 +9,6 @@ import { getApiKey } from '../../shared/providers';
 import { t } from '../../shared/i18n';
 import InputArea from './InputArea';
 import Response from './Response';
-import PersonaSelector from './PersonaSelector';
 
 interface DialogProps {
   isOpen: boolean;
@@ -431,11 +430,6 @@ const Dialog: React.FC<DialogProps> = ({ isOpen, onClose }) => {
               <img src={chrome.runtime.getURL('icons/icon-48.png')} alt="" className={iconStyles} />
               Hootly <span className={taglineStyles}>- Your wise web companion</span>
             </h2>
-            <PersonaSelector
-              personas={personas}
-              selectedPersonaId={currentPersonaId}
-              onSelectPersona={handlePersonaSelect}
-            />
           </div>
           <div className={headerButtonsStyles}>
             {conversationHistory.length > 0 && (
@@ -477,6 +471,9 @@ const Dialog: React.FC<DialogProps> = ({ isOpen, onClose }) => {
                 onContextToggle={handleContextToggle}
                 modelId={currentModel}
                 provider={currentProvider}
+                personas={personas}
+                selectedPersonaId={currentPersonaId}
+                onSelectPersona={handlePersonaSelect}
               />
             ) : (
               <div className={cancelHintStyles} dangerouslySetInnerHTML={{ __html: t('dialog.cancelHint') }} />

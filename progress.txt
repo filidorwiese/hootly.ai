@@ -381,3 +381,30 @@ NOTES FOR NEXT PERSON:
 - HP-11 (context toggle in history) not implemented
 - UI-4 (persona selector at bottom of dialog) not started
 - ICON-1 through ICON-6 (glyphs.fyi icons) not started
+
+---
+
+2026-01-29 - UI-4: Persona selector at bottom of dialog
+
+COMPLETED:
+- Moved PersonaSelector from dialog header to footer/input area
+- Added persona props to InputArea component (personas, selectedPersonaId, onSelectPersona)
+- PersonaSelector now renders alongside ContextToggle in footer left group
+- Removed PersonaSelector import from Dialog.tsx (now imported in InputArea)
+- Added footerLeftStyles for proper horizontal grouping of footer elements
+- All existing persona functionality preserved (selection, dropdown, custom personas)
+- Added unit tests for UI-4 in both InputArea.test.tsx and Dialog.test.tsx
+
+FILES CHANGED:
+- src/content/components/InputArea.tsx (added PersonaSelector import, props, rendering in footer)
+- src/content/components/Dialog.tsx (removed PersonaSelector from header, pass props to InputArea)
+- src/__tests__/components/InputArea.test.tsx (added UI-4 persona selector tests)
+- src/__tests__/components/Dialog.test.tsx (added UI-4 position verification tests)
+- plans/prd.json (marked UI-4 as passing)
+
+PRD ITEMS COMPLETED:
+- UI-4: Persona selector at bottom of dialog
+
+NOTES FOR NEXT PERSON:
+- HP-11 (context toggle in history) not implemented
+- ICON-1 through ICON-6 (glyphs.fyi icons) not started

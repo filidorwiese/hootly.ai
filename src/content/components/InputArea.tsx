@@ -1,8 +1,9 @@
 import React, { useRef, useEffect } from 'react';
 import { css } from '@emotion/css';
 import ContextToggle from './ContextToggle';
+import PersonaSelector from './PersonaSelector';
 import { t } from '../../shared/i18n';
-import type { LLMProvider } from '../../shared/types';
+import type { LLMProvider, Persona } from '../../shared/types';
 
 function formatModelName(modelId: string, provider?: LLMProvider): string {
   if (!modelId) return '';
@@ -59,11 +60,15 @@ interface InputAreaProps {
   onContextToggle: () => void;
   modelId?: string;
   provider?: LLMProvider;
+  personas?: Persona[];
+  selectedPersonaId?: string;
+  onSelectPersona?: (persona: Persona) => void;
 }
 
 const InputArea: React.FC<InputAreaProps> = ({
   value, onChange, onSubmit, disabled,
-  contextEnabled, contextMode, selectionLength, onContextToggle, modelId, provider
+  contextEnabled, contextMode, selectionLength, onContextToggle, modelId, provider,
+  personas, selectedPersonaId, onSelectPersona
 }) => {
   const textareaRef = useRef<HTMLTextAreaElement>(null);
 
@@ -127,12 +132,21 @@ const InputArea: React.FC<InputAreaProps> = ({
         )}
       </div>
       <div className={footerStyles}>
-        <ContextToggle
-          enabled={contextEnabled}
-          mode={contextMode}
-          selectionLength={selectionLength}
-          onToggle={onContextToggle}
-        />
+        <div className={footerLeftStyles}>
+          <ContextToggle
+            enabled={contextEnabled}
+            mode={contextMode}
+            selectionLength={selectionLength}
+            onToggle={onContextToggle}
+          />
+          {personas && selectedPersonaId && onSelectPersona && (
+            <PersonaSelector
+              personas={personas}
+              selectedPersonaId={selectedPersonaId}
+              onSelectPersona={onSelectPersona}
+            />
+          )}
+        </div>
         {modelId && (
           <span className={modelIdStyles}>
             {formatModelName(modelId, provider)}
@@ -245,6 +259,12 @@ const footerStyles = css`
   display: flex;
   justify-content: space-between;
   align-items: center;
+`;
+
+const footerLeftStyles = css`
+  display: flex;
+  align-items: center;
+  gap: 8px;
 `;
 
 const modelIdStyles = css`

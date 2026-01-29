@@ -509,7 +509,7 @@
       "Verify selector still functional",
       "Check positioning doesn't crowd input controls"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "UI-5",
