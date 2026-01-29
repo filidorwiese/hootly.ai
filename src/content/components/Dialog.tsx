@@ -598,7 +598,7 @@ const contentWrapperStyles = css`
   flex: 1;
   display: flex;
   flex-direction: column;
-  overflow: hidden;
+  overflow: visible;
 `;
 
 const inputSectionStyles = css`
