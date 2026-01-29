@@ -277,3 +277,31 @@ NOTES FOR NEXT PERSON:
 - PP-1 through PP-9 (personas page) not started
 - UI-4, UI-5 (dialog UI tweaks) not started
 - ICON-1 through ICON-6 (glyphs.fyi icons) not started
+
+---
+
+2026-01-29 - HP-12: Remove history panel from dialog
+
+COMPLETED:
+- Removed HistoryPanel component import from Dialog.tsx
+- Removed isHistoryOpen and savedConversations state variables
+- Removed handleSelectConversation and handleDeleteConversation functions
+- Removed HistoryPanel JSX from dialog render
+- Deleted HistoryPanel.tsx component file (no longer needed)
+- History icon (📜) now opens dedicated history page instead of inline panel
+- Added tests to verify HistoryPanel.tsx is removed
+
+FILES CHANGED:
+- src/content/components/Dialog.tsx (removed HistoryPanel usage)
+- src/content/components/HistoryPanel.tsx (deleted)
+- src/__tests__/history/history-page.test.ts (added HP-12 tests)
+- plans/prd.json (marked HP-12 as passing)
+
+PRD ITEMS COMPLETED:
+- HP-12: Remove history panel from dialog
+
+NOTES FOR NEXT PERSON:
+- HP-11 (context toggle in history) not implemented
+- PP-1 through PP-9 (personas page) not started
+- UI-4, UI-5 (dialog UI tweaks) not started
+- ICON-1 through ICON-6 (glyphs.fyi icons) not started

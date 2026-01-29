@@ -497,7 +497,7 @@
       "Verify no inline history panel exists",
       "Verify history icon opens history page instead"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "UI-4",

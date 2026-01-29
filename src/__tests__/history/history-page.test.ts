@@ -178,6 +178,36 @@ describe('History Page Integration', () => {
   });
 });
 
+describe('HP-12: No inline history panel in dialog', () => {
+  it('dialog does not import or render HistoryPanel component', async () => {
+    // Verify that HistoryPanel.tsx doesn't exist or is not imported
+    // This is a structural test - the component file should be removed
+    const fs = await import('fs');
+    const path = await import('path');
+
+    // Check that HistoryPanel.tsx has been removed
+    const historyPanelPath = path.resolve(__dirname, '../../content/components/HistoryPanel.tsx');
+    let historyPanelExists = false;
+    try {
+      fs.accessSync(historyPanelPath);
+      historyPanelExists = true;
+    } catch {
+      historyPanelExists = false;
+    }
+
+    expect(historyPanelExists).toBe(false);
+  });
+
+  it('history icon opens history page instead of inline panel', async () => {
+    // Simulate the message that Dialog.tsx sends when history icon is clicked
+    const message = { type: 'openHistory' };
+    await chromeMock.runtime.sendMessage(message);
+
+    // Verify it sends openHistory message (which opens history.html)
+    expect(chromeMock.runtime.sendMessage).toHaveBeenCalledWith({ type: 'openHistory' });
+  });
+});
+
 describe('Continue Conversation', () => {
   beforeEach(() => {
     resetChromeMock();

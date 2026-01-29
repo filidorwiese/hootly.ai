@@ -2,14 +2,13 @@ import React, { useState, useEffect } from 'react';
 import { Rnd } from 'react-rnd';
 import { css } from '@emotion/css';
 import { Storage } from '../../shared/storage';
-import type { DialogPosition, Message, ContentMessage, LLMProvider, Conversation, Persona } from '../../shared/types';
+import type { DialogPosition, Message, ContentMessage, LLMProvider, Persona, Conversation } from '../../shared/types';
 import { DEFAULT_PERSONAS } from '../../shared/types';
 import { extractSelection, extractPageText, getPageUrl, getPageTitle, requestPageInfo } from '../../shared/utils';
 import { getApiKey } from '../../shared/providers';
 import { t } from '../../shared/i18n';
 import InputArea from './InputArea';
 import Response from './Response';
-import HistoryPanel from './HistoryPanel';
 import PersonaSelector from './PersonaSelector';
 
 interface DialogProps {
@@ -38,8 +37,6 @@ const Dialog: React.FC<DialogProps> = ({ isOpen, onClose }) => {
   const [currentModel, setCurrentModel] = useState<string>('');
   const [currentProvider, setCurrentProvider] = useState<LLMProvider>('claude');
   const [currentConversationId, setCurrentConversationId] = useState<string | null>(null);
-  const [isHistoryOpen, setIsHistoryOpen] = useState(false);
-  const [savedConversations, setSavedConversations] = useState<Conversation[]>([]);
   const [personas, setPersonas] = useState<Persona[]>(DEFAULT_PERSONAS);
   const [currentPersonaId, setCurrentPersonaId] = useState<string>('general');
 
@@ -317,28 +314,6 @@ const Dialog: React.FC<DialogProps> = ({ isOpen, onClose }) => {
     chrome.runtime.sendMessage({ type: 'openHistory' });
   };
 
-  const handleSelectConversation = (conversation: Conversation) => {
-    setConversationHistory(conversation.messages);
-    setCurrentConversationId(conversation.id);
-    if (conversation.personaId) {
-      setCurrentPersonaId(conversation.personaId);
-    }
-    setResponse('');
-    setError(null);
-    setIsHistoryOpen(false);
-  };
-
-  const handleDeleteConversation = async (id: string) => {
-    await Storage.deleteConversation(id);
-    setSavedConversations((prev) => prev.filter((c) => c.id !== id));
-    if (currentConversationId === id) {
-      setConversationHistory([]);
-      setCurrentConversationId(null);
-      setResponse('');
-      setError(null);
-    }
-  };
-
   const handleSubmit = async () => {
     if (!inputValue.trim() || isLoading) return;
 
@@ -526,16 +501,6 @@ const Dialog: React.FC<DialogProps> = ({ isOpen, onClose }) => {
               <div className={cancelHintStyles} dangerouslySetInnerHTML={{ __html: t('dialog.cancelHint') }} />
             )}
           </div>
-
-          {/* History Panel */}
-          <HistoryPanel
-            isOpen={isHistoryOpen}
-            onClose={() => setIsHistoryOpen(false)}
-            conversations={savedConversations}
-            onSelectConversation={handleSelectConversation}
-            onDeleteConversation={handleDeleteConversation}
-            currentConversationId={currentConversationId}
-          />
         </div>
       </Rnd>
       </div>
