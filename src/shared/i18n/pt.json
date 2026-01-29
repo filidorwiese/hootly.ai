@@ -111,7 +111,9 @@
     "importEmpty": "Nenhuma conversa no arquivo",
     "importReadError": "Falha ao ler o arquivo",
     "importSuccess": "Importação concluída!",
-    "importFailed": "Falha na importação"
+    "importFailed": "Falha na importação",
+    "clearAll": "Limpar tudo",
+    "clearAllConfirm": "Excluir todas as conversas? Isso não pode ser desfeito."
   },
   "persona": {
     "selectPersona": "Selecionar persona",

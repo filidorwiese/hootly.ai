@@ -111,7 +111,9 @@
     "importEmpty": "No conversations in file",
     "importReadError": "Failed to read file",
     "importSuccess": "Import successful!",
-    "importFailed": "Import failed"
+    "importFailed": "Import failed",
+    "clearAll": "Clear All",
+    "clearAllConfirm": "Delete all conversations? This cannot be undone."
   },
   "persona": {
     "selectPersona": "Select persona",

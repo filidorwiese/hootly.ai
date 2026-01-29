@@ -111,7 +111,9 @@
     "importEmpty": "파일에 대화가 없습니다",
     "importReadError": "파일 읽기 실패",
     "importSuccess": "가져오기 성공!",
-    "importFailed": "가져오기 실패"
+    "importFailed": "가져오기 실패",
+    "clearAll": "전체 삭제",
+    "clearAllConfirm": "모든 대화를 삭제하시겠습니까? 이 작업은 취소할 수 없습니다."
   },
   "persona": {
     "selectPersona": "페르소나 선택",

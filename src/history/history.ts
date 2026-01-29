@@ -361,6 +361,21 @@ function hideDeleteConfirm(): void {
   dialog.classList.remove('visible');
 }
 
+function showClearAllConfirm(): void {
+  const dialog = document.getElementById('clearAllDialog')!;
+  dialog.classList.add('visible');
+}
+
+function hideClearAllConfirm(): void {
+  const dialog = document.getElementById('clearAllDialog')!;
+  dialog.classList.remove('visible');
+}
+
+async function clearAllHistory(): Promise<void> {
+  await chrome.storage.local.set({ hootly_conversations: [] });
+  renderHistoryList([]);
+}
+
 async function deleteConversation(id: string): Promise<void> {
   await Storage.deleteConversation(id);
   const conversations = await Storage.getConversations();
@@ -862,6 +877,25 @@ async function init(): Promise<void> {
   // Export button handler
   document.getElementById('exportBtn')!.addEventListener('click', () => {
     exportHistory();
+  });
+
+  // Clear All button handler
+  document.getElementById('clearAllBtn')!.addEventListener('click', () => {
+    showClearAllConfirm();
+  });
+
+  // Clear All confirmation handlers
+  document.getElementById('cancelClearAll')!.addEventListener('click', hideClearAllConfirm);
+  document.getElementById('confirmClearAll')!.addEventListener('click', async () => {
+    await clearAllHistory();
+    hideClearAllConfirm();
+  });
+
+  // Click outside clear all dialog to cancel
+  document.getElementById('clearAllDialog')!.addEventListener('click', (e) => {
+    if (e.target === e.currentTarget) {
+      hideClearAllConfirm();
+    }
   });
 
   // Import button handler

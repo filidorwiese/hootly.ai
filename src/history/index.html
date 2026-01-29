@@ -144,6 +144,15 @@
       border-color: var(--color-border-focus);
       color: var(--color-text-link);
     }
+    .header-btn-danger {
+      color: var(--color-accent-error);
+      border-color: var(--color-accent-error);
+    }
+    .header-btn-danger:hover {
+      background: rgba(196, 90, 90, 0.1);
+      border-color: var(--color-accent-error-hover);
+      color: var(--color-accent-error-hover);
+    }
     h1 {
       margin: 0;
       font-size: var(--font-size-4xl);
@@ -657,6 +666,7 @@
       <div class="header-actions">
         <button class="header-btn" id="importBtn" data-i18n="history.import">Import</button>
         <button class="header-btn" id="exportBtn" data-i18n="history.export">Export</button>
+        <button class="header-btn header-btn-danger" id="clearAllBtn" data-i18n="history.clearAll">Clear All</button>
         <a href="#" class="back-link" id="closeBtn">
           <span>&larr;</span>
           <span data-i18n="history.close">Close</span>
@@ -680,6 +690,16 @@
       <div class="confirm-buttons">
         <button class="confirm-cancel" id="cancelDelete" data-i18n="settings.cancel">Cancel</button>
         <button class="confirm-delete" id="confirmDelete" data-i18n="settings.delete">Delete</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="clearAllDialog" class="confirm-dialog">
+    <div class="confirm-box">
+      <p data-i18n="history.clearAllConfirm">Delete all conversations?</p>
+      <div class="confirm-buttons">
+        <button class="confirm-cancel" id="cancelClearAll" data-i18n="settings.cancel">Cancel</button>
+        <button class="confirm-delete" id="confirmClearAll" data-i18n="history.clearAll">Clear All</button>
       </div>
     </div>
   </div>

@@ -934,3 +934,33 @@ NOTES FOR NEXT PERSON:
 - ICON-1 through ICON-6 (glyphs.fyi icons) not started
 - WS-1 through WS-10 (website) not started
 - INTRO-1 through INTRO-3 (intro text) not started
+
+---
+
+2026-01-29 - HP-15: Add Clear All button to history page
+
+COMPLETED:
+- Added Clear All button to history page header (next to Export)
+- Clear All button styled as danger (red color for destructive action)
+- Confirmation dialog with Cancel/Clear All buttons
+- clearAllHistory() function clears storage and renders empty list
+- Click-outside-to-close for confirmation dialog
+- Added i18n translations for all 10 languages (clearAll, clearAllConfirm)
+- 58 unit tests covering all HP-15 requirements
+
+FILES CHANGED:
+- src/history/index.html (added Clear All button, dialog, CSS)
+- src/history/history.ts (added clearAllHistory, show/hide dialog, event handlers)
+- src/shared/i18n/*.json (added clearAll, clearAllConfirm to all 10 languages)
+- src/__tests__/history/clear-all-history.test.ts (new - 58 tests)
+- plans/prd.json (marked HP-15 as passing)
+
+PRD ITEMS COMPLETED:
+- HP-15: Add Clear All button to history page
+
+NOTES FOR NEXT PERSON:
+- HP-16 (search history) not started
+- HP-17 (continue conversation in popup window) not started
+- ICON-1 through ICON-6 (glyphs.fyi icons) not started
+- WS-1 through WS-10 (website) not started
+- INTRO-1 through INTRO-3 (intro text) not started

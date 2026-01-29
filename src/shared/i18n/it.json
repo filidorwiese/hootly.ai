@@ -111,7 +111,9 @@
     "importEmpty": "Nessuna conversazione nel file",
     "importReadError": "Impossibile leggere il file",
     "importSuccess": "Importazione riuscita!",
-    "importFailed": "Importazione fallita"
+    "importFailed": "Importazione fallita",
+    "clearAll": "Cancella tutto",
+    "clearAllConfirm": "Eliminare tutte le conversazioni? Questa azione non può essere annullata."
   },
   "persona": {
     "selectPersona": "Seleziona persona",

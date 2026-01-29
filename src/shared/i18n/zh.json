@@ -111,7 +111,9 @@
     "importEmpty": "文件中没有对话",
     "importReadError": "读取文件失败",
     "importSuccess": "导入成功！",
-    "importFailed": "导入失败"
+    "importFailed": "导入失败",
+    "clearAll": "全部清除",
+    "clearAllConfirm": "删除所有对话？此操作无法撤销。"
   },
   "persona": {
     "selectPersona": "选择角色",

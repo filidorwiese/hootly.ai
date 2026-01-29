@@ -111,7 +111,9 @@
     "importEmpty": "Geen gesprekken in bestand",
     "importReadError": "Kan bestand niet lezen",
     "importSuccess": "Import succesvol!",
-    "importFailed": "Import mislukt"
+    "importFailed": "Import mislukt",
+    "clearAll": "Alles wissen",
+    "clearAllConfirm": "Alle gesprekken verwijderen? Dit kan niet ongedaan worden."
   },
   "persona": {
     "selectPersona": "Selecteer persona",

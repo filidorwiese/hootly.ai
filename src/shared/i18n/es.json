@@ -111,7 +111,9 @@
     "importEmpty": "No hay conversaciones en el archivo",
     "importReadError": "Error al leer el archivo",
     "importSuccess": "¡Importación exitosa!",
-    "importFailed": "Error en la importación"
+    "importFailed": "Error en la importación",
+    "clearAll": "Borrar todo",
+    "clearAllConfirm": "¿Eliminar todas las conversaciones? Esto no se puede deshacer."
   },
   "persona": {
     "selectPersona": "Seleccionar persona",

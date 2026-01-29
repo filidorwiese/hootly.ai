@@ -111,7 +111,9 @@
     "importEmpty": "Keine Gespräche in Datei",
     "importReadError": "Datei konnte nicht gelesen werden",
     "importSuccess": "Import erfolgreich!",
-    "importFailed": "Import fehlgeschlagen"
+    "importFailed": "Import fehlgeschlagen",
+    "clearAll": "Alle löschen",
+    "clearAllConfirm": "Alle Gespräche löschen? Dies kann nicht rückgängig gemacht werden."
   },
   "persona": {
     "selectPersona": "Persona auswählen",

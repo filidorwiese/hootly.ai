@@ -966,7 +966,7 @@
       "Show empty state after clearing",
       "Verify storage cleared"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "HP-16",
