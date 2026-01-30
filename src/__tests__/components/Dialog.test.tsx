@@ -47,12 +47,12 @@ describe('Dialog', () => {
 
     it('renders dialog when open', async () => {
       await renderDialog({ isOpen: true, onClose: () => {} })
-      expect(screen.getByText('Hootly')).toBeInTheDocument()
+      expect(screen.getByText('Hootly.ai')).toBeInTheDocument()
     })
 
     it('renders header with title', async () => {
       await renderDialog({ isOpen: true, onClose: () => {} })
-      expect(screen.getByRole('heading')).toHaveTextContent('Hootly')
+      expect(screen.getByRole('heading')).toHaveTextContent('Hootly.ai')
     })
 
     it('renders settings button', async () => {

@@ -1496,3 +1496,61 @@ NOTES FOR NEXT PERSON:
 - ICON-7 through ICON-14 (specific icon replacements) not started
 - HP-18 through HP-21 (chat page for continued conversations) not started
 - RENAME-1 through RENAME-7 (branding) not started
+
+---
+
+2026-01-30 - RENAME-1 through RENAME-7: Rename Hootly to Hootly.ai
+
+COMPLETED:
+- Updated manifest.firefox.json: name, action title, command description
+- Updated manifest.chrome.json: name, action title, command description
+- Updated settings page title: Hootly Settings → Hootly.ai Settings
+- Updated personas page title: Hootly Personas → Hootly.ai Personas
+- Updated history page title: Hootly History → Hootly.ai History
+- Updated popup page title: Hootly → Hootly.ai
+- Updated popup header text: Hootly → Hootly.ai
+- Updated Dialog.tsx header: Hootly → Hootly.ai
+- Updated all 10 i18n translation files: appName "Hootly" → "Hootly.ai"
+- Updated website title, meta description, logo, footer, and image alt text
+- Updated existing tests that expected "Hootly" to expect "Hootly.ai"
+- Created 32 unit tests verifying branding across all files
+
+FILES CHANGED:
+- manifest.firefox.json (action.default_title, commands description)
+- manifest.chrome.json (action.default_title, commands description)
+- src/settings/index.html (title)
+- src/personas/index.html (title)
+- src/history/index.html (title)
+- src/popup/index.html (title, header text)
+- src/content/components/Dialog.tsx (header text)
+- src/shared/i18n/en.json (appName)
+- src/shared/i18n/nl.json (appName)
+- src/shared/i18n/de.json (appName)
+- src/shared/i18n/fr.json (appName)
+- src/shared/i18n/es.json (appName)
+- src/shared/i18n/it.json (appName)
+- src/shared/i18n/pt.json (appName)
+- src/shared/i18n/zh.json (appName)
+- src/shared/i18n/ja.json (appName)
+- src/shared/i18n/ko.json (appName)
+- website/index.html (title, meta, logo, footer, alt text)
+- src/__tests__/branding/rename-hootly-ai.test.ts (new - 32 tests)
+- src/__tests__/components/Dialog.test.tsx (updated test expectations)
+- src/__tests__/shared/i18n.test.ts (updated test expectations)
+- plans/prd.json (marked RENAME-1 through RENAME-7 as passing)
+
+PRD ITEMS COMPLETED:
+- RENAME-1: Rename Hootly to Hootly.ai in extension manifest
+- RENAME-2: Rename Hootly to Hootly.ai in settings page
+- RENAME-3: Rename Hootly to Hootly.ai in personas page
+- RENAME-4: Rename Hootly to Hootly.ai in history page
+- RENAME-5: Rename Hootly to Hootly.ai in dialog component
+- RENAME-6: Rename Hootly to Hootly.ai in i18n translations
+- RENAME-7: Rename Hootly to Hootly.ai on website
+
+NOTES FOR NEXT PERSON:
+- All branding items (RENAME-1 through RENAME-7) now pass
+- WS-8 through WS-14 (website) remaining
+- TAB-1 through TAB-5 (tabbed pages) not started
+- ICON-7 through ICON-14 (specific icon replacements) not started
+- HP-18 through HP-21 (chat page for continued conversations) not started

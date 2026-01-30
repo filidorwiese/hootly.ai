@@ -9,7 +9,7 @@ describe('i18n', () => {
 
   describe('t() - translation function', () => {
     it('returns translation for valid key', () => {
-      expect(t('appName')).toBe('Hootly')
+      expect(t('appName')).toBe('Hootly.ai')
     })
 
     it('returns nested translation', () => {
@@ -63,7 +63,7 @@ describe('i18n', () => {
     it('falls back to English for missing translations', () => {
       setLanguage('de')
       // appName should be same in all languages
-      expect(t('appName')).toBe('Hootly')
+      expect(t('appName')).toBe('Hootly.ai')
     })
 
     it('returns English for unsupported language', () => {

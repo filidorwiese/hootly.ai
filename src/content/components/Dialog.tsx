@@ -463,7 +463,7 @@ const Dialog: React.FC<DialogProps> = ({ isOpen, onClose }) => {
           <div className={headerLeftStyles}>
             <h2>
               <img src={chrome.runtime.getURL('icons/icon-48.png')} alt="" className={iconStyles} />
-              Hootly <span className={taglineStyles}>- Your wise web companion</span>
+              Hootly.ai <span className={taglineStyles}>- Your wise web companion</span>
             </h2>
           </div>
           <div className={headerButtonsStyles}>

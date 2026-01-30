@@ -1263,7 +1263,7 @@
       "Update name field in manifest.chrome.json to 'Hootly.ai'",
       "Verify extension name shows correctly in browser"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "RENAME-2",
@@ -1274,7 +1274,7 @@
       "Replace with 'Hootly.ai'",
       "Verify page title and any headers updated"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "RENAME-3",
@@ -1285,7 +1285,7 @@
       "Replace with 'Hootly.ai'",
       "Verify page title and any headers updated"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "RENAME-4",
@@ -1296,7 +1296,7 @@
       "Replace with 'Hootly.ai'",
       "Verify page title and any headers updated"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "RENAME-5",
@@ -1307,7 +1307,7 @@
       "Replace with 'Hootly.ai'",
       "Verify dialog header updated if applicable"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "RENAME-6",
@@ -1318,7 +1318,7 @@
       "Replace with 'Hootly.ai' in all languages",
       "Verify translations load correctly"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "RENAME-7",
@@ -1330,16 +1330,16 @@
       "Update page title to 'Hootly.ai'",
       "Verify all instances updated"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "WS-11",
     "category": "website",
-    "description": "Use forest.jpg as website background",
+    "description": "Use forest.svg as website background",
     "steps": [
-      "Reference website/images/forest.jpg in CSS",
+      "Reference website/images/forest.svg in CSS",
       "Set as full-page background image",
-      "Apply background-size: cover",
+      "Apply background-size: contain",
       "Ensure content remains readable over image"
     ],
     "passes": false

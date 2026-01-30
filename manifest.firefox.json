@@ -26,7 +26,7 @@
     }
   ],
   "action": {
-    "default_title": "Toggle Hootly"
+    "default_title": "Toggle Hootly.ai"
   },
   "options_ui": {
     "page": "settings.html",
@@ -37,7 +37,7 @@
       "suggested_key": {
         "default": "Alt+C"
       },
-      "description": "Toggle Hootly dialog (fallback - configure in settings)"
+      "description": "Toggle Hootly.ai dialog (fallback - configure in settings)"
     }
   },
   "icons": {
