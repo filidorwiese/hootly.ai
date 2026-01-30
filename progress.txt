@@ -1633,3 +1633,37 @@ NOTES FOR NEXT PERSON:
 - WS-8 through WS-14 (website) remaining
 - ICON-7 through ICON-14 (specific icon replacements) not started
 - HP-18 through HP-21 (chat page for continued conversations) not started
+
+---
+
+2026-01-30 - TAB-2: Integrate TabHeader into settings page
+
+COMPLETED:
+- Imported injectTabHeader from TabHeader.ts in settings.ts
+- Called injectTabHeader({ activeTab: 'settings' }) in DOMContentLoaded
+- Removed old h1 header with settings SVG icon from index.html
+- Added .settings-content container for proper content layout
+- Updated body CSS (removed max-width/margin, TabHeader is full-width)
+- Tab navigation works: clicking Personas/History tabs navigates to those pages
+- Updated ICON-2 tests to reflect new architecture (TabHeader provides branding)
+- 30 new unit tests for TAB-2 integration
+- All 1616 tests pass, TypeScript type checking passes
+
+FILES CHANGED:
+- src/settings/settings.ts (import TabHeader, call injectTabHeader)
+- src/settings/index.html (removed h1, added settings-content container, updated body CSS)
+- src/__tests__/shared/tab2-settings-integration.test.ts (new - 30 tests)
+- src/__tests__/icons/settings-page-icons.test.ts (updated for TabHeader architecture)
+- plans/prd.json (marked TAB-2 as passing)
+
+PRD ITEMS COMPLETED:
+- TAB-2: Integrate TabHeader into settings page
+
+NOTES FOR NEXT PERSON:
+- TAB-3 (integrate into personas.ts) next priority
+- TAB-4 (integrate into history.ts) after TAB-3
+- TAB-5 (update manage personas link) after integration
+- Pattern for integration: import injectTabHeader, call in init with activeTab
+- WS-8 through WS-14 (website) remaining
+- ICON-7 through ICON-14 (specific icon replacements) not started
+- HP-18 through HP-21 (chat page for continued conversations) not started

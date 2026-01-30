@@ -2,6 +2,7 @@ import { Storage } from '../shared/storage';
 import { Settings, ModelConfig, LLMProvider, DEFAULT_PERSONAS } from '../shared/types';
 import { t, initLanguage, setLanguage } from '../shared/i18n';
 import { selectDefaultModel } from '../shared/models';
+import { injectTabHeader } from '../shared/TabHeader';
 
 const API_KEY_SECTIONS: Record<LLMProvider, string> = {
   claude: 'claudeApiKeySection',
@@ -96,6 +97,10 @@ async function fetchModelsFromBackground(): Promise<{ success: boolean; models?:
 document.addEventListener('DOMContentLoaded', async () => {
   // Initialize language first
   await initLanguage();
+
+  // Inject TabHeader component
+  injectTabHeader({ activeTab: 'settings' });
+
   applyTranslations();
 
   const providerSelect = document.getElementById('provider') as HTMLSelectElement;

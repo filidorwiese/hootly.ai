@@ -1057,7 +1057,7 @@
       "Wire tab clicks to navigate to other pages",
       "Verify styling matches existing design"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "TAB-3",
@@ -1401,6 +1401,32 @@
       "Identify any website-related test files",
       "Remove test files for website components",
       "Update test config if needed to exclude website folder"
+    ],
+    "passes": false
+  },
+  {
+    "id": "WS-18",
+    "category": "website",
+    "description": "Update footer with author avatar and credit",
+    "steps": [
+      "Replace '© 2026 Hootly.ai. Open source browser extension.' with author credit",
+      "Add images/filidor-wiese-avatar.png on left of text",
+      "Add 'Created by Filidor Wiese' text",
+      "Link 'Filidor Wiese' to https://filidorwiese.nl",
+      "Style avatar and text alignment"
+    ],
+    "passes": false
+  },
+  {
+    "id": "RM-1",
+    "category": "readme",
+    "description": "Update and compact README.md",
+    "steps": [
+      "Review current README.md content",
+      "Remove redundant or verbose sections",
+      "Consolidate installation instructions",
+      "Keep essential info: project overview, quick start, build commands",
+      "Ensure concise formatting"
     ],
     "passes": false
   }

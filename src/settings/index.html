@@ -92,19 +92,17 @@
 
     body {
       font-family: 'Inter', sans-serif;
-      max-width: 600px;
-      margin: var(--spacing-10) auto;
-      padding: var(--spacing-5);
+      margin: 0;
+      padding: 0;
       line-height: 1.6;
       background: var(--color-bg-base);
       color: var(--color-text-primary);
     }
 
-    h1 {
-      color: var(--color-text-primary);
-      margin-bottom: var(--spacing-8);
-      font-size: var(--font-size-3xl);
-      font-weight: 600;
+    .settings-content {
+      max-width: 600px;
+      margin: 0 auto;
+      padding: var(--spacing-5);
     }
 
     .setting {
@@ -280,15 +278,10 @@
   </style>
 </head>
 <body>
-  <h1>
-    <svg width="28" height="28" viewBox="0 0 24 24" fill="none" style="vertical-align: middle; margin-right: 8px;">
-      <path d="M12 15a3 3 0 100-6 3 3 0 000 6z" fill="#3A7B89"/>
-      <path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 010 2.83 2 2 0 01-2.83 0l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-2 2 2 2 0 01-2-2v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83 0 2 2 0 010-2.83l.06-.06a1.65 1.65 0 00.33-1.82 1.65 1.65 0 00-1.51-1H3a2 2 0 01-2-2 2 2 0 012-2h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 010-2.83 2 2 0 012.83 0l.06.06a1.65 1.65 0 001.82.33H9a1.65 1.65 0 001-1.51V3a2 2 0 012-2 2 2 0 012 2v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 012.83 0 2 2 0 010 2.83l-.06.06a1.65 1.65 0 00-.33 1.82V9a1.65 1.65 0 001.51 1H21a2 2 0 012 2 2 2 0 01-2 2h-.09a1.65 1.65 0 00-1.51 1z" fill="#5BA3B0"/>
-    </svg>
-    <span data-i18n="settings.title">Settings</span>
-  </h1>
+  <!-- TabHeader injected by settings.ts -->
 
-  <p class="intro-text" data-i18n="settings.intro">Configure your API keys, model preferences, and personalization options below.</p>
+  <div class="settings-content">
+    <p class="intro-text" data-i18n="settings.intro">Configure your API keys, model preferences, and personalization options below.</p>
 
   <div class="setting">
     <label for="provider" data-i18n="settings.provider">Provider</label>
@@ -406,6 +399,7 @@
   <button id="saveBtn" data-i18n="settings.save">Save Settings</button>
 
   <div id="status" class="status"></div>
+  </div>
 
   <script type="module" src="./settings.ts"></script>
 </body>
