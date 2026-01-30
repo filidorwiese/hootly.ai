@@ -583,7 +583,7 @@
       "Verify icons use color variants, not grayscale",
       "Verify colors complement forest theme"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "ICON-6",
@@ -594,7 +594,7 @@
       "Cycle through context modes",
       "Verify selection/full-page/disabled icons are glyphs.fyi colorful icons"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "FD-1",

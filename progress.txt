@@ -1245,3 +1245,30 @@ NOTES FOR NEXT PERSON:
 - ICON-5 (icons are colorful not monochrome) - should auto-pass, all icons use multiple colors
 - ICON-6 (context toggle icons) - already done via ICON-1
 - WS-1 through WS-10 (website) not started
+
+---
+
+2026-01-30 - ICON-5 & ICON-6: Verify colorful icons and context toggle icons
+
+COMPLETED:
+- Created colorful-icons.test.ts (32 tests) verifying all icons use multiple colors
+- Tests verify icons are not grayscale/monochrome
+- Tests verify forest theme colors are used (greens, teals, warm accents)
+- Tests verify specific icon color requirements (FireIcon=orange, TrashIcon=red, etc.)
+- Created context-toggle-icons.test.ts (23 tests) verifying context toggle uses SVG icons
+- Tests verify SelectionIcon, FullPageIcon, NoContextIcon are imported and used
+- Tests verify icons are colorful (not emoji) with proper size prop support
+- All 55 new tests pass, all 1297 total tests pass
+
+FILES CHANGED:
+- src/__tests__/icons/colorful-icons.test.ts (new - 32 tests)
+- src/__tests__/icons/context-toggle-icons.test.ts (new - 23 tests)
+- plans/prd.json (marked ICON-5 and ICON-6 as passing)
+
+PRD ITEMS COMPLETED:
+- ICON-5: Icons are colorful not monochrome
+- ICON-6: Context toggle icons updated
+
+NOTES FOR NEXT PERSON:
+- All ICON items (ICON-1 through ICON-6) now pass
+- WS-1 through WS-10 (website) not started - these are the only remaining items
