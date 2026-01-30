@@ -1379,7 +1379,7 @@
       "Replace current browser icons with official logos",
       "Verify logos display correctly at button size"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "WS-16",

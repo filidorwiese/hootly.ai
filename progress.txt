@@ -2778,3 +2778,28 @@ NOTES FOR NEXT PERSON:
 - WS-15 (browser logos) - needs official Chrome/Firefox SVG logos
 
 ---
+2026-01-30 - WS-15: Use official Chrome and Firefox logos
+
+COMPLETED:
+- Created chrome-logo.svg with official Google colors (#EA4335, #34A853, #FBBC05, #4285F4)
+- Created firefox-logo.svg with proper gradients (orange/yellow flame)
+- Saved both to website/images/ folder
+- Updated website/index.html to use external SVG files via <img> tags
+- Replaced inline SVGs with cleaner img src references
+- All 997 tests pass, typecheck passes
+
+FILES CHANGED:
+- website/images/chrome-logo.svg (new)
+- website/images/firefox-logo.svg (new)
+- website/index.html (updated download buttons to use img tags)
+- plans/prd.json (marked WS-15 as passing)
+
+PRD ITEMS COMPLETED:
+- WS-15: Use official Chrome and Firefox logos
+
+NOTES FOR NEXT PERSON:
+- Remaining incomplete items (1): WS-8
+- WS-8 (screenshot) - needs actual screenshot of extension in action
+- This is the last remaining website feature and requires manual screenshot capture
+
+---
