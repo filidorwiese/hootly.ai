@@ -34,11 +34,8 @@ chrome.runtime.onMessage.addListener((message: BackgroundMessage, sender, sendRe
     sendResponse({ success: true });
   } else if (message.type === 'continueConversation') {
     const convId = message.payload.conversationId;
-    chrome.windows.create({
-      url: chrome.runtime.getURL(`popup.html?conversationId=${encodeURIComponent(convId)}`),
-      type: 'popup',
-      width: 800,
-      height: 700,
+    chrome.tabs.create({
+      url: chrome.runtime.getURL(`chat.html?conversationId=${encodeURIComponent(convId)}`),
     });
     sendResponse({ success: true });
   } else if (message.type === 'fetchModels') {

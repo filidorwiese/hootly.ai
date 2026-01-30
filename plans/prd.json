@@ -1252,7 +1252,7 @@
       "Pass conversation ID via URL query parameter",
       "Verify conversation loads correctly in new tab"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "RENAME-1",

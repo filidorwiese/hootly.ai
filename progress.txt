@@ -1823,3 +1823,33 @@ NOTES FOR NEXT PERSON:
 - PP-11, PP-12 (personas page updates) not started
 - RM-1 (update README) not started
 - DM-1 through DM-8 (dark mode) not started
+
+---
+
+2026-01-30 - HP-21: Update Continue button to open chat page
+
+COMPLETED:
+- Changed continueConversation handler in service-worker.ts
+- Now opens chat.html in new browser tab via chrome.tabs.create
+- Previously opened popup.html in popup window via chrome.windows.create
+- Conversation ID passed via URL query parameter (same format)
+- Updated HP-17 tests to reflect new behavior
+- Created 21 new unit tests for HP-21
+
+FILES CHANGED:
+- src/background/service-worker.ts (changed from chrome.windows.create to chrome.tabs.create, popup.html to chat.html)
+- src/__tests__/history/hp21-continue-chat-page.test.ts (new - 21 tests)
+- src/__tests__/history/hp17-popup-continue.test.ts (updated for HP-21 changes)
+- plans/prd.json (marked HP-21 as passing)
+
+PRD ITEMS COMPLETED:
+- HP-21: Update Continue button to open chat page
+
+NOTES FOR NEXT PERSON:
+- All history-page items (HP-1 through HP-21) now pass
+- TAB-6, TAB-7 (TabHeader updates) not started
+- WS-8 through WS-19 (website) remaining
+- ICON-7 through ICON-14 (specific icon replacements) not started
+- PP-11, PP-12 (personas page updates) not started
+- RM-1 (update README) not started
+- DM-1 through DM-8 (dark mode) not started

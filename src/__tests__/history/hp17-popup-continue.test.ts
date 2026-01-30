@@ -42,15 +42,21 @@ describe('HP-17: Continue conversation opens in new window', () => {
 
     it('should handle continueConversation in service worker', () => {
       expect(serviceWorkerContent).toContain("message.type === 'continueConversation'");
-      expect(serviceWorkerContent).toContain('chrome.windows.create');
-      expect(serviceWorkerContent).toContain('popup.html');
+      // HP-21: Now opens chat.html in new tab instead of popup window
+      expect(serviceWorkerContent).toContain('chrome.tabs.create');
+      expect(serviceWorkerContent).toContain('chat.html');
       expect(serviceWorkerContent).toContain('conversationId');
     });
 
-    it('should open popup window with correct options', () => {
-      expect(serviceWorkerContent).toContain("type: 'popup'");
-      expect(serviceWorkerContent).toContain('width: 800');
-      expect(serviceWorkerContent).toContain('height: 700');
+    it('should open chat page in new tab (HP-21 update)', () => {
+      // HP-21 changed from popup window to chat page in new tab
+      const continueConvMatch = serviceWorkerContent.match(
+        /message\.type === 'continueConversation'[\s\S]*?sendResponse/
+      );
+      expect(continueConvMatch).toBeTruthy();
+      const block = continueConvMatch![0];
+      expect(block).toContain('chrome.tabs.create');
+      expect(block).not.toContain("type: 'popup'");
     });
   });
 
@@ -265,14 +271,19 @@ describe('HP-17: Continue conversation opens in new window', () => {
     });
   });
 
-  describe('Popup Window Configuration', () => {
+  describe('Chat Page Configuration (HP-21 Update)', () => {
     it('should pass conversationId as URL parameter', () => {
       expect(serviceWorkerContent).toContain('encodeURIComponent(convId)');
       expect(serviceWorkerContent).toContain('conversationId=');
     });
 
-    it('should use popup window type', () => {
-      expect(serviceWorkerContent).toContain("type: 'popup'");
+    it('should open in new tab instead of popup window', () => {
+      // HP-21 changed from popup window to new tab
+      const continueConvMatch = serviceWorkerContent.match(
+        /message\.type === 'continueConversation'[\s\S]*?sendResponse/
+      );
+      expect(continueConvMatch).toBeTruthy();
+      expect(continueConvMatch![0]).toContain('chrome.tabs.create');
     });
   });
 });
