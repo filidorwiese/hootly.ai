@@ -1744,3 +1744,37 @@ NOTES FOR NEXT PERSON:
 - ICON-7 through ICON-14 (specific icon replacements) not started
 - HP-18 through HP-21 (chat page for continued conversations) not started
 - RM-1 (update README) not started
+
+---
+
+2026-01-30 - TAB-5: Update manage personas link to open tab
+
+COMPLETED:
+- Imported getTabUrl from TabHeader.ts in settings.ts (alongside injectTabHeader)
+- Changed managePersonasLink click handler to use window.location.href = getTabUrl('personas')
+- Removed chrome.tabs.create call (was opening personas page in new tab)
+- Now navigates to Personas tab in same window, consistent with TabHeader tab buttons
+- Updated comment to reflect new tab navigation behavior
+- Updated PP-10 test to expect getTabUrl('personas') instead of direct URL string
+- 25 new unit tests for TAB-5 (tab5-manage-personas-link.test.ts)
+- All 1751 tests pass, TypeScript type checking passes
+
+FILES CHANGED:
+- src/settings/settings.ts (import getTabUrl, change navigation to use window.location.href)
+- src/__tests__/shared/tab5-manage-personas-link.test.ts (new - 25 tests)
+- src/__tests__/settings/pp10-remove-persona-list.test.ts (updated test for new navigation)
+- plans/prd.json (marked TAB-5 as passing)
+
+PRD ITEMS COMPLETED:
+- TAB-5: Update manage personas link to open tab
+
+NOTES FOR NEXT PERSON:
+- All TAB items (TAB-1 through TAB-5) now pass
+- TAB-6 (use icon.png as logo in TabHeader) not started
+- TAB-7 (constrain TabHeader to max-width 1024px) not started
+- WS-8 through WS-19 (website) remaining
+- ICON-7 through ICON-14 (specific icon replacements) not started
+- HP-18 through HP-21 (chat page for continued conversations) not started
+- PP-11, PP-12 (personas page updates) not started
+- RM-1 (update README) not started
+- DM-1 through DM-8 (dark mode) not started

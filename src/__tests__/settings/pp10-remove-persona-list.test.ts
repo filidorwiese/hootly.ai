@@ -134,7 +134,8 @@ describe('PP-10: Remove persona list from settings page', () => {
 
     test('managePersonasLink still has event handler', () => {
       expect(settingsTs).toContain("getElementById('managePersonasLink')");
-      expect(settingsTs).toContain("personas.html");
+      // After TAB-5, navigation uses getTabUrl('personas') instead of direct URL
+      expect(settingsTs).toMatch(/getTabUrl\s*\(\s*['"]personas['"]\s*\)/);
     });
 
     test('custom personas still populated in default dropdown', () => {

@@ -1095,7 +1095,7 @@
       "Verify navigation switches to Personas tab",
       "Ensure active tab state updates correctly"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "ICON-7",

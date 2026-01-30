@@ -2,7 +2,7 @@ import { Storage } from '../shared/storage';
 import { Settings, ModelConfig, LLMProvider, DEFAULT_PERSONAS } from '../shared/types';
 import { t, initLanguage, setLanguage } from '../shared/i18n';
 import { selectDefaultModel } from '../shared/models';
-import { injectTabHeader } from '../shared/TabHeader';
+import { injectTabHeader, getTabUrl } from '../shared/TabHeader';
 
 const API_KEY_SECTIONS: Record<LLMProvider, string> = {
   claude: 'claudeApiKeySection',
@@ -255,12 +255,12 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
   });
 
-  // Manage Personas link - opens dedicated personas page
+  // Manage Personas link - navigates to Personas tab
   const managePersonasLink = document.getElementById('managePersonasLink');
   if (managePersonasLink) {
     managePersonasLink.addEventListener('click', (e) => {
       e.preventDefault();
-      chrome.tabs.create({ url: chrome.runtime.getURL('personas.html') });
+      window.location.href = getTabUrl('personas');
     });
   }
 
