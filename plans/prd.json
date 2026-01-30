@@ -1391,7 +1391,7 @@
       "Open link in new tab",
       "Style consistent with header design"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "WS-17",

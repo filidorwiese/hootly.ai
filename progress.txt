@@ -2614,3 +2614,35 @@ NOTES FOR NEXT PERSON:
 - WS-17 (remove website tests) - unclear requirement, may be unnecessary
 - WS-18 (author footer) - needs avatar asset
 - PP-12 (revert addPersonaBtn icon) - needs to identify previous icon style
+
+---
+
+2026-01-30 - WS-16: Add GitHub logo to header
+
+COMPLETED:
+- Added GitHub SVG icon (octocat logo) to website header
+- Positioned in top-right via nav-container flexbox
+- Links to https://github.com/filidorwiese/hootly.ai
+- Opens in new tab with rel="noopener noreferrer" for security
+- Added title attribute for accessibility
+- CSS styling: hover state, consistent with forest theme
+- Created unit tests in ws16-github-link.test.ts (9 tests)
+
+FILES CHANGED:
+- website/index.html (added github-link with SVG icon in nav-container)
+- website/styles.css (added .github-link and .github-icon styles)
+- src/__tests__/website/ws16-github-link.test.ts (new - 9 tests)
+- plans/prd.json (marked WS-16 as passing)
+
+PRD ITEMS COMPLETED:
+- WS-16: Add GitHub logo to header
+
+NOTES FOR NEXT PERSON:
+- Remaining incomplete items (7): WS-8, WS-11, WS-13, WS-15, WS-17, WS-18, PP-12
+- WS-8 (screenshot) - needs screenshot asset
+- WS-11 (forest.svg bg) - needs SVG asset
+- WS-13 (owl logo) - needs logo asset
+- WS-15 (browser logos) - needs official Chrome/Firefox logo assets
+- WS-17 (remove website tests) - unclear requirement
+- WS-18 (author footer) - needs avatar asset
+- PP-12 (revert addPersonaBtn icon) - needs git history investigation

@@ -138,6 +138,29 @@ body {
     color: var(--color-primary-400);
 }
 
+/* GitHub link */
+.github-link {
+    display: flex;
+    align-items: center;
+    padding: var(--spacing-2);
+    border-radius: var(--radius-md);
+    transition: background-color var(--transition-default);
+}
+
+.github-link:hover {
+    background-color: var(--color-surface-hover);
+}
+
+.github-icon {
+    width: 24px;
+    height: 24px;
+    transition: opacity var(--transition-default);
+}
+
+.github-link:hover .github-icon path {
+    fill: var(--color-primary-400);
+}
+
 /* Main content */
 main {
     flex: 1;
