@@ -29,6 +29,40 @@ npm run build:chrome
 npm test
 ```
 
+## Testing Strategy
+
+### What to Test
+
+**DO write tests for:**
+- Business logic (utils, models, providers)
+- Stateful operations (storage, theme behavior)
+- Component behavior (user interactions, state changes)
+- Integration flows (conversation lifecycle, settings persistence)
+- i18n functionality (translation function, language switching)
+
+**DON'T write tests for:**
+- Static CSS values/color constants - visual breakage is immediately obvious
+- File content checks (checking if strings exist in source files)
+- HTML structure (checking if elements exist)
+- One-time migration checks
+- Design system constants (spacing, radii, font sizes)
+
+### Test Quality Guidelines
+
+- Test behavior, not implementation details
+- Avoid reading source files to check for strings - that's a snapshot test without benefits
+- If a test checks static config values that never change, delete it
+- If a test would only fail when the UI visually breaks, it's redundant
+- Component tests should use @testing-library and test user interactions
+
+### Test File Location
+
+Tests live in `src/__tests__/` mirroring the source structure:
+- `src/__tests__/shared/` - utility/storage/i18n tests
+- `src/__tests__/components/` - React component tests
+- `src/__tests__/integration/` - multi-module integration tests
+- `src/__tests__/background/` - service worker tests
+
 ## Testing in Firefox
 
 1. Build: `npm run build:firefox`
