@@ -2096,3 +2096,39 @@ NOTES FOR NEXT PERSON:
 - Theme toggle UI is ready but doesn't actually switch colors yet
 - CSS variables for dark mode already exist in styles.ts (from DM-1)
 - Theme value stored in settings.theme ('light' | 'dark' | 'auto')
+
+---
+
+2026-01-30 - DM-4: Implement auto mode with system preference
+
+COMPLETED:
+- Created src/shared/theme.ts module with theme management functions
+- getEffectiveTheme() determines actual theme from setting and system preference
+- applyTheme() sets data-theme attribute on document root
+- initTheme() initializes theme system with all required listeners
+- Uses prefers-color-scheme media query via window.matchMedia
+- Listens for system preference changes via mediaQuery.addEventListener('change')
+- Listens for storage changes via chrome.storage.onChanged
+- Updates theme dynamically without page reload
+- Returns cleanup function for removing listeners
+- Helper functions: systemPrefersDark(), getCurrentTheme(), setTheme()
+- Legacy browser support using addListener/removeListener fallback
+- 33 unit tests covering all DM-4 requirements
+
+FILES CHANGED:
+- src/shared/theme.ts (new - theme management module)
+- src/__tests__/dark-mode/dm4-auto-mode.test.ts (new - 33 tests)
+- plans/prd.json (marked DM-4 as passing)
+
+PRD ITEMS COMPLETED:
+- DM-4: Implement auto mode with system preference
+
+NOTES FOR NEXT PERSON:
+- Theme module created but NOT YET INTEGRATED into pages
+- DM-5 through DM-8 need to:
+  1. Import initTheme() and allCssVariables from theme.ts and styles.ts
+  2. Call initTheme() in page initialization
+  3. Add allCssVariables CSS to page styles
+  4. Components already use CSS variables, so they'll auto-update with theme
+- CSS infrastructure (darkCssVariables) already handles [data-theme="dark"] and [data-theme="auto"] + @media query
+- Integration pattern: add CSS variables to <style>, call initTheme() in DOMContentLoaded
