@@ -1468,3 +1468,31 @@ NOTES FOR NEXT PERSON:
 - ICON-7 through ICON-14 (specific icon replacements) not started
 - HP-18 through HP-21 (chat page for continued conversations) not started
 - RENAME-1 through RENAME-7 (branding) not started
+
+---
+
+2026-01-30 - WS-7: Add history and personas section
+
+COMPLETED:
+- Added history-personas feature card with id="history-personas" in features section
+- Heading: "History & Personas"
+- Explanation covers: browse/search/continue conversations, custom personas, local storage
+- Created combined clock+user SVG icon using forest theme colors
+- Icon uses #3A5A40, #4A7C54, #588157, #E8F0EA (multiple colors, not monochrome)
+- Added after "free" section as fourth feature card
+- 18 unit tests covering all WS-7 requirements
+
+FILES CHANGED:
+- website/index.html (added history-personas feature card with SVG icon)
+- src/__tests__/website/ws7-history-personas-section.test.ts (new - 18 tests)
+- plans/prd.json (marked WS-7 as passing)
+
+PRD ITEMS COMPLETED:
+- WS-7: Add history and personas section
+
+NOTES FOR NEXT PERSON:
+- WS-8 through WS-14 (website) remaining
+- TAB-1 through TAB-5 (tabbed pages) not started
+- ICON-7 through ICON-14 (specific icon replacements) not started
+- HP-18 through HP-21 (chat page for continued conversations) not started
+- RENAME-1 through RENAME-7 (branding) not started

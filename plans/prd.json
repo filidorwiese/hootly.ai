@@ -774,7 +774,7 @@
       "Explain local storage benefits",
       "Add relevant icons or illustrations"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "WS-8",
