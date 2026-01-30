@@ -31,7 +31,15 @@ const DELETE_ICON = `<svg width="14" height="14" viewBox="0 0 24 24" fill="none"
 
 function renderPersonaItem(persona: Persona, isDefault: boolean, isBuiltIn: boolean): string {
   const defaultBadge = isDefault ? `<span class="default-badge" data-i18n="personas.default">Default</span>` : '';
-  const promptPreview = persona.systemPrompt ? escapeHtml(persona.systemPrompt.slice(0, 150)) + (persona.systemPrompt.length > 150 ? '...' : '') : '';
+  const fullPrompt = persona.systemPrompt ? escapeHtml(persona.systemPrompt) : '';
+  const promptPreview = persona.systemPrompt && persona.systemPrompt.length > 150
+    ? escapeHtml(persona.systemPrompt.slice(0, 150)) + '...'
+    : fullPrompt;
+
+  // Built-in personas always show full prompt; custom personas show preview (full when expanded)
+  const promptDisplay = isBuiltIn
+    ? fullPrompt
+    : `<span class="prompt-preview">${promptPreview}</span><span class="prompt-full">${fullPrompt}</span>`;
 
   const actions = isBuiltIn
     ? `<button class="action-btn set-default" data-id="${persona.id}" title="${t('personas.setDefault') || 'Set as default'}" ${isDefault ? 'disabled style="opacity: 0.5"' : ''}>
@@ -63,7 +71,7 @@ function renderPersonaItem(persona: Persona, isDefault: boolean, isBuiltIn: bool
           ${actions}
         </div>
       </div>
-      ${promptPreview ? `<div class="persona-prompt">${promptPreview}</div>` : ''}
+      ${fullPrompt ? `<div class="persona-prompt">${promptDisplay}</div>` : ''}
     </div>
   `;
 }

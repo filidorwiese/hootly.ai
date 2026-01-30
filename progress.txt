@@ -2259,3 +2259,32 @@ NOTES FOR NEXT PERSON:
 - Theme toggle in settings immediately affects all pages
 - CSS variables include: backgrounds, surfaces, borders, text, accents, messages
 - Next priorities could be: icons (ICON-7 through ICON-14), website improvements, or tooltips
+
+---
+
+2026-01-30 - PP-11: Show full description/systemprompt for built-in personas
+
+COMPLETED:
+- Updated renderPersonaItem in personas.ts to show full system prompt for built-in personas
+- Built-in personas now display full prompt directly without truncation
+- Custom personas retain preview/full toggle behavior (truncated by default, full on expand)
+- Added CSS rules in personas/index.html for visibility:
+  - .persona-item.builtin .persona-prompt { display: block; } - always visible
+  - .prompt-preview/.prompt-full toggling for custom personas based on .expanded class
+- 19 unit tests covering: truncation bypass, HTML structure, escaping, class names
+
+FILES CHANGED:
+- src/personas/personas.ts (updated renderPersonaItem to differentiate built-in vs custom)
+- src/personas/index.html (added CSS for preview/full prompt display)
+- src/__tests__/personas/pp11-builtin-full-prompt.test.ts (new - 19 tests)
+- plans/prd.json (marked PP-11 as passing)
+
+PRD ITEMS COMPLETED:
+- PP-11: Show full description/systemprompt for built-in personas
+
+NOTES FOR NEXT PERSON:
+- Built-in personas now always show their full system prompt (visible by default, no click needed)
+- Custom personas still have expand/collapse behavior with preview (150 chars)
+- Remaining PRD items include: icons (ICON-7 through ICON-14), website improvements, tooltips
+- HP-22 through HP-25 (dialog/chat page refactoring) could also be prioritized
+

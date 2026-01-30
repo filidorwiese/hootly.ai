@@ -223,8 +223,31 @@
       display: none;
     }
 
+    /* Built-in personas: always show full prompt */
+    .persona-item.builtin .persona-prompt {
+      display: block;
+    }
+
+    /* Custom personas: show when expanded */
     .persona-item.expanded .persona-prompt {
       display: block;
+    }
+
+    /* Custom persona prompt preview/full toggling */
+    .prompt-preview {
+      display: inline;
+    }
+
+    .prompt-full {
+      display: none;
+    }
+
+    .persona-item.expanded .prompt-preview {
+      display: none;
+    }
+
+    .persona-item.expanded .prompt-full {
+      display: inline;
     }
 
     .persona-actions {

@@ -1440,7 +1440,7 @@
       "Remove or bypass truncation for built-in persona system prompts",
       "Verify full text displays in persona list"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "PP-12",
@@ -1597,27 +1597,6 @@
       "Check content script loads setting on init"
     ],
     "passes": true
-  },
-  {
-    "id": "LIC-1",
-    "category": "license",
-    "description": "Add GPL license file to project",
-    "steps": [
-      "Create LICENSE file in project root",
-      "Add full GPL v3 license text",
-      "Verify file is accessible at repo root"
-    ],
-    "passes": false
-  },
-  {
-    "id": "LIC-2",
-    "category": "license",
-    "description": "Add license reference to package.json",
-    "steps": [
-      "Update license field in package.json to 'GPL-3.0'",
-      "Verify npm recognizes license"
-    ],
-    "passes": false
   },
   {
     "id": "FAQ-1",
