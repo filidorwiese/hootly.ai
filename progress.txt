@@ -1387,3 +1387,29 @@ NOTES FOR NEXT PERSON:
 - WS-5 through WS-10 (website) not started
 - WS-5 is next: Add privacy selling point section
 - Features section foundation established - can add more .feature cards
+
+---
+
+2026-01-30 - WS-5: Add privacy selling point section
+
+COMPLETED:
+- Added privacy feature card with id="privacy" in features section
+- Heading: "Privacy Friendly"
+- Explanation: data stored locally, no telemetry/tracking/analytics
+- Created colorful shield SVG icon with checkmark using forest theme colors
+- Icon uses #3A5A40, #4A7C54, #588157, #E8F0EA (multiple colors, not monochrome)
+- Added after BYOK section as second feature card
+- 17 unit tests covering HTML structure, icon colors, accessibility
+
+FILES CHANGED:
+- website/index.html (added privacy feature card with SVG icon)
+- src/__tests__/website/ws5-privacy-section.test.ts (new - 17 tests)
+- plans/prd.json (marked WS-5 as passing)
+
+PRD ITEMS COMPLETED:
+- WS-5: Add privacy selling point section
+
+NOTES FOR NEXT PERSON:
+- WS-6 through WS-10 (website) remaining
+- WS-6 is next: Add free/no subscription section
+- Features section pattern established - follow same structure for new cards

@@ -748,7 +748,7 @@
       "Explain no telemetry or tracking",
       "Add relevant icon or illustration"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "WS-6",
