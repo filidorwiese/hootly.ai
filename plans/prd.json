@@ -1735,7 +1735,7 @@
       "Render Dialog with conversation loaded from URL param",
       "Verify style matches regular dialog exactly"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "HP-24",
@@ -1747,7 +1747,7 @@
       "Verify clicking close button closes the tab/window",
       "Update tooltip to 'Close window' for chat page context"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "HP-25",
@@ -1760,7 +1760,7 @@
       "Test model selector works on chat page",
       "Test conversation saves after exchange"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "WS-20",

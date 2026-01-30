@@ -12,18 +12,18 @@ import { resolve } from 'path';
 // Read source files for analysis
 const serviceWorkerPath = resolve(__dirname, '../../background/service-worker.ts');
 const historyTsPath = resolve(__dirname, '../../history/history.ts');
-const chatTsPath = resolve(__dirname, '../../chat/chat.ts');
+const chatTsxPath = resolve(__dirname, '../../chat/chat.tsx');
 const chatHtmlPath = resolve(__dirname, '../../chat/index.html');
 
 let serviceWorkerContent: string;
 let historyTsContent: string;
-let chatTsContent: string;
+let chatTsxContent: string;
 let chatHtmlContent: string;
 
 beforeEach(() => {
   serviceWorkerContent = readFileSync(serviceWorkerPath, 'utf-8');
   historyTsContent = readFileSync(historyTsPath, 'utf-8');
-  chatTsContent = readFileSync(chatTsPath, 'utf-8');
+  chatTsxContent = readFileSync(chatTsxPath, 'utf-8');
   chatHtmlContent = readFileSync(chatHtmlPath, 'utf-8');
 });
 
@@ -84,23 +84,22 @@ describe('HP-21: Update Continue button to open chat page', () => {
     });
   });
 
-  describe('Chat Page - Receives Conversation ID', () => {
+  describe('Chat Page - Receives Conversation ID (React)', () => {
     it('should read conversationId from URL params', () => {
-      expect(chatTsContent).toContain('URLSearchParams');
-      expect(chatTsContent).toContain("get('conversationId')");
+      expect(chatTsxContent).toContain('URLSearchParams');
+      expect(chatTsxContent).toContain("get('conversationId')");
     });
 
-    it('should load conversation from storage', () => {
-      expect(chatTsContent).toContain('Storage.getConversations');
+    it('should pass conversationId to Dialog component', () => {
+      expect(chatTsxContent).toContain('initialConversationId={conversationId}');
     });
 
-    it('should have messagesContainer for displaying conversation', () => {
-      expect(chatTsContent).toContain('messagesContainer');
+    it('should use Dialog in standalone mode', () => {
+      expect(chatTsxContent).toContain('mode="standalone"');
     });
 
-    it('should have input area for continuing conversation', () => {
-      expect(chatTsContent).toContain('inputTextarea');
-      expect(chatTsContent).toContain('sendBtn');
+    it('should close window on onClose', () => {
+      expect(chatTsxContent).toContain('window.close()');
     });
   });
 
@@ -115,13 +114,12 @@ describe('HP-21: Update Continue button to open chat page', () => {
       expect(chatHtmlContent).toMatch(/background:.*gradient|linear-gradient/i);
     });
 
-    it('should have messages container', () => {
-      expect(chatHtmlContent).toContain('id="messagesContainer"');
+    it('should have chat-root mount point', () => {
+      expect(chatHtmlContent).toContain('id="chat-root"');
     });
 
-    it('should have input section', () => {
-      expect(chatHtmlContent).toContain('input-section');
-      expect(chatHtmlContent).toContain('id="inputTextarea"');
+    it('should load chat.tsx module', () => {
+      expect(chatHtmlContent).toContain('src="./chat.tsx"');
     });
   });
 

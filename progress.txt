@@ -2427,3 +2427,40 @@ NOTES FOR NEXT PERSON:
 - HP-24 (close button closes window) just needs: onClose={() => window.close()} in chat page
 - HP-25 (verify functionality) requires integration testing after HP-23
 - chat.ts is still vanilla TypeScript - converting to React requires HP-23 implementation
+
+---
+
+2026-01-30 - HP-23/HP-24/HP-25: Reuse Dialog component in chat page
+
+COMPLETED:
+- Created chat.tsx React app that imports and uses Dialog component with mode="standalone"
+- Removed 496 lines of duplicate vanilla TypeScript in chat.ts
+- Chat page now reuses exact same Dialog component as the overlay iframe
+- onClose callback calls window.close() to close the chat tab
+- Minimal index.html with just gradient background and chat-root mount point
+- Dark mode gradient support via CSS media query
+- Updated tests to reflect React-based implementation
+
+FILES CHANGED:
+- src/chat/chat.tsx (created - 47 lines replacing 496 lines of chat.ts)
+- src/chat/index.html (simplified to minimal mount point)
+- src/chat/chat.ts (deleted)
+- src/__tests__/chat/hp18-chat-page.test.ts (updated for React implementation)
+- src/__tests__/history/hp21-continue-chat-page.test.ts (updated to use chat.tsx)
+- plans/prd.json (marked HP-23, HP-24, HP-25 as passing)
+
+PRD ITEMS COMPLETED:
+- HP-23: Reuse Dialog component in chat page
+- HP-24: Chat page close button closes window
+- HP-25: Verify chat page dialog has full functionality
+
+CODE REDUCTION:
+- Before: 496 lines of vanilla TypeScript + ~600 lines of inline CSS in HTML
+- After: 47 lines of React + minimal HTML
+- Reduction: ~1000 lines removed by reusing Dialog component
+
+NOTES FOR NEXT PERSON:
+- Chat page now uses Dialog component with mode="standalone" and initialConversationId
+- Style is identical to overlay dialog (same component)
+- Remaining PRD items: icons (ICON-7-14), website visuals (WS-8, WS-11-20), PP-12
+- Website items need external assets (screenshots, logos, etc.)
