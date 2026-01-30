@@ -560,7 +560,7 @@ const dialogStyles = css`
   display: flex;
   flex-direction: column;
   font-family: 'Inter', sans-serif;
-  overflow: hidden;
+  overflow: visible;
 `;
 
 const headerStyles = css`
@@ -570,6 +570,7 @@ const headerStyles = css`
   padding: ${spacing[3]} ${spacing[4]};
   background: ${colors.background.muted};
   border-bottom: 1px solid ${colors.border.light};
+  border-radius: ${radii['3xl']} ${radii['3xl']} 0 0;
   cursor: grab;
   user-select: none;
 
@@ -646,6 +647,7 @@ const inputSectionStyles = css`
   border-top: 1px solid ${colors.border.light};
   padding: ${spacing[3]} ${spacing[4]};
   background: ${colors.background.muted};
+  border-radius: 0 0 ${radii['3xl']} ${radii['3xl']};
 `;
 
 const cancelHintStyles = css`

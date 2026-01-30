@@ -1413,3 +1413,29 @@ NOTES FOR NEXT PERSON:
 - WS-6 through WS-10 (website) remaining
 - WS-6 is next: Add free/no subscription section
 - Features section pattern established - follow same structure for new cards
+
+---
+
+2026-01-30 - UI-8: Fix dropdown cut-off on react-draggable
+
+COMPLETED:
+- Changed dialogStyles overflow from 'hidden' to 'visible'
+- Persona and model selector dropdowns now fully visible when opened
+- Added border-radius to headerStyles (top corners) to maintain rounded appearance
+- Added border-radius to inputSectionStyles (bottom corners) to maintain rounded appearance
+- Dragging and resizing still work correctly with bounds="parent"
+- 19 unit tests verifying overflow, dropdown positioning, border-radius, and drag functionality
+
+FILES CHANGED:
+- src/content/components/Dialog.tsx (changed overflow: hidden to visible, added border-radius to header/input)
+- src/__tests__/ui/ui8-dropdown-cutoff.test.ts (new - 19 tests)
+- plans/prd.json (marked UI-8 as passing)
+
+PRD ITEMS COMPLETED:
+- UI-8: Fix dropdown cut-off on react-draggable
+
+NOTES FOR NEXT PERSON:
+- WS-6 through WS-10 (website) remaining
+- TAB-1 through TAB-5 (tabbed pages) not started
+- ICON-7 through ICON-14 (specific icon replacements) not started
+- HP-18 through HP-21 (chat page for continued conversations) not started

@@ -1204,7 +1204,7 @@
       "Test model dropdown fully visible when open",
       "Verify dragging still works correctly"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "HP-18",
@@ -1251,6 +1251,119 @@
       "Open chat.html in new browser tab",
       "Pass conversation ID via URL query parameter",
       "Verify conversation loads correctly in new tab"
+    ],
+    "passes": false
+  },
+  {
+    "id": "RENAME-1",
+    "category": "branding",
+    "description": "Rename Hootly to Hootly.ai in extension manifest",
+    "steps": [
+      "Update name field in manifest.json to 'Hootly.ai'",
+      "Update name field in manifest.chrome.json to 'Hootly.ai'",
+      "Verify extension name shows correctly in browser"
+    ],
+    "passes": false
+  },
+  {
+    "id": "RENAME-2",
+    "category": "branding",
+    "description": "Rename Hootly to Hootly.ai in settings page",
+    "steps": [
+      "Find all visible 'Hootly' text in settings.ts",
+      "Replace with 'Hootly.ai'",
+      "Verify page title and any headers updated"
+    ],
+    "passes": false
+  },
+  {
+    "id": "RENAME-3",
+    "category": "branding",
+    "description": "Rename Hootly to Hootly.ai in personas page",
+    "steps": [
+      "Find all visible 'Hootly' text in personas.ts",
+      "Replace with 'Hootly.ai'",
+      "Verify page title and any headers updated"
+    ],
+    "passes": false
+  },
+  {
+    "id": "RENAME-4",
+    "category": "branding",
+    "description": "Rename Hootly to Hootly.ai in history page",
+    "steps": [
+      "Find all visible 'Hootly' text in history.ts",
+      "Replace with 'Hootly.ai'",
+      "Verify page title and any headers updated"
+    ],
+    "passes": false
+  },
+  {
+    "id": "RENAME-5",
+    "category": "branding",
+    "description": "Rename Hootly to Hootly.ai in dialog component",
+    "steps": [
+      "Find all visible 'Hootly' text in Dialog.tsx",
+      "Replace with 'Hootly.ai'",
+      "Verify dialog header updated if applicable"
+    ],
+    "passes": false
+  },
+  {
+    "id": "RENAME-6",
+    "category": "branding",
+    "description": "Rename Hootly to Hootly.ai in i18n translations",
+    "steps": [
+      "Search all translation JSON files for 'Hootly'",
+      "Replace with 'Hootly.ai' in all languages",
+      "Verify translations load correctly"
+    ],
+    "passes": false
+  },
+  {
+    "id": "RENAME-7",
+    "category": "branding",
+    "description": "Rename Hootly to Hootly.ai on website",
+    "steps": [
+      "Find all visible 'Hootly' text in website/index.html",
+      "Replace with 'Hootly.ai'",
+      "Update page title to 'Hootly.ai'",
+      "Verify all instances updated"
+    ],
+    "passes": false
+  },
+  {
+    "id": "WS-11",
+    "category": "website",
+    "description": "Use forest.jpg as website background",
+    "steps": [
+      "Reference website/images/forest.jpg in CSS",
+      "Set as full-page background image",
+      "Apply background-size: cover",
+      "Ensure content remains readable over image"
+    ],
+    "passes": false
+  },
+  {
+    "id": "WS-12",
+    "category": "website",
+    "description": "Remove open-source line from website",
+    "steps": [
+      "Locate open-source mention in website/index.html",
+      "Remove the line/section",
+      "Verify layout still looks correct after removal"
+    ],
+    "passes": false
+  },
+  {
+    "id": "WS-13",
+    "category": "website",
+    "description": "Add owl logo to website header",
+    "steps": [
+      "Add owl logo image at top of website",
+      "Position prominently in header/hero area",
+      "Size appropriately for web display",
+      "Ensure logo loads correctly"
     ],
     "passes": false
   }
