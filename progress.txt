@@ -2358,3 +2358,41 @@ NOTES FOR NEXT PERSON:
 - HP-22-25 would refactor Dialog for reuse in chat page (reduces code duplication)
 - Website items need forest.svg background, owl logo, compact USPs, browser logos, etc.
 
+---
+
+2026-01-30 - FAQ-1 to FAQ-6: Add FAQ section to website
+
+COMPLETED:
+- Created FAQ section in website/index.html with collapsible Q&A format using <details>/<summary>
+- Added 5 FAQ items covering all PRD requirements:
+  - How to get a Claude API key (console.anthropic.com)
+  - How to get an OpenAI API key (platform.openai.com)
+  - How to get a Gemini API key (aistudio.google.com)
+  - Where is my data stored (locally in browser)
+  - Is my API key safe (stored locally, only sent to official endpoints)
+- Added comprehensive CSS styling for FAQ section in styles.css:
+  - Collapsible items with +/- indicators
+  - Hover and open states with border color changes
+  - Responsive styles for mobile (480px), tablet (768px), desktop
+- Positioned FAQ section below feature sections, before footer
+- All styles consistent with existing forest theme
+
+FILES CHANGED:
+- website/index.html (added FAQ section with 5 collapsible items)
+- website/styles.css (added ~80 lines of FAQ styling + responsive breakpoints)
+- plans/prd.json (marked FAQ-1 through FAQ-6 as passing)
+
+PRD ITEMS COMPLETED:
+- FAQ-1: Add FAQ section to website
+- FAQ-2: Add FAQ: How to create Claude API key
+- FAQ-3: Add FAQ: How to create ChatGPT/OpenAI API key
+- FAQ-4: Add FAQ: How to create Gemini API key
+- FAQ-5: Add FAQ: Where is my data stored
+- FAQ-6: Add FAQ: Is my API key safe
+
+NOTES FOR NEXT PERSON:
+- FAQ uses native HTML <details>/<summary> for accessibility and no-JS fallback
+- Remaining PRD items: icons (ICON-7-14), website visuals (WS-8, WS-11-20), HP-22-25 dialog refactor
+- Website could benefit from screenshot (WS-8) and visual polish items
+- Consider HP-22-25 for reducing code duplication between chat.ts and Dialog.tsx
+

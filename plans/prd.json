@@ -1608,7 +1608,7 @@
       "Style consistent with website design",
       "Position below feature sections"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "FAQ-2",
@@ -1619,7 +1619,7 @@
       "Answer: Go to console.anthropic.com, create account, generate key",
       "Keep answer concise (2-3 sentences max)"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "FAQ-3",
@@ -1630,7 +1630,7 @@
       "Answer: Go to platform.openai.com, create account, generate key",
       "Keep answer concise (2-3 sentences max)"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "FAQ-4",
@@ -1641,7 +1641,7 @@
       "Answer: Go to aistudio.google.com, sign in, create API key",
       "Keep answer concise (1-2 sentences max)"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "FAQ-5",
@@ -1652,7 +1652,7 @@
       "Answer: Locally in your browser. No data sent to external servers except API calls.",
       "Keep answer concise (1-2 sentences)"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "FAQ-6",
@@ -1663,7 +1663,7 @@
       "Answer: Stored locally in browser storage, never sent anywhere except official API endpoints.",
       "Keep answer concise (1-2 sentences)"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "TT-1",
