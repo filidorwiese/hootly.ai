@@ -132,7 +132,7 @@ describe('InputArea', () => {
       render(<InputArea {...defaultProps} onContextToggle={onContextToggle} />)
 
       // Click the context toggle button (has SVG icon now, find by title)
-      const toggleButton = screen.getByTitle('Click to enable context')
+      const toggleButton = screen.getByTitle('Add current website as context to chat')
       fireEvent.click(toggleButton)
 
       expect(onContextToggle).toHaveBeenCalledTimes(1)
@@ -221,7 +221,7 @@ describe('InputArea', () => {
       expect(screen.getByText('Code Helper')).toBeInTheDocument()
 
       // Both context toggle and persona selector should be siblings in the footer left group
-      const contextToggleButton = screen.getByTitle('Click to enable context')
+      const contextToggleButton = screen.getByTitle('Add current website as context to chat')
       const personaButton = screen.getByLabelText('Select persona')
 
       // They should share a common ancestor (the footer left group)

@@ -2288,3 +2288,46 @@ NOTES FOR NEXT PERSON:
 - Remaining PRD items include: icons (ICON-7 through ICON-14), website improvements, tooltips
 - HP-22 through HP-25 (dialog/chat page refactoring) could also be prioritized
 
+---
+
+2026-01-30 - TT-1, TT-2, TT-3, TT-4: Update tooltips for improved UX
+
+COMPLETED:
+- TT-1: Context toggle tooltip changed from "Click to enable context" to "Add current website as context to chat"
+- TT-2: Persona selector tooltip changed from showing persona name to "Change persona"
+- TT-3: Model selector tooltip changed from showing model ID to "Change AI model"
+- TT-4: Close button now has tooltip "Close dialog"
+- Added i18n translation keys for all 10 languages:
+  - context.clickToEnable (updated)
+  - persona.changePersona (new)
+  - model.changeModel (new)
+  - dialog.closeDialog (new)
+- Created unit tests for tooltip updates
+
+FILES CHANGED:
+- src/content/components/ContextToggle.tsx (already used clickToEnable i18n key)
+- src/content/components/PersonaSelector.tsx (title uses changePersona key)
+- src/content/components/ModelSelector.tsx (title uses changeModel key)
+- src/content/components/Dialog.tsx (close button title uses closeDialog key)
+- src/shared/i18n/*.json (all 10 language files updated with new keys)
+- src/__tests__/tooltips/tooltip-updates.test.ts (new - 11 tests)
+- src/__tests__/components/ContextToggle.test.tsx (updated for new tooltip text)
+- src/__tests__/components/Dialog.test.tsx (updated for new tooltip text)
+- src/__tests__/components/InputArea.test.tsx (updated for new tooltip text)
+- src/__tests__/personas/persona-description-removal.test.ts (updated for new tooltip)
+- src/__tests__/history/history-page.test.ts (updated for new tooltip text)
+- plans/prd.json (marked TT-1 through TT-4 as passing)
+
+PRD ITEMS COMPLETED:
+- TT-1: Update context toggle tooltip to be descriptive
+- TT-2: Update persona selector tooltip
+- TT-3: Update model selector tooltip
+- TT-4: Add tooltip to close button
+
+NOTES FOR NEXT PERSON:
+- All tooltip features (TT-1 through TT-4) now pass
+- Remaining PRD items include: icons (ICON-7 through ICON-14), website improvements (WS-8, WS-11-20)
+- HP-22 through HP-25 (dialog/chat page refactoring) still pending
+- FAQ section (FAQ-1 through FAQ-6) still pending
+- README update (RM-1) still pending
+

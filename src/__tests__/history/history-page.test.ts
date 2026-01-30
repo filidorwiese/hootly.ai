@@ -435,7 +435,7 @@ describe('HP-11: Context toggle in history page', () => {
         <div class="conversation-item continuing" data-id="test-conv">
           <div class="input-footer">
             <div class="context-toggle" data-id="test-conv">
-              <button class="context-toggle-btn" data-id="test-conv" title="Click to enable context">🌐</button>
+              <button class="context-toggle-btn" data-id="test-conv" title="Add current website as context to chat">🌐</button>
               <span class="context-badge">No context</span>
             </div>
           </div>

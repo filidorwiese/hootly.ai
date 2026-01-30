@@ -59,6 +59,7 @@
     "settings": "Instellingen",
     "openSettings": "Instellingen openen",
     "close": "Sluiten",
+    "closeDialog": "Dialoog sluiten",
     "cancelHint": "Druk op <strong>Esc</strong> om te stoppen",
     "noApiKey": "Geen API-sleutel geconfigureerd. Klik op het instellingen-icoon om je Anthropic API-sleutel toe te voegen.",
     "noModelSelected": "Geen model geselecteerd. Open Instellingen om te configureren.",
@@ -84,7 +85,7 @@
     "enableContext": "Context inschakelen",
     "switchToFullPage": "Klik om naar volledige pagina te wisselen",
     "disableContext": "Klik om context uit te schakelen",
-    "clickToEnable": "Klik om context in te schakelen",
+    "clickToEnable": "Voeg huidige website als context toe aan chat",
     "selection": "Selectie ({{chars}} tekens)",
     "fullPage": "Volledige pagina",
     "noContext": "Geen context"
@@ -126,10 +127,12 @@
   },
   "persona": {
     "selectPersona": "Selecteer persona",
+    "changePersona": "Persona wijzigen",
     "custom": "Aangepast"
   },
   "model": {
     "selectModel": "Selecteer model",
+    "changeModel": "AI-model wijzigen",
     "loading": "Laden..."
   },
   "personas": {

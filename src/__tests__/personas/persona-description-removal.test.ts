@@ -114,9 +114,9 @@ describe('P-7: Remove description field from persona', () => {
       expect(selectorCode).not.toContain('persona.description')
     })
 
-    it('uses persona.name for title attribute instead of description', () => {
+    it('uses changePersona translation for title attribute', () => {
       expect(selectorCode).toContain('title={persona.name}')
-      expect(selectorCode).toContain('title={selectedPersona.name}')
+      expect(selectorCode).toContain("title={t('persona.changePersona')}")
     })
 
     it('renders name directly without column layout', () => {

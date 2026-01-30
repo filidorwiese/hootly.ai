@@ -97,7 +97,7 @@ const ModelSelector: React.FC<ModelSelectorProps> = ({
         className={triggerStyles}
         onClick={() => setIsOpen(!isOpen)}
         aria-label={t('model.selectModel')}
-        title={selectedModel?.name || selectedModelId}
+        title={t('model.changeModel')}
         disabled={isLoading || models.length === 0}
       >
         <span className={modelIconStyles}>🤖</span>

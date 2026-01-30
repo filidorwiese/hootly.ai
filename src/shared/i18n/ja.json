@@ -59,6 +59,7 @@
     "settings": "設定",
     "openSettings": "設定を開く",
     "close": "閉じる",
+    "closeDialog": "ダイアログを閉じる",
     "cancelHint": "<strong>Esc</strong>キーで生成を停止",
     "noApiKey": "APIキーが設定されていません。設定アイコンをクリックしてAnthropic APIキーを追加してください。",
     "noModelSelected": "モデルが選択されていません。設定を開いて構成してください。",
@@ -84,7 +85,7 @@
     "enableContext": "コンテキストを有効化",
     "switchToFullPage": "クリックでページ全体に切り替え",
     "disableContext": "クリックでコンテキストを無効化",
-    "clickToEnable": "クリックでコンテキストを有効化",
+    "clickToEnable": "現在のウェブサイトをチャットのコンテキストとして追加",
     "selection": "選択範囲（{{chars}}文字）",
     "fullPage": "ページ全体",
     "noContext": "コンテキストなし"
@@ -126,10 +127,12 @@
   },
   "persona": {
     "selectPersona": "ペルソナを選択",
+    "changePersona": "ペルソナを変更",
     "custom": "カスタム"
   },
   "model": {
     "selectModel": "モデルを選択",
+    "changeModel": "AIモデルを変更",
     "loading": "読み込み中..."
   },
   "personas": {

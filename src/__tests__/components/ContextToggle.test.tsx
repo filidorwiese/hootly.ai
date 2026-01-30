@@ -20,7 +20,7 @@ describe('ContextToggle', () => {
       )
 
       expect(screen.getByText('No context')).toBeInTheDocument()
-      expect(screen.getByRole('button')).toHaveAttribute('title', 'Click to enable context')
+      expect(screen.getByRole('button')).toHaveAttribute('title', 'Add current website as context to chat')
     })
 
     it('renders selection mode', () => {

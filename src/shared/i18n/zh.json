@@ -59,6 +59,7 @@
     "settings": "设置",
     "openSettings": "打开设置",
     "close": "关闭",
+    "closeDialog": "关闭对话框",
     "cancelHint": "按 <strong>Esc</strong> 停止生成",
     "noApiKey": "未配置 API 密钥。点击设置图标添加您的 Anthropic API 密钥。",
     "noModelSelected": "未选择模型。打开设置进行配置。",
@@ -84,7 +85,7 @@
     "enableContext": "启用上下文",
     "switchToFullPage": "点击切换到整页",
     "disableContext": "点击禁用上下文",
-    "clickToEnable": "点击启用上下文",
+    "clickToEnable": "将当前网站添加为聊天上下文",
     "selection": "选中内容（{{chars}} 字符）",
     "fullPage": "整页",
     "noContext": "无上下文"
@@ -126,10 +127,12 @@
   },
   "persona": {
     "selectPersona": "选择角色",
+    "changePersona": "更换角色",
     "custom": "自定义"
   },
   "model": {
     "selectModel": "选择模型",
+    "changeModel": "更换AI模型",
     "loading": "加载中..."
   },
   "personas": {

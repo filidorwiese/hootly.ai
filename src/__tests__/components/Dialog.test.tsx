@@ -194,7 +194,7 @@ describe('Dialog', () => {
       await renderDialog({ isOpen: true, onClose: () => {} })
 
       // Context toggle now uses SVG icon instead of emoji
-      expect(screen.getByTitle('Click to enable context')).toBeInTheDocument()
+      expect(screen.getByTitle('Add current website as context to chat')).toBeInTheDocument()
     })
 
     it('shows "No context" initially', async () => {
@@ -216,7 +216,7 @@ describe('Dialog', () => {
       expect(header.textContent).toContain('Hootly')
 
       // Persona selector and context toggle should both exist (in footer)
-      const contextToggle = screen.getByTitle('Click to enable context')
+      const contextToggle = screen.getByTitle('Add current website as context to chat')
       const personaSelector = screen.getByText('General')
 
       expect(contextToggle).toBeInTheDocument()

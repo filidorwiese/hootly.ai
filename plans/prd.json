@@ -1675,7 +1675,7 @@
       "Add i18n translation key if needed",
       "Verify tooltip displays on hover"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "TT-2",
@@ -1687,7 +1687,7 @@
       "Add i18n translation key if needed",
       "Verify tooltip displays on hover"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "TT-3",
@@ -1699,7 +1699,7 @@
       "Add i18n translation key if needed",
       "Verify tooltip displays on hover"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "TT-4",
@@ -1711,7 +1711,7 @@
       "Add i18n translation key if needed",
       "Verify tooltip displays on hover"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "HP-22",

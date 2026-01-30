@@ -478,7 +478,7 @@ const Dialog: React.FC<DialogProps> = ({ isOpen, onClose }) => {
             <button onClick={() => chrome.runtime.sendMessage({ type: 'openSettings' })} aria-label={t('dialog.settings')} title={t('dialog.openSettings')}>
               <SettingsIcon size={18} />
             </button>
-            <button onClick={onClose} aria-label={t('dialog.close')}>
+            <button onClick={onClose} aria-label={t('dialog.close')} title={t('dialog.closeDialog')}>
               <CloseIcon size={18} />
             </button>
           </div>

@@ -47,7 +47,7 @@ const PersonaSelector: React.FC<PersonaSelectorProps> = ({
         className={triggerStyles}
         onClick={() => setIsOpen(!isOpen)}
         aria-label={t('persona.selectPersona')}
-        title={selectedPersona.name}
+        title={t('persona.changePersona')}
       >
         <span className={iconStyles}>{selectedPersona.icon}</span>
         <span className={nameStyles}>{selectedPersona.name}</span>

@@ -59,6 +59,7 @@
     "settings": "Configurações",
     "openSettings": "Abrir configurações",
     "close": "Fechar",
+    "closeDialog": "Fechar diálogo",
     "cancelHint": "Pressione <strong>Esc</strong> para parar a geração",
     "noApiKey": "Nenhuma chave API configurada. Clique no ícone de configurações para adicionar sua chave API Anthropic.",
     "noModelSelected": "Nenhum modelo selecionado. Abra Configurações para configurar.",
@@ -84,7 +85,7 @@
     "enableContext": "Ativar contexto",
     "switchToFullPage": "Clique para mudar para página completa",
     "disableContext": "Clique para desativar contexto",
-    "clickToEnable": "Clique para ativar contexto",
+    "clickToEnable": "Adicionar site atual como contexto ao chat",
     "selection": "Seleção ({{chars}} caracteres)",
     "fullPage": "Página completa",
     "noContext": "Sem contexto"
@@ -126,10 +127,12 @@
   },
   "persona": {
     "selectPersona": "Selecionar persona",
+    "changePersona": "Mudar persona",
     "custom": "Personalizado"
   },
   "model": {
     "selectModel": "Selecionar modelo",
+    "changeModel": "Mudar modelo de IA",
     "loading": "Carregando..."
   },
   "personas": {
