@@ -9,7 +9,7 @@ export interface Settings {
   model: string;
   maxTokens: number;
   temperature: number;
-  theme: 'light' | 'dark' | 'system';
+  theme: 'light' | 'dark' | 'auto';
   fontSize: number;
   shortcut: string;
   autoClose: boolean;
@@ -145,7 +145,7 @@ export const DEFAULT_SETTINGS: Settings = {
   model: '',
   maxTokens: 4096,
   temperature: 1.0,
-  theme: 'system',
+  theme: 'auto',
   fontSize: 14,
   shortcut: 'Alt+C',
   autoClose: false,

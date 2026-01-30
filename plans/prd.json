@@ -1511,7 +1511,7 @@
       "Default value is 'auto'",
       "Update storage wrapper if needed"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "DM-3",

@@ -2022,3 +2022,33 @@ NOTES FOR NEXT PERSON:
 - Remaining icon items: ICON-7 through ICON-14
 - Remaining dark mode: DM-2 through DM-8
 - Remaining features: PP-11, PP-12, HP-22-25, LIC-1-2, FAQ-1-6, TT-1-4, RM-1
+
+---
+
+2026-01-30 - DM-2: Add theme setting to storage
+
+COMPLETED:
+- Aligned Settings.theme type with Theme from styles.ts
+- Changed theme type from 'system' to 'auto' to match CSS standard
+- Updated default value from 'system' to 'auto' in DEFAULT_SETTINGS
+- Storage wrapper already handles theme via getSettings/saveSettings
+- 21 unit tests verifying theme setting storage
+
+CHANGES:
+- types.ts: theme type changed from 'light' | 'dark' | 'system' to 'light' | 'dark' | 'auto'
+- types.ts: DEFAULT_SETTINGS.theme changed from 'system' to 'auto'
+
+FILES CHANGED:
+- src/shared/types.ts (theme type and default value)
+- src/__tests__/dark-mode/dm2-theme-setting.test.ts (new - 21 tests)
+- plans/prd.json (marked DM-2 as passing)
+
+PRD ITEMS COMPLETED:
+- DM-2: Add theme setting to storage
+
+NOTES FOR NEXT PERSON:
+- DM-3 (theme toggle in settings) is next logical step
+- DM-4 (auto mode with system preference) CSS ready in styles.ts
+- DM-5-8 (apply dark theme to dialog/settings/personas/history) pending
+- Theme setting now uses 'auto' (not 'system') to match CSS prefers-color-scheme
+- Storage wrapper merges with DEFAULT_SETTINGS, so old settings without theme get 'auto'
