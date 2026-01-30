@@ -2052,3 +2052,47 @@ NOTES FOR NEXT PERSON:
 - DM-5-8 (apply dark theme to dialog/settings/personas/history) pending
 - Theme setting now uses 'auto' (not 'system') to match CSS prefers-color-scheme
 - Storage wrapper merges with DEFAULT_SETTINGS, so old settings without theme get 'auto'
+
+---
+
+2026-01-30 - DM-3: Add theme toggle to settings page
+
+COMPLETED:
+- Added Theme section with radio buttons (Light, Dark, Auto)
+- Radio buttons styled with forest theme accent color
+- Auto pre-selected by default (matches DEFAULT_SETTINGS.theme)
+- Theme selection saved to storage on save button click
+- Added getSelectedTheme() helper function
+- i18n translations added for all 10 languages:
+  - settings.theme (label)
+  - settings.themeLight (Light option)
+  - settings.themeDark (Dark option)
+  - settings.themeAuto (Auto option)
+  - settings.themeHint (hint text explaining Auto follows system)
+- 76 unit tests covering HTML structure, CSS, TypeScript, and i18n
+
+FILES CHANGED:
+- src/settings/index.html (added theme radio buttons section with CSS)
+- src/settings/settings.ts (added theme state management and save)
+- src/shared/i18n/en.json (added theme translations)
+- src/shared/i18n/nl.json (added theme translations)
+- src/shared/i18n/de.json (added theme translations)
+- src/shared/i18n/fr.json (added theme translations)
+- src/shared/i18n/es.json (added theme translations)
+- src/shared/i18n/it.json (added theme translations)
+- src/shared/i18n/pt.json (added theme translations)
+- src/shared/i18n/zh.json (added theme translations)
+- src/shared/i18n/ja.json (added theme translations)
+- src/shared/i18n/ko.json (added theme translations)
+- src/__tests__/dark-mode/dm3-theme-toggle.test.ts (new - 76 tests)
+- plans/prd.json (marked DM-3 as passing)
+
+PRD ITEMS COMPLETED:
+- DM-3: Add theme toggle to settings page
+
+NOTES FOR NEXT PERSON:
+- DM-4 (auto mode with system preference) is next step - needs JS listener
+- DM-5-8 (apply dark theme to components) still pending
+- Theme toggle UI is ready but doesn't actually switch colors yet
+- CSS variables for dark mode already exist in styles.ts (from DM-1)
+- Theme value stored in settings.theme ('light' | 'dark' | 'auto')

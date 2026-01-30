@@ -275,6 +275,27 @@
       margin-bottom: var(--spacing-6);
       line-height: 1.5;
     }
+
+    /* Theme radio buttons */
+    .theme-options {
+      display: flex;
+      gap: var(--spacing-4);
+      margin-top: var(--spacing-2);
+    }
+
+    .radio-label {
+      display: flex;
+      align-items: center;
+      gap: var(--spacing-2);
+      cursor: pointer;
+      font-weight: 400;
+      color: var(--color-text-primary);
+    }
+
+    .radio-label input[type="radio"] {
+      width: auto;
+      accent-color: var(--color-accent-success);
+    }
   </style>
 </head>
 <body>
@@ -375,6 +396,27 @@
       <option value="ja">日本語</option>
       <option value="ko">한국어</option>
     </select>
+  </div>
+
+  <div class="setting">
+    <label data-i18n="settings.theme">Theme</label>
+    <div class="theme-options">
+      <label class="radio-label">
+        <input type="radio" name="theme" value="light" id="themeLight">
+        <span data-i18n="settings.themeLight">Light</span>
+      </label>
+      <label class="radio-label">
+        <input type="radio" name="theme" value="dark" id="themeDark">
+        <span data-i18n="settings.themeDark">Dark</span>
+      </label>
+      <label class="radio-label">
+        <input type="radio" name="theme" value="auto" id="themeAuto">
+        <span data-i18n="settings.themeAuto">Auto</span>
+      </label>
+    </div>
+    <small style="margin-top: 5px; display: block;" data-i18n="settings.themeHint">
+      Auto follows your system preference
+    </small>
   </div>
 
   <div class="setting">

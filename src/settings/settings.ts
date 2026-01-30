@@ -114,6 +114,9 @@ document.addEventListener('DOMContentLoaded', async () => {
   const shortcutInput = document.getElementById('shortcut') as HTMLInputElement;
   const showSelectionTooltipInput = document.getElementById('showSelectionTooltip') as HTMLInputElement;
   const languageSelect = document.getElementById('language') as HTMLSelectElement;
+  const themeLightRadio = document.getElementById('themeLight') as HTMLInputElement;
+  const themeDarkRadio = document.getElementById('themeDark') as HTMLInputElement;
+  const themeAutoRadio = document.getElementById('themeAuto') as HTMLInputElement;
   const defaultPersonaSelect = document.getElementById('defaultPersona') as HTMLSelectElement;
   const saveBtn = document.getElementById('saveBtn') as HTMLButtonElement;
   const statusDiv = document.getElementById('status') as HTMLDivElement;
@@ -144,6 +147,12 @@ document.addEventListener('DOMContentLoaded', async () => {
   shortcutInput.value = settings.shortcut;
   showSelectionTooltipInput.checked = settings.showSelectionTooltip !== false;
   languageSelect.value = settings.language;
+
+  // Set theme radio button
+  const themeValue = settings.theme || 'auto';
+  if (themeValue === 'light') themeLightRadio.checked = true;
+  else if (themeValue === 'dark') themeDarkRadio.checked = true;
+  else themeAutoRadio.checked = true;
 
   // Populate default persona select
   DEFAULT_PERSONAS.forEach(persona => {
@@ -225,6 +234,13 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
   });
 
+  // Get selected theme value
+  function getSelectedTheme(): Settings['theme'] {
+    if (themeLightRadio.checked) return 'light';
+    if (themeDarkRadio.checked) return 'dark';
+    return 'auto';
+  }
+
   // Save settings
   saveBtn.addEventListener('click', async () => {
     try {
@@ -240,6 +256,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         shortcut: shortcutInput.value.trim() || 'Alt+C',
         showSelectionTooltip: showSelectionTooltipInput.checked,
         language: languageSelect.value as Settings['language'],
+        theme: getSelectedTheme(),
         defaultPersonaId: defaultPersonaSelect.value,
       });
 
