@@ -1272,3 +1272,30 @@ PRD ITEMS COMPLETED:
 NOTES FOR NEXT PERSON:
 - All ICON items (ICON-1 through ICON-6) now pass
 - WS-1 through WS-10 (website) not started - these are the only remaining items
+
+---
+
+2026-01-30 - WS-1: Create website folder structure
+
+COMPLETED:
+- Created /website folder in project root
+- Created index.html with HTML5 structure, viewport meta, Inter font
+- Created styles.css with flat design CSS variables matching extension theme
+- Created /website/images folder for assets
+- All styles use solid colors (no shadows, no gradients)
+- CSS custom properties define color palette, spacing, typography
+- 14 unit tests verifying folder structure and file contents
+
+FILES CHANGED:
+- website/index.html (new)
+- website/styles.css (new)
+- website/images/ (new folder)
+- src/__tests__/website/ws1-folder-structure.test.ts (new - 14 tests)
+- plans/prd.json (marked WS-1 as passing)
+
+PRD ITEMS COMPLETED:
+- WS-1: Create website folder structure
+
+NOTES FOR NEXT PERSON:
+- WS-2 through WS-10 (website) not started
+- WS-2 is next: Create HTML structure with hero section

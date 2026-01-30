@@ -696,7 +696,7 @@
       "Create styles.css file",
       "Create /website/images folder for assets"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "WS-2",
