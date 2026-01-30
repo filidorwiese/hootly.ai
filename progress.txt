@@ -2205,3 +2205,29 @@ NOTES FOR NEXT PERSON:
   2. Import and call initTheme() in page script
   3. Pages already use CSS variables, so just need the dark overrides
 - Pattern is identical to settings page implementation
+
+---
+
+2026-01-30 - DM-7: Apply dark theme to personas page
+
+COMPLETED:
+- Added initTheme import from shared/theme.ts into personas.ts
+- Called initTheme() at start of init() function, before initLanguage()
+- Personas page HTML already had dark mode CSS variables (added previously)
+- 43 unit tests verifying dark mode integration
+
+FILES CHANGED:
+- src/personas/personas.ts (added initTheme import and call)
+- src/__tests__/dark-mode/dm7-personas-theme.test.ts (new - 43 tests)
+- plans/prd.json (marked DM-7 as passing)
+
+PRD ITEMS COMPLETED:
+- DM-7: Apply dark theme to personas page
+
+NOTES FOR NEXT PERSON:
+- Personas page now supports light/dark/auto themes
+- Theme toggle in settings immediately affects all pages
+- DM-8 (history page) still pending - needs similar treatment:
+  1. Add dark mode CSS variables to history/index.html
+  2. Import and call initTheme() in history.ts
+  3. History page already uses CSS variables for styling

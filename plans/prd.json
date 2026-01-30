@@ -1571,7 +1571,7 @@
       "Verify persona cards styled correctly",
       "Test in both light and dark modes"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "DM-8",

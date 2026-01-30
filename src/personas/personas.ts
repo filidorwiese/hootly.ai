@@ -3,6 +3,7 @@ import type { Persona, Settings } from '../shared/types';
 import { DEFAULT_PERSONAS } from '../shared/types';
 import { t, initLanguage } from '../shared/i18n';
 import { injectTabHeader } from '../shared/TabHeader';
+import { initTheme } from '../shared/theme';
 
 let currentSettings: Settings | null = null;
 let pendingDeleteId: string | null = null;
@@ -282,6 +283,7 @@ function applyTranslations(): void {
 }
 
 async function init(): Promise<void> {
+  await initTheme();
   await initLanguage();
 
   currentSettings = await Storage.getSettings();
