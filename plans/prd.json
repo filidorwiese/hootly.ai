@@ -1083,7 +1083,7 @@
       "Set History tab as active",
       "Wire tab clicks to navigate to other pages"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "TAB-5",
@@ -1427,6 +1427,161 @@
       "Consolidate installation instructions",
       "Keep essential info: project overview, quick start, build commands",
       "Ensure concise formatting"
+    ],
+    "passes": false
+  },
+  {
+    "id": "PP-11",
+    "category": "personas-page",
+    "description": "Show full description/systemprompt for built-in personas",
+    "steps": [
+      "Locate truncation logic for built-in personas",
+      "Remove or bypass truncation for built-in persona descriptions",
+      "Remove or bypass truncation for built-in persona system prompts",
+      "Verify full text displays in persona list"
+    ],
+    "passes": false
+  },
+  {
+    "id": "PP-12",
+    "category": "personas-page",
+    "description": "Revert addPersonaBtn icon to previous version",
+    "steps": [
+      "Identify current .btn-icon styling on addPersonaBtn",
+      "Find previous version of icon styling",
+      "Revert icon CSS/component to previous state",
+      "Verify icon displays correctly"
+    ],
+    "passes": false
+  },
+  {
+    "id": "TAB-6",
+    "category": "tabbed-pages",
+    "description": "Use icon.png as logo in TabHeader",
+    "steps": [
+      "Import icon.png into TabHeader component",
+      "Replace current logo with icon.png",
+      "Size logo appropriately for header",
+      "Verify logo displays on settings/personas/history pages"
+    ],
+    "passes": false
+  },
+  {
+    "id": "TAB-7",
+    "category": "tabbed-pages",
+    "description": "Constrain TabHeader contents to max-width 1024px centered",
+    "steps": [
+      "Add inner container to TabHeader with max-width: 1024px",
+      "Center inner container with margin: 0 auto",
+      "Keep outer background/border full-width",
+      "Verify layout on wide and narrow screens"
+    ],
+    "passes": false
+  },
+  {
+    "id": "WS-19",
+    "category": "website",
+    "description": "Add multilingual USP section",
+    "steps": [
+      "Add feature section for multilingual support",
+      "Highlight 10 languages supported",
+      "List languages: EN, NL, DE, FR, ES, IT, PT, ZH, JA, KO",
+      "Add relevant icon or illustration"
+    ],
+    "passes": false
+  },
+  {
+    "id": "DM-1",
+    "category": "dark-mode",
+    "description": "Create dark mode CSS variables",
+    "steps": [
+      "Define dark theme color palette complementing forest theme",
+      "Create CSS custom properties for dark mode colors",
+      "Include background, text, accent, border colors",
+      "Document color mapping from light to dark"
+    ],
+    "passes": false
+  },
+  {
+    "id": "DM-2",
+    "category": "dark-mode",
+    "description": "Add theme setting to storage",
+    "steps": [
+      "Add theme field to Settings type: 'light' | 'dark' | 'auto'",
+      "Default value is 'auto'",
+      "Update storage wrapper if needed"
+    ],
+    "passes": false
+  },
+  {
+    "id": "DM-3",
+    "category": "dark-mode",
+    "description": "Add theme toggle to settings page",
+    "steps": [
+      "Add Theme section to settings page",
+      "Add radio buttons or dropdown: Light, Dark, Auto",
+      "Auto selected by default",
+      "Save selection to storage on change"
+    ],
+    "passes": false
+  },
+  {
+    "id": "DM-4",
+    "category": "dark-mode",
+    "description": "Implement auto mode with system preference",
+    "steps": [
+      "Use prefers-color-scheme media query",
+      "Listen for system preference changes",
+      "Apply appropriate theme when in auto mode",
+      "Update theme dynamically without reload"
+    ],
+    "passes": false
+  },
+  {
+    "id": "DM-5",
+    "category": "dark-mode",
+    "description": "Apply dark theme to dialog",
+    "steps": [
+      "Update Dialog.tsx to use CSS variables",
+      "Apply dark theme styles conditionally",
+      "Verify header, body, input area styled correctly",
+      "Test in both light and dark modes"
+    ],
+    "passes": false
+  },
+  {
+    "id": "DM-6",
+    "category": "dark-mode",
+    "description": "Apply dark theme to settings page",
+    "steps": [
+      "Update settings.ts to use CSS variables",
+      "Apply dark theme styles conditionally",
+      "Verify all form elements styled correctly",
+      "Test in both light and dark modes"
+    ],
+    "passes": false
+  },
+  {
+    "id": "DM-7",
+    "category": "dark-mode",
+    "description": "Apply dark theme to personas page",
+    "steps": [
+      "Update personas.ts to use CSS variables",
+      "Apply dark theme styles conditionally",
+      "Verify persona cards styled correctly",
+      "Test in both light and dark modes"
+    ],
+    "passes": false
+  },
+  {
+    "id": "DM-8",
+    "category": "dark-mode",
+    "description": "Apply dark theme to history page",
+    "steps": [
+      "Update history.ts to use CSS variables",
+      "Apply dark theme styles conditionally",
+      "Verify history items styled correctly",
+      "Test in both light and dark modes"
     ],
     "passes": false
   }

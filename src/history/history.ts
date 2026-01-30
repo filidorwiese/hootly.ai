@@ -2,6 +2,7 @@ import { Storage } from '../shared/storage';
 import type { Conversation, Persona, Settings } from '../shared/types';
 import { DEFAULT_PERSONAS } from '../shared/types';
 import { t, initLanguage } from '../shared/i18n';
+import { injectTabHeader } from '../shared/TabHeader';
 
 // SVG icons for history page
 const VIEW_ICON = `<svg width="14" height="14" viewBox="0 0 24 24" fill="none">
@@ -39,10 +40,6 @@ const CLEAR_ALL_ICON = `<svg width="14" height="14" viewBox="0 0 24 24" fill="no
   <path d="M8 8l8 8M16 8l-8 8" stroke="#C45A5A" stroke-width="2" stroke-linecap="round"/>
 </svg>`;
 
-const BACK_ICON = `<svg width="14" height="14" viewBox="0 0 24 24" fill="none">
-  <path d="M15 18l-6-6 6-6" stroke="#3A5A40" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-  <circle cx="12" cy="12" r="9" fill="#E8F0EA" stroke="#3A5A40" stroke-width="1.5" opacity="0.5"/>
-</svg>`;
 
 const SEARCH_CLEAR_ICON = `<svg width="12" height="12" viewBox="0 0 24 24" fill="none">
   <circle cx="12" cy="12" r="9" fill="#EEF1EC" stroke="#6B7A6E" stroke-width="1.5"/>
@@ -564,16 +561,18 @@ async function init(): Promise<void> {
   // Initialize language
   await initLanguage();
 
+  // Inject TabHeader component
+  injectTabHeader({ activeTab: 'history' });
+
   // Load settings and personas
   currentSettings = await Storage.getSettings();
   allPersonas = [...DEFAULT_PERSONAS, ...(currentSettings.customPersonas || [])];
 
-  // Inject SVG icons into header and state elements
+  // Inject SVG icons into page elements
   document.getElementById('titleIcon')!.innerHTML = HISTORY_TITLE_ICON;
   document.getElementById('importIcon')!.innerHTML = IMPORT_ICON;
   document.getElementById('exportIcon')!.innerHTML = EXPORT_ICON;
   document.getElementById('clearAllIcon')!.innerHTML = CLEAR_ALL_ICON;
-  document.getElementById('backIcon')!.innerHTML = BACK_ICON;
   document.getElementById('clearSearchBtn')!.innerHTML = SEARCH_CLEAR_ICON;
   document.getElementById('emptyStateIcon')!.innerHTML = EMPTY_STATE_ICON;
   document.getElementById('noResultsIcon')!.innerHTML = NO_RESULTS_ICON;
@@ -601,12 +600,6 @@ async function init(): Promise<void> {
     clearSearchBtn.style.display = 'none';
     renderHistoryList(allConversations);
     searchInput.focus();
-  });
-
-  // Close button handler
-  document.getElementById('closeBtn')!.addEventListener('click', (e) => {
-    e.preventDefault();
-    window.close();
   });
 
   // Export button handler

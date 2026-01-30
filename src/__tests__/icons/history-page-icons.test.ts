@@ -58,11 +58,6 @@ describe('ICON-4: History page icons', () => {
       expect(tsContent).toMatch(/CLEAR_ALL_ICON[\s\S]*?<svg/);
     });
 
-    it('should define BACK_ICON constant with SVG', () => {
-      expect(tsContent).toContain('const BACK_ICON');
-      expect(tsContent).toMatch(/BACK_ICON[\s\S]*?<svg/);
-    });
-
     it('should define SEARCH_CLEAR_ICON constant with SVG', () => {
       expect(tsContent).toContain('const SEARCH_CLEAR_ICON');
       expect(tsContent).toMatch(/SEARCH_CLEAR_ICON[\s\S]*?<svg/);
@@ -163,11 +158,6 @@ describe('ICON-4: History page icons', () => {
       expect(htmlContent).toContain('id="clearAllBtn"');
     });
 
-    it('should have placeholder span for back icon', () => {
-      expect(htmlContent).toContain('id="backIcon"');
-      expect(htmlContent).toContain('id="closeBtn"');
-    });
-
     it('should have placeholder span for title icon', () => {
       expect(htmlContent).toContain('id="titleIcon"');
     });
@@ -177,7 +167,6 @@ describe('ICON-4: History page icons', () => {
       expect(tsContent).toContain("getElementById('importIcon')!.innerHTML = IMPORT_ICON");
       expect(tsContent).toContain("getElementById('exportIcon')!.innerHTML = EXPORT_ICON");
       expect(tsContent).toContain("getElementById('clearAllIcon')!.innerHTML = CLEAR_ALL_ICON");
-      expect(tsContent).toContain("getElementById('backIcon')!.innerHTML = BACK_ICON");
     });
   });
 
@@ -275,16 +264,12 @@ describe('ICON-4: History page icons', () => {
       expect(htmlContent).toContain('vertical-align: middle');
     });
 
-    it('should have CSS for header-btn svg alignment', () => {
-      expect(htmlContent).toContain('.header-btn svg');
+    it('should have CSS for action-btn-header svg alignment', () => {
+      expect(htmlContent).toContain('.action-btn-header svg');
     });
 
-    it('should have CSS for back-link svg alignment', () => {
-      expect(htmlContent).toContain('.back-link svg');
-    });
-
-    it('should have CSS for h1 svg alignment', () => {
-      expect(htmlContent).toContain('h1 svg');
+    it('should have CSS for page-title svg alignment', () => {
+      expect(htmlContent).toContain('.page-title svg');
     });
 
     it('should have CSS for clear-search-btn svg', () => {

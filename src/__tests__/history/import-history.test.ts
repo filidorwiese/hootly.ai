@@ -16,10 +16,10 @@ describe('HP-14: Import chat history from JSON', () => {
       expect(htmlContent).toContain('id="importBtn"');
     });
 
-    it('should have import button inside header-actions', () => {
-      const headerActionsMatch = htmlContent.match(/<div class="header-actions">([\s\S]*?)<\/header>/);
-      expect(headerActionsMatch).not.toBeNull();
-      expect(headerActionsMatch![1]).toContain('id="importBtn"');
+    it('should have import button inside action-buttons', () => {
+      const actionButtonsMatch = htmlContent.match(/<div class="action-buttons">([\s\S]*?)<\/div>/);
+      expect(actionButtonsMatch).not.toBeNull();
+      expect(actionButtonsMatch![1]).toContain('id="importBtn"');
     });
 
     it('should have data-i18n attribute for localization', () => {

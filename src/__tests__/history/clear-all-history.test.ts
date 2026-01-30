@@ -16,10 +16,10 @@ describe('HP-15: Add Clear All button to history page', () => {
       expect(htmlContent).toContain('id="clearAllBtn"');
     });
 
-    it('should have Clear All button inside header-actions', () => {
-      const headerActionsMatch = htmlContent.match(/<div class="header-actions">([\s\S]*?)<a href="#"/);
-      expect(headerActionsMatch).not.toBeNull();
-      expect(headerActionsMatch![1]).toContain('id="clearAllBtn"');
+    it('should have Clear All button inside action-buttons', () => {
+      const actionButtonsMatch = htmlContent.match(/<div class="action-buttons">([\s\S]*?)<\/div>/);
+      expect(actionButtonsMatch).not.toBeNull();
+      expect(actionButtonsMatch![1]).toContain('id="clearAllBtn"');
     });
 
     it('should have data-i18n attribute for Clear All button', () => {
@@ -27,19 +27,19 @@ describe('HP-15: Add Clear All button to history page', () => {
     });
 
     it('should have danger styling class for Clear All button', () => {
-      expect(htmlContent).toContain('header-btn-danger');
+      expect(htmlContent).toContain('action-btn-danger');
     });
 
-    it('should have proper CSS for header-btn-danger class', () => {
-      expect(htmlContent).toContain('.header-btn-danger');
+    it('should have proper CSS for action-btn-danger class', () => {
+      expect(htmlContent).toContain('.action-btn-danger');
     });
 
     it('should have danger hover state styling', () => {
-      expect(htmlContent).toContain('.header-btn-danger:hover');
+      expect(htmlContent).toContain('.action-btn-danger:hover');
     });
 
     it('should use error color for danger button', () => {
-      expect(htmlContent).toMatch(/\.header-btn-danger\s*\{[^}]*--color-accent-error/);
+      expect(htmlContent).toMatch(/\.action-btn-danger\s*\{[^}]*--color-accent-error/);
     });
   });
 
@@ -170,19 +170,19 @@ describe('HP-15: i18n translations', () => {
 
 describe('HP-15: CSS Styling', () => {
   it('should have danger button using error accent color', () => {
-    expect(htmlContent).toMatch(/\.header-btn-danger\s*\{[^}]*color:\s*var\(--color-accent-error\)/);
+    expect(htmlContent).toMatch(/\.action-btn-danger\s*\{[^}]*color:\s*var\(--color-accent-error\)/);
   });
 
   it('should have danger button border using error color', () => {
-    expect(htmlContent).toMatch(/\.header-btn-danger\s*\{[^}]*border-color:\s*var\(--color-accent-error\)/);
+    expect(htmlContent).toMatch(/\.action-btn-danger\s*\{[^}]*border-color:\s*var\(--color-accent-error\)/);
   });
 
   it('should have danger hover with darker error color', () => {
-    expect(htmlContent).toMatch(/\.header-btn-danger:hover\s*\{[^}]*--color-accent-error-hover/);
+    expect(htmlContent).toMatch(/\.action-btn-danger:hover\s*\{[^}]*--color-accent-error-hover/);
   });
 
   it('should have danger hover with background highlight', () => {
-    expect(htmlContent).toMatch(/\.header-btn-danger:hover\s*\{[^}]*background:/);
+    expect(htmlContent).toMatch(/\.action-btn-danger:hover\s*\{[^}]*background:/);
   });
 
   it('should use confirm-delete styling for confirm button', () => {

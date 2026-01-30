@@ -16,19 +16,19 @@ describe('HP-13: Export chat history to JSON', () => {
       expect(htmlContent).toContain('id="exportBtn"');
     });
 
-    it('should have header-actions container for action buttons', () => {
-      expect(htmlContent).toContain('class="header-actions"');
+    it('should have action-buttons container for action buttons', () => {
+      expect(htmlContent).toContain('class="action-buttons"');
     });
 
-    it('should have export button inside header-actions', () => {
-      const headerActionsMatch = htmlContent.match(/<div class="header-actions">([\s\S]*?)<\/div>/);
-      expect(headerActionsMatch).not.toBeNull();
-      expect(headerActionsMatch![1]).toContain('id="exportBtn"');
+    it('should have export button inside action-buttons', () => {
+      const actionButtonsMatch = htmlContent.match(/<div class="action-buttons">([\s\S]*?)<\/div>/);
+      expect(actionButtonsMatch).not.toBeNull();
+      expect(actionButtonsMatch![1]).toContain('id="exportBtn"');
     });
 
-    it('should have proper CSS styling for header-btn class', () => {
-      expect(htmlContent).toContain('.header-btn');
-      expect(htmlContent).toContain('.header-btn:hover');
+    it('should have proper CSS styling for action-btn-header class', () => {
+      expect(htmlContent).toContain('.action-btn-header');
+      expect(htmlContent).toContain('.action-btn-header:hover');
     });
 
     it('should have data-i18n attribute for localization', () => {
@@ -150,12 +150,12 @@ describe('HP-13: i18n translations', () => {
 });
 
 describe('HP-13: CSS Styling', () => {
-  it('should have header-btn display flex for icon alignment', () => {
-    expect(htmlContent).toMatch(/\.header-btn\s*\{[^}]*display:\s*flex/);
+  it('should have action-btn-header display flex for icon alignment', () => {
+    expect(htmlContent).toMatch(/\.action-btn-header\s*\{[^}]*display:\s*flex/);
   });
 
-  it('should have header-btn hover state with color change', () => {
-    expect(htmlContent).toMatch(/\.header-btn:hover\s*\{[^}]*color:/);
+  it('should have action-btn-header hover state with color change', () => {
+    expect(htmlContent).toMatch(/\.action-btn-header:hover\s*\{[^}]*color:/);
   });
 
   it('should use CSS variables for consistent theming', () => {

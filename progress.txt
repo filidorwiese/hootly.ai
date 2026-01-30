@@ -1705,3 +1705,42 @@ NOTES FOR NEXT PERSON:
 - ICON-7 through ICON-14 (specific icon replacements) not started
 - HP-18 through HP-21 (chat page for continued conversations) not started
 - RM-1 (update README) not started
+
+---
+
+2026-01-30 - TAB-4: Integrate TabHeader into history page
+
+COMPLETED:
+- Imported injectTabHeader from TabHeader.ts in history.ts
+- Called injectTabHeader({ activeTab: 'history' }) in init function
+- Removed old header element, close button, and back-link from index.html
+- Removed BACK_ICON constant from history.ts (no longer needed)
+- Removed closeBtn event listener from init function
+- Changed .container to .history-content for proper content layout
+- Added .page-header and .page-title CSS for secondary header with title
+- Renamed .header-btn to .action-btn-header and .header-btn-danger to .action-btn-danger
+- Tab navigation works: clicking Settings/Personas tabs navigates to those pages
+- Updated ICON-4 tests to reflect back button removal
+- Updated export/import/clear-all tests for new CSS class names
+- 55 new unit tests for TAB-4 integration (tab4-history-integration.test.ts)
+- All 1726 tests pass, TypeScript type checking passes
+
+FILES CHANGED:
+- src/history/history.ts (import TabHeader, call injectTabHeader, removed backIcon/closeBtn)
+- src/history/index.html (removed header, added history-content/page-header/page-title, renamed CSS classes)
+- src/__tests__/shared/tab4-history-integration.test.ts (new - 55 tests)
+- src/__tests__/icons/history-page-icons.test.ts (updated for back button removal)
+- src/__tests__/history/export-history.test.ts (updated for new CSS class names)
+- src/__tests__/history/import-history.test.ts (updated for new CSS class names)
+- src/__tests__/history/clear-all-history.test.ts (updated for new CSS class names)
+- plans/prd.json (marked TAB-4 as passing)
+
+PRD ITEMS COMPLETED:
+- TAB-4: Integrate TabHeader into history page
+
+NOTES FOR NEXT PERSON:
+- TAB-5 (update manage personas link) next priority
+- WS-8 through WS-18 (website) remaining
+- ICON-7 through ICON-14 (specific icon replacements) not started
+- HP-18 through HP-21 (chat page for continued conversations) not started
+- RM-1 (update README) not started
