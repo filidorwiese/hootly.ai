@@ -1596,7 +1596,7 @@
       "Verify tooltip does NOT appear",
       "Check content script loads setting on init"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "LIC-1",

@@ -1988,3 +1988,37 @@ NOTES FOR NEXT PERSON:
 - DM-5-8 (apply to dialog/settings/personas/history) need to use CSS vars
 - Dark colors designed with WCAG AA contrast in mind
 - Color mapping: darkColors has same structure as colors for easy switching
+
+---
+
+2026-01-30 - ST-5: Bug fix - Tooltip appears even when disabled in settings
+
+COMPLETED:
+- Fixed race condition where tooltip could show before settings loaded
+- Changed isEnabled initial state from true to null (loading state)
+- Added null check to render condition: isEnabled === null returns null
+- Component now waits for Storage.getSettings() before showing tooltip
+- Added TypeScript type annotation useState<boolean | null>(null)
+- Added comment explaining null = loading state
+- 18 unit tests verifying the bug fix
+
+BUG ROOT CAUSE:
+- isEnabled was initialized to true (useState(true))
+- Storage.getSettings() is async, takes time to load actual setting
+- If user had setting disabled but selection occurred during load, tooltip showed
+- Fix: Initialize to null, render condition checks for null to prevent premature display
+
+FILES CHANGED:
+- src/content/components/SelectionTooltip.tsx (fixed initial state, added loading check)
+- src/__tests__/selection-tooltip/st5-tooltip-disabled-bug.test.ts (new - 18 tests)
+- plans/prd.json (marked ST-5 as passing)
+
+PRD ITEMS COMPLETED:
+- ST-5: Bug fix - Tooltip appears even when disabled in settings
+
+NOTES FOR NEXT PERSON:
+- All selection-tooltip items (ST-1 through ST-5) now pass
+- Remaining website items: WS-8, WS-11, WS-13-19
+- Remaining icon items: ICON-7 through ICON-14
+- Remaining dark mode: DM-2 through DM-8
+- Remaining features: PP-11, PP-12, HP-22-25, LIC-1-2, FAQ-1-6, TT-1-4, RM-1

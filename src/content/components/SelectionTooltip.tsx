@@ -9,7 +9,7 @@ interface SelectionTooltipProps {
 const SelectionTooltip: React.FC<SelectionTooltipProps> = ({ onOpenWithSelection }) => {
   const [isVisible, setIsVisible] = useState(false);
   const [shortcut, setShortcut] = useState('Alt+C');
-  const [isEnabled, setIsEnabled] = useState(true);
+  const [isEnabled, setIsEnabled] = useState<boolean | null>(null); // null = loading
 
   useEffect(() => {
     // Load settings
@@ -44,7 +44,8 @@ const SelectionTooltip: React.FC<SelectionTooltipProps> = ({ onOpenWithSelection
     };
   }, []);
 
-  if (!isEnabled || !isVisible) return null;
+  // Don't render while loading settings or when disabled or no selection
+  if (isEnabled === null || !isEnabled || !isVisible) return null;
 
   return (
     <div className={tooltipStyles} onClick={onOpenWithSelection}>
