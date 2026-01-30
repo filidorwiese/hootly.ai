@@ -1428,7 +1428,7 @@
       "Keep essential info: project overview, quick start, build commands",
       "Ensure concise formatting"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "PP-11",

@@ -2331,3 +2331,30 @@ NOTES FOR NEXT PERSON:
 - FAQ section (FAQ-1 through FAQ-6) still pending
 - README update (RM-1) still pending
 
+---
+
+2026-01-30 - RM-1: Update and compact README.md
+
+COMPLETED:
+- Reduced README from 363 lines to 67 lines (82% reduction)
+- Removed verbose installation instructions (nvm, package managers, etc.)
+- Consolidated build instructions into single Quick Start section
+- Removed redundant troubleshooting section
+- Removed detailed architecture diagrams (available in CLAUDE.md)
+- Kept essential info: overview, quick start, features, commands, structure
+- Updated GitHub link to correct repository URL
+
+FILES CHANGED:
+- README.md (completely rewritten)
+- plans/prd.json (marked RM-1 as passing)
+
+PRD ITEMS COMPLETED:
+- RM-1: Update and compact README.md
+
+NOTES FOR NEXT PERSON:
+- README is now concise and action-oriented
+- Detailed dev info in CLAUDE.md for contributors
+- Remaining PRD items: icons (ICON-7-14), website (WS-8, WS-11-20), FAQ (FAQ-1-6), HP-22-25
+- HP-22-25 would refactor Dialog for reuse in chat page (reduces code duplication)
+- Website items need forest.svg background, owl logo, compact USPs, browser logos, etc.
+
