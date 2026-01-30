@@ -2756,3 +2756,25 @@ NOTES FOR NEXT PERSON:
 - WS-15 (browser logos) - may need official Chrome/Firefox SVG logos
 
 ---
+2026-01-30 - WS-11: Use forest.svg as website background
+
+COMPLETED:
+- Added forest.svg as full-page background image in CSS
+- Applied background-size: contain, positioned at bottom center
+- Used background-attachment: fixed for parallax effect
+- Content readable: header/footer/features/FAQ have solid backgrounds
+- All 997 tests pass, typecheck passes
+
+FILES CHANGED:
+- website/styles.css (body background properties, main position relative)
+- plans/prd.json (marked WS-11 as passing)
+
+PRD ITEMS COMPLETED:
+- WS-11: Use forest.svg as website background
+
+NOTES FOR NEXT PERSON:
+- Remaining incomplete items (2): WS-8, WS-15
+- WS-8 (screenshot) - needs actual screenshot of extension in action
+- WS-15 (browser logos) - needs official Chrome/Firefox SVG logos
+
+---

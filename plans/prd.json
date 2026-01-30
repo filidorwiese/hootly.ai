@@ -1342,7 +1342,7 @@
       "Apply background-size: contain",
       "Ensure content remains readable over image"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "WS-13",
