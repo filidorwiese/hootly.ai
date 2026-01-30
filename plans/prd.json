@@ -572,7 +572,7 @@
       "Verify delete button uses glyphs.fyi icon",
       "Verify date group icons (if any) use glyphs.fyi icons"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "ICON-5",

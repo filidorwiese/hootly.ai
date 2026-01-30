@@ -3,6 +3,70 @@ import type { Conversation, Persona, Settings } from '../shared/types';
 import { DEFAULT_PERSONAS } from '../shared/types';
 import { t, initLanguage } from '../shared/i18n';
 
+// SVG icons for history page
+const VIEW_ICON = `<svg width="14" height="14" viewBox="0 0 24 24" fill="none">
+  <ellipse cx="12" cy="12" rx="10" ry="6" fill="#E8F3F5" stroke="#3A7B89" stroke-width="1.5"/>
+  <circle cx="12" cy="12" r="3" fill="#3A7B89"/>
+</svg>`;
+
+const CONTINUE_ICON = `<svg width="14" height="14" viewBox="0 0 24 24" fill="none">
+  <path d="M5 4v16l14-8L5 4z" fill="#D1E1D6" stroke="#4A7C54" stroke-width="1.5" stroke-linejoin="round"/>
+</svg>`;
+
+const DELETE_ICON = `<svg width="14" height="14" viewBox="0 0 24 24" fill="none">
+  <path d="M3 6h18" stroke="#C45A5A" stroke-width="2" stroke-linecap="round"/>
+  <path d="M8 6V4c0-1.1.9-2 2-2h4c1.1 0 2 .9 2 2v2" stroke="#C45A5A" stroke-width="2"/>
+  <path d="M5 6l1 14c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2l1-14" fill="#FFEAEA" stroke="#C45A5A" stroke-width="2"/>
+  <path d="M10 10v8M14 10v8" stroke="#C45A5A" stroke-width="1.5" stroke-linecap="round"/>
+</svg>`;
+
+const EXPORT_ICON = `<svg width="14" height="14" viewBox="0 0 24 24" fill="none">
+  <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4" stroke="#3A7B89" stroke-width="2" stroke-linecap="round"/>
+  <path d="M7 10l5-5 5 5" stroke="#3A7B89" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M12 5v12" stroke="#3A7B89" stroke-width="2" stroke-linecap="round"/>
+  <rect x="3" y="15" width="18" height="6" rx="2" fill="#E8F3F5" stroke="none"/>
+</svg>`;
+
+const IMPORT_ICON = `<svg width="14" height="14" viewBox="0 0 24 24" fill="none">
+  <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4" stroke="#4A7C54" stroke-width="2" stroke-linecap="round"/>
+  <path d="M7 11l5 5 5-5" stroke="#4A7C54" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M12 16V4" stroke="#4A7C54" stroke-width="2" stroke-linecap="round"/>
+  <rect x="3" y="15" width="18" height="6" rx="2" fill="#D1E1D6" stroke="none"/>
+</svg>`;
+
+const CLEAR_ALL_ICON = `<svg width="14" height="14" viewBox="0 0 24 24" fill="none">
+  <circle cx="12" cy="12" r="9" fill="#FFEAEA" stroke="#C45A5A" stroke-width="2"/>
+  <path d="M8 8l8 8M16 8l-8 8" stroke="#C45A5A" stroke-width="2" stroke-linecap="round"/>
+</svg>`;
+
+const BACK_ICON = `<svg width="14" height="14" viewBox="0 0 24 24" fill="none">
+  <path d="M15 18l-6-6 6-6" stroke="#3A5A40" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <circle cx="12" cy="12" r="9" fill="#E8F0EA" stroke="#3A5A40" stroke-width="1.5" opacity="0.5"/>
+</svg>`;
+
+const SEARCH_CLEAR_ICON = `<svg width="12" height="12" viewBox="0 0 24 24" fill="none">
+  <circle cx="12" cy="12" r="9" fill="#EEF1EC" stroke="#6B7A6E" stroke-width="1.5"/>
+  <path d="M8 8l8 8M16 8l-8 8" stroke="#6B7A6E" stroke-width="2" stroke-linecap="round"/>
+</svg>`;
+
+const HISTORY_TITLE_ICON = `<svg width="28" height="28" viewBox="0 0 24 24" fill="none">
+  <circle cx="12" cy="12" r="9" fill="#E8F0EA" stroke="#3A5A40" stroke-width="2"/>
+  <path d="M12 6v6l4 2" stroke="#4A7C54" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <circle cx="12" cy="12" r="2" fill="#3A5A40"/>
+</svg>`;
+
+const EMPTY_STATE_ICON = `<svg width="48" height="48" viewBox="0 0 24 24" fill="none">
+  <circle cx="12" cy="12" r="9" fill="#E8F0EA" stroke="#3A5A40" stroke-width="1.5"/>
+  <path d="M12 6v6l4 2" stroke="#4A7C54" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <circle cx="12" cy="12" r="2" fill="#3A5A40"/>
+</svg>`;
+
+const NO_RESULTS_ICON = `<svg width="48" height="48" viewBox="0 0 24 24" fill="none">
+  <circle cx="10" cy="10" r="6" fill="#E8F3F5" stroke="#3A7B89" stroke-width="2"/>
+  <path d="M14.5 14.5L20 20" stroke="#3A7B89" stroke-width="2" stroke-linecap="round"/>
+  <path d="M7 10h6" stroke="#3A7B89" stroke-width="1.5" stroke-linecap="round"/>
+</svg>`;
+
 interface DateGroup {
   label: string;
   conversations: Conversation[];
@@ -133,13 +197,13 @@ function renderConversation(conv: Conversation): string {
           <span>${messagesLabel}</span>
           <div class="conversation-actions">
             <button class="action-btn view-btn" data-id="${conv.id}" title="${t('history.view') || 'View'}">
-              ${t('history.view') || 'View'}
+              ${VIEW_ICON}${t('history.view') || 'View'}
             </button>
             <button class="action-btn continue" data-id="${conv.id}" title="${continueLabel}">
-              ${continueLabel}
+              ${CONTINUE_ICON}${continueLabel}
             </button>
             <button class="action-btn delete" data-id="${conv.id}" title="${t('history.delete') || 'Delete'}">
-              ${t('settings.delete') || 'Delete'}
+              ${DELETE_ICON}${t('settings.delete') || 'Delete'}
             </button>
           </div>
         </div>
@@ -504,9 +568,15 @@ async function init(): Promise<void> {
   currentSettings = await Storage.getSettings();
   allPersonas = [...DEFAULT_PERSONAS, ...(currentSettings.customPersonas || [])];
 
-  // Set logo
-  const logo = document.getElementById('logo') as HTMLImageElement;
-  logo.src = chrome.runtime.getURL('icons/icon-48.png');
+  // Inject SVG icons into header and state elements
+  document.getElementById('titleIcon')!.innerHTML = HISTORY_TITLE_ICON;
+  document.getElementById('importIcon')!.innerHTML = IMPORT_ICON;
+  document.getElementById('exportIcon')!.innerHTML = EXPORT_ICON;
+  document.getElementById('clearAllIcon')!.innerHTML = CLEAR_ALL_ICON;
+  document.getElementById('backIcon')!.innerHTML = BACK_ICON;
+  document.getElementById('clearSearchBtn')!.innerHTML = SEARCH_CLEAR_ICON;
+  document.getElementById('emptyStateIcon')!.innerHTML = EMPTY_STATE_ICON;
+  document.getElementById('noResultsIcon')!.innerHTML = NO_RESULTS_ICON;
 
   // Apply translations
   applyTranslations();

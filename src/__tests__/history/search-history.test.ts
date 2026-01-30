@@ -57,9 +57,9 @@ describe('HP-16: Add search to history page', () => {
       expect(historyHtml).toContain('class="no-results-state"');
     });
 
-    it('should have no results icon', () => {
+    it('should have no results icon placeholder', () => {
       expect(historyHtml).toContain('class="no-results-icon"');
-      expect(historyHtml).toContain('🔍');
+      expect(historyHtml).toContain('id="noResultsIcon"');
     });
 
     it('should have i18n text for no results', () => {

@@ -1215,3 +1215,33 @@ NOTES FOR NEXT PERSON:
 - ICON-5 (icons are colorful not monochrome) not started - may auto-pass after ICON-4
 - ICON-6 (context toggle icons) - already done via ICON-1
 - WS-1 through WS-10 (website) not started
+
+---
+
+2026-01-30 - ICON-4: Replace history page icons with glyphs.fyi icons
+
+COMPLETED:
+- Added 11 SVG icon constants to history.ts: VIEW_ICON, CONTINUE_ICON, DELETE_ICON, EXPORT_ICON, IMPORT_ICON, CLEAR_ALL_ICON, BACK_ICON, SEARCH_CLEAR_ICON, HISTORY_TITLE_ICON, EMPTY_STATE_ICON, NO_RESULTS_ICON
+- Updated history.html with placeholder spans for icon injection
+- Added CSS for .action-btn svg, .header-btn svg, .back-link svg, h1 svg, .clear-search-btn svg
+- renderConversation() now uses SVG icons for View, Continue, Delete buttons
+- init() injects SVG icons into header buttons, search clear, empty state, no results state
+- Replaced emoji icons (📜, 🔍, ✕, ←) with colorful SVG icons
+- All icons use forest theme colors (#3A5A40, #4A7C54, #E8F0EA, #3A7B89, #E8F3F5, #C45A5A, #FFEAEA)
+- Updated search-history.test.ts to expect SVG icon placeholder instead of emoji
+- 57 unit tests verifying icon implementation
+
+FILES CHANGED:
+- src/history/index.html (added icon placeholders, CSS for SVG icons)
+- src/history/history.ts (added SVG icon constants, injection in init, used in renderConversation)
+- src/__tests__/icons/history-page-icons.test.ts (new - 57 tests)
+- src/__tests__/history/search-history.test.ts (updated for SVG icon)
+- plans/prd.json (marked ICON-4 as passing)
+
+PRD ITEMS COMPLETED:
+- ICON-4: Replace history page icons with glyphs.fyi icons
+
+NOTES FOR NEXT PERSON:
+- ICON-5 (icons are colorful not monochrome) - should auto-pass, all icons use multiple colors
+- ICON-6 (context toggle icons) - already done via ICON-1
+- WS-1 through WS-10 (website) not started
