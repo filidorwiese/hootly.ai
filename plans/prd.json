@@ -1500,7 +1500,7 @@
       "Include background, text, accent, border colors",
       "Document color mapping from light to dark"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "DM-2",
@@ -1582,6 +1582,216 @@
       "Apply dark theme styles conditionally",
       "Verify history items styled correctly",
       "Test in both light and dark modes"
+    ],
+    "passes": false
+  },
+  {
+    "id": "ST-5",
+    "category": "selection-tooltip",
+    "description": "Bug: Tooltip appears even when disabled in settings",
+    "steps": [
+      "Open settings, uncheck 'Show Selection Tooltip'",
+      "Navigate to any webpage",
+      "Select text on the page",
+      "Verify tooltip does NOT appear",
+      "Check content script loads setting on init"
+    ],
+    "passes": false
+  },
+  {
+    "id": "LIC-1",
+    "category": "license",
+    "description": "Add GPL license file to project",
+    "steps": [
+      "Create LICENSE file in project root",
+      "Add full GPL v3 license text",
+      "Verify file is accessible at repo root"
+    ],
+    "passes": false
+  },
+  {
+    "id": "LIC-2",
+    "category": "license",
+    "description": "Add license reference to package.json",
+    "steps": [
+      "Update license field in package.json to 'GPL-3.0'",
+      "Verify npm recognizes license"
+    ],
+    "passes": false
+  },
+  {
+    "id": "FAQ-1",
+    "category": "faq",
+    "description": "Add FAQ section to website",
+    "steps": [
+      "Create FAQ section in website/index.html",
+      "Add collapsible Q&A format",
+      "Style consistent with website design",
+      "Position below feature sections"
+    ],
+    "passes": false
+  },
+  {
+    "id": "FAQ-2",
+    "category": "faq",
+    "description": "Add FAQ: How to create Claude API key",
+    "steps": [
+      "Add question: 'How do I get a Claude API key?'",
+      "Answer: Go to console.anthropic.com, create account, generate key",
+      "Keep answer concise (2-3 sentences max)"
+    ],
+    "passes": false
+  },
+  {
+    "id": "FAQ-3",
+    "category": "faq",
+    "description": "Add FAQ: How to create ChatGPT/OpenAI API key",
+    "steps": [
+      "Add question: 'How do I get an OpenAI API key?'",
+      "Answer: Go to platform.openai.com, create account, generate key",
+      "Keep answer concise (2-3 sentences max)"
+    ],
+    "passes": false
+  },
+  {
+    "id": "FAQ-4",
+    "category": "faq",
+    "description": "Add FAQ: How to create Gemini API key",
+    "steps": [
+      "Add question: 'How do I get a Google Gemini API key?'",
+      "Answer: Go to aistudio.google.com, sign in, create API key",
+      "Keep answer concise (1-2 sentences max)"
+    ],
+    "passes": false
+  },
+  {
+    "id": "FAQ-5",
+    "category": "faq",
+    "description": "Add FAQ: Where is my data stored",
+    "steps": [
+      "Add question: 'Where is my data stored?'",
+      "Answer: Locally in your browser. No data sent to external servers except API calls.",
+      "Keep answer concise (1-2 sentences)"
+    ],
+    "passes": false
+  },
+  {
+    "id": "FAQ-6",
+    "category": "faq",
+    "description": "Add FAQ: Is my API key safe",
+    "steps": [
+      "Add question: 'Is my API key safe?'",
+      "Answer: Stored locally in browser storage, never sent anywhere except official API endpoints.",
+      "Keep answer concise (1-2 sentences)"
+    ],
+    "passes": false
+  },
+  {
+    "id": "TT-1",
+    "category": "tooltips",
+    "description": "Update context toggle tooltip to be descriptive",
+    "steps": [
+      "Locate context toggle button in InputArea.tsx or Dialog.tsx",
+      "Change tooltip from 'Click to enable context' to 'Add current website as context to chat'",
+      "Add i18n translation key if needed",
+      "Verify tooltip displays on hover"
+    ],
+    "passes": false
+  },
+  {
+    "id": "TT-2",
+    "category": "tooltips",
+    "description": "Update persona selector tooltip",
+    "steps": [
+      "Locate persona selector dropdown in dialog",
+      "Change tooltip from showing persona name to 'Change persona'",
+      "Add i18n translation key if needed",
+      "Verify tooltip displays on hover"
+    ],
+    "passes": false
+  },
+  {
+    "id": "TT-3",
+    "category": "tooltips",
+    "description": "Update model selector tooltip",
+    "steps": [
+      "Locate model selector dropdown in dialog",
+      "Change tooltip from showing model name to 'Change AI model'",
+      "Add i18n translation key if needed",
+      "Verify tooltip displays on hover"
+    ],
+    "passes": false
+  },
+  {
+    "id": "TT-4",
+    "category": "tooltips",
+    "description": "Add tooltip to close button",
+    "steps": [
+      "Locate close button in Dialog.tsx header",
+      "Add title attribute with 'Close dialog'",
+      "Add i18n translation key if needed",
+      "Verify tooltip displays on hover"
+    ],
+    "passes": false
+  },
+  {
+    "id": "HP-22",
+    "category": "history-page",
+    "description": "Refactor Dialog to accept onClose callback prop",
+    "steps": [
+      "Add optional onClose prop to Dialog component",
+      "Default behavior: hide dialog (current behavior)",
+      "If onClose provided: call onClose instead",
+      "Verify regular dialog still works unchanged"
+    ],
+    "passes": false
+  },
+  {
+    "id": "HP-23",
+    "category": "history-page",
+    "description": "Reuse Dialog component in chat page",
+    "steps": [
+      "Import Dialog component into chat.ts",
+      "Remove any duplicate dialog code from chat page",
+      "Render Dialog with conversation loaded from URL param",
+      "Verify style matches regular dialog exactly"
+    ],
+    "passes": false
+  },
+  {
+    "id": "HP-24",
+    "category": "history-page",
+    "description": "Chat page close button closes window",
+    "steps": [
+      "Pass onClose prop to Dialog in chat.ts",
+      "onClose calls window.close()",
+      "Verify clicking close button closes the tab/window",
+      "Update tooltip to 'Close window' for chat page context"
+    ],
+    "passes": false
+  },
+  {
+    "id": "HP-25",
+    "category": "history-page",
+    "description": "Verify chat page dialog has full functionality",
+    "steps": [
+      "Test send message works on chat page",
+      "Test context toggle works on chat page",
+      "Test persona selector works on chat page",
+      "Test model selector works on chat page",
+      "Test conversation saves after exchange"
+    ],
+    "passes": false
+  },
+  {
+    "id": "WS-20",
+    "category": "website",
+    "description": "Add npm script to serve website locally",
+    "steps": [
+      "Add serve or http-server as devDependency",
+      "Add 'serve:website' script to package.json",
+      "Script serves website folder on localhost",
+      "Test with npm run serve:website"
     ],
     "passes": false
   }

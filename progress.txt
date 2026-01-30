@@ -1953,4 +1953,38 @@ NOTES FOR NEXT PERSON:
 - ICON-7 through ICON-14 (specific icon replacements) not started
 - PP-11, PP-12 (personas page updates) not started
 - RM-1 (update README) not started
-- DM-1 through DM-8 (dark mode) not started
+- DM-2 through DM-8 (dark mode remaining) not started
+
+---
+
+2026-01-30 - DM-1: Create dark mode CSS variables
+
+COMPLETED:
+- Added darkColors palette to styles.ts with forest-themed dark mode
+- Dark theme uses inverted luminance with same hue family
+- Primary-500 is #4A7C54 (brighter for visibility on dark)
+- Dark backgrounds: #121812 (base), #1A221A (elevated), #1E261E (muted)
+- Text colors inverted: #E8F0EA (primary), #B8C4BC (secondary)
+- Accent colors brightened for dark bg visibility
+- Added Theme type ('light' | 'dark' | 'auto')
+- Added getColors(theme) helper function
+- Added darkCssVariables string with [data-theme="dark"] selector
+- Added @media (prefers-color-scheme: dark) for [data-theme="auto"]
+- Added allCssVariables combining light and dark mode CSS
+- 44 unit tests covering all dark mode color definitions
+
+FILES CHANGED:
+- src/shared/styles.ts (added darkColors, Theme, getColors, darkCssVariables, allCssVariables)
+- src/__tests__/dark-mode/dm1-css-variables.test.ts (new - 44 tests)
+- plans/prd.json (marked DM-1 as passing)
+
+PRD ITEMS COMPLETED:
+- DM-1: Create dark mode CSS variables
+
+NOTES FOR NEXT PERSON:
+- DM-2 (add theme setting to storage) is next step
+- DM-3 (theme toggle in settings) builds on DM-2
+- DM-4 (auto mode implementation) CSS ready, needs JS listener
+- DM-5-8 (apply to dialog/settings/personas/history) need to use CSS vars
+- Dark colors designed with WCAG AA contrast in mind
+- Color mapping: darkColors has same structure as colors for easy switching

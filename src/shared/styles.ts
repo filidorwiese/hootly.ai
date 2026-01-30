@@ -3,8 +3,13 @@
  *
  * Forest-themed flat design system with solid colors, no shadows or gradients.
  * WCAG AA compliant contrast ratios maintained.
+ * Supports light and dark themes.
  */
 
+// Theme type
+export type Theme = 'light' | 'dark' | 'auto';
+
+// Light theme colors (default)
 export const colors = {
   // Primary - Forest Green spectrum
   primary: {
@@ -98,6 +103,103 @@ export const colors = {
   },
 } as const;
 
+/**
+ * Dark theme colors - Forest-themed dark mode
+ * Maintains WCAG AA contrast ratios with inverted luminance
+ */
+export const darkColors = {
+  // Primary - Forest Green spectrum (same hues, adjusted for dark bg)
+  primary: {
+    50: '#0A100D',   // Inverted: darkest becomes lightest
+    100: '#142019',
+    200: '#203326',
+    300: '#2D4733',
+    400: '#3A5A40',
+    500: '#4A7C54', // Main primary (brighter for dark mode)
+    600: '#75A683',
+    700: '#A3C4AC',
+    800: '#D1E1D6',
+    900: '#E8F0EA',
+  },
+
+  // Background - Dark forest tones
+  background: {
+    base: '#121812',     // Deep forest black
+    elevated: '#1A221A', // Slightly lighter
+    muted: '#1E261E',    // Muted dark
+    subtle: '#242E24',   // Subtle variation
+  },
+
+  // Surface - Dark card/container backgrounds
+  surface: {
+    default: '#1A221A',
+    hover: '#242E24',
+    active: '#2A352A',
+    disabled: '#1E261E',
+  },
+
+  // Border - Visible on dark backgrounds
+  border: {
+    light: '#2A352A',
+    default: '#3A4A3A',
+    strong: '#4A5A4A',
+    focus: '#75A683',
+  },
+
+  // Text - High contrast on dark backgrounds
+  text: {
+    primary: '#E8F0EA',
+    secondary: '#B8C4BC',
+    tertiary: '#8A9A8C',
+    inverse: '#121812',
+    link: '#75A683',
+    linkHover: '#A3C4AC',
+  },
+
+  // Accent - Brighter for visibility on dark
+  accent: {
+    success: '#75A683',
+    successHover: '#8BB897',
+    info: '#5AA0B0',
+    infoHover: '#72B4C2',
+    warning: '#D4A840',
+    warningHover: '#E0BC5C',
+    error: '#D87070',
+    errorHover: '#E68888',
+  },
+
+  // Semantic - Status indicators for dark mode
+  status: {
+    successBg: '#1A2A1E',
+    successText: '#A3C4AC',
+    successBorder: '#3A5A40',
+    infoBg: '#1A2A2E',
+    infoText: '#A3C4C9',
+    infoBorder: '#3A5A60',
+    warningBg: '#2A2A1A',
+    warningText: '#D4C4A0',
+    warningBorder: '#5A5030',
+    errorBg: '#2A1A1A',
+    errorText: '#D4A0A0',
+    errorBorder: '#5A3030',
+  },
+
+  // User/Assistant message backgrounds
+  message: {
+    userBg: '#1E2A22',
+    userBorder: '#3A5040',
+    assistantBg: '#1A221A',
+    assistantBorder: '#2A352A',
+  },
+
+  // Send button specific
+  send: {
+    default: '#75A683',
+    hover: '#8BB897',
+    active: '#6A9876',
+  },
+} as const;
+
 // Spacing scale (4px base unit)
 export const spacing = {
   0: '0',
@@ -151,6 +253,15 @@ export const transitions = {
   default: '0.15s ease',
   slow: '0.25s ease',
 } as const;
+
+/**
+ * Get colors by theme
+ * @param theme - 'light' or 'dark'
+ * @returns Color palette for the specified theme
+ */
+export const getColors = (theme: 'light' | 'dark') => {
+  return theme === 'dark' ? darkColors : colors;
+};
 
 /**
  * CSS custom properties string for embedding in HTML pages
@@ -276,6 +387,171 @@ export const cssVariables = `
     --transition-slow: ${transitions.slow};
   }
 `;
+
+/**
+ * Dark mode CSS variables
+ * Apply via [data-theme="dark"] or prefers-color-scheme media query
+ */
+export const darkCssVariables = `
+  [data-theme="dark"] {
+    /* Primary Colors */
+    --color-primary-50: ${darkColors.primary[50]};
+    --color-primary-100: ${darkColors.primary[100]};
+    --color-primary-200: ${darkColors.primary[200]};
+    --color-primary-300: ${darkColors.primary[300]};
+    --color-primary-400: ${darkColors.primary[400]};
+    --color-primary-500: ${darkColors.primary[500]};
+    --color-primary-600: ${darkColors.primary[600]};
+    --color-primary-700: ${darkColors.primary[700]};
+    --color-primary-800: ${darkColors.primary[800]};
+    --color-primary-900: ${darkColors.primary[900]};
+
+    /* Backgrounds */
+    --color-bg-base: ${darkColors.background.base};
+    --color-bg-elevated: ${darkColors.background.elevated};
+    --color-bg-muted: ${darkColors.background.muted};
+    --color-bg-subtle: ${darkColors.background.subtle};
+
+    /* Surfaces */
+    --color-surface-default: ${darkColors.surface.default};
+    --color-surface-hover: ${darkColors.surface.hover};
+    --color-surface-active: ${darkColors.surface.active};
+    --color-surface-disabled: ${darkColors.surface.disabled};
+
+    /* Borders */
+    --color-border-light: ${darkColors.border.light};
+    --color-border-default: ${darkColors.border.default};
+    --color-border-strong: ${darkColors.border.strong};
+    --color-border-focus: ${darkColors.border.focus};
+
+    /* Text */
+    --color-text-primary: ${darkColors.text.primary};
+    --color-text-secondary: ${darkColors.text.secondary};
+    --color-text-tertiary: ${darkColors.text.tertiary};
+    --color-text-inverse: ${darkColors.text.inverse};
+    --color-text-link: ${darkColors.text.link};
+    --color-text-link-hover: ${darkColors.text.linkHover};
+
+    /* Accent */
+    --color-accent-success: ${darkColors.accent.success};
+    --color-accent-success-hover: ${darkColors.accent.successHover};
+    --color-accent-info: ${darkColors.accent.info};
+    --color-accent-info-hover: ${darkColors.accent.infoHover};
+    --color-accent-warning: ${darkColors.accent.warning};
+    --color-accent-warning-hover: ${darkColors.accent.warningHover};
+    --color-accent-error: ${darkColors.accent.error};
+    --color-accent-error-hover: ${darkColors.accent.errorHover};
+
+    /* Status */
+    --color-status-success-bg: ${darkColors.status.successBg};
+    --color-status-success-text: ${darkColors.status.successText};
+    --color-status-success-border: ${darkColors.status.successBorder};
+    --color-status-info-bg: ${darkColors.status.infoBg};
+    --color-status-info-text: ${darkColors.status.infoText};
+    --color-status-info-border: ${darkColors.status.infoBorder};
+    --color-status-warning-bg: ${darkColors.status.warningBg};
+    --color-status-warning-text: ${darkColors.status.warningText};
+    --color-status-warning-border: ${darkColors.status.warningBorder};
+    --color-status-error-bg: ${darkColors.status.errorBg};
+    --color-status-error-text: ${darkColors.status.errorText};
+    --color-status-error-border: ${darkColors.status.errorBorder};
+
+    /* Messages */
+    --color-message-user-bg: ${darkColors.message.userBg};
+    --color-message-user-border: ${darkColors.message.userBorder};
+    --color-message-assistant-bg: ${darkColors.message.assistantBg};
+    --color-message-assistant-border: ${darkColors.message.assistantBorder};
+
+    /* Send Button */
+    --color-send-default: ${darkColors.send.default};
+    --color-send-hover: ${darkColors.send.hover};
+    --color-send-active: ${darkColors.send.active};
+  }
+
+  /* Auto mode: system preference detection */
+  @media (prefers-color-scheme: dark) {
+    [data-theme="auto"] {
+      /* Primary Colors */
+      --color-primary-50: ${darkColors.primary[50]};
+      --color-primary-100: ${darkColors.primary[100]};
+      --color-primary-200: ${darkColors.primary[200]};
+      --color-primary-300: ${darkColors.primary[300]};
+      --color-primary-400: ${darkColors.primary[400]};
+      --color-primary-500: ${darkColors.primary[500]};
+      --color-primary-600: ${darkColors.primary[600]};
+      --color-primary-700: ${darkColors.primary[700]};
+      --color-primary-800: ${darkColors.primary[800]};
+      --color-primary-900: ${darkColors.primary[900]};
+
+      /* Backgrounds */
+      --color-bg-base: ${darkColors.background.base};
+      --color-bg-elevated: ${darkColors.background.elevated};
+      --color-bg-muted: ${darkColors.background.muted};
+      --color-bg-subtle: ${darkColors.background.subtle};
+
+      /* Surfaces */
+      --color-surface-default: ${darkColors.surface.default};
+      --color-surface-hover: ${darkColors.surface.hover};
+      --color-surface-active: ${darkColors.surface.active};
+      --color-surface-disabled: ${darkColors.surface.disabled};
+
+      /* Borders */
+      --color-border-light: ${darkColors.border.light};
+      --color-border-default: ${darkColors.border.default};
+      --color-border-strong: ${darkColors.border.strong};
+      --color-border-focus: ${darkColors.border.focus};
+
+      /* Text */
+      --color-text-primary: ${darkColors.text.primary};
+      --color-text-secondary: ${darkColors.text.secondary};
+      --color-text-tertiary: ${darkColors.text.tertiary};
+      --color-text-inverse: ${darkColors.text.inverse};
+      --color-text-link: ${darkColors.text.link};
+      --color-text-link-hover: ${darkColors.text.linkHover};
+
+      /* Accent */
+      --color-accent-success: ${darkColors.accent.success};
+      --color-accent-success-hover: ${darkColors.accent.successHover};
+      --color-accent-info: ${darkColors.accent.info};
+      --color-accent-info-hover: ${darkColors.accent.infoHover};
+      --color-accent-warning: ${darkColors.accent.warning};
+      --color-accent-warning-hover: ${darkColors.accent.warningHover};
+      --color-accent-error: ${darkColors.accent.error};
+      --color-accent-error-hover: ${darkColors.accent.errorHover};
+
+      /* Status */
+      --color-status-success-bg: ${darkColors.status.successBg};
+      --color-status-success-text: ${darkColors.status.successText};
+      --color-status-success-border: ${darkColors.status.successBorder};
+      --color-status-info-bg: ${darkColors.status.infoBg};
+      --color-status-info-text: ${darkColors.status.infoText};
+      --color-status-info-border: ${darkColors.status.infoBorder};
+      --color-status-warning-bg: ${darkColors.status.warningBg};
+      --color-status-warning-text: ${darkColors.status.warningText};
+      --color-status-warning-border: ${darkColors.status.warningBorder};
+      --color-status-error-bg: ${darkColors.status.errorBg};
+      --color-status-error-text: ${darkColors.status.errorText};
+      --color-status-error-border: ${darkColors.status.errorBorder};
+
+      /* Messages */
+      --color-message-user-bg: ${darkColors.message.userBg};
+      --color-message-user-border: ${darkColors.message.userBorder};
+      --color-message-assistant-bg: ${darkColors.message.assistantBg};
+      --color-message-assistant-border: ${darkColors.message.assistantBorder};
+
+      /* Send Button */
+      --color-send-default: ${darkColors.send.default};
+      --color-send-hover: ${darkColors.send.hover};
+      --color-send-active: ${darkColors.send.active};
+    }
+  }
+`;
+
+/**
+ * Combined CSS variables for both light and dark modes
+ * Includes light mode defaults, dark mode overrides, and auto mode
+ */
+export const allCssVariables = cssVariables + darkCssVariables;
 
 /**
  * Flat design reset - removes shadows and gradients
