@@ -1044,7 +1044,7 @@
       "Add three tab buttons: Settings, Personas, History",
       "Style consistent with forest theme"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "TAB-2",
@@ -1345,17 +1345,6 @@
     "passes": false
   },
   {
-    "id": "WS-12",
-    "category": "website",
-    "description": "Remove open-source line from website",
-    "steps": [
-      "Locate open-source mention in website/index.html",
-      "Remove the line/section",
-      "Verify layout still looks correct after removal"
-    ],
-    "passes": false
-  },
-  {
     "id": "WS-13",
     "category": "website",
     "description": "Add owl logo to website header",
@@ -1376,6 +1365,42 @@
       "Display USPs side-by-side (2-4 columns)",
       "Reduce padding/margins for compact look",
       "Ensure responsive: stack on mobile, columns on desktop"
+    ],
+    "passes": false
+  },
+  {
+    "id": "WS-15",
+    "category": "website",
+    "description": "Use official Chrome and Firefox logos",
+    "steps": [
+      "Download official Chrome logo SVG",
+      "Download official Firefox logo SVG",
+      "Save logos to website/images/ folder",
+      "Replace current browser icons with official logos",
+      "Verify logos display correctly at button size"
+    ],
+    "passes": false
+  },
+  {
+    "id": "WS-16",
+    "category": "website",
+    "description": "Add GitHub logo to header",
+    "steps": [
+      "Add GitHub logo icon to top-right of header",
+      "Link to https://github.com/filidorwiese/hootly.ai",
+      "Open link in new tab",
+      "Style consistent with header design"
+    ],
+    "passes": false
+  },
+  {
+    "id": "WS-17",
+    "category": "website",
+    "description": "Remove website unit tests",
+    "steps": [
+      "Identify any website-related test files",
+      "Remove test files for website components",
+      "Update test config if needed to exclude website folder"
     ],
     "passes": false
   }

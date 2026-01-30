@@ -1589,3 +1589,47 @@ NOTES FOR NEXT PERSON:
 - TAB-1 through TAB-5 (tabbed pages) not started
 - ICON-7 through ICON-14 (specific icon replacements) not started
 - HP-18 through HP-21 (chat page for continued conversations) not started
+
+---
+
+2026-01-30 - TAB-1: Create shared TabHeader component
+
+COMPLETED:
+- Created src/shared/TabHeader.ts module with HTML/CSS/JS implementation
+- Added owl logo SVG with forest theme colors (#4A7C54, #E8F0EA, #2D3A30, #A3C4AC)
+- Added "Hootly.ai" brand title in bold next to logo
+- Added three tab buttons (Settings, Personas, History) with SVG icons
+- Tab buttons show active state (highlighted bg + border)
+- Clicking non-active tab navigates to corresponding page via chrome.runtime.getURL
+- Flat design styling (no shadows, solid borders, CSS custom properties)
+- Added i18n translations for tabs.settings, tabs.personas, tabs.history in all 10 languages
+- Created 46 unit tests verifying all TAB-1 requirements
+
+FILES CHANGED:
+- src/shared/TabHeader.ts (new - full module with getTabHeaderStyles, generateTabHeaderHTML, getTabUrl, initTabHeaderNav, injectTabHeader, createTabHeaderElement)
+- src/shared/i18n/en.json (added tabs section)
+- src/shared/i18n/nl.json (added tabs section)
+- src/shared/i18n/de.json (added tabs section)
+- src/shared/i18n/fr.json (added tabs section)
+- src/shared/i18n/es.json (added tabs section)
+- src/shared/i18n/it.json (added tabs section)
+- src/shared/i18n/pt.json (added tabs section)
+- src/shared/i18n/zh.json (added tabs section)
+- src/shared/i18n/ja.json (added tabs section)
+- src/shared/i18n/ko.json (added tabs section)
+- src/__tests__/shared/TabHeader.test.ts (new - 46 tests)
+- plans/prd.json (marked TAB-1 as passing)
+
+PRD ITEMS COMPLETED:
+- TAB-1: Create shared TabHeader component
+
+NOTES FOR NEXT PERSON:
+- TabHeader module created but NOT YET INTEGRATED into pages
+- TAB-2 (integrate into settings.ts) next priority
+- TAB-3 (integrate into personas.ts) after TAB-2
+- TAB-4 (integrate into history.ts) after TAB-3
+- TAB-5 (update manage personas link) after integration
+- Use injectTabHeader({ activeTab: 'settings' }) in each page's init function
+- WS-8 through WS-14 (website) remaining
+- ICON-7 through ICON-14 (specific icon replacements) not started
+- HP-18 through HP-21 (chat page for continued conversations) not started

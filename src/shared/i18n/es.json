@@ -142,5 +142,10 @@
   "popup": {
     "loading": "Cargando...",
     "notFound": "Conversación no encontrada"
+  },
+  "tabs": {
+    "settings": "Configuración",
+    "personas": "Personas",
+    "history": "Historial"
   }
 }

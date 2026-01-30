@@ -142,5 +142,10 @@
   "popup": {
     "loading": "Laden...",
     "notFound": "Gesprek niet gevonden"
+  },
+  "tabs": {
+    "settings": "Instellingen",
+    "personas": "Persona's",
+    "history": "Geschiedenis"
   }
 }

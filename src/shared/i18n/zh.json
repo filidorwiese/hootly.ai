@@ -142,5 +142,10 @@
   "popup": {
     "loading": "加载中...",
     "notFound": "对话未找到"
+  },
+  "tabs": {
+    "settings": "设置",
+    "personas": "角色",
+    "history": "历史"
   }
 }

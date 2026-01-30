@@ -142,5 +142,10 @@
   "popup": {
     "loading": "Chargement...",
     "notFound": "Conversation introuvable"
+  },
+  "tabs": {
+    "settings": "Paramètres",
+    "personas": "Personas",
+    "history": "Historique"
   }
 }
