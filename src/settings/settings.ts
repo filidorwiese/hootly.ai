@@ -3,6 +3,7 @@ import { Settings, ModelConfig, LLMProvider, DEFAULT_PERSONAS } from '../shared/
 import { t, initLanguage, setLanguage } from '../shared/i18n';
 import { selectDefaultModel } from '../shared/models';
 import { injectTabHeader, getTabUrl } from '../shared/TabHeader';
+import { initTheme } from '../shared/theme';
 
 const API_KEY_SECTIONS: Record<LLMProvider, string> = {
   claude: 'claudeApiKeySection',
@@ -95,6 +96,9 @@ async function fetchModelsFromBackground(): Promise<{ success: boolean; models?:
 }
 
 document.addEventListener('DOMContentLoaded', async () => {
+  // Initialize theme system (sets data-theme attribute and listens for changes)
+  await initTheme();
+
   // Initialize language first
   await initLanguage();
 

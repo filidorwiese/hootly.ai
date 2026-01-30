@@ -2174,3 +2174,34 @@ NOTES FOR NEXT PERSON:
 - CSS variables include light mode defaults, dark mode ([data-theme="dark"]), and auto mode (@media prefers-color-scheme)
 - DM-6 (settings page), DM-7 (personas page), DM-8 (history page) still pending
 - These pages need similar treatment: inject CSS vars, call initTheme, use CSS vars in styles
+
+---
+
+2026-01-30 - DM-6: Apply dark theme to settings page
+
+COMPLETED:
+- Added dark mode CSS variables to settings/index.html
+- Added [data-theme="dark"] selector with full dark color palette
+- Added @media (prefers-color-scheme: dark) with [data-theme="auto"] support
+- Imported initTheme() from shared/theme.ts into settings.ts
+- Called initTheme() at start of DOMContentLoaded handler
+- Settings page already used CSS variables for all styling (no changes needed)
+- 37 unit tests verifying dark mode integration
+
+FILES CHANGED:
+- src/settings/index.html (added dark mode CSS variables)
+- src/settings/settings.ts (added initTheme import and call)
+- src/__tests__/dark-mode/dm6-settings-theme.test.ts (new - 37 tests)
+- plans/prd.json (marked DM-6 as passing)
+
+PRD ITEMS COMPLETED:
+- DM-6: Apply dark theme to settings page
+
+NOTES FOR NEXT PERSON:
+- Settings page now supports light/dark/auto themes
+- Theme toggle in settings immediately affects the settings page itself
+- DM-7 (personas page) and DM-8 (history page) need similar treatment:
+  1. Add dark mode CSS variables to HTML file
+  2. Import and call initTheme() in page script
+  3. Pages already use CSS variables, so just need the dark overrides
+- Pattern is identical to settings page implementation
