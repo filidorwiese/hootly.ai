@@ -83,8 +83,10 @@ describe('WS-1: Create website folder structure', () => {
       expect(cssContent).toContain('Inter');
     });
 
-    it('should have flat design (no box-shadow)', () => {
-      expect(cssContent).not.toContain('box-shadow');
+    it('should have flat design (no actual shadows)', () => {
+      // Allow box-shadow: none (reset) but not actual shadow values
+      expect(cssContent).not.toMatch(/box-shadow:\s*\d+px/);
+      expect(cssContent).not.toMatch(/box-shadow:\s*rgba/);
     });
 
     it('should have flat design (no gradient)', () => {

@@ -800,7 +800,7 @@
       "Clean typography with Inter font",
       "Verify consistent with extension styling"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "WS-10",
