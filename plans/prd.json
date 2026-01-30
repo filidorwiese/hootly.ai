@@ -1107,7 +1107,7 @@
       "Verify icon displays correctly at button size",
       "Test hover states still work"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "ICON-8",
@@ -1119,7 +1119,7 @@
       "Verify icon displays correctly at button size",
       "Test hover states still work"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "ICON-9",
@@ -1167,7 +1167,7 @@
       "Verify icon displays correctly at button size",
       "Test hover states still work"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "ICON-13",
@@ -1179,7 +1179,7 @@
       "Verify icon displays correctly at button size",
       "Test disabled state styling"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "ICON-14",
@@ -1191,7 +1191,7 @@
       "Verify icon displays correctly at button size",
       "Test hover states still work"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "UI-8",
@@ -1488,7 +1488,7 @@
       "List languages: EN, NL, DE, FR, ES, IT, PT, ZH, JA, KO",
       "Add relevant icon or illustration"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "DM-1",

@@ -81,10 +81,10 @@ describe('WS-14: Compact Horizontal USP Sections', () => {
   });
 
   describe('HTML Structure', () => {
-    it('has 4 feature cards in the features section', () => {
+    it('has 5 feature cards in the features section', () => {
       const featureMatches = htmlContent.match(/<div class="feature"/g);
       expect(featureMatches).toBeTruthy();
-      expect(featureMatches!.length).toBe(4);
+      expect(featureMatches!.length).toBe(5);
     });
 
     it('all feature cards have unique IDs', () => {
@@ -92,6 +92,7 @@ describe('WS-14: Compact Horizontal USP Sections', () => {
       expect(htmlContent).toContain('id="privacy"');
       expect(htmlContent).toContain('id="free"');
       expect(htmlContent).toContain('id="history-personas"');
+      expect(htmlContent).toContain('id="multilingual"');
     });
   });
 

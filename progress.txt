@@ -2558,3 +2558,59 @@ NOTES FOR NEXT PERSON:
 - Remaining incomplete items (14): WS-8, WS-11, WS-13, WS-15-19, ICON-7/8/12/13/14, PP-12
 - ICON-7/8/12/13/14 may already be done - check Dialog.tsx uses FireIcon, HistoryIcon etc
 - Website items need external assets (screenshots, logos)
+
+---
+
+2026-01-30 - ICON-7/8/12/13/14: Mark dialog icons as passing (already implemented)
+
+COMPLETED:
+- Verified FireIcon used in Dialog.tsx for clear conversation button (ICON-7)
+- Verified HistoryIcon used in Dialog.tsx for history button (ICON-8)
+- Verified SettingsIcon used in Dialog.tsx for settings button (ICON-12)
+- Verified SendIcon used in InputArea.tsx for send button (ICON-13)
+- Verified ClearIcon used in InputArea.tsx for clear input button (ICON-14)
+- All icons imported from shared/icons.tsx
+- Updated PRD to mark all 5 items as passing
+
+FILES CHANGED:
+- plans/prd.json (marked ICON-7, ICON-8, ICON-12, ICON-13, ICON-14 as passing)
+
+PRD ITEMS COMPLETED:
+- ICON-7: Replace clear conversation icon with fire
+- ICON-8: Replace chat history icon with history
+- ICON-12: Replace settings icon with cog
+- ICON-13: Replace send button icon with play-circle
+- ICON-14: Replace clear input icon with times
+
+---
+
+2026-01-30 - WS-19: Add multilingual USP section to website
+
+COMPLETED:
+- Added fifth feature card with id="multilingual" in features section
+- Heading: "10 Languages"
+- Description lists all 10 supported languages: English, Dutch, German, French, Spanish, Italian, Portuguese, Chinese, Japanese, Korean
+- Created colorful globe SVG icon with language symbols (EN, 中, 日)
+- Icon uses forest theme colors (#3A5A40, #4A7C54, #E8F0EA, #A3C4AC)
+- Updated WS-14 test to expect 5 feature cards instead of 4
+- Created 10 unit tests for WS-19
+
+FILES CHANGED:
+- website/index.html (added multilingual feature card with SVG icon)
+- src/__tests__/website/ws19-multilingual.test.ts (new - 10 tests)
+- src/__tests__/website/ws14-compact-usps.test.ts (updated feature count to 5)
+- plans/prd.json (marked WS-19 as passing)
+
+PRD ITEMS COMPLETED:
+- WS-19: Add multilingual USP section
+
+NOTES FOR NEXT PERSON:
+- Remaining incomplete items (8): WS-8, WS-11, WS-13, WS-15, WS-16, WS-17, WS-18, PP-12
+- WS-8 (screenshot) - needs screenshot asset
+- WS-11 (forest.svg bg) - needs SVG asset
+- WS-13 (owl logo) - needs logo asset
+- WS-15 (browser logos) - needs official Chrome/Firefox logos
+- WS-16 (GitHub logo) - add GitHub link to header
+- WS-17 (remove website tests) - unclear requirement, may be unnecessary
+- WS-18 (author footer) - needs avatar asset
+- PP-12 (revert addPersonaBtn icon) - needs to identify previous icon style
