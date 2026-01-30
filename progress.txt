@@ -1299,3 +1299,32 @@ PRD ITEMS COMPLETED:
 NOTES FOR NEXT PERSON:
 - WS-2 through WS-10 (website) not started
 - WS-2 is next: Create HTML structure with hero section
+
+---
+
+2026-01-30 - WS-2: Create HTML structure with hero section
+
+COMPLETED:
+- Added semantic HTML5 structure (header, nav, main, section, footer)
+- Created hero section with h1 headline mentioning AI assistant in browser
+- Added tagline paragraph describing functionality (Chat with Claude, GPT, Gemini)
+- Added placeholder for screenshot hero image (images/screenshot.png)
+- Image has onerror handler to show "Screenshot coming soon" placeholder text
+- Added aria-labelledby for accessibility
+- Added meta description tag for SEO
+- Verified responsive viewport meta tag present
+- Styled hero section with flat design CSS (no shadows/gradients)
+- 29 unit tests covering all WS-2 requirements
+
+FILES CHANGED:
+- website/index.html (complete rewrite with semantic structure)
+- website/styles.css (added hero, header, footer styles)
+- src/__tests__/website/ws2-hero-section.test.ts (new - 29 tests)
+- plans/prd.json (marked WS-2 as passing)
+
+PRD ITEMS COMPLETED:
+- WS-2: Create HTML structure with hero section
+
+NOTES FOR NEXT PERSON:
+- WS-3 through WS-10 (website) not started
+- WS-3 is next: Add download buttons for browsers

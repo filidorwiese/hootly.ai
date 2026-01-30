@@ -709,7 +709,7 @@
       "Add placeholder for screenshot hero image",
       "Verify responsive viewport meta tag"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "WS-3",
