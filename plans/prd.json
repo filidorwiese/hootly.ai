@@ -1366,5 +1366,17 @@
       "Ensure logo loads correctly"
     ],
     "passes": false
+  },
+  {
+    "id": "WS-14",
+    "category": "website",
+    "description": "Make USP sections compact and horizontal",
+    "steps": [
+      "Change USP layout from stacked to grid/flexbox",
+      "Display USPs side-by-side (2-4 columns)",
+      "Reduce padding/margins for compact look",
+      "Ensure responsive: stack on mobile, columns on desktop"
+    ],
+    "passes": false
   }
 ]

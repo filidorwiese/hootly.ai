@@ -20,11 +20,10 @@ for ((i=1; i<=$1; i++)); do
   ONLY WORK ON A SINGLE FEATURE. \
   If, while implementing the feature, you notice the PRD is complete, output <promise>COMPLETE</promise>.")
 
-  echo "$result"
+  echo "$result"; echo
 
   if [[ "$result" == *"<promise>COMPLETE</promise>"* ]]; then
     echo "PRD complete after $i iterations."
     exit 0
   fi
 done
-
