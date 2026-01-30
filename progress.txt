@@ -1328,3 +1328,34 @@ PRD ITEMS COMPLETED:
 NOTES FOR NEXT PERSON:
 - WS-3 through WS-10 (website) not started
 - WS-3 is next: Add download buttons for browsers
+
+---
+
+2026-01-30 - WS-3: Add download buttons for browsers
+
+COMPLETED:
+- Added Firefox download button with colorful SVG icon in hero section
+- Added Chrome download button with colorful SVG icon in hero section
+- Buttons link to respective addon stores (placeholder URLs for now)
+- Firefox button: primary style (green bg), links to addons.mozilla.org
+- Chrome button: secondary style (white bg, border), links to chrome.google.com/webstore
+- Both buttons have target="_blank" and rel="noopener noreferrer" for security
+- Browser icons are inline SVGs with colorful styling
+- Button layout: "Download for" label on top, browser name bold below
+- Buttons use flat design (no shadows/gradients, solid colors)
+- Responsive flex-wrap layout for mobile screens
+- Hover states with color transitions
+- 36 unit tests verifying all WS-3 requirements
+
+FILES CHANGED:
+- website/index.html (added download-buttons container with Firefox/Chrome buttons)
+- website/styles.css (added download button styles, browser icon sizing)
+- src/__tests__/website/ws3-download-buttons.test.ts (new - 36 tests)
+- plans/prd.json (marked WS-3 as passing)
+
+PRD ITEMS COMPLETED:
+- WS-3: Add download buttons for browsers
+
+NOTES FOR NEXT PERSON:
+- WS-4 through WS-10 (website) not started
+- WS-4 is next: Add BYOK selling point section

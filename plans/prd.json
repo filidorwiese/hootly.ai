@@ -722,7 +722,7 @@
       "Link to respective addon stores (placeholder URLs)",
       "Verify buttons prominent and accessible"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "WS-4",

@@ -120,10 +120,76 @@ main {
 .hero-tagline {
   font-size: var(--font-size-lg);
   color: var(--color-text-secondary);
-  margin-bottom: var(--spacing-2xl);
+  margin-bottom: var(--spacing-xl);
   max-width: 600px;
   margin-left: auto;
   margin-right: auto;
+}
+
+/* Download buttons */
+.download-buttons {
+  display: flex;
+  gap: var(--spacing-md);
+  justify-content: center;
+  margin-bottom: var(--spacing-2xl);
+  flex-wrap: wrap;
+}
+
+.download-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+  padding: var(--spacing-md) var(--spacing-lg);
+  border-radius: var(--radius-md);
+  text-decoration: none;
+  font-weight: 500;
+  transition: background-color 0.2s ease, border-color 0.2s ease;
+  border: 2px solid transparent;
+}
+
+.download-btn-firefox {
+  background-color: var(--color-primary-600);
+  color: #FFFFFF;
+  border-color: var(--color-primary-600);
+}
+
+.download-btn-firefox:hover {
+  background-color: var(--color-primary-700);
+  border-color: var(--color-primary-700);
+}
+
+.download-btn-chrome {
+  background-color: var(--color-surface);
+  color: var(--color-text-primary);
+  border-color: var(--color-border);
+}
+
+.download-btn-chrome:hover {
+  background-color: var(--color-primary-50);
+  border-color: var(--color-primary-400);
+}
+
+.browser-icon {
+  width: 28px;
+  height: 28px;
+  flex-shrink: 0;
+}
+
+.download-text {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  line-height: 1.2;
+}
+
+.download-label {
+  font-size: var(--font-size-sm);
+  opacity: 0.8;
+}
+
+.download-browser {
+  font-size: var(--font-size-base);
+  font-weight: 600;
 }
 
 /* Screenshot placeholder */
