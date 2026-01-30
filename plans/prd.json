@@ -1402,7 +1402,7 @@
       "Remove test files for website components",
       "Update test config if needed to exclude website folder"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "WS-18",

@@ -2676,3 +2676,30 @@ NOTES FOR NEXT PERSON:
   - WS-18 (author footer) - needs avatar asset
 
 ---
+
+2026-01-30 - WS-17: Remove website unit tests
+
+COMPLETED:
+- Removed src/__tests__/website/ directory
+- Deleted 3 test files: ws14-compact-usps.test.ts, ws16-github-link.test.ts, ws19-multilingual.test.ts
+- These tests violated CLAUDE.md testing guidelines: "DON'T write tests for file content checks, HTML structure, static CSS values"
+- No vitest.config.ts changes needed (generic include pattern still works)
+- All 997 remaining tests pass
+
+FILES CHANGED:
+- src/__tests__/website/ (deleted directory)
+- plans/prd.json (marked WS-17 as passing)
+
+PRD ITEMS COMPLETED:
+- WS-17: Remove website unit tests
+
+NOTES FOR NEXT PERSON:
+- Remaining incomplete items (5): WS-8, WS-11, WS-13, WS-15, WS-18
+- All remaining items require external assets:
+  - WS-8 (screenshot) - needs screenshot of extension in action
+  - WS-11 (forest.svg bg) - needs forest SVG asset
+  - WS-13 (owl logo) - needs owl logo asset
+  - WS-15 (browser logos) - could create official Chrome/Firefox SVG logos
+  - WS-18 (author footer) - needs avatar asset (filidor-wiese-avatar.png)
+
+---
