@@ -1439,3 +1439,32 @@ NOTES FOR NEXT PERSON:
 - TAB-1 through TAB-5 (tabbed pages) not started
 - ICON-7 through ICON-14 (specific icon replacements) not started
 - HP-18 through HP-21 (chat page for continued conversations) not started
+
+---
+
+2026-01-30 - WS-6: Add free/no subscription section
+
+COMPLETED:
+- Added free feature card with id="free" in features section
+- Heading: "Free as in Beer"
+- Explanation: no subscription fees, no premium tiers, no paywalls
+- Explains user pays only API usage directly through their provider
+- Created colorful coin/dollar SVG icon using forest theme colors
+- Icon uses #3A5A40, #4A7C54, #E8F0EA (multiple colors, not monochrome)
+- Added after privacy section as third feature card
+- 19 unit tests covering all WS-6 requirements
+
+FILES CHANGED:
+- website/index.html (added free feature card with SVG icon)
+- src/__tests__/website/ws6-free-section.test.ts (new - 19 tests)
+- plans/prd.json (marked WS-6 as passing)
+
+PRD ITEMS COMPLETED:
+- WS-6: Add free/no subscription section
+
+NOTES FOR NEXT PERSON:
+- WS-7 through WS-13 (website) remaining
+- TAB-1 through TAB-5 (tabbed pages) not started
+- ICON-7 through ICON-14 (specific icon replacements) not started
+- HP-18 through HP-21 (chat page for continued conversations) not started
+- RENAME-1 through RENAME-7 (branding) not started

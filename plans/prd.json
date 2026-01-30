@@ -761,7 +761,7 @@
       "Explain user pays only API usage",
       "Add relevant icon or illustration"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "WS-7",
