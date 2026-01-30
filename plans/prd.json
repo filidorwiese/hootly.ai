@@ -735,7 +735,7 @@
       "Explain no middleman markup",
       "Add relevant icon or illustration"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "WS-5",
@@ -1032,5 +1032,226 @@
       "Add i18n translation key"
     ],
     "passes": true
+  },
+  {
+    "id": "TAB-1",
+    "category": "tabbed-pages",
+    "description": "Create shared TabHeader component",
+    "steps": [
+      "Create TabHeader.tsx component in shared folder",
+      "Add Hootly logo on the left",
+      "Add 'Hootly.ai' text in bold next to logo",
+      "Add three tab buttons: Settings, Personas, History",
+      "Style consistent with forest theme"
+    ],
+    "passes": false
+  },
+  {
+    "id": "TAB-2",
+    "category": "tabbed-pages",
+    "description": "Integrate TabHeader into settings page",
+    "steps": [
+      "Import TabHeader into settings.ts",
+      "Replace current header with TabHeader",
+      "Set Settings tab as active",
+      "Wire tab clicks to navigate to other pages",
+      "Verify styling matches existing design"
+    ],
+    "passes": false
+  },
+  {
+    "id": "TAB-3",
+    "category": "tabbed-pages",
+    "description": "Integrate TabHeader into personas page",
+    "steps": [
+      "Import TabHeader into personas.ts",
+      "Replace current header with TabHeader",
+      "Remove close button from personas page",
+      "Set Personas tab as active",
+      "Wire tab clicks to navigate to other pages"
+    ],
+    "passes": false
+  },
+  {
+    "id": "TAB-4",
+    "category": "tabbed-pages",
+    "description": "Integrate TabHeader into history page",
+    "steps": [
+      "Import TabHeader into history.ts",
+      "Replace current header with TabHeader",
+      "Remove close button from history page",
+      "Set History tab as active",
+      "Wire tab clicks to navigate to other pages"
+    ],
+    "passes": false
+  },
+  {
+    "id": "TAB-5",
+    "category": "tabbed-pages",
+    "description": "Update manage personas link to open tab",
+    "steps": [
+      "Locate 'Manage Personas' link in settings page",
+      "Change link to open personas tab instead of new page",
+      "Verify navigation switches to Personas tab",
+      "Ensure active tab state updates correctly"
+    ],
+    "passes": false
+  },
+  {
+    "id": "ICON-7",
+    "category": "icons",
+    "description": "Replace clear conversation icon with fire",
+    "steps": [
+      "Download fire icon from glyphs.fyi colorful set",
+      "Replace current clear conversation icon in Dialog.tsx",
+      "Verify icon displays correctly at button size",
+      "Test hover states still work"
+    ],
+    "passes": false
+  },
+  {
+    "id": "ICON-8",
+    "category": "icons",
+    "description": "Replace chat history icon with history",
+    "steps": [
+      "Download history icon from glyphs.fyi colorful set",
+      "Replace current chat history icon in Dialog.tsx",
+      "Verify icon displays correctly at button size",
+      "Test hover states still work"
+    ],
+    "passes": false
+  },
+  {
+    "id": "ICON-9",
+    "category": "icons",
+    "description": "Replace copy to clipboard icon with copy",
+    "steps": [
+      "Download copy icon from glyphs.fyi colorful set",
+      "Replace current copy icon in Response.tsx",
+      "Verify icon displays correctly at button size",
+      "Test in both user and assistant messages"
+    ],
+    "passes": false
+  },
+  {
+    "id": "ICON-10",
+    "category": "icons",
+    "description": "Replace You avatar with user icon",
+    "steps": [
+      "Download user icon from glyphs.fyi colorful set",
+      "Replace current You indicator in Response.tsx",
+      "Size appropriately for message avatar",
+      "Verify alignment with message content"
+    ],
+    "passes": false
+  },
+  {
+    "id": "ICON-11",
+    "category": "icons",
+    "description": "Replace bot avatar with robot-head icon",
+    "steps": [
+      "Download robot-head icon from glyphs.fyi colorful set",
+      "Replace current bot indicator in Response.tsx",
+      "Size appropriately for message avatar",
+      "Verify alignment with message content"
+    ],
+    "passes": false
+  },
+  {
+    "id": "ICON-12",
+    "category": "icons",
+    "description": "Replace settings icon with cog",
+    "steps": [
+      "Download cog icon from glyphs.fyi colorful set",
+      "Replace current settings icon in Dialog.tsx header",
+      "Verify icon displays correctly at button size",
+      "Test hover states still work"
+    ],
+    "passes": false
+  },
+  {
+    "id": "ICON-13",
+    "category": "icons",
+    "description": "Replace send button icon with play-circle",
+    "steps": [
+      "Download play-circle icon from glyphs.fyi colorful set",
+      "Replace current send icon in InputArea.tsx",
+      "Verify icon displays correctly at button size",
+      "Test disabled state styling"
+    ],
+    "passes": false
+  },
+  {
+    "id": "ICON-14",
+    "category": "icons",
+    "description": "Replace clear input icon with times",
+    "steps": [
+      "Download times icon from glyphs.fyi colorful set",
+      "Replace current clear icon in InputArea.tsx",
+      "Verify icon displays correctly at button size",
+      "Test hover states still work"
+    ],
+    "passes": false
+  },
+  {
+    "id": "UI-8",
+    "category": "ui",
+    "description": "Fix dropdown cut-off on react-draggable",
+    "steps": [
+      "Identify overflow:hidden on react-draggable component",
+      "Modify or override overflow property to allow dropdowns",
+      "Test persona dropdown fully visible when open",
+      "Test model dropdown fully visible when open",
+      "Verify dragging still works correctly"
+    ],
+    "passes": false
+  },
+  {
+    "id": "HP-18",
+    "category": "history-page",
+    "description": "Create chat page for continued conversations",
+    "steps": [
+      "Create chat.html entry point",
+      "Create chat.ts with React app setup",
+      "Add to Vite build configuration",
+      "Load conversation ID from URL parameter"
+    ],
+    "passes": false
+  },
+  {
+    "id": "HP-19",
+    "category": "history-page",
+    "description": "Add gradient background to chat page",
+    "steps": [
+      "Design gradient that complements forest theme",
+      "Apply gradient as background to chat.html page",
+      "Ensure dialog is readable over gradient",
+      "Test gradient renders correctly in Firefox and Chrome"
+    ],
+    "passes": false
+  },
+  {
+    "id": "HP-20",
+    "category": "history-page",
+    "description": "Dialog active by default on chat page",
+    "steps": [
+      "Auto-load conversation from URL parameter on page load",
+      "Display dialog immediately without toggle",
+      "Ensure input area is focused and ready",
+      "Maintain full functionality (send, context toggle, persona)"
+    ],
+    "passes": false
+  },
+  {
+    "id": "HP-21",
+    "category": "history-page",
+    "description": "Update Continue button to open chat page",
+    "steps": [
+      "Update Continue button in history.ts",
+      "Open chat.html in new browser tab",
+      "Pass conversation ID via URL query parameter",
+      "Verify conversation loads correctly in new tab"
+    ],
+    "passes": false
   }
 ]

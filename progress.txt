@@ -1359,3 +1359,31 @@ PRD ITEMS COMPLETED:
 NOTES FOR NEXT PERSON:
 - WS-4 through WS-10 (website) not started
 - WS-4 is next: Add BYOK selling point section
+
+---
+
+2026-01-30 - WS-4: Add BYOK selling point section
+
+COMPLETED:
+- Created features section in website/index.html
+- Added BYOK feature card with id="byok"
+- Heading: "Bring Your Own Key"
+- Explanation paragraph covers: own API key, cost control, no middleman markup, no hidden fees
+- Created colorful lock/key SVG icon using forest theme colors (#3A5A40, #4A7C54, #E8F0EA)
+- Added CSS for .features, .feature, .feature-icon, .feature h2, .feature p
+- Flat design styling (no shadows, solid borders, centered layout)
+- 29 unit tests covering HTML structure, icon colors, CSS, accessibility
+
+FILES CHANGED:
+- website/index.html (added features section with BYOK card)
+- website/styles.css (added features section CSS)
+- src/__tests__/website/ws4-byok-section.test.ts (new - 29 tests)
+- plans/prd.json (marked WS-4 as passing)
+
+PRD ITEMS COMPLETED:
+- WS-4: Add BYOK selling point section
+
+NOTES FOR NEXT PERSON:
+- WS-5 through WS-10 (website) not started
+- WS-5 is next: Add privacy selling point section
+- Features section foundation established - can add more .feature cards
