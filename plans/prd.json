@@ -1723,7 +1723,7 @@
       "If onClose provided: call onClose instead",
       "Verify regular dialog still works unchanged"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "HP-23",

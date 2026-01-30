@@ -2396,3 +2396,34 @@ NOTES FOR NEXT PERSON:
 - Website could benefit from screenshot (WS-8) and visual polish items
 - Consider HP-22-25 for reducing code duplication between chat.ts and Dialog.tsx
 
+---
+
+2026-01-30 - HP-22: Refactor Dialog to accept mode prop for chat page reuse
+
+COMPLETED:
+- Added `mode` prop to Dialog component ('overlay' | 'standalone')
+- Added `initialConversationId` prop for loading existing conversation
+- Overlay mode (default): full functionality with Rnd drag/resize, backdrop, parent messaging
+- Standalone mode: fixed layout, no drag/resize, no backdrop, no parent messaging
+- Close button tooltip changes based on mode (closeDialog vs closeWindow)
+- Added useEffect to load conversation from storage when initialConversationId provided
+- Added i18n translations for 'closeWindow' in all 10 languages
+- Added 7 new tests for mode prop behavior
+- Updated tooltip test to check for both closeDialog and closeWindow keys
+
+FILES CHANGED:
+- src/content/components/Dialog.tsx (added mode prop, standalone styles, conditional rendering)
+- src/shared/i18n/*.json (added dialog.closeWindow translation for all 10 languages)
+- src/__tests__/components/Dialog.test.tsx (added HP-22 mode prop tests)
+- src/__tests__/tooltips/tooltip-updates.test.ts (updated to check both tooltip keys)
+- plans/prd.json (marked HP-22 as passing)
+
+PRD ITEMS COMPLETED:
+- HP-22: Refactor Dialog to accept onClose callback prop (and mode prop for standalone/chat page use)
+
+NOTES FOR NEXT PERSON:
+- Dialog now supports two modes: 'overlay' (iframe) and 'standalone' (chat page)
+- HP-23 (reuse Dialog in chat.ts) can now be done by replacing vanilla TS with React Dialog component
+- HP-24 (close button closes window) just needs: onClose={() => window.close()} in chat page
+- HP-25 (verify functionality) requires integration testing after HP-23
+- chat.ts is still vanilla TypeScript - converting to React requires HP-23 implementation

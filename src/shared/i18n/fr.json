@@ -60,6 +60,7 @@
     "openSettings": "Ouvrir les paramètres",
     "close": "Fermer",
     "closeDialog": "Fermer le dialogue",
+    "closeWindow": "Fermer la fenêtre",
     "cancelHint": "Appuyez sur <strong>Échap</strong> pour arrêter la génération",
     "noApiKey": "Aucune clé API configurée. Cliquez sur l'icône des paramètres pour ajouter votre clé API Anthropic.",
     "noModelSelected": "Aucun modèle sélectionné. Ouvrez les Paramètres pour configurer.",

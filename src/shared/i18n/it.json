@@ -60,6 +60,7 @@
     "openSettings": "Apri impostazioni",
     "close": "Chiudi",
     "closeDialog": "Chiudi finestra",
+    "closeWindow": "Chiudi finestra",
     "cancelHint": "Premi <strong>Esc</strong> per interrompere la generazione",
     "noApiKey": "Nessuna chiave API configurata. Clicca sull'icona delle impostazioni per aggiungere la tua chiave API Anthropic.",
     "noModelSelected": "Nessun modello selezionato. Apri Impostazioni per configurare.",

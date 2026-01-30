@@ -63,11 +63,17 @@ describe('Tooltip i18n keys', () => {
       expect(t('dialog.closeDialog')).toBe('Close dialog')
     })
 
+    it('has closeWindow key in English', () => {
+      expect(t('dialog.closeWindow')).toBe('Close window')
+    })
+
     it('translation key exists in all languages', () => {
       const languages = [en, nl, de, fr, es, itLang, pt, zh, ja, ko]
       languages.forEach(lang => {
         expect(lang.dialog.closeDialog).toBeDefined()
         expect(lang.dialog.closeDialog.length).toBeGreaterThan(0)
+        expect(lang.dialog.closeWindow).toBeDefined()
+        expect(lang.dialog.closeWindow.length).toBeGreaterThan(0)
       })
     })
   })
@@ -97,13 +103,15 @@ describe('Tooltip usage in components', () => {
   })
 
   describe('Dialog close button tooltip', () => {
-    it('should use closeDialog key', async () => {
+    it('should use closeDialog or closeWindow key depending on mode', async () => {
       const fs = await import('fs')
       const path = await import('path')
       const componentPath = path.resolve(__dirname, '../../content/components/Dialog.tsx')
       const content = fs.readFileSync(componentPath, 'utf-8')
 
-      expect(content).toContain("title={t('dialog.closeDialog')}")
+      // Dialog uses closeDialog in overlay mode and closeWindow in standalone mode
+      expect(content).toContain("t('dialog.closeDialog')")
+      expect(content).toContain("t('dialog.closeWindow')")
     })
   })
 })

@@ -60,6 +60,7 @@
     "openSettings": "設定を開く",
     "close": "閉じる",
     "closeDialog": "ダイアログを閉じる",
+    "closeWindow": "ウィンドウを閉じる",
     "cancelHint": "<strong>Esc</strong>キーで生成を停止",
     "noApiKey": "APIキーが設定されていません。設定アイコンをクリックしてAnthropic APIキーを追加してください。",
     "noModelSelected": "モデルが選択されていません。設定を開いて構成してください。",

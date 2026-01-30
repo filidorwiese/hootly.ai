@@ -16,9 +16,13 @@ import Response from './Response';
 interface DialogProps {
   isOpen: boolean;
   onClose: () => void;
+  /** 'overlay' for iframe mode with drag/backdrop, 'standalone' for chat page */
+  mode?: 'overlay' | 'standalone';
+  /** Initial conversation to load (for chat page) */
+  initialConversationId?: string | null;
 }
 
-const Dialog: React.FC<DialogProps> = ({ isOpen, onClose }) => {
+const Dialog: React.FC<DialogProps> = ({ isOpen, onClose, mode = 'overlay', initialConversationId = null }) => {
   // Initialize position: centered horizontally, 60px from top
   const [position, setPosition] = useState(() => {
     const centerX = Math.max(0, (window.innerWidth - 800) / 2);
@@ -426,15 +430,116 @@ const Dialog: React.FC<DialogProps> = ({ isOpen, onClose }) => {
     }
   };
 
-  // Notify parent window when dialog closes
+  // Notify parent window when dialog closes (only in overlay mode)
   useEffect(() => {
-    if (!isOpen) {
+    if (!isOpen && mode === 'overlay') {
       window.parent.postMessage({ type: 'hootly-dialog-closed' }, '*');
     }
-  }, [isOpen]);
+  }, [isOpen, mode]);
+
+  // Load initial conversation if provided (for standalone/chat page mode)
+  useEffect(() => {
+    if (initialConversationId && isOpen) {
+      Storage.getConversations().then((conversations) => {
+        const conv = conversations.find((c) => c.id === initialConversationId);
+        if (conv) {
+          setCurrentConversationId(conv.id);
+          setConversationHistory(conv.messages);
+          if (conv.personaId) {
+            setCurrentPersonaId(conv.personaId);
+          }
+          if (conv.modelId) {
+            setCurrentModel(conv.modelId);
+          }
+        }
+      });
+    }
+  }, [initialConversationId, isOpen]);
 
   if (!isOpen) return null;
 
+  // Shared dialog content (used in both modes)
+  const dialogContent = (
+    <>
+      {/* Header */}
+      <div className={`${headerStyles} ${mode === 'overlay' ? 'drag-handle' : ''}`} style={mode === 'standalone' ? { cursor: 'default' } : undefined}>
+        <div className={headerLeftStyles}>
+          <h2>
+            <img src={chrome.runtime.getURL('icons/icon-48.png')} alt="" className={iconStyles} />
+            Hootly.ai <span className={taglineStyles}>- Your wise web companion</span>
+          </h2>
+        </div>
+        <div className={headerButtonsStyles}>
+          {conversationHistory.length > 0 && (
+            <button onClick={handleClearConversation} aria-label={t('dialog.clearConversation')} title={t('dialog.clearConversation')}>
+              <FireIcon size={18} />
+            </button>
+          )}
+          <button onClick={handleOpenHistory} aria-label={t('history.openHistory')} title={t('history.openHistory')}>
+            <HistoryIcon size={18} />
+          </button>
+          <button onClick={() => chrome.runtime.sendMessage({ type: 'openSettings' })} aria-label={t('dialog.settings')} title={t('dialog.openSettings')}>
+            <SettingsIcon size={18} />
+          </button>
+          <button onClick={onClose} aria-label={t('dialog.close')} title={mode === 'standalone' ? t('dialog.closeWindow') : t('dialog.closeDialog')}>
+            <CloseIcon size={18} />
+          </button>
+        </div>
+      </div>
+
+      {/* Content */}
+      <div className={contentWrapperStyles}>
+        {/* Response Area - only shown when there's content */}
+        {(conversationHistory.length > 0 || response || isLoading || error) && (
+          <Response
+            conversationHistory={conversationHistory}
+            currentResponse={response}
+            isLoading={isLoading}
+            error={error}
+          />
+        )}
+
+        {/* Input Area */}
+        <div className={inputSectionStyles}>
+          {!isLoading ? (
+            <InputArea
+              value={inputValue}
+              onChange={setInputValue}
+              onSubmit={handleSubmit}
+              disabled={isLoading}
+              contextEnabled={contextEnabled}
+              contextMode={contextMode}
+              selectionLength={capturedSelection?.length}
+              onContextToggle={handleContextToggle}
+              modelId={currentModel}
+              provider={currentProvider}
+              personas={personas}
+              selectedPersonaId={currentPersonaId}
+              onSelectPersona={handlePersonaSelect}
+              models={models}
+              onSelectModel={handleModelSelect}
+              isLoadingModels={isLoadingModels}
+            />
+          ) : (
+            <div className={cancelHintStyles} dangerouslySetInnerHTML={{ __html: t('dialog.cancelHint') }} />
+          )}
+        </div>
+      </div>
+    </>
+  );
+
+  // Standalone mode: no backdrop, no dragging, fixed layout
+  if (mode === 'standalone') {
+    return (
+      <div className={standaloneContainerStyles}>
+        <div className={standaloneDialogStyles}>
+          {dialogContent}
+        </div>
+      </div>
+    );
+  }
+
+  // Overlay mode: backdrop + draggable dialog
   return (
     <>
       {/* Backdrop */}
@@ -458,71 +563,8 @@ const Dialog: React.FC<DialogProps> = ({ isOpen, onClose }) => {
           className={dialogStyles}
           enableResizing={{ left: true, right: true, topLeft: true, topRight: true, bottomLeft: true, bottomRight: true, top: false, bottom: false }}
         >
-        {/* Header */}
-        <div className={`${headerStyles} drag-handle`}>
-          <div className={headerLeftStyles}>
-            <h2>
-              <img src={chrome.runtime.getURL('icons/icon-48.png')} alt="" className={iconStyles} />
-              Hootly.ai <span className={taglineStyles}>- Your wise web companion</span>
-            </h2>
-          </div>
-          <div className={headerButtonsStyles}>
-            {conversationHistory.length > 0 && (
-              <button onClick={handleClearConversation} aria-label={t('dialog.clearConversation')} title={t('dialog.clearConversation')}>
-                <FireIcon size={18} />
-              </button>
-            )}
-            <button onClick={handleOpenHistory} aria-label={t('history.openHistory')} title={t('history.openHistory')}>
-              <HistoryIcon size={18} />
-            </button>
-            <button onClick={() => chrome.runtime.sendMessage({ type: 'openSettings' })} aria-label={t('dialog.settings')} title={t('dialog.openSettings')}>
-              <SettingsIcon size={18} />
-            </button>
-            <button onClick={onClose} aria-label={t('dialog.close')} title={t('dialog.closeDialog')}>
-              <CloseIcon size={18} />
-            </button>
-          </div>
-        </div>
-
-        {/* Content */}
-        <div className={contentWrapperStyles}>
-          {/* Response Area - only shown when there's content */}
-          {(conversationHistory.length > 0 || response || isLoading || error) && (
-            <Response
-              conversationHistory={conversationHistory}
-              currentResponse={response}
-              isLoading={isLoading}
-              error={error}
-            />
-          )}
-
-          {/* Input Area */}
-          <div className={inputSectionStyles}>
-            {!isLoading ? (
-              <InputArea
-                value={inputValue}
-                onChange={setInputValue}
-                onSubmit={handleSubmit}
-                disabled={isLoading}
-                contextEnabled={contextEnabled}
-                contextMode={contextMode}
-                selectionLength={capturedSelection?.length}
-                onContextToggle={handleContextToggle}
-                modelId={currentModel}
-                provider={currentProvider}
-                personas={personas}
-                selectedPersonaId={currentPersonaId}
-                onSelectPersona={handlePersonaSelect}
-                models={models}
-                onSelectModel={handleModelSelect}
-                isLoadingModels={isLoadingModels}
-              />
-            ) : (
-              <div className={cancelHintStyles} dangerouslySetInnerHTML={{ __html: t('dialog.cancelHint') }} />
-            )}
-          </div>
-        </div>
-      </Rnd>
+          {dialogContent}
+        </Rnd>
       </div>
     </>
   );
@@ -663,6 +705,29 @@ const cancelHintStyles = css`
     color: var(--color-primary-500);
     font-weight: ${fontWeights.semibold};
   }
+`;
+
+// Standalone mode styles (for chat page)
+const standaloneContainerStyles = css`
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: 'Inter', sans-serif;
+`;
+
+const standaloneDialogStyles = css`
+  width: 100%;
+  max-width: 800px;
+  height: 90%;
+  max-height: 700px;
+  background: var(--color-bg-base);
+  border-radius: ${radii['3xl']};
+  border: 1px solid var(--color-border-default);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
 `;
 
 export default Dialog;

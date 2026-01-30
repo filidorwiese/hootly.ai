@@ -466,3 +466,96 @@ describe('Dialog flat design (FD-2)', () => {
     expect(tagline).toBeInTheDocument()
   })
 })
+
+describe('Dialog mode prop (HP-22)', () => {
+  beforeEach(() => {
+    setLanguage('en')
+    setMockStorage({
+      hootly_settings: configuredSettings,
+    })
+  })
+
+  it('defaults to overlay mode', async () => {
+    await renderDialog({ isOpen: true, onClose: () => {} })
+
+    // In overlay mode, Rnd wrapper should exist
+    expect(screen.getByTestId('rnd-container')).toBeInTheDocument()
+  })
+
+  it('overlay mode has drag-handle class on header', async () => {
+    await renderDialog({ isOpen: true, onClose: () => {} })
+
+    const header = document.querySelector('.drag-handle')
+    expect(header).toBeTruthy()
+  })
+
+  it('standalone mode renders without Rnd wrapper', async () => {
+    let result: ReturnType<typeof render>
+    await act(async () => {
+      result = render(<Dialog isOpen={true} onClose={() => {}} mode="standalone" />)
+      await new Promise(resolve => setTimeout(resolve, 0))
+    })
+
+    // In standalone mode, no Rnd wrapper
+    expect(screen.queryByTestId('rnd-container')).not.toBeInTheDocument()
+    // But dialog content should still render
+    expect(screen.getByText('Hootly.ai')).toBeInTheDocument()
+  })
+
+  it('standalone mode renders in centered container', async () => {
+    await act(async () => {
+      render(<Dialog isOpen={true} onClose={() => {}} mode="standalone" />)
+      await new Promise(resolve => setTimeout(resolve, 0))
+    })
+
+    // In standalone mode, dialog content renders but no Rnd container
+    expect(screen.queryByTestId('rnd-container')).not.toBeInTheDocument()
+    expect(screen.getByRole('heading')).toHaveTextContent('Hootly')
+  })
+
+  it('standalone mode has non-draggable header', async () => {
+    await act(async () => {
+      render(<Dialog isOpen={true} onClose={() => {}} mode="standalone" />)
+      await new Promise(resolve => setTimeout(resolve, 0))
+    })
+
+    // Header should not have drag-handle class
+    const header = document.querySelector('.drag-handle')
+    expect(header).toBeFalsy()
+  })
+
+  it('standalone mode still calls onClose when close button clicked', async () => {
+    const onClose = vi.fn()
+    await act(async () => {
+      render(<Dialog isOpen={true} onClose={onClose} mode="standalone" />)
+      await new Promise(resolve => setTimeout(resolve, 0))
+    })
+
+    await act(async () => {
+      fireEvent.click(screen.getByLabelText('Close'))
+    })
+    expect(onClose).toHaveBeenCalledTimes(1)
+  })
+
+  it('standalone mode does not post message to parent when closed', async () => {
+    const postMessageSpy = vi.spyOn(window.parent, 'postMessage')
+
+    let rerender: ReturnType<typeof render>['rerender']
+    await act(async () => {
+      const result = render(<Dialog isOpen={true} onClose={() => {}} mode="standalone" />)
+      rerender = result.rerender
+      await new Promise(resolve => setTimeout(resolve, 0))
+    })
+
+    postMessageSpy.mockClear()
+    await act(async () => {
+      rerender(<Dialog isOpen={false} onClose={() => {}} mode="standalone" />)
+    })
+
+    // In standalone mode, should NOT post message to parent
+    expect(postMessageSpy).not.toHaveBeenCalledWith(
+      { type: 'hootly-dialog-closed' },
+      '*'
+    )
+  })
+})

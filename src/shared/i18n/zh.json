@@ -60,6 +60,7 @@
     "openSettings": "打开设置",
     "close": "关闭",
     "closeDialog": "关闭对话框",
+    "closeWindow": "关闭窗口",
     "cancelHint": "按 <strong>Esc</strong> 停止生成",
     "noApiKey": "未配置 API 密钥。点击设置图标添加您的 Anthropic API 密钥。",
     "noModelSelected": "未选择模型。打开设置进行配置。",
