@@ -72,6 +72,11 @@ export default defineConfig(({ mode }) => {
           if (existsSync(popupPath)) {
             copyFileSync(popupPath, popupAltPath);
           }
+          const chatPath = `${outDir}/src/chat/index.html`;
+          const chatAltPath = `${outDir}/chat.html`;
+          if (existsSync(chatPath)) {
+            copyFileSync(chatPath, chatAltPath);
+          }
         },
       },
     ],
@@ -82,6 +87,7 @@ export default defineConfig(({ mode }) => {
           history: resolve(__dirname, 'src/history/index.html'),
           personas: resolve(__dirname, 'src/personas/index.html'),
           popup: resolve(__dirname, 'src/popup/index.html'),
+          chat: resolve(__dirname, 'src/chat/index.html'),
         },
         output: {
           entryFileNames: '[name].js',

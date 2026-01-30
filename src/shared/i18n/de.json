@@ -147,5 +147,12 @@
     "settings": "Einstellungen",
     "personas": "Personas",
     "history": "Verlauf"
+  },
+  "chat": {
+    "loading": "Laden...",
+    "notFound": "Gespräch nicht gefunden",
+    "emptyTitle": "Gespräch starten",
+    "emptyHint": "Geben Sie unten eine Nachricht ein, um zu beginnen",
+    "newConversation": "Neues Gespräch"
   }
 }

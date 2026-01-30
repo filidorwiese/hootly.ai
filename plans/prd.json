@@ -1216,7 +1216,7 @@
       "Add to Vite build configuration",
       "Load conversation ID from URL parameter"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "HP-19",
@@ -1228,7 +1228,7 @@
       "Ensure dialog is readable over gradient",
       "Test gradient renders correctly in Firefox and Chrome"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "HP-20",
@@ -1240,7 +1240,7 @@
       "Ensure input area is focused and ready",
       "Maintain full functionality (send, context toggle, persona)"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "HP-21",

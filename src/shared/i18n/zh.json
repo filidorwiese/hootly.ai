@@ -147,5 +147,12 @@
     "settings": "设置",
     "personas": "角色",
     "history": "历史"
+  },
+  "chat": {
+    "loading": "加载中...",
+    "notFound": "对话未找到",
+    "emptyTitle": "开始对话",
+    "emptyHint": "在下方输入消息开始聊天",
+    "newConversation": "新对话"
   }
 }

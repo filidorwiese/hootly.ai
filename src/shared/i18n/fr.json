@@ -147,5 +147,12 @@
     "settings": "Paramètres",
     "personas": "Personas",
     "history": "Historique"
+  },
+  "chat": {
+    "loading": "Chargement...",
+    "notFound": "Conversation introuvable",
+    "emptyTitle": "Démarrer une conversation",
+    "emptyHint": "Tapez un message ci-dessous pour commencer",
+    "newConversation": "Nouvelle conversation"
   }
 }

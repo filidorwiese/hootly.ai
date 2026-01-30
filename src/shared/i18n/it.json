@@ -147,5 +147,12 @@
     "settings": "Impostazioni",
     "personas": "Personas",
     "history": "Cronologia"
+  },
+  "chat": {
+    "loading": "Caricamento...",
+    "notFound": "Conversazione non trovata",
+    "emptyTitle": "Inizia una conversazione",
+    "emptyHint": "Digita un messaggio qui sotto per iniziare",
+    "newConversation": "Nuova conversazione"
   }
 }

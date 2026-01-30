@@ -147,5 +147,12 @@
     "settings": "Configurações",
     "personas": "Personas",
     "history": "Histórico"
+  },
+  "chat": {
+    "loading": "Carregando...",
+    "notFound": "Conversa não encontrada",
+    "emptyTitle": "Iniciar conversa",
+    "emptyHint": "Digite uma mensagem abaixo para começar",
+    "newConversation": "Nova conversa"
   }
 }

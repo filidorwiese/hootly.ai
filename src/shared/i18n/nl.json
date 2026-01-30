@@ -147,5 +147,12 @@
     "settings": "Instellingen",
     "personas": "Persona's",
     "history": "Geschiedenis"
+  },
+  "chat": {
+    "loading": "Laden...",
+    "notFound": "Gesprek niet gevonden",
+    "emptyTitle": "Start een gesprek",
+    "emptyHint": "Typ hieronder een bericht om te beginnen",
+    "newConversation": "Nieuw gesprek"
   }
 }

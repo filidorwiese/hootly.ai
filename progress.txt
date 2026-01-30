@@ -1778,3 +1778,48 @@ NOTES FOR NEXT PERSON:
 - PP-11, PP-12 (personas page updates) not started
 - RM-1 (update README) not started
 - DM-1 through DM-8 (dark mode) not started
+
+---
+
+2026-01-30 - HP-18, HP-19, HP-20: Create chat page for continued conversations
+
+COMPLETED:
+- Created chat.html entry point with full page layout
+- Created chat.ts with conversation loading, messaging, streaming support
+- Added gradient background (135deg from #E8F0EA to #4A7C54)
+- Dialog active by default (shows immediately, input focused)
+- Added to Vite build configuration (chat entry point)
+- Added chat.html to manifest web_accessible_resources (Firefox + Chrome)
+- Conversation ID loaded from URL parameter
+- URL updated with conversation ID for refresh support
+- New conversation created if no ID provided
+- Empty state shown for new conversations
+- Full functionality: send, streaming, context toggle, persona selector
+- Header buttons: settings, history, burn/clear
+- Auto-generates title from first user message
+- Added i18n translations for all 10 languages (chat section)
+- 77 unit tests covering all HP-18/19/20 requirements
+
+FILES CHANGED:
+- src/chat/index.html (new - full chat page with gradient bg)
+- src/chat/chat.ts (new - conversation handling, messaging)
+- vite.config.ts (added chat entry point)
+- manifest.firefox.json (added chat.html to web_accessible_resources)
+- manifest.chrome.json (added chat.html to web_accessible_resources)
+- src/shared/i18n/*.json (added chat section to all 10 languages)
+- src/__tests__/chat/hp18-chat-page.test.ts (new - 77 tests)
+- plans/prd.json (marked HP-18, HP-19, HP-20 as passing)
+
+PRD ITEMS COMPLETED:
+- HP-18: Create chat page for continued conversations
+- HP-19: Add gradient background to chat page
+- HP-20: Dialog active by default on chat page
+
+NOTES FOR NEXT PERSON:
+- HP-21 (update Continue button to open chat page) not started
+- TAB-6, TAB-7 (TabHeader updates) not started
+- WS-8 through WS-19 (website) remaining
+- ICON-7 through ICON-14 (specific icon replacements) not started
+- PP-11, PP-12 (personas page updates) not started
+- RM-1 (update README) not started
+- DM-1 through DM-8 (dark mode) not started
