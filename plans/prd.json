@@ -1452,7 +1452,7 @@
       "Revert icon CSS/component to previous state",
       "Verify icon displays correctly"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "TAB-6",

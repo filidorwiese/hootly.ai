@@ -2646,3 +2646,33 @@ NOTES FOR NEXT PERSON:
 - WS-17 (remove website tests) - unclear requirement
 - WS-18 (author footer) - needs avatar asset
 - PP-12 (revert addPersonaBtn icon) - needs git history investigation
+
+---
+
+2026-01-30 - PP-12: Revert addPersonaBtn icon to previous version
+
+COMPLETED:
+- Identified ICON-3 commit (36c7c78) added SVG icon to addPersonaBtn
+- Previous version used simple <span>+</span> text
+- SVG had visibility issues (light colors on dark green button)
+- Reverted button content from SVG icon to simple + text
+- Removed unused .btn-icon CSS class from personas page
+
+FILES CHANGED:
+- src/personas/index.html (reverted button content, removed .btn-icon CSS)
+- plans/prd.json (marked PP-12 as passing)
+
+PRD ITEMS COMPLETED:
+- PP-12: Revert addPersonaBtn icon to previous version
+
+NOTES FOR NEXT PERSON:
+- Remaining incomplete items (6): WS-8, WS-11, WS-13, WS-15, WS-17, WS-18
+- All remaining items require external assets or unclear requirements:
+  - WS-8 (screenshot) - needs screenshot asset
+  - WS-11 (forest.svg bg) - needs SVG asset
+  - WS-13 (owl logo) - needs logo asset
+  - WS-15 (browser logos) - needs official Chrome/Firefox logos
+  - WS-17 (remove website tests) - contradicts testing best practices
+  - WS-18 (author footer) - needs avatar asset
+
+---
