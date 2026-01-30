@@ -297,7 +297,7 @@ describe('Response', () => {
     it('shows checkmark after successful copy', async () => {
       vi.useFakeTimers()
       const history: Message[] = [createMessage('assistant', 'Copy this')]
-      render(
+      const { container } = render(
         <Response
           conversationHistory={history}
           currentResponse=""
@@ -310,14 +310,19 @@ describe('Response', () => {
         fireEvent.click(copyButton)
       })
 
-      expect(screen.getByText('✓')).toBeInTheDocument()
+      // After click, button should show CheckIcon (SVG) and have "Copied!" title
       expect(screen.getByTitle('Copied!')).toBeInTheDocument()
+      // CheckIcon renders as SVG with a checkmark path
+      const copiedButton = screen.getByTitle('Copied!')
+      expect(copiedButton.querySelector('svg')).toBeInTheDocument()
 
       await act(async () => {
         vi.advanceTimersByTime(2000)
       })
 
-      expect(screen.queryByText('✓')).not.toBeInTheDocument()
+      // After timeout, should revert to CopyIcon with original title
+      expect(screen.queryByTitle('Copied!')).not.toBeInTheDocument()
+      expect(screen.getByTitle('Copy to clipboard')).toBeInTheDocument()
       vi.useRealTimers()
     })
 

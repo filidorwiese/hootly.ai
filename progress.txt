@@ -2523,3 +2523,38 @@ NOTES FOR NEXT PERSON:
 - Many remaining items need external assets (screenshots, logos, icons)
 - WS-17 (remove website tests) is quick if needed
 - WS-19 (multilingual USP) is pure HTML/CSS addition
+
+---
+
+2026-01-30 - ICON-9/10/11: Replace emoji icons with SVG in Response component
+
+COMPLETED:
+- Added CopyIcon SVG (blue/teal clipboard with copy pages)
+- Added UserIcon SVG (teal user silhouette)
+- Added RobotIcon SVG (green robot head with eyes)
+- Added CheckIcon SVG (green circle with checkmark)
+- Updated Response.tsx to use SVG icons instead of emojis
+- Replaced 👤 with UserIcon for user messages
+- Replaced 🤖 with RobotIcon for assistant messages
+- Replaced 📋 with CopyIcon for copy button
+- Replaced ✓ with CheckIcon after successful copy
+- Updated Response.test.tsx to test SVG icons instead of text
+
+FILES CHANGED:
+- src/shared/icons.tsx (added CopyIcon, UserIcon, RobotIcon, CheckIcon)
+- src/content/components/Response.tsx (imported and used new icons)
+- src/__tests__/components/Response.test.tsx (updated copy success test)
+- plans/prd.json (marked ICON-9, ICON-10, ICON-11 as passing)
+
+PRD ITEMS COMPLETED:
+- ICON-9: Replace copy to clipboard icon with copy
+- ICON-10: Replace You avatar with user icon
+- ICON-11: Replace bot avatar with robot-head icon
+
+NOTES FOR NEXT PERSON:
+- Code block copy button (📋 inside pre tags) still uses emoji
+  - Would need custom solution since rendered via marked HTML string
+  - Lower priority - icon is small and inside dark code blocks
+- Remaining incomplete items (14): WS-8, WS-11, WS-13, WS-15-19, ICON-7/8/12/13/14, PP-12
+- ICON-7/8/12/13/14 may already be done - check Dialog.tsx uses FireIcon, HistoryIcon etc
+- Website items need external assets (screenshots, logos)

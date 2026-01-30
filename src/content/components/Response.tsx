@@ -4,6 +4,7 @@ import { marked } from 'marked';
 import hljs from 'highlight.js';
 import type { Message } from '../../shared/types';
 import { t } from '../../shared/i18n';
+import { CopyIcon, CheckIcon, UserIcon, RobotIcon } from '../../shared/icons';
 
 // Configure marked with renderer for code highlighting
 const renderer = new marked.Renderer();
@@ -111,7 +112,8 @@ const Response: React.FC<ResponseProps> = ({ conversationHistory, currentRespons
         return (
           <div key={index} className={messageContainerStyles(message.role)}>
             <div className={messageHeaderStyles}>
-              <strong>{message.role === 'user' ? `👤 ${t('response.you')}` : `🤖 ${t('response.claude')}`}</strong>
+              {message.role === 'user' ? <UserIcon size={16} /> : <RobotIcon size={16} />}
+              <strong>{message.role === 'user' ? t('response.you') : t('response.claude')}</strong>
             </div>
             <div
               className={markdownStyles}
@@ -122,7 +124,7 @@ const Response: React.FC<ResponseProps> = ({ conversationHistory, currentRespons
               onClick={() => handleCopy(message.content, index)}
               title={copiedIndex === index ? t('response.copied') : t('response.copyToClipboard')}
             >
-              {copiedIndex === index ? '✓' : '📋'}
+              {copiedIndex === index ? <CheckIcon size={14} /> : <CopyIcon size={14} />}
             </button>
           </div>
         );
@@ -132,7 +134,8 @@ const Response: React.FC<ResponseProps> = ({ conversationHistory, currentRespons
       {currentResponse && (
         <div className={messageContainerStyles('assistant')}>
           <div className={messageHeaderStyles}>
-            <strong>🤖 {t('response.claude')}</strong>
+            <RobotIcon size={16} />
+            <strong>{t('response.claude')}</strong>
             {isLoading && <span className={streamingIndicatorStyles}>●</span>}
           </div>
           <div
@@ -144,7 +147,7 @@ const Response: React.FC<ResponseProps> = ({ conversationHistory, currentRespons
             onClick={() => handleCopy(currentResponse, -1)}
             title={copiedIndex === -1 ? t('response.copied') : t('response.copyToClipboard')}
           >
-            {copiedIndex === -1 ? '✓' : '📋'}
+            {copiedIndex === -1 ? <CheckIcon size={14} /> : <CopyIcon size={14} />}
           </button>
         </div>
       )}
@@ -387,12 +390,16 @@ const messageContainerStyles = (role: 'user' | 'assistant') => css`
 const messageHeaderStyles = css`
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 6px;
   margin-bottom: 10px;
   font-size: 12px;
   color: var(--color-text-secondary);
   text-transform: uppercase;
   letter-spacing: 0.03em;
+
+  svg {
+    flex-shrink: 0;
+  }
 
   strong {
     color: var(--color-text-secondary);

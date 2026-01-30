@@ -304,3 +304,51 @@ export const SearchIcon: React.FC<IconProps> = ({ size = 20, className }) => (
     />
   </svg>
 );
+
+// Copy icon - For clipboard copy actions
+export const CopyIcon: React.FC<IconProps> = ({ size = 20, className }) => (
+  <svg width={size} height={size} viewBox="0 0 24 24" fill="none" className={className}>
+    <rect x="8" y="8" width="12" height="12" rx="2" fill="#E8F3F5" stroke="#3A7B89" strokeWidth="1.5" />
+    <path
+      d="M16 8V6c0-1.1-.9-2-2-2H6c-1.1 0-2 .9-2 2v8c0 1.1.9 2 2 2h2"
+      stroke="#5BA3B0"
+      strokeWidth="1.5"
+    />
+  </svg>
+);
+
+// User icon - For user avatar in chat messages
+export const UserIcon: React.FC<IconProps> = ({ size = 20, className }) => (
+  <svg width={size} height={size} viewBox="0 0 24 24" fill="none" className={className}>
+    <circle cx="12" cy="8" r="4" fill="#5BA3B0" />
+    <path
+      d="M4 20c0-4 4-6 8-6s8 2 8 6"
+      fill="#3A7B89"
+    />
+  </svg>
+);
+
+// Robot icon - For AI/assistant avatar in chat messages
+export const RobotIcon: React.FC<IconProps> = ({ size = 20, className }) => (
+  <svg width={size} height={size} viewBox="0 0 24 24" fill="none" className={className}>
+    <rect x="4" y="8" width="16" height="12" rx="2" fill="#4A7C54" />
+    <circle cx="9" cy="13" r="2" fill="#FFFFFF" />
+    <circle cx="15" cy="13" r="2" fill="#FFFFFF" />
+    <rect x="10" y="17" width="4" height="2" rx="1" fill="#A3C4AC" />
+    <path d="M12 4v4M10 4h4" stroke="#4A7C54" strokeWidth="2" strokeLinecap="round" />
+  </svg>
+);
+
+// Check/Success icon - For confirmation states
+export const CheckIcon: React.FC<IconProps> = ({ size = 20, className }) => (
+  <svg width={size} height={size} viewBox="0 0 24 24" fill="none" className={className}>
+    <circle cx="12" cy="12" r="9" fill="#E8F0EA" stroke="#4A7C54" strokeWidth="1.5" />
+    <path
+      d="M8 12l3 3 5-6"
+      stroke="#4A7C54"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+  </svg>
+);
