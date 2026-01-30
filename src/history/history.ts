@@ -3,6 +3,7 @@ import type { Conversation, Persona, Settings } from '../shared/types';
 import { DEFAULT_PERSONAS } from '../shared/types';
 import { t, initLanguage } from '../shared/i18n';
 import { injectTabHeader } from '../shared/TabHeader';
+import { initTheme } from '../shared/theme';
 
 // SVG icons for history page
 const VIEW_ICON = `<svg width="14" height="14" viewBox="0 0 24 24" fill="none">
@@ -558,6 +559,9 @@ async function exportHistory(): Promise<void> {
 }
 
 async function init(): Promise<void> {
+  // Initialize theme (must be before initLanguage for proper display)
+  await initTheme();
+
   // Initialize language
   await initLanguage();
 

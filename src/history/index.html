@@ -527,6 +527,114 @@
       margin-bottom: var(--spacing-5);
       line-height: 1.5;
     }
+
+    /* Dark mode variables */
+    [data-theme="dark"] {
+      /* Primary Colors */
+      --color-primary-50: #0A100D;
+      --color-primary-100: #142019;
+      --color-primary-200: #203326;
+      --color-primary-300: #2D4733;
+      --color-primary-400: #3A5A40;
+      --color-primary-500: #4A7C54;
+      --color-primary-600: #75A683;
+      --color-primary-700: #A3C4AC;
+
+      /* Backgrounds */
+      --color-bg-base: #121812;
+      --color-bg-elevated: #1A221A;
+      --color-bg-muted: #1E261E;
+      --color-bg-subtle: #242E24;
+
+      /* Surfaces */
+      --color-surface-default: #1A221A;
+      --color-surface-hover: #242E24;
+      --color-surface-active: #2A352A;
+      --color-surface-disabled: #1E261E;
+
+      /* Borders */
+      --color-border-light: #2A352A;
+      --color-border-default: #3A4A3A;
+      --color-border-strong: #4A5A4A;
+      --color-border-focus: #75A683;
+
+      /* Text */
+      --color-text-primary: #E8F0EA;
+      --color-text-secondary: #B8C4BC;
+      --color-text-tertiary: #8A9A8C;
+      --color-text-inverse: #121812;
+      --color-text-link: #75A683;
+      --color-text-link-hover: #A3C4AC;
+
+      /* Accent */
+      --color-accent-success: #75A683;
+      --color-accent-success-hover: #8BB897;
+      --color-accent-error: #D87070;
+      --color-accent-error-hover: #E68888;
+
+      /* Messages */
+      --color-message-user-bg: #1A2A1E;
+      --color-message-assistant-bg: #1A221A;
+
+      /* Send Button */
+      --color-send-default: #5A8A60;
+      --color-send-hover: #4A7A50;
+    }
+
+    /* Auto mode: system preference detection */
+    @media (prefers-color-scheme: dark) {
+      [data-theme="auto"] {
+        /* Primary Colors */
+        --color-primary-50: #0A100D;
+        --color-primary-100: #142019;
+        --color-primary-200: #203326;
+        --color-primary-300: #2D4733;
+        --color-primary-400: #3A5A40;
+        --color-primary-500: #4A7C54;
+        --color-primary-600: #75A683;
+        --color-primary-700: #A3C4AC;
+
+        /* Backgrounds */
+        --color-bg-base: #121812;
+        --color-bg-elevated: #1A221A;
+        --color-bg-muted: #1E261E;
+        --color-bg-subtle: #242E24;
+
+        /* Surfaces */
+        --color-surface-default: #1A221A;
+        --color-surface-hover: #242E24;
+        --color-surface-active: #2A352A;
+        --color-surface-disabled: #1E261E;
+
+        /* Borders */
+        --color-border-light: #2A352A;
+        --color-border-default: #3A4A3A;
+        --color-border-strong: #4A5A4A;
+        --color-border-focus: #75A683;
+
+        /* Text */
+        --color-text-primary: #E8F0EA;
+        --color-text-secondary: #B8C4BC;
+        --color-text-tertiary: #8A9A8C;
+        --color-text-inverse: #121812;
+        --color-text-link: #75A683;
+        --color-text-link-hover: #A3C4AC;
+
+        /* Accent */
+        --color-accent-success: #75A683;
+        --color-accent-success-hover: #8BB897;
+        --color-accent-error: #D87070;
+        --color-accent-error-hover: #E68888;
+
+        /* Messages */
+        --color-message-user-bg: #1A2A1E;
+        --color-message-assistant-bg: #1A221A;
+
+        /* Send Button */
+        --color-send-default: #5A8A60;
+        --color-send-hover: #4A7A50;
+      }
+    }
   </style>
 </head>
 <body>

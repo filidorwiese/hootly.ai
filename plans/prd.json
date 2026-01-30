@@ -1583,7 +1583,7 @@
       "Verify history items styled correctly",
       "Test in both light and dark modes"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "ST-5",
