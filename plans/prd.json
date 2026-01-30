@@ -1476,7 +1476,7 @@
       "Keep outer background/border full-width",
       "Verify layout on wide and narrow screens"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "WS-19",

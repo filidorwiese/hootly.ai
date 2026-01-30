@@ -1853,3 +1853,32 @@ NOTES FOR NEXT PERSON:
 - PP-11, PP-12 (personas page updates) not started
 - RM-1 (update README) not started
 - DM-1 through DM-8 (dark mode) not started
+
+---
+
+2026-01-30 - TAB-7: Constrain TabHeader contents to max-width 1024px centered
+
+COMPLETED:
+- Added .tab-header-inner container inside .tab-header
+- Inner container has max-width: 1024px, width: 100%, margin: 0 auto
+- Moved flex layout (display: flex, justify-content: space-between, align-items: center) to inner container
+- Moved padding to inner container for consistent content spacing
+- Outer .tab-header keeps background/border full-width
+- Inner container responsive: shrinks on narrow screens, centered on wide screens
+- 20 unit tests covering structure, CSS, and responsive behavior
+
+FILES CHANGED:
+- src/shared/TabHeader.ts (added .tab-header-inner styles, updated HTML structure)
+- src/__tests__/shared/tab7-tabheader-maxwidth.test.ts (new - 20 tests)
+- plans/prd.json (marked TAB-7 as passing)
+
+PRD ITEMS COMPLETED:
+- TAB-7: Constrain TabHeader contents to max-width 1024px centered
+
+NOTES FOR NEXT PERSON:
+- TAB-6 (use icon.png as logo in TabHeader) not started
+- WS-8 through WS-19 (website) remaining
+- ICON-7 through ICON-14 (specific icon replacements) not started
+- PP-11, PP-12 (personas page updates) not started
+- RM-1 (update README) not started
+- DM-1 through DM-8 (dark mode) not started

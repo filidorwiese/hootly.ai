@@ -54,13 +54,19 @@ const HISTORY_ICON = `
 export function getTabHeaderStyles(): string {
   return `
     .tab-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: var(--spacing-4, 16px) var(--spacing-5, 20px);
       background: var(--color-surface-default, #FFFFFF);
       border-bottom: 1px solid var(--color-border-light, #E4E8E2);
       margin-bottom: var(--spacing-6, 24px);
+    }
+
+    .tab-header-inner {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      max-width: 1024px;
+      width: 100%;
+      margin: 0 auto;
+      padding: var(--spacing-4, 16px) var(--spacing-5, 20px);
     }
 
     .tab-header-brand {
@@ -146,13 +152,15 @@ export function generateTabHeaderHTML(activeTab: TabId): string {
 
   return `
     <div class="tab-header">
-      <div class="tab-header-brand">
-        <div class="tab-header-logo">${OWL_LOGO_SVG}</div>
-        <h2 class="tab-header-title">Hootly.ai</h2>
+      <div class="tab-header-inner">
+        <div class="tab-header-brand">
+          <div class="tab-header-logo">${OWL_LOGO_SVG}</div>
+          <h2 class="tab-header-title">Hootly.ai</h2>
+        </div>
+        <nav class="tab-header-nav">
+          ${tabButtons}
+        </nav>
       </div>
-      <nav class="tab-header-nav">
-        ${tabButtons}
-      </nav>
     </div>
   `;
 }
