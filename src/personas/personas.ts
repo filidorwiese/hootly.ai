@@ -14,6 +14,19 @@ function escapeHtml(text: string): string {
   return div.innerHTML;
 }
 
+// SVG icons for action buttons
+const EDIT_ICON = `<svg width="14" height="14" viewBox="0 0 24 24" fill="none">
+  <path d="M15.5 4.5l4 4L8 20H4v-4l11.5-11.5z" fill="#E8F3F5" stroke="#3A7B89" stroke-width="1.5"/>
+  <path d="M13 7l4 4" stroke="#3A7B89" stroke-width="1.5"/>
+</svg>`;
+
+const DELETE_ICON = `<svg width="14" height="14" viewBox="0 0 24 24" fill="none">
+  <path d="M3 6h18" stroke="#C45A5A" stroke-width="2" stroke-linecap="round"/>
+  <path d="M8 6V4c0-1.1.9-2 2-2h4c1.1 0 2 .9 2 2v2" stroke="#C45A5A" stroke-width="2"/>
+  <path d="M5 6l1 14c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2l1-14" fill="#FFEAEA" stroke="#C45A5A" stroke-width="2"/>
+  <path d="M10 10v8M14 10v8" stroke="#C45A5A" stroke-width="1.5" stroke-linecap="round"/>
+</svg>`;
+
 function renderPersonaItem(persona: Persona, isDefault: boolean, isBuiltIn: boolean): string {
   const defaultBadge = isDefault ? `<span class="default-badge" data-i18n="personas.default">Default</span>` : '';
   const promptPreview = persona.systemPrompt ? escapeHtml(persona.systemPrompt.slice(0, 150)) + (persona.systemPrompt.length > 150 ? '...' : '') : '';
@@ -26,9 +39,11 @@ function renderPersonaItem(persona: Persona, isDefault: boolean, isBuiltIn: bool
         ${t('personas.setDefault') || 'Set default'}
        </button>
        <button class="action-btn edit" data-id="${persona.id}" title="${t('settings.edit') || 'Edit'}">
+        ${EDIT_ICON}
         ${t('settings.edit') || 'Edit'}
        </button>
        <button class="action-btn delete" data-id="${persona.id}" title="${t('settings.delete') || 'Delete'}">
+        ${DELETE_ICON}
         ${t('settings.delete') || 'Delete'}
        </button>`;
 

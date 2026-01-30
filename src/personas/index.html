@@ -284,6 +284,16 @@
       border-color: var(--color-border-light);
     }
 
+    .action-btn svg {
+      vertical-align: middle;
+      margin-right: 2px;
+    }
+
+    .btn-icon {
+      vertical-align: middle;
+      flex-shrink: 0;
+    }
+
     .action-btn.delete:hover {
       background: var(--color-bg-elevated);
       color: var(--color-accent-error);
@@ -517,11 +527,16 @@
       </h1>
       <div class="header-actions">
         <button class="add-btn" id="addPersonaBtn">
-          <span>+</span>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" class="btn-icon">
+            <circle cx="12" cy="12" r="9" fill="#E8F0EA" stroke="#FFFFFF" stroke-width="1.5" />
+            <path d="M12 8v8M8 12h8" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round" />
+          </svg>
           <span data-i18n="settings.addPersona">Add Persona</span>
         </button>
         <a href="#" class="back-link" id="backBtn">
-          <span>&larr;</span>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" class="btn-icon">
+            <path d="M15 18l-6-6 6-6" stroke="#3A5A40" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+          </svg>
           <span data-i18n="personas.backToSettings">Settings</span>
         </a>
       </div>

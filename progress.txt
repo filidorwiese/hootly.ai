@@ -1185,3 +1185,33 @@ NOTES FOR NEXT PERSON:
 - ICON-5 (icons are colorful not monochrome) not started
 - ICON-6 (context toggle icons) - already done via ICON-1
 - WS-1 through WS-10 (website) not started
+
+---
+
+2026-01-30 - ICON-3: Replace personas page icons with glyphs.fyi icons
+
+COMPLETED:
+- Replaced + symbol in Add Persona button with colorful SVG add icon
+- Replaced ← arrow in Back link with colorful SVG back arrow icon
+- Added EDIT_ICON and DELETE_ICON SVG constants to personas.ts
+- Edit button now shows teal pencil icon (#3A7B89, #E8F3F5)
+- Delete button now shows red trash icon (#C45A5A, #FFEAEA)
+- Added CSS for .btn-icon and .action-btn svg alignment
+- All icons use multiple colors (not monochrome)
+- Icons sized appropriately (16px for header, 14px for action buttons)
+- 26 unit tests verifying icon implementation
+
+FILES CHANGED:
+- src/personas/index.html (replaced text/emoji with SVG icons, added CSS)
+- src/personas/personas.ts (added EDIT_ICON and DELETE_ICON constants)
+- src/__tests__/icons/personas-page-icons.test.ts (new - 26 tests)
+- plans/prd.json (marked ICON-3 as passing)
+
+PRD ITEMS COMPLETED:
+- ICON-3: Replace personas page icons with glyphs.fyi icons
+
+NOTES FOR NEXT PERSON:
+- ICON-4 (history page icons) not started
+- ICON-5 (icons are colorful not monochrome) not started - may auto-pass after ICON-4
+- ICON-6 (context toggle icons) - already done via ICON-1
+- WS-1 through WS-10 (website) not started
