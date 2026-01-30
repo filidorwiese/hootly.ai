@@ -1070,7 +1070,7 @@
       "Set Personas tab as active",
       "Wire tab clicks to navigate to other pages"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "TAB-4",

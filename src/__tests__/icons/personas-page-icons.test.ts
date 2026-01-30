@@ -73,44 +73,14 @@ describe('ICON-3: Personas page icons', () => {
     });
   });
 
-  describe('Back navigation link', () => {
-    it('should have inline SVG icon', () => {
+  // TAB-3: Back navigation link removed - TabHeader now provides navigation
+  describe('Back navigation link (removed in TAB-3)', () => {
+    it('should not have back button - navigation via TabHeader', () => {
+      // Back link was removed when TabHeader was integrated
       const backLinkMatch = htmlContent.match(
         /<a[^>]*id="backBtn"[^>]*>[\s\S]*?<\/a>/
       );
-      expect(backLinkMatch).toBeTruthy();
-      expect(backLinkMatch![0]).toContain('<svg');
-      expect(backLinkMatch![0]).toContain('viewBox="0 0 24 24"');
-    });
-
-    it('should have back arrow icon shape', () => {
-      const backLinkMatch = htmlContent.match(
-        /<a[^>]*id="backBtn"[^>]*>[\s\S]*?<\/a>/
-      );
-      // Back arrow path (left-pointing chevron)
-      expect(backLinkMatch![0]).toContain('M15 18l-6-6 6-6');
-    });
-
-    it('should use forest theme green color', () => {
-      const backLinkMatch = htmlContent.match(
-        /<a[^>]*id="backBtn"[^>]*>[\s\S]*?<\/a>/
-      );
-      expect(backLinkMatch![0]).toContain('stroke="#3A5A40"');
-    });
-
-    it('should not use HTML arrow entity', () => {
-      const backLinkMatch = htmlContent.match(
-        /<a[^>]*id="backBtn"[^>]*>[\s\S]*?<\/a>/
-      );
-      // Should not have &larr; entity
-      expect(backLinkMatch![0]).not.toContain('&larr;');
-    });
-
-    it('should have btn-icon class for styling', () => {
-      const backLinkMatch = htmlContent.match(
-        /<a[^>]*id="backBtn"[^>]*>[\s\S]*?<\/a>/
-      );
-      expect(backLinkMatch![0]).toContain('class="btn-icon"');
+      expect(backLinkMatch).toBeNull();
     });
   });
 
@@ -176,18 +146,12 @@ describe('ICON-3: Personas page icons', () => {
 
   describe('Icon dimensions', () => {
     it('should use 16x16 size for header buttons', () => {
-      // Add button and back link icons should be 16x16
+      // Add button icon should be 16x16 (back link removed in TAB-3)
       const addBtnMatch = htmlContent.match(
         /<button[^>]*id="addPersonaBtn"[^>]*>[\s\S]*?<\/button>/
       );
       expect(addBtnMatch![0]).toContain('width="16"');
       expect(addBtnMatch![0]).toContain('height="16"');
-
-      const backLinkMatch = htmlContent.match(
-        /<a[^>]*id="backBtn"[^>]*>[\s\S]*?<\/a>/
-      );
-      expect(backLinkMatch![0]).toContain('width="16"');
-      expect(backLinkMatch![0]).toContain('height="16"');
     });
 
     it('should use 14x14 size for action buttons', () => {

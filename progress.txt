@@ -1667,3 +1667,41 @@ NOTES FOR NEXT PERSON:
 - WS-8 through WS-14 (website) remaining
 - ICON-7 through ICON-14 (specific icon replacements) not started
 - HP-18 through HP-21 (chat page for continued conversations) not started
+
+---
+
+2026-01-30 - TAB-3: Integrate TabHeader into personas page
+
+COMPLETED:
+- Imported injectTabHeader from TabHeader.ts in personas.ts
+- Called injectTabHeader({ activeTab: 'personas' }) in init function
+- Removed old header element with img logo from index.html
+- Removed back button (#backBtn) and back-link styles (per PRD requirement)
+- Removed header-actions CSS (no longer needed)
+- Changed .container to .personas-content for proper content layout
+- Added .page-header and .page-title CSS for secondary header with title
+- Tab navigation works: clicking Settings/History tabs navigates to those pages
+- Updated ICON-3 tests to reflect back button removal
+- Updated FD-5 tests to reflect header CSS changes
+- 31 new unit tests for TAB-3 integration
+- All 1661 tests pass, TypeScript type checking passes
+
+FILES CHANGED:
+- src/personas/personas.ts (import TabHeader, call injectTabHeader, removed backBtn listener)
+- src/personas/index.html (removed header/h1/logo, removed back-link CSS, added personas-content/page-header/page-title)
+- src/__tests__/shared/tab3-personas-integration.test.ts (new - 31 tests)
+- src/__tests__/icons/personas-page-icons.test.ts (updated for back button removal)
+- src/__tests__/flat-design/personas-page.test.ts (updated for header CSS removal)
+- plans/prd.json (marked TAB-3 as passing)
+
+PRD ITEMS COMPLETED:
+- TAB-3: Integrate TabHeader into personas page
+
+NOTES FOR NEXT PERSON:
+- TAB-4 (integrate into history.ts) next priority
+- TAB-5 (update manage personas link) after TAB-4
+- Pattern for integration: import injectTabHeader, call in init with activeTab
+- WS-8 through WS-18 (website) remaining
+- ICON-7 through ICON-14 (specific icon replacements) not started
+- HP-18 through HP-21 (chat page for continued conversations) not started
+- RM-1 (update README) not started

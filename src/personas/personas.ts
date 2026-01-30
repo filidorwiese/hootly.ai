@@ -2,6 +2,7 @@ import { Storage } from '../shared/storage';
 import type { Persona, Settings } from '../shared/types';
 import { DEFAULT_PERSONAS } from '../shared/types';
 import { t, initLanguage } from '../shared/i18n';
+import { injectTabHeader } from '../shared/TabHeader';
 
 let currentSettings: Settings | null = null;
 let pendingDeleteId: string | null = null;
@@ -285,16 +286,11 @@ async function init(): Promise<void> {
 
   currentSettings = await Storage.getSettings();
 
-  const logo = document.getElementById('logo') as HTMLImageElement;
-  logo.src = chrome.runtime.getURL('icons/icon-48.png');
+  // Inject shared TabHeader with Personas tab active
+  injectTabHeader({ activeTab: 'personas' });
 
   applyTranslations();
   renderPersonaLists();
-
-  document.getElementById('backBtn')!.addEventListener('click', (e) => {
-    e.preventDefault();
-    chrome.runtime.openOptionsPage();
-  });
 
   document.getElementById('addPersonaBtn')!.addEventListener('click', () => {
     showModal();

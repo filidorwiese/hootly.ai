@@ -137,9 +137,8 @@ describe('FD-5: Personas page flat design', () => {
   })
 
   describe('solid borders for cards and separation', () => {
-    it('header uses solid bottom border', () => {
-      expect(personasHtml).toContain('border-bottom: 1px solid var(--color-border-light)')
-    })
+    // TAB-3: Header is now TabHeader component (injected via JS)
+    // The old inline header CSS was removed
 
     it('persona items use solid borders', () => {
       expect(personasHtml).toContain('.persona-item {')
