@@ -134,8 +134,8 @@ describe('TabHeader (TAB-1)', () => {
     it('includes SVG icons for each tab', () => {
       const html = generateTabHeaderHTML('settings');
       const svgCount = (html.match(/<svg/g) || []).length;
-      // 1 logo + 3 tab icons = 4 SVGs
-      expect(svgCount).toBe(4);
+      // 3 tab icons (logo is now img, not SVG - TAB-6)
+      expect(svgCount).toBe(3);
     });
   });
 
@@ -269,14 +269,18 @@ describe('TabHeader (TAB-1)', () => {
     });
   });
 
-  describe('Logo SVG', () => {
-    it('includes owl logo with multiple colors', () => {
+  describe('Logo image (TAB-6)', () => {
+    it('uses icon.png via chrome.runtime.getURL', () => {
+      generateTabHeaderHTML('settings');
+      // getLogoUrl should call chrome.runtime.getURL
+      expect(chrome.runtime.getURL).toHaveBeenCalledWith('icons/icon.png');
+    });
+
+    it('has img element with proper class and alt text', () => {
       const html = generateTabHeaderHTML('settings');
-      // Check for multiple fill colors in logo (not monochrome)
-      expect(html).toContain('fill="#4A7C54"'); // Primary green
-      expect(html).toContain('fill="#E8F0EA"'); // Light green
-      expect(html).toContain('fill="#2D3A30"'); // Dark green
-      expect(html).toContain('fill="#A3C4AC"'); // Medium green
+      expect(html).toContain('tab-header-logo-img');
+      expect(html).toContain('<img');
+      expect(html).toMatch(/alt=["']Hootly\.ai[^"']*["']/i);
     });
   });
 
@@ -335,11 +339,11 @@ describe('TabHeader (TAB-1)', () => {
       expect(styles).toContain('--color-primary-500');
     });
 
-    it('logo uses forest green colors', () => {
+    it('logo is loaded from icon.png (TAB-6)', () => {
       const html = generateTabHeaderHTML('settings');
-      expect(html).toContain('#4A7C54'); // Forest green (primary-400)
-      expect(html).toContain('#2D3A30'); // Darker green for eyes/details
-      expect(html).toContain('#A3C4AC'); // Light green (primary-200)
+      // Logo is now an img element instead of inline SVG with colors
+      expect(html).toContain('icons/icon.png');
+      expect(html).toContain('tab-header-logo-img');
     });
   });
 });

@@ -1464,7 +1464,7 @@
       "Size logo appropriately for header",
       "Verify logo displays on settings/personas/history pages"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "TAB-7",

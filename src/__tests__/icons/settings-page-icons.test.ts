@@ -2,7 +2,7 @@
  * Tests for ICON-2: Replace settings page icons with glyphs.fyi icons
  *
  * Verifies that:
- * - Settings page uses TabHeader with owl logo for branding
+ * - Settings page uses TabHeader with icon.png for branding (TAB-6)
  * - Manage Personas link uses SVG icon
  * - Icons are colorful (not monochrome)
  * - Icons match forest theme colors
@@ -40,15 +40,16 @@ describe('ICON-2: Settings Page Icons', () => {
       expect(settingsTs).toMatch(/injectTabHeader.*activeTab.*settings/s);
     });
 
-    it('TabHeader has owl logo SVG', () => {
-      expect(tabHeaderTs).toMatch(/OWL_LOGO_SVG/);
-      expect(tabHeaderTs).toContain('<svg');
+    it('TabHeader uses icon.png for logo (TAB-6)', () => {
+      // TAB-6: Logo changed from inline SVG to icon.png
+      expect(tabHeaderTs).toMatch(/icons\/icon\.png/);
+      expect(tabHeaderTs).toMatch(/getLogoUrl/);
     });
 
-    it('TabHeader owl logo uses colorful fills', () => {
-      // Owl logo should have forest theme colors
-      expect(tabHeaderTs).toContain('#4A7C54'); // Green
-      expect(tabHeaderTs).toContain('#E8F0EA'); // Light green
+    it('TabHeader logo uses img element', () => {
+      // Logo should be an img tag with proper class
+      expect(tabHeaderTs).toContain('tab-header-logo-img');
+      expect(tabHeaderTs).toContain('<img');
     });
 
     it('TabHeader has Hootly.ai branding text', () => {

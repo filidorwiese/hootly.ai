@@ -112,8 +112,10 @@ describe('TAB-2: Integrate TabHeader into settings page', () => {
   });
 
   describe('Visual requirements', () => {
-    it('TabHeader contains owl logo', () => {
-      expect(tabHeaderTs).toMatch(/OWL_LOGO_SVG|owl/i);
+    it('TabHeader uses icon.png for logo', () => {
+      // TAB-6: Logo changed from inline SVG to icon.png
+      expect(tabHeaderTs).toMatch(/icons\/icon\.png/);
+      expect(tabHeaderTs).toMatch(/getLogoUrl/);
     });
 
     it('TabHeader contains Hootly.ai brand title', () => {

@@ -1882,3 +1882,35 @@ NOTES FOR NEXT PERSON:
 - PP-11, PP-12 (personas page updates) not started
 - RM-1 (update README) not started
 - DM-1 through DM-8 (dark mode) not started
+
+---
+
+2026-01-30 - TAB-6: Use icon.png as logo in TabHeader
+
+COMPLETED:
+- Replaced inline OWL_LOGO_SVG with getLogoUrl() function
+- getLogoUrl() calls chrome.runtime.getURL('icons/icon.png')
+- Logo now uses <img> element with class="tab-header-logo-img"
+- Added proper CSS for image sizing (32x32px, object-fit: contain)
+- Added alt text for accessibility ("Hootly.ai logo")
+- Updated existing tests that expected OWL_LOGO_SVG
+- All 1891 tests pass, TypeScript type checking passes
+
+FILES CHANGED:
+- src/shared/TabHeader.ts (replaced SVG with getLogoUrl/img element)
+- src/__tests__/shared/tab6-icon-logo.test.ts (new - 21 tests)
+- src/__tests__/shared/tab2-settings-integration.test.ts (updated for icon.png)
+- src/__tests__/icons/settings-page-icons.test.ts (updated for icon.png)
+- src/__tests__/shared/TabHeader.test.ts (updated for icon.png, fixed SVG count)
+- plans/prd.json (marked TAB-6 as passing)
+
+PRD ITEMS COMPLETED:
+- TAB-6: Use icon.png as logo in TabHeader
+
+NOTES FOR NEXT PERSON:
+- All TAB items (TAB-1 through TAB-7) now pass
+- WS-8 through WS-19 (website) remaining
+- ICON-7 through ICON-14 (specific icon replacements) not started
+- PP-11, PP-12 (personas page updates) not started
+- RM-1 (update README) not started
+- DM-1 through DM-8 (dark mode) not started

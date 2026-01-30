@@ -10,21 +10,12 @@ export interface TabHeaderOptions {
   containerId?: string;
 }
 
-// SVG owl logo matching forest theme
-const OWL_LOGO_SVG = `
-<svg width="32" height="32" viewBox="0 0 24 24" fill="none">
-  <circle cx="12" cy="13" r="9" fill="#4A7C54"/>
-  <circle cx="9" cy="11" r="2.5" fill="#E8F0EA"/>
-  <circle cx="15" cy="11" r="2.5" fill="#E8F0EA"/>
-  <circle cx="9" cy="11" r="1.2" fill="#2D3A30"/>
-  <circle cx="15" cy="11" r="1.2" fill="#2D3A30"/>
-  <path d="M10.5 15.5c0.8 0.5 2.2 0.5 3 0" stroke="#2D3A30" stroke-width="1.2" stroke-linecap="round"/>
-  <path d="M12 8l-3-4" stroke="#4A7C54" stroke-width="1.5" stroke-linecap="round"/>
-  <path d="M12 8l3-4" stroke="#4A7C54" stroke-width="1.5" stroke-linecap="round"/>
-  <circle cx="9" cy="4" r="1.5" fill="#A3C4AC"/>
-  <circle cx="15" cy="4" r="1.5" fill="#A3C4AC"/>
-</svg>
-`;
+/**
+ * Get the URL for the extension icon.png
+ */
+function getLogoUrl(): string {
+  return chrome.runtime.getURL('icons/icon.png');
+}
 
 // Tab icons
 const SETTINGS_ICON = `
@@ -80,7 +71,10 @@ export function getTabHeaderStyles(): string {
       align-items: center;
     }
 
-    .tab-header-logo svg {
+    .tab-header-logo-img {
+      width: 32px;
+      height: 32px;
+      object-fit: contain;
       display: block;
     }
 
@@ -154,7 +148,7 @@ export function generateTabHeaderHTML(activeTab: TabId): string {
     <div class="tab-header">
       <div class="tab-header-inner">
         <div class="tab-header-brand">
-          <div class="tab-header-logo">${OWL_LOGO_SVG}</div>
+          <div class="tab-header-logo"><img class="tab-header-logo-img" src="${getLogoUrl()}" alt="Hootly.ai logo" /></div>
           <h2 class="tab-header-title">Hootly.ai</h2>
         </div>
         <nav class="tab-header-nav">
