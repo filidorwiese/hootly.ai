@@ -2464,3 +2464,37 @@ NOTES FOR NEXT PERSON:
 - Style is identical to overlay dialog (same component)
 - Remaining PRD items: icons (ICON-7-14), website visuals (WS-8, WS-11-20), PP-12
 - Website items need external assets (screenshots, logos, etc.)
+
+---
+
+2026-01-30 - WS-14: Make USP sections compact and horizontal
+
+COMPLETED:
+- Changed features section from stacked to CSS grid layout
+- Default: 2 columns with grid-template-columns: repeat(2, 1fr)
+- Desktop (1024px+): 4 columns side-by-side
+- Tablet (481-768px): 2 columns
+- Mobile (480px-): 1 column (stacked)
+- Reduced padding from --spacing-8 to --spacing-5
+- Reduced icon size from 80px to 48px
+- Reduced heading font from 2xl to lg
+- Reduced paragraph font to sm
+- Reduced gap between items from --spacing-12 to --spacing-4
+- Added max-width constraint (900px default, 1000px desktop)
+- Centered with margin: 0 auto
+- 17 unit tests covering grid layout, responsive breakpoints, and compact styling
+
+FILES CHANGED:
+- website/styles.css (complete rework of .features and responsive styles)
+- src/__tests__/website/ws14-compact-usps.test.ts (new - 17 tests)
+- plans/prd.json (marked WS-14 as passing)
+
+PRD ITEMS COMPLETED:
+- WS-14: Make USP sections compact and horizontal
+
+NOTES FOR NEXT PERSON:
+- Website feature cards now display in a compact grid (4 columns on desktop)
+- Remaining website items: WS-8 (screenshot), WS-11 (forest.svg bg), WS-13 (owl logo), WS-15-20
+- Remaining icon items: ICON-7 through ICON-14
+- Remaining features: PP-12, WS-16-20
+- Many website items need external assets (screenshots, logos)

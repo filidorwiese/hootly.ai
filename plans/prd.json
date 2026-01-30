@@ -1366,7 +1366,7 @@
       "Reduce padding/margins for compact look",
       "Ensure responsive: stack on mobile, columns on desktop"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "WS-15",
