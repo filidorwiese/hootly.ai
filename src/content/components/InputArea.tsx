@@ -7,7 +7,7 @@ import { t } from '../../shared/i18n';
 import { SendIcon, ClearIcon } from '../../shared/icons';
 import type { LLMProvider, Persona } from '../../shared/types';
 import type { ModelConfig } from '../../shared/models';
-import { colors, radii, fontSizes, transitions, spacing } from '../../shared/styles';
+import { radii, fontSizes, transitions, spacing } from '../../shared/styles';
 
 interface InputAreaProps {
   value: string;
@@ -140,7 +140,7 @@ const textareaWrapperStyles = css`
 const textareaStyles = css`
   width: 100%;
   padding: ${spacing[3]} 70px ${spacing[3]} ${spacing[3]};
-  border: 1px solid ${colors.border.default};
+  border: 1px solid var(--color-border-default);
   border-radius: ${radii.xl};
   font-size: ${fontSizes.md};
   font-family: 'Inter', sans-serif;
@@ -148,22 +148,22 @@ const textareaStyles = css`
   line-height: 1.55;
   box-sizing: border-box;
   outline: none;
-  background: ${colors.surface.default};
-  color: ${colors.text.primary};
+  background: var(--color-surface-default);
+  color: var(--color-text-primary);
   transition: border-color ${transitions.default};
 
   &:focus {
-    border-color: ${colors.border.focus};
+    border-color: var(--color-border-focus);
   }
 
   &:disabled {
-    background: ${colors.surface.disabled};
+    background: var(--color-surface-disabled);
     cursor: not-allowed;
-    color: ${colors.text.secondary};
+    color: var(--color-text-secondary);
   }
 
   &::placeholder {
-    color: ${colors.text.tertiary};
+    color: var(--color-text-tertiary);
   }
 `;
 

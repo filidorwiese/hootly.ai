@@ -42,14 +42,16 @@ describe('FD-7: Input areas flat design', () => {
       expect(inputAreaTsx).toContain("from '../../shared/styles'")
     })
 
-    it('uses design system colors for textarea', () => {
-      expect(inputAreaTsx).toContain('colors.border.default')
-      expect(inputAreaTsx).toContain('colors.surface.default')
-      expect(inputAreaTsx).toContain('colors.text.primary')
+    it('uses design system colors for textarea (via CSS vars)', () => {
+      // DM-5: InputArea now uses CSS variables for dark mode support
+      expect(inputAreaTsx).toContain('var(--color-border-default)')
+      expect(inputAreaTsx).toContain('var(--color-surface-default)')
+      expect(inputAreaTsx).toContain('var(--color-text-primary)')
     })
 
-    it('focus state uses only border color change', () => {
-      expect(inputAreaTsx).toContain('colors.border.focus')
+    it('focus state uses only border color change (via CSS var)', () => {
+      // DM-5: InputArea now uses CSS variables for dark mode support
+      expect(inputAreaTsx).toContain('var(--color-border-focus)')
     })
 
     it('does not have box-shadow in textarea styles', () => {
@@ -65,13 +67,15 @@ describe('FD-7: Input areas flat design', () => {
       expect(inputAreaTsx).toContain('transitions.default')
     })
 
-    it('disabled state uses design system colors', () => {
-      expect(inputAreaTsx).toContain('colors.surface.disabled')
-      expect(inputAreaTsx).toContain('colors.text.secondary')
+    it('disabled state uses design system colors (via CSS vars)', () => {
+      // DM-5: InputArea now uses CSS variables for dark mode support
+      expect(inputAreaTsx).toContain('var(--color-surface-disabled)')
+      expect(inputAreaTsx).toContain('var(--color-text-secondary)')
     })
 
-    it('placeholder uses design system tertiary color', () => {
-      expect(inputAreaTsx).toContain('colors.text.tertiary')
+    it('placeholder uses design system tertiary color (via CSS var)', () => {
+      // DM-5: InputArea now uses CSS variables for dark mode support
+      expect(inputAreaTsx).toContain('var(--color-text-tertiary)')
     })
 
     it('uses design system radii for border-radius', () => {

@@ -89,7 +89,8 @@ describe('UI-7: Model selector dropdown', () => {
     });
 
     it('should use flat design styling', () => {
-      expect(modelSelectorSource).toContain('colors.');
+      // DM-5: ModelSelector now uses CSS variables for dark mode support
+      expect(modelSelectorSource).toContain('var(--color-');
       expect(modelSelectorSource).toContain('radii.');
       expect(modelSelectorSource).toContain('transitions.');
     });

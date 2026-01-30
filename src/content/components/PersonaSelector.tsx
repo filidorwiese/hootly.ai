@@ -2,7 +2,7 @@ import React, { useState, useRef, useEffect } from 'react';
 import { css } from '@emotion/css';
 import type { Persona } from '../../shared/types';
 import { t } from '../../shared/i18n';
-import { colors, radii, fontSizes, fontWeights, transitions, spacing } from '../../shared/styles';
+import { radii, fontSizes, fontWeights, transitions, spacing } from '../../shared/styles';
 
 interface PersonaSelectorProps {
   personas: Persona[];
@@ -108,16 +108,16 @@ const triggerStyles = css`
   cursor: pointer;
   font-family: 'Inter', sans-serif;
   font-size: ${fontSizes.sm};
-  color: ${colors.primary[500]};
+  color: var(--color-primary-500);
   transition: background ${transitions.default}, border-color ${transitions.default};
 
   &:hover {
-    background: ${colors.surface.hover};
-    border-color: ${colors.border.light};
+    background: var(--color-surface-hover);
+    border-color: var(--color-border-light);
   }
 
   &:active {
-    background: ${colors.surface.active};
+    background: var(--color-surface-active);
   }
 `;
 
@@ -135,7 +135,7 @@ const nameStyles = css`
 
 const chevronStyles = css`
   font-size: 7px;
-  color: ${colors.text.tertiary};
+  color: var(--color-text-tertiary);
   margin-left: 1px;
 `;
 
@@ -147,8 +147,8 @@ const dropdownStyles = css`
   max-width: 260px;
   max-height: 300px;
   overflow-y: auto;
-  background: ${colors.background.base};
-  border: 1px solid ${colors.border.default};
+  background: var(--color-bg-base);
+  border: 1px solid var(--color-border-default);
   border-radius: ${radii.xl};
   z-index: 1000;
   padding: ${spacing[1]};
@@ -168,17 +168,17 @@ const optionStyles = css`
   transition: background ${transitions.fast};
 
   &:hover {
-    background: ${colors.surface.hover};
+    background: var(--color-surface-hover);
   }
 
   &:active {
-    background: ${colors.surface.active};
+    background: var(--color-surface-active);
   }
 `;
 
 const selectedOptionStyles = css`
-  background: ${colors.primary[50]};
-  border: 1px solid ${colors.primary[100]};
+  background: var(--color-primary-50);
+  border: 1px solid var(--color-primary-100);
 `;
 
 const optionIconStyles = css`
@@ -190,12 +190,12 @@ const optionNameStyles = css`
   font-family: 'Inter', sans-serif;
   font-size: ${fontSizes.sm};
   font-weight: ${fontWeights.medium};
-  color: ${colors.text.primary};
+  color: var(--color-text-primary);
 `;
 
 const dividerStyles = css`
   height: 1px;
-  background: ${colors.border.light};
+  background: var(--color-border-light);
   margin: ${spacing[1]} 0;
 `;
 
@@ -205,12 +205,12 @@ const groupLabelStyles = css`
   font-weight: ${fontWeights.semibold};
   text-transform: uppercase;
   letter-spacing: 0.5px;
-  color: ${colors.text.tertiary};
+  color: var(--color-text-tertiary);
   padding: ${spacing[1]} ${spacing[2]} 2px;
 `;
 
 const customGroupStyles = css`
-  background: ${colors.background.muted};
+  background: var(--color-bg-muted);
   border-radius: ${radii.md};
   margin-top: 2px;
   padding: 2px;

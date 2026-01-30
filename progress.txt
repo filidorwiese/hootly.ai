@@ -2132,3 +2132,45 @@ NOTES FOR NEXT PERSON:
   4. Components already use CSS variables, so they'll auto-update with theme
 - CSS infrastructure (darkCssVariables) already handles [data-theme="dark"] and [data-theme="auto"] + @media query
 - Integration pattern: add CSS variables to <style>, call initTheme() in DOMContentLoaded
+
+---
+
+2026-01-30 - DM-5: Apply dark theme to dialog
+
+COMPLETED:
+- Injected CSS variables into iframe via iframe-app.tsx initialization
+- Added style element with allCssVariables to document head
+- Called initTheme() to set data-theme attribute and listen for changes
+- Updated Dialog.tsx to use CSS variables for all colors
+- Updated InputArea.tsx to use CSS variables for textarea styling
+- Updated Response.tsx to use CSS variables for messages, markdown, errors
+- Updated ContextToggle.tsx to use CSS variables for badges and buttons
+- Updated PersonaSelector.tsx to use CSS variables for dropdown and options
+- Updated ModelSelector.tsx to use CSS variables for dropdown and options
+- Removed unused 'colors' imports from all updated components
+- Updated existing flat-design tests to check for CSS vars instead of colors.*
+- 67 unit tests verifying CSS variable usage across all dialog components
+
+FILES CHANGED:
+- src/content/iframe-app.tsx (added theme initialization)
+- src/content/components/Dialog.tsx (converted to CSS variables)
+- src/content/components/InputArea.tsx (converted to CSS variables)
+- src/content/components/Response.tsx (converted to CSS variables)
+- src/content/components/ContextToggle.tsx (converted to CSS variables)
+- src/content/components/PersonaSelector.tsx (converted to CSS variables)
+- src/content/components/ModelSelector.tsx (converted to CSS variables)
+- src/__tests__/dark-mode/dm5-dialog-theme.test.ts (new - 67 tests)
+- src/__tests__/flat-design/input-areas.test.ts (updated for CSS vars)
+- src/__tests__/components/Dialog.test.tsx (updated for CSS vars)
+- src/__tests__/components/ModelSelector.test.ts (updated for CSS vars)
+- plans/prd.json (marked DM-5 as passing)
+
+PRD ITEMS COMPLETED:
+- DM-5: Apply dark theme to dialog
+
+NOTES FOR NEXT PERSON:
+- Dialog and all sub-components now use CSS variables
+- Theme automatically responds to data-theme attribute changes
+- CSS variables include light mode defaults, dark mode ([data-theme="dark"]), and auto mode (@media prefers-color-scheme)
+- DM-6 (settings page), DM-7 (personas page), DM-8 (history page) still pending
+- These pages need similar treatment: inject CSS vars, call initTheme, use CSS vars in styles

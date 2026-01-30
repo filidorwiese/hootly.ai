@@ -1,7 +1,7 @@
 import React from 'react';
 import { css } from '@emotion/css';
 import { t } from '../../shared/i18n';
-import { colors, radii, fontSizes, fontWeights, transitions, spacing } from '../../shared/styles';
+import { radii, fontSizes, fontWeights, transitions, spacing } from '../../shared/styles';
 import { SelectionIcon, FullPageIcon, NoContextIcon } from '../../shared/icons';
 
 interface ContextToggleProps {
@@ -64,21 +64,21 @@ const toggleButtonStyles = (enabled: boolean) => css`
   display: flex;
   align-items: center;
   justify-content: center;
-  border: 1px solid ${enabled ? colors.border.focus : colors.border.default};
+  border: 1px solid ${enabled ? 'var(--color-border-focus)' : 'var(--color-border-default)'};
   border-radius: ${radii.lg};
-  background: ${enabled ? colors.primary[50] : colors.surface.default};
+  background: ${enabled ? 'var(--color-primary-50)' : 'var(--color-surface-default)'};
   cursor: pointer;
   transition: background ${transitions.default}, border-color ${transitions.default}, transform ${transitions.default};
   padding: 0;
 
   &:hover {
-    border-color: ${enabled ? colors.primary[500] : colors.border.strong};
-    background: ${enabled ? colors.primary[100] : colors.surface.hover};
+    border-color: ${enabled ? 'var(--color-primary-500)' : 'var(--color-border-strong)'};
+    background: ${enabled ? 'var(--color-primary-100)' : 'var(--color-surface-hover)'};
     transform: scale(1.05);
   }
 
   &:active {
-    background: ${enabled ? colors.primary[200] : colors.surface.active};
+    background: ${enabled ? 'var(--color-primary-200)' : 'var(--color-surface-active)'};
     transform: scale(0.98);
   }
 `;
@@ -98,21 +98,21 @@ const badgeStyles = (type: 'selection' | 'full' | 'off') => css`
   border: 1px solid transparent;
 
   ${type === 'selection' && `
-    background: ${colors.status.infoBg};
-    color: ${colors.status.infoText};
-    border-color: ${colors.status.infoBorder};
+    background: var(--color-status-info-bg);
+    color: var(--color-status-info-text);
+    border-color: var(--color-status-info-border);
   `}
 
   ${type === 'full' && `
-    background: ${colors.status.successBg};
-    color: ${colors.status.successText};
-    border-color: ${colors.status.successBorder};
+    background: var(--color-status-success-bg);
+    color: var(--color-status-success-text);
+    border-color: var(--color-status-success-border);
   `}
 
   ${type === 'off' && `
-    background: ${colors.surface.disabled};
-    color: ${colors.text.secondary};
-    border-color: ${colors.border.light};
+    background: var(--color-surface-disabled);
+    color: var(--color-text-secondary);
+    border-color: var(--color-border-light);
   `}
 `;
 

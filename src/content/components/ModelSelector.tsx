@@ -3,7 +3,7 @@ import { css } from '@emotion/css';
 import type { LLMProvider } from '../../shared/types';
 import type { ModelConfig } from '../../shared/models';
 import { t } from '../../shared/i18n';
-import { colors, radii, fontSizes, fontWeights, transitions, spacing } from '../../shared/styles';
+import { radii, fontSizes, fontWeights, transitions, spacing } from '../../shared/styles';
 
 interface ModelSelectorProps {
   models: ModelConfig[];
@@ -141,16 +141,16 @@ const triggerStyles = css`
   cursor: pointer;
   font-family: 'Inter', sans-serif;
   font-size: ${fontSizes.sm};
-  color: ${colors.text.secondary};
+  color: var(--color-text-secondary);
   transition: background ${transitions.default}, border-color ${transitions.default};
 
   &:hover:not(:disabled) {
-    background: ${colors.surface.hover};
-    border-color: ${colors.border.light};
+    background: var(--color-surface-hover);
+    border-color: var(--color-border-light);
   }
 
   &:active:not(:disabled) {
-    background: ${colors.surface.active};
+    background: var(--color-surface-active);
   }
 
   &:disabled {
@@ -173,7 +173,7 @@ const nameStyles = css`
 
 const chevronStyles = css`
   font-size: 7px;
-  color: ${colors.text.tertiary};
+  color: var(--color-text-tertiary);
   margin-left: 1px;
 `;
 
@@ -185,8 +185,8 @@ const dropdownStyles = css`
   max-width: 320px;
   max-height: 300px;
   overflow-y: auto;
-  background: ${colors.background.base};
-  border: 1px solid ${colors.border.default};
+  background: var(--color-bg-base);
+  border: 1px solid var(--color-border-default);
   border-radius: ${radii.xl};
   z-index: 1000;
   padding: ${spacing[1]};
@@ -207,30 +207,30 @@ const optionStyles = css`
   transition: background ${transitions.fast};
 
   &:hover {
-    background: ${colors.surface.hover};
+    background: var(--color-surface-hover);
   }
 
   &:active {
-    background: ${colors.surface.active};
+    background: var(--color-surface-active);
   }
 `;
 
 const selectedOptionStyles = css`
-  background: ${colors.primary[50]};
-  border: 1px solid ${colors.primary[100]};
+  background: var(--color-primary-50);
+  border: 1px solid var(--color-primary-100);
 `;
 
 const optionNameStyles = css`
   font-family: 'Inter', sans-serif;
   font-size: ${fontSizes.sm};
   font-weight: ${fontWeights.medium};
-  color: ${colors.text.primary};
+  color: var(--color-text-primary);
 `;
 
 const optionIdStyles = css`
   font-family: 'Inter', sans-serif;
   font-size: ${fontSizes.xs};
-  color: ${colors.text.tertiary};
+  color: var(--color-text-tertiary);
   max-width: 100%;
   overflow: hidden;
   text-overflow: ellipsis;

@@ -8,7 +8,7 @@ import { DEFAULT_PERSONAS } from '../../shared/types';
 import { extractSelection, extractPageText, getPageUrl, getPageTitle, requestPageInfo } from '../../shared/utils';
 import { getApiKey } from '../../shared/providers';
 import { t } from '../../shared/i18n';
-import { colors, radii, spacing, fontSizes, fontWeights, transitions } from '../../shared/styles';
+import { radii, spacing, fontSizes, fontWeights, transitions } from '../../shared/styles';
 import { FireIcon, HistoryIcon, SettingsIcon, CloseIcon } from '../../shared/icons';
 import InputArea from './InputArea';
 import Response from './Response';
@@ -554,9 +554,9 @@ const backdropStyles = css`
 
 const dialogStyles = css`
   position: absolute !important;
-  background: ${colors.background.base};
+  background: var(--color-bg-base);
   border-radius: ${radii['3xl']};
-  border: 1px solid ${colors.border.default};
+  border: 1px solid var(--color-border-default);
   display: flex;
   flex-direction: column;
   font-family: 'Inter', sans-serif;
@@ -568,8 +568,8 @@ const headerStyles = css`
   justify-content: space-between;
   align-items: center;
   padding: ${spacing[3]} ${spacing[4]};
-  background: ${colors.background.muted};
-  border-bottom: 1px solid ${colors.border.light};
+  background: var(--color-bg-muted);
+  border-bottom: 1px solid var(--color-border-light);
   border-radius: ${radii['3xl']} ${radii['3xl']} 0 0;
   cursor: grab;
   user-select: none;
@@ -582,7 +582,7 @@ const headerStyles = css`
     margin: 0;
     font-size: ${fontSizes.lg};
     font-weight: ${fontWeights.semibold};
-    color: ${colors.text.primary};
+    color: var(--color-text-primary);
     display: flex;
     align-items: center;
     gap: ${spacing[2]};
@@ -597,7 +597,7 @@ const iconStyles = css`
 
 const taglineStyles = css`
   font-weight: ${fontWeights.normal};
-  color: ${colors.text.tertiary};
+  color: var(--color-text-tertiary);
 `;
 
 const headerLeftStyles = css`
@@ -614,7 +614,7 @@ const headerButtonsStyles = css`
     background: transparent;
     border: none;
     font-size: ${fontSizes.xl};
-    color: ${colors.text.secondary};
+    color: var(--color-text-secondary);
     cursor: pointer;
     padding: 0;
     width: 32px;
@@ -626,12 +626,12 @@ const headerButtonsStyles = css`
     transition: background ${transitions.default}, color ${transitions.default};
 
     &:hover {
-      background: ${colors.surface.hover};
-      color: ${colors.primary[500]};
+      background: var(--color-surface-hover);
+      color: var(--color-primary-500);
     }
 
     &:active {
-      background: ${colors.surface.active};
+      background: var(--color-surface-active);
     }
   }
 `;
@@ -644,23 +644,23 @@ const contentWrapperStyles = css`
 `;
 
 const inputSectionStyles = css`
-  border-top: 1px solid ${colors.border.light};
+  border-top: 1px solid var(--color-border-light);
   padding: ${spacing[3]} ${spacing[4]};
-  background: ${colors.background.muted};
+  background: var(--color-bg-muted);
   border-radius: 0 0 ${radii['3xl']} ${radii['3xl']};
 `;
 
 const cancelHintStyles = css`
   text-align: center;
   padding: ${spacing[4]};
-  color: ${colors.text.secondary};
+  color: var(--color-text-secondary);
   font-size: ${fontSizes.md};
-  background: ${colors.background.subtle};
+  background: var(--color-bg-subtle);
   border-radius: ${radii.xl};
-  border: 1px solid ${colors.border.light};
+  border: 1px solid var(--color-border-light);
 
   strong {
-    color: ${colors.primary[500]};
+    color: var(--color-primary-500);
     font-weight: ${fontWeights.semibold};
   }
 `;
