@@ -813,7 +813,7 @@
       "Ensure download buttons usable on mobile",
       "Test at 320px, 768px, 1024px widths"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "ST-1",

@@ -349,3 +349,175 @@ button:focus {
     outline: 2px solid var(--color-border-focus);
     outline-offset: 2px;
 }
+
+/* ==========================================================================
+   Responsive Design - Mobile First
+   ========================================================================== */
+
+/* Small mobile (max-width: 480px) */
+@media (max-width: 480px) {
+    .site-header {
+        padding: var(--spacing-3) var(--spacing-4);
+    }
+
+    .logo {
+        font-size: var(--font-size-xl);
+    }
+
+    main {
+        padding: var(--spacing-4);
+    }
+
+    .hero {
+        padding: var(--spacing-8) 0;
+    }
+
+    .hero h1 {
+        font-size: var(--font-size-2xl);
+        margin-bottom: var(--spacing-4);
+    }
+
+    .hero-tagline {
+        font-size: var(--font-size-base);
+        margin-bottom: var(--spacing-6);
+    }
+
+    .download-buttons {
+        flex-direction: column;
+        align-items: stretch;
+        gap: var(--spacing-3);
+    }
+
+    .download-btn {
+        width: 100%;
+        justify-content: center;
+        padding: var(--spacing-4);
+    }
+
+    .hero-screenshot-placeholder {
+        min-height: 200px;
+        border-radius: var(--radius-lg);
+    }
+
+    .features {
+        padding: var(--spacing-8) 0;
+    }
+
+    .feature {
+        padding: var(--spacing-6);
+        margin-bottom: var(--spacing-6);
+    }
+
+    .feature-icon {
+        width: 60px;
+        height: 60px;
+        margin-bottom: var(--spacing-4);
+    }
+
+    .feature h2 {
+        font-size: var(--font-size-xl);
+        margin-bottom: var(--spacing-3);
+    }
+
+    .feature p {
+        font-size: var(--font-size-sm);
+    }
+
+    .site-footer {
+        padding: var(--spacing-4);
+    }
+}
+
+/* Tablet (max-width: 768px) - between small mobile and desktop */
+@media (min-width: 481px) and (max-width: 768px) {
+    .site-header {
+        padding: var(--spacing-4) var(--spacing-6);
+    }
+
+    main {
+        padding: var(--spacing-6);
+    }
+
+    .hero {
+        padding: var(--spacing-10) 0;
+    }
+
+    .hero h1 {
+        font-size: var(--font-size-3xl);
+    }
+
+    .hero-tagline {
+        font-size: var(--font-size-base);
+    }
+
+    .download-buttons {
+        gap: var(--spacing-3);
+    }
+
+    .download-btn {
+        padding: var(--spacing-3) var(--spacing-5);
+    }
+
+    .hero-screenshot-placeholder {
+        min-height: 300px;
+    }
+
+    .features {
+        padding: var(--spacing-10) 0;
+    }
+
+    .feature {
+        padding: var(--spacing-6);
+        margin-bottom: var(--spacing-8);
+    }
+
+    .feature-icon {
+        width: 70px;
+        height: 70px;
+    }
+
+    .feature h2 {
+        font-size: var(--font-size-xl);
+    }
+}
+
+/* Desktop/laptop (min-width: 1024px) - larger screens */
+@media (min-width: 1024px) {
+    .nav-container {
+        padding: 0 var(--spacing-4);
+    }
+
+    .hero {
+        padding: var(--spacing-16) 0;
+    }
+
+    .hero h1 {
+        font-size: var(--font-size-4xl);
+    }
+
+    .hero-tagline {
+        font-size: var(--font-size-lg);
+    }
+
+    .hero-screenshot-placeholder {
+        min-height: 400px;
+    }
+
+    .features {
+        padding: var(--spacing-16) 0;
+    }
+
+    .feature {
+        max-width: 600px;
+        padding: var(--spacing-8);
+    }
+
+    .feature-icon {
+        width: 80px;
+        height: 80px;
+    }
+
+    .feature h2 {
+        font-size: var(--font-size-2xl);
+    }
+}

@@ -1914,3 +1914,43 @@ NOTES FOR NEXT PERSON:
 - PP-11, PP-12 (personas page updates) not started
 - RM-1 (update README) not started
 - DM-1 through DM-8 (dark mode) not started
+
+---
+
+2026-01-30 - WS-10: Make website responsive
+
+COMPLETED:
+- Added mobile-first media queries at 480px, 768px, and 1024px breakpoints
+- 480px (small mobile): stacked download buttons, reduced font sizes, smaller padding
+- 768px (tablet): medium sizing between mobile and desktop
+- 1024px (desktop): full sizing with max-width constraints
+- Hero h1 responsive: 48px desktop → 32px tablet → 24px mobile
+- Download buttons stack vertically on mobile (flex-direction: column)
+- Feature cards have responsive padding and icon sizes
+- Screenshot placeholder has responsive min-height (400px → 300px → 200px)
+- Header/footer padding adjusts for smaller screens
+- All elements touch-friendly with adequate tap targets
+- 32 unit tests covering all WS-10 requirements
+
+FILES CHANGED:
+- website/styles.css (added ~150 lines of responsive media queries)
+- src/__tests__/website/ws10-responsive.test.ts (new - 32 tests)
+- plans/prd.json (marked WS-10 as passing)
+
+PRD ITEMS COMPLETED:
+- WS-10: Make website responsive
+
+NOTES FOR NEXT PERSON:
+- WS-8 (screenshot as hero image) not started - requires screenshot asset
+- WS-11 (forest.svg background) not started - requires SVG asset
+- WS-13 (owl logo in header) not started - requires logo asset
+- WS-14 (compact horizontal USPs) not started
+- WS-15 (official browser logos) not started
+- WS-16 (GitHub logo in header) not started
+- WS-17 (remove website unit tests) - unclear requirement
+- WS-18 (footer with author credit) not started
+- WS-19 (multilingual USP section) not started
+- ICON-7 through ICON-14 (specific icon replacements) not started
+- PP-11, PP-12 (personas page updates) not started
+- RM-1 (update README) not started
+- DM-1 through DM-8 (dark mode) not started
