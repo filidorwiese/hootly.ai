@@ -14,6 +14,7 @@
     "preview": "vite preview",
     "test": "vitest",
     "typecheck": "tsc --noEmit",
+    "serve:website": "serve website -l 3000",
     "prepare": "husky",
     "postversion": "git push --follow-tags"
   },
@@ -49,6 +50,7 @@
     "sharp": "^0.34.5",
     "typescript": "~5.6.2",
     "vite": "^6.0.11",
+    "serve": "^14.2.4",
     "vitest": "^2.1.8"
   }
 }

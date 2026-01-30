@@ -1772,6 +1772,6 @@
       "Script serves website folder on localhost",
       "Test with npm run serve:website"
     ],
-    "passes": false
+    "passes": true
   }
 ]
