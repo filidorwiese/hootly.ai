@@ -2703,3 +2703,31 @@ NOTES FOR NEXT PERSON:
   - WS-18 (author footer) - needs avatar asset (filidor-wiese-avatar.png)
 
 ---
+
+2026-01-30 - WS-18: Update footer with author avatar and credit
+
+COMPLETED:
+- Replaced copyright text with author credit in website footer
+- Added filidor-wiese-avatar.png avatar image on left of text
+- Added "Created by Filidor Wiese" text with link
+- Link opens https://filidorwiese.nl in new tab
+- Styled with flexbox for proper alignment
+- Added responsive styles for mobile (smaller avatar/gap)
+
+FILES CHANGED:
+- website/index.html (footer section with avatar and author link)
+- website/styles.css (.footer-content, .footer-avatar styles + responsive)
+- plans/prd.json (marked WS-18 as passing)
+
+PRD ITEMS COMPLETED:
+- WS-18: Update footer with author avatar and credit
+
+NOTES FOR NEXT PERSON:
+- Remaining incomplete items (4): WS-8, WS-11, WS-13, WS-15
+- All require external assets:
+  - WS-8 (screenshot) - needs screenshot of extension in action
+  - WS-11 (forest.svg bg) - forest.svg exists, needs CSS implementation
+  - WS-13 (owl logo) - icon.png/icon-owl.png exist in public/icons/
+  - WS-15 (browser logos) - may need official Chrome/Firefox SVG logos
+
+---

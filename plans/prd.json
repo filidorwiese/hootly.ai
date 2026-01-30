@@ -1415,7 +1415,7 @@
       "Link 'Filidor Wiese' to https://filidorwiese.nl",
       "Style avatar and text alignment"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "RM-1",
