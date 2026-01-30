@@ -1354,7 +1354,7 @@
       "Size appropriately for web display",
       "Ensure logo loads correctly"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "WS-14",

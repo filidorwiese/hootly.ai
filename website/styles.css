@@ -127,15 +127,27 @@ body {
 }
 
 .logo {
-    font-size: var(--font-size-2xl);
-    font-weight: var(--font-weight-bold);
-    color: var(--color-primary-500);
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-2);
     text-decoration: none;
-    transition: color var(--transition-default);
+    transition: opacity var(--transition-default);
 }
 
 .logo:hover {
-    color: var(--color-primary-400);
+    opacity: 0.85;
+}
+
+.logo-icon {
+    width: 36px;
+    height: 36px;
+    object-fit: contain;
+}
+
+.logo-text {
+    font-size: var(--font-size-2xl);
+    font-weight: var(--font-weight-bold);
+    color: var(--color-primary-500);
 }
 
 /* GitHub link */
@@ -483,7 +495,12 @@ button:focus {
         padding: var(--spacing-3) var(--spacing-4);
     }
 
-    .logo {
+    .logo-icon {
+        width: 28px;
+        height: 28px;
+    }
+
+    .logo-text {
         font-size: var(--font-size-xl);
     }
 
