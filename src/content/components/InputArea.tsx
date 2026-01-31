@@ -82,7 +82,7 @@ const InputArea: React.FC<InputAreaProps> = ({
                 aria-label={t('input.send')}
                 type="button"
             >
-              <SendIcon size={14} />
+              <SendIcon size={24} />
             </button>
             <button
                 onClick={() => onChange('')}
@@ -90,7 +90,7 @@ const InputArea: React.FC<InputAreaProps> = ({
                 aria-label={t('input.clear')}
                 type="button"
             >
-              <ClearIcon size={14} />
+              <ClearIcon size={24} />
             </button>
           </>
         )}

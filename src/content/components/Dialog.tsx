@@ -472,17 +472,17 @@ const Dialog: React.FC<DialogProps> = ({ isOpen, onClose, mode = 'overlay', init
         <div className={headerButtonsStyles}>
           {conversationHistory.length > 0 && (
             <button onClick={handleClearConversation} aria-label={t('dialog.clearConversation')} title={t('dialog.clearConversation')}>
-              <FireIcon size={18} />
+              <FireIcon size={24} />
             </button>
           )}
           <button onClick={handleOpenHistory} aria-label={t('history.openHistory')} title={t('history.openHistory')}>
-            <HistoryIcon size={18} />
+            <HistoryIcon size={24} />
           </button>
           <button onClick={() => chrome.runtime.sendMessage({ type: 'openSettings' })} aria-label={t('dialog.settings')} title={t('dialog.openSettings')}>
-            <SettingsIcon size={18} />
+            <SettingsIcon size={24} />
           </button>
           <button onClick={onClose} aria-label={t('dialog.close')} title={mode === 'standalone' ? t('dialog.closeWindow') : t('dialog.closeDialog')}>
-            <CloseIcon size={18} />
+            <CloseIcon size={24} />
           </button>
         </div>
       </div>
@@ -720,7 +720,7 @@ const standaloneContainerStyles = css`
 const standaloneDialogStyles = css`
   width: 100%;
   max-width: 800px;
-  height: 90%;
+  height: auto;
   max-height: 700px;
   background: var(--color-bg-base);
   border-radius: ${radii['3xl']};

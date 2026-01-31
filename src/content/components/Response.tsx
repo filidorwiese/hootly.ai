@@ -11,7 +11,7 @@ const renderer = new marked.Renderer();
 renderer.code = ({ text, lang }: { text: string; lang?: string }) => {
   let highlighted = text;
   let detectedLang = lang;
-  
+
   if (lang && hljs.getLanguage(lang)) {
     try {
       highlighted = hljs.highlight(text, { language: lang }).value;
@@ -27,7 +27,7 @@ renderer.code = ({ text, lang }: { text: string; lang?: string }) => {
       // Fallback to plain text
     }
   }
-  
+
   // Store raw text in data attribute for copying
   const escapedText = text.replace(/&/g, '&amp;').replace(/"/g, '&quot;');
   const langLabel = detectedLang ? `<span class="code-lang-label">${detectedLang}</span>` : '';
@@ -124,7 +124,7 @@ const Response: React.FC<ResponseProps> = ({ conversationHistory, currentRespons
               onClick={() => handleCopy(message.content, index)}
               title={copiedIndex === index ? t('response.copied') : t('response.copyToClipboard')}
             >
-              {copiedIndex === index ? <CheckIcon size={14} /> : <CopyIcon size={14} />}
+              {copiedIndex === index ? <CheckIcon size={24} /> : <CopyIcon size={24} />}
             </button>
           </div>
         );
@@ -147,7 +147,7 @@ const Response: React.FC<ResponseProps> = ({ conversationHistory, currentRespons
             onClick={() => handleCopy(currentResponse, -1)}
             title={copiedIndex === -1 ? t('response.copied') : t('response.copyToClipboard')}
           >
-            {copiedIndex === -1 ? <CheckIcon size={14} /> : <CopyIcon size={14} />}
+            {copiedIndex === -1 ? <CheckIcon size={24} /> : <CopyIcon size={24} />}
           </button>
         </div>
       )}
