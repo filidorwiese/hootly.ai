@@ -1840,5 +1840,114 @@
       "Style with small, muted text"
     ],
     "passes": false
+  },
+  {
+    "id": "TT-5",
+    "category": "tooltips",
+    "description": "Change 'Clear conversation' tooltip to 'Burn conversation' in all languages",
+    "steps": [
+      "Open src/shared/i18n/en.json",
+      "Find 'Clear conversation' tooltip string",
+      "Change to 'Burn conversation'",
+      "Update all 10 language files (en, nl, de, fr, es, it, pt, zh, ja, ko)",
+      "Verify tooltip displays correctly in dialog"
+    ],
+    "passes": false
+  },
+  {
+    "id": "SVG-1",
+    "category": "icons",
+    "description": "Fix React SVG attribute names in icons.tsx",
+    "steps": [
+      "Open src/shared/icons.tsx",
+      "Replace fill-rule with fillRule",
+      "Replace clip-rule with clipRule",
+      "Verify no React warnings in console"
+    ],
+    "passes": false
+  },
+  {
+    "id": "SVG-2",
+    "category": "icons",
+    "description": "Fix GlobeI1con typo to GlobeIcon",
+    "steps": [
+      "Open src/shared/icons.tsx",
+      "Rename GlobeI1con to GlobeIcon",
+      "Find all usages of GlobeI1con in codebase",
+      "Update imports to use GlobeIcon",
+      "Verify no build errors"
+    ],
+    "passes": false
+  },
+  {
+    "id": "SVG-3",
+    "category": "icons",
+    "description": "Add xmlns attribute to all SVGs in icons.tsx",
+    "steps": [
+      "Open src/shared/icons.tsx",
+      "Add xmlns='http://www.w3.org/2000/svg' to all svg elements missing it",
+      "Verify consistent attribute order across all icons"
+    ],
+    "passes": false
+  },
+  {
+    "id": "SVG-4",
+    "category": "icons",
+    "description": "Standardize viewBox sizing in icons.tsx",
+    "steps": [
+      "Review all icons for viewBox consistency",
+      "Document which icons use 24x24 vs 80x80",
+      "Consider normalizing if appropriate",
+      "Add comment documenting the viewBox convention"
+    ],
+    "passes": false
+  },
+  {
+    "id": "CLEANUP-1",
+    "category": "cleanup",
+    "description": "Identify unused exports in shared modules",
+    "steps": [
+      "Scan src/shared/*.ts for exported functions/types",
+      "Check if each export is imported elsewhere",
+      "List unused exports for review",
+      "Remove confirmed dead code"
+    ],
+    "passes": false
+  },
+  {
+    "id": "CLEANUP-2",
+    "category": "cleanup",
+    "description": "Remove unused CSS styles",
+    "steps": [
+      "Scan iframe.html and CSS files for defined styles",
+      "Check if each class/id is used in components",
+      "List unused styles for review",
+      "Remove confirmed dead styles"
+    ],
+    "passes": false
+  },
+  {
+    "id": "CLEANUP-3",
+    "category": "cleanup",
+    "description": "Prune unused i18n translation keys",
+    "steps": [
+      "Extract all translation keys from en.json",
+      "Grep codebase for t('key') usage",
+      "List translation keys never referenced in code",
+      "Remove confirmed unused keys from all language files"
+    ],
+    "passes": false
+  },
+  {
+    "id": "CLEANUP-4",
+    "category": "cleanup",
+    "description": "Remove unused icon exports from icons.tsx",
+    "steps": [
+      "List all exported icons from icons.tsx",
+      "Grep codebase for each icon import",
+      "Identify icons never imported",
+      "Remove unused icon components"
+    ],
+    "passes": false
   }
 ]
