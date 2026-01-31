@@ -1948,6 +1948,6 @@
       "Identify icons never imported",
       "Remove unused icon components"
     ],
-    "passes": false
+    "passes": true
   }
 ]
