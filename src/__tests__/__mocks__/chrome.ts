@@ -67,6 +67,10 @@ export const chromeMock = {
     query: vi.fn(() => Promise.resolve([{ id: 1, url: 'https://example.com' }])),
     sendMessage: vi.fn(() => Promise.resolve()),
     create: vi.fn(() => Promise.resolve({ id: 2 })),
+    update: vi.fn(() => Promise.resolve({ id: 1 })),
+  },
+  windows: {
+    update: vi.fn(() => Promise.resolve()),
   },
   action: {
     onClicked: {

@@ -1773,5 +1773,72 @@
       "Test with npm run serve:website"
     ],
     "passes": true
+  },
+  {
+    "id": "HP-26",
+    "category": "history-page",
+    "description": "Add scrollbar and min-height to expanded history items",
+    "steps": [
+      "Locate expanded history item container in history.ts",
+      "Add max-height CSS property (e.g., 400px)",
+      "Add overflow-y: auto for scrollbar",
+      "Add min-height CSS property (e.g., 150px)",
+      "Verify scrollbar appears for long conversations",
+      "Test scroll behavior works smoothly"
+    ],
+    "passes": false
+  },
+  {
+    "id": "HP-27",
+    "category": "history-page",
+    "description": "Add forest1.svg as fullscreen fixed background on chat page",
+    "steps": [
+      "Locate chat page CSS/styles in chat.ts or chat.html",
+      "Set background-image to website/images/forest1.svg",
+      "Apply background-size: cover",
+      "Apply background-attachment: fixed",
+      "Apply background-position: center",
+      "Ensure dialog remains readable over background",
+      "Test in Firefox and Chrome"
+    ],
+    "passes": false
+  },
+  {
+    "id": "UI-9",
+    "category": "ui",
+    "description": "Remove Manage Personas link from settings page",
+    "steps": [
+      "Locate 'Manage Personas' link in settings.ts",
+      "Remove the link element and its container",
+      "Verify personas still accessible via TabHeader",
+      "Test settings page renders without errors"
+    ],
+    "passes": false
+  },
+  {
+    "id": "UI-10",
+    "category": "ui",
+    "description": "Prevent multiple settings windows - focus existing tab",
+    "steps": [
+      "When settings icon clicked, query for existing settings tab",
+      "If settings tab exists, focus that tab instead of opening new",
+      "Use chrome.tabs.query to find settings page URL",
+      "Use chrome.tabs.update to focus existing tab",
+      "Only create new tab if no existing settings tab found"
+    ],
+    "passes": true
+  },
+  {
+    "id": "UI-11",
+    "category": "ui",
+    "description": "Display version number on settings page for debugging",
+    "steps": [
+      "Read version from package.json at build time",
+      "Use Vite define or import.meta to inject version",
+      "Display version subtly on settings page (footer or corner)",
+      "Format as 'v1.0.0' or similar",
+      "Style with small, muted text"
+    ],
+    "passes": false
   }
 ]

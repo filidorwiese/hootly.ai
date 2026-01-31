@@ -27,10 +27,10 @@ chrome.runtime.onMessage.addListener((message: BackgroundMessage, sender, sendRe
     // Settings are stored in chrome.storage, which content scripts can access directly
     sendResponse({ success: true });
   } else if (message.type === 'openSettings') {
-    chrome.tabs.create({ url: chrome.runtime.getURL('settings.html') });
+    openOrFocusTab('settings.html');
     sendResponse({ success: true });
   } else if (message.type === 'openHistory') {
-    chrome.tabs.create({ url: chrome.runtime.getURL('history.html') });
+    openOrFocusTab('history.html');
     sendResponse({ success: true });
   } else if (message.type === 'continueConversation') {
     const convId = message.payload.conversationId;
@@ -60,6 +60,22 @@ async function handleFetchModels(): Promise<{ success: boolean; models?: ModelCo
     console.error('[Hootly] Failed to fetch models:', error);
     return { success: false, error: error.message || 'Failed to fetch models' };
   }
+}
+
+// Open extension page or focus existing tab
+function openOrFocusTab(page: string) {
+  const targetUrl = chrome.runtime.getURL(page);
+  chrome.tabs.query({}, (tabs) => {
+    const existing = tabs.find((tab) => tab.url?.startsWith(targetUrl));
+    if (existing?.id) {
+      chrome.tabs.update(existing.id, { active: true });
+      if (existing.windowId) {
+        chrome.windows.update(existing.windowId, { focused: true });
+      }
+    } else {
+      chrome.tabs.create({ url: targetUrl });
+    }
+  });
 }
 
 // Toggle dialog helper

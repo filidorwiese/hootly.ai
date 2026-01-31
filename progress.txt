@@ -2858,3 +2858,29 @@ STATUS: PRD IS EFFECTIVELY COMPLETE (1 manual task remaining)
 FEATURES LEFT: 0 (all automated features done)
 
 ---
+2026-01-31 - UI-10: Prevent multiple settings windows
+
+COMPLETED:
+- Added openOrFocusTab() helper function to service-worker.ts
+- Modified openSettings/openHistory handlers to use new helper
+- Helper queries all tabs for matching URL, focuses existing or creates new
+- Also focuses the window containing the existing tab
+- Applied same logic to history page for consistency
+- Added 3 unit tests for the new functionality
+- All 1000 tests pass, typecheck passes
+
+FILES CHANGED:
+- src/background/service-worker.ts (added openOrFocusTab, updated handlers)
+- src/__tests__/__mocks__/chrome.ts (added tabs.update and windows mock)
+- src/__tests__/background/service-worker.test.ts (added 3 tests)
+- plans/prd.json (marked UI-10 as passing)
+
+NOTES FOR NEXT PERSON:
+- Remaining incomplete items (5): WS-8, HP-26, HP-27, UI-9, UI-11
+- WS-8 (screenshot) - manual task, requires screenshot of extension
+- HP-26 - scrollbar/min-height for expanded history items
+- HP-27 - forest1.svg background on chat page
+- UI-9 - remove Manage Personas link from settings
+- UI-11 - display version number on settings page
+
+---

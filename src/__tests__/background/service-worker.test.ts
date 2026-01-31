@@ -319,6 +319,70 @@ describe('isModelNotFoundError', () => {
   })
 })
 
+describe('openOrFocusTab', () => {
+  beforeEach(() => {
+    resetChromeMock()
+    vi.clearAllMocks()
+  })
+
+  function openOrFocusTab(page: string) {
+    const targetUrl = chromeMock.runtime.getURL(page)
+    chromeMock.tabs.query({}, (tabs: any[]) => {
+      const existing = tabs.find((tab: any) => tab.url?.startsWith(targetUrl))
+      if (existing?.id) {
+        chromeMock.tabs.update(existing.id, { active: true })
+        if (existing.windowId) {
+          chromeMock.windows.update(existing.windowId, { focused: true })
+        }
+      } else {
+        chromeMock.tabs.create({ url: targetUrl })
+      }
+    })
+  }
+
+  it('creates new tab when no existing settings tab', () => {
+    chromeMock.tabs.query.mockImplementation((_query: any, callback: any) => {
+      callback([{ id: 1, url: 'https://example.com' }])
+    })
+
+    openOrFocusTab('settings.html')
+
+    expect(chromeMock.tabs.create).toHaveBeenCalledWith({
+      url: 'chrome-extension://mock-id/settings.html',
+    })
+    expect(chromeMock.tabs.update).not.toHaveBeenCalled()
+  })
+
+  it('focuses existing tab when settings tab already open', () => {
+    chromeMock.tabs.query.mockImplementation((_query: any, callback: any) => {
+      callback([
+        { id: 1, url: 'https://example.com' },
+        { id: 2, url: 'chrome-extension://mock-id/settings.html', windowId: 1 },
+      ])
+    })
+
+    openOrFocusTab('settings.html')
+
+    expect(chromeMock.tabs.update).toHaveBeenCalledWith(2, { active: true })
+    expect(chromeMock.windows.update).toHaveBeenCalledWith(1, { focused: true })
+    expect(chromeMock.tabs.create).not.toHaveBeenCalled()
+  })
+
+  it('focuses existing history tab', () => {
+    chromeMock.tabs.query.mockImplementation((_query: any, callback: any) => {
+      callback([
+        { id: 3, url: 'chrome-extension://mock-id/history.html', windowId: 2 },
+      ])
+    })
+
+    openOrFocusTab('history.html')
+
+    expect(chromeMock.tabs.update).toHaveBeenCalledWith(3, { active: true })
+    expect(chromeMock.windows.update).toHaveBeenCalledWith(2, { focused: true })
+    expect(chromeMock.tabs.create).not.toHaveBeenCalled()
+  })
+})
+
 describe('toolbar and commands', () => {
   beforeEach(() => {
     resetChromeMock()
