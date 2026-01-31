@@ -3012,3 +3012,31 @@ NOTES FOR NEXT PERSON:
 - Tooltip now matches fire icon semantics
 
 ---
+
+2026-01-31 - UI-9: Remove Manage Personas link from settings page
+
+COMPLETED:
+- Removed managePersonasLink anchor tag + SVG icon from settings HTML
+- Removed JS click handler for managePersonasLink from settings.ts
+- Removed unused getTabUrl import from settings.ts
+- Removed unused .manage-personas-link CSS class from settings HTML
+- Personas still accessible via TabHeader tabs
+- Typecheck passes, all 1003 tests pass
+
+FILES CHANGED:
+- src/settings/index.html (removed link + CSS)
+- src/settings/settings.ts (removed handler + import)
+- plans/prd.json (marked UI-9 as passing)
+
+NOTES FOR NEXT PERSON:
+- Remaining incomplete items (8):
+  - WS-8 (screenshot) - manual task
+  - HP-26 - scrollbar/min-height for expanded history
+  - HP-27 - forest1.svg background on chat page
+  - SVG-3 - add xmlns to SVGs
+  - SVG-4 - standardize viewBox
+  - CLEANUP-1 through CLEANUP-4
+- settings.managePersonas i18n key is now unused (cleanup in CLEANUP-3)
+- TabHeader provides access to Personas tab, making link redundant
+
+---

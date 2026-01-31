@@ -1813,7 +1813,7 @@
       "Verify personas still accessible via TabHeader",
       "Test settings page renders without errors"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "UI-10",

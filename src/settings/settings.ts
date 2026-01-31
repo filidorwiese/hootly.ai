@@ -2,7 +2,7 @@ import { Storage } from '../shared/storage';
 import { Settings, ModelConfig, LLMProvider, DEFAULT_PERSONAS } from '../shared/types';
 import { t, initLanguage, setLanguage } from '../shared/i18n';
 import { selectDefaultModel } from '../shared/models';
-import { injectTabHeader, getTabUrl } from '../shared/TabHeader';
+import { injectTabHeader } from '../shared/TabHeader';
 import { initTheme } from '../shared/theme';
 
 const API_KEY_SECTIONS: Record<LLMProvider, string> = {
@@ -275,15 +275,6 @@ document.addEventListener('DOMContentLoaded', async () => {
       statusDiv.className = 'status error';
     }
   });
-
-  // Manage Personas link - navigates to Personas tab
-  const managePersonasLink = document.getElementById('managePersonasLink');
-  if (managePersonasLink) {
-    managePersonasLink.addEventListener('click', (e) => {
-      e.preventDefault();
-      window.location.href = getTabUrl('personas');
-    });
-  }
 
   // Also populate custom personas in default persona select
   (settings.customPersonas || []).forEach(persona => {
