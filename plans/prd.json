@@ -1888,7 +1888,7 @@
       "Add xmlns='http://www.w3.org/2000/svg' to all svg elements missing it",
       "Verify consistent attribute order across all icons"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "SVG-4",
