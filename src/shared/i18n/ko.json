@@ -54,7 +54,7 @@
     "managePersonas": "페르소나 관리"
   },
   "dialog": {
-    "clearConversation": "대화 지우기",
+    "clearConversation": "대화 소각",
     "clearConversationConfirm": "전체 대화를 지우시겠습니까?",
     "settings": "설정",
     "openSettings": "설정 열기",

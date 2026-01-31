@@ -2971,3 +2971,44 @@ NOTES FOR NEXT PERSON:
 - Version is read from package.json at build time via Vite define
 
 ---
+2026-01-31 - TT-5: Change 'Clear conversation' tooltip to 'Burn conversation'
+
+COMPLETED:
+- Updated clearConversation translation key in all 10 language files
+- English: "Burn conversation"
+- Dutch: "Gesprek verbranden"
+- German: "Gespräch verbrennen"
+- French: "Brûler la conversation"
+- Spanish: "Quemar conversación"
+- Italian: "Brucia conversazione"
+- Portuguese: "Queimar conversa"
+- Chinese: "烧毁对话"
+- Japanese: "会話を焼却"
+- Korean: "대화 소각"
+- All 1003 tests pass, typecheck passes
+
+FILES CHANGED:
+- src/shared/i18n/en.json (line 57)
+- src/shared/i18n/nl.json (line 57)
+- src/shared/i18n/de.json (line 57)
+- src/shared/i18n/fr.json (line 57)
+- src/shared/i18n/es.json (line 57)
+- src/shared/i18n/it.json (line 57)
+- src/shared/i18n/pt.json (line 57)
+- src/shared/i18n/zh.json (line 57)
+- src/shared/i18n/ja.json (line 57)
+- src/shared/i18n/ko.json (line 57)
+- plans/prd.json (marked TT-5 as passing)
+
+NOTES FOR NEXT PERSON:
+- Remaining incomplete items (9):
+  - WS-8 (screenshot) - manual task
+  - HP-26 - scrollbar/min-height for expanded history
+  - HP-27 - forest1.svg background on chat page
+  - UI-9 - remove Manage Personas link
+  - SVG-3 - add xmlns to SVGs
+  - SVG-4 - standardize viewBox
+  - CLEANUP-1 through CLEANUP-4
+- Tooltip now matches fire icon semantics
+
+---

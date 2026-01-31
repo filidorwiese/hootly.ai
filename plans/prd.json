@@ -1852,7 +1852,7 @@
       "Update all 10 language files (en, nl, de, fr, es, it, pt, zh, ja, ko)",
       "Verify tooltip displays correctly in dialog"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "SVG-1",
