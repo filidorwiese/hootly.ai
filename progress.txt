@@ -3170,3 +3170,36 @@ NOTES FOR NEXT PERSON:
 - SVG-4/CLEANUP-1/CLEANUP-2 are lower priority cleanup tasks
 
 ---
+2026-01-31 - CLEANUP-1: Remove unused exports from shared modules
+
+COMPLETED:
+- Scanned all src/shared/*.ts files for exports
+- Identified and removed 5 unused style helper functions from styles.ts:
+  - getColors() - theme color helper, never imported
+  - flatReset - CSS reset string, never imported
+  - flatButtonStyle() - style generator, never imported
+  - flatInputStyle() - style generator, never imported
+  - flatCardStyle() - style generator, never imported
+- Changed 4 exports to internal constants (still needed internally):
+  - colors → const colors (used by cssVariables)
+  - darkColors → const darkColors (used by darkCssVariables)
+  - cssVariables → const cssVariables (used by allCssVariables)
+  - darkCssVariables → const darkCssVariables (used by allCssVariables)
+- File reduced from 672 to 537 lines (135 lines / 20% reduction)
+- Typecheck passes, all 1011 tests pass
+
+FILES CHANGED:
+- src/shared/styles.ts (removed 5 unused exports, internalized 4 exports)
+- plans/prd.json (marked CLEANUP-1 as passing)
+
+NOTES FOR NEXT PERSON:
+- Remaining incomplete items (3):
+  - WS-8 (screenshot) - manual task
+  - HP-27 - forest1.svg background (5.8MB SVG, impractical)
+  - SVG-4 - standardize viewBox (intentional difference)
+  - CLEANUP-2 - remove unused CSS styles
+- models.ts fetchModels() is only used in tests, not production code
+  (production uses provider.fetchModels pattern)
+- All other shared module exports are actively used
+
+---

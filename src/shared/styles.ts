@@ -9,8 +9,8 @@
 // Theme type
 export type Theme = 'light' | 'dark' | 'auto';
 
-// Light theme colors (default)
-export const colors = {
+// Light theme colors (default) - used internally to build CSS variables
+const colors = {
   // Primary - Forest Green spectrum
   primary: {
     50: '#E8F0EA',
@@ -103,11 +103,8 @@ export const colors = {
   },
 } as const;
 
-/**
- * Dark theme colors - Forest-themed dark mode
- * Maintains WCAG AA contrast ratios with inverted luminance
- */
-export const darkColors = {
+// Dark theme colors - used internally to build CSS variables
+const darkColors = {
   // Primary - Forest Green spectrum (same hues, adjusted for dark bg)
   primary: {
     50: '#0A100D',   // Inverted: darkest becomes lightest
@@ -254,20 +251,8 @@ export const transitions = {
   slow: '0.25s ease',
 } as const;
 
-/**
- * Get colors by theme
- * @param theme - 'light' or 'dark'
- * @returns Color palette for the specified theme
- */
-export const getColors = (theme: 'light' | 'dark') => {
-  return theme === 'dark' ? darkColors : colors;
-};
-
-/**
- * CSS custom properties string for embedding in HTML pages
- * Use this in <style> tags for settings/history/personas pages
- */
-export const cssVariables = `
+// CSS custom properties for light mode (combined into allCssVariables)
+const cssVariables = `
   :root {
     /* Primary Colors */
     --color-primary-50: ${colors.primary[50]};
@@ -388,11 +373,8 @@ export const cssVariables = `
   }
 `;
 
-/**
- * Dark mode CSS variables
- * Apply via [data-theme="dark"] or prefers-color-scheme media query
- */
-export const darkCssVariables = `
+// Dark mode CSS variables (combined into allCssVariables)
+const darkCssVariables = `
   [data-theme="dark"] {
     /* Primary Colors */
     --color-primary-50: ${darkColors.primary[50]};
@@ -553,119 +535,3 @@ export const darkCssVariables = `
  */
 export const allCssVariables = cssVariables + darkCssVariables;
 
-/**
- * Flat design reset - removes shadows and gradients
- * Apply to global styles
- */
-export const flatReset = `
-  * {
-    box-shadow: none !important;
-  }
-
-  *:focus {
-    outline: 2px solid var(--color-border-focus);
-    outline-offset: 2px;
-  }
-`;
-
-/**
- * Generate a flat button style
- */
-export const flatButtonStyle = (variant: 'primary' | 'secondary' | 'danger' = 'primary') => {
-  const variants = {
-    primary: {
-      bg: colors.accent.success,
-      bgHover: colors.accent.successHover,
-      text: colors.text.inverse,
-      border: colors.accent.success,
-    },
-    secondary: {
-      bg: colors.surface.default,
-      bgHover: colors.surface.hover,
-      text: colors.text.primary,
-      border: colors.border.default,
-    },
-    danger: {
-      bg: colors.accent.error,
-      bgHover: colors.accent.errorHover,
-      text: colors.text.inverse,
-      border: colors.accent.error,
-    },
-  };
-
-  const v = variants[variant];
-  return `
-    background: ${v.bg};
-    color: ${v.text};
-    border: 1px solid ${v.border};
-    border-radius: ${radii.md};
-    padding: ${spacing[2]} ${spacing[4]};
-    font-size: ${fontSizes.base};
-    font-weight: ${fontWeights.medium};
-    cursor: pointer;
-    transition: background ${transitions.default}, border-color ${transitions.default};
-
-    &:hover {
-      background: ${v.bgHover};
-      border-color: ${v.bgHover};
-    }
-
-    &:active {
-      transform: translateY(1px);
-    }
-
-    &:disabled {
-      background: ${colors.surface.disabled};
-      border-color: ${colors.border.light};
-      color: ${colors.text.tertiary};
-      cursor: not-allowed;
-    }
-  `;
-};
-
-/**
- * Generate a flat input style
- */
-export const flatInputStyle = () => `
-  background: ${colors.surface.default};
-  color: ${colors.text.primary};
-  border: 1px solid ${colors.border.default};
-  border-radius: ${radii.md};
-  padding: ${spacing[2]} ${spacing[3]};
-  font-size: ${fontSizes.base};
-  transition: border-color ${transitions.default};
-
-  &:hover {
-    border-color: ${colors.border.strong};
-  }
-
-  &:focus {
-    border-color: ${colors.border.focus};
-    outline: none;
-  }
-
-  &::placeholder {
-    color: ${colors.text.tertiary};
-  }
-
-  &:disabled {
-    background: ${colors.surface.disabled};
-    color: ${colors.text.tertiary};
-    cursor: not-allowed;
-  }
-`;
-
-/**
- * Generate a flat card style
- */
-export const flatCardStyle = () => `
-  background: ${colors.surface.default};
-  border: 1px solid ${colors.border.light};
-  border-radius: ${radii.xl};
-  padding: ${spacing[4]};
-  transition: border-color ${transitions.default};
-
-  &:hover {
-    border-color: ${colors.border.strong};
-  }
-`;

@@ -1912,7 +1912,7 @@
       "List unused exports for review",
       "Remove confirmed dead code"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "CLEANUP-2",
