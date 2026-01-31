@@ -1864,7 +1864,7 @@
       "Replace clip-rule with clipRule",
       "Verify no React warnings in console"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "SVG-2",

@@ -2884,3 +2884,31 @@ NOTES FOR NEXT PERSON:
 - UI-11 - display version number on settings page
 
 ---
+2026-01-31 - SVG-1: Fix React SVG attribute names in icons.tsx
+
+COMPLETED:
+- Replaced all fill-rule with fillRule (5 occurrences)
+- Replaced all clip-rule with clipRule (5 occurrences)
+- Affected icons: FireIcon, HistoryIcon, SettingsIcon, SendIcon, UserIcon
+- These attributes were using HTML syntax instead of JSX camelCase
+- This eliminates React DOM warnings in browser console
+
+FILES CHANGED:
+- src/shared/icons.tsx (attribute name fixes)
+- plans/prd.json (marked SVG-1 as passing)
+
+NOTES FOR NEXT PERSON:
+- Remaining incomplete items (12):
+  - WS-8 (screenshot) - manual task
+  - HP-26 - scrollbar/min-height for expanded history
+  - HP-27 - forest1.svg background on chat page
+  - UI-9 - remove Manage Personas link
+  - UI-11 - display version number on settings
+  - TT-5 - change tooltip to 'Burn conversation'
+  - SVG-2 - fix GlobeI1con typo
+  - SVG-3 - add xmlns to SVGs
+  - SVG-4 - standardize viewBox
+  - CLEANUP-1 through CLEANUP-4
+- Priority recommendation: SVG-2 (typo fix) is quick win
+
+---
