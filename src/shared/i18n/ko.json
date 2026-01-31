@@ -14,9 +14,6 @@
     "openrouterApiKeyHint": "OpenRouter API 키 받기",
     "apiKeyHintLink": "여기",
     "model": "모델",
-    "modelRecommended": "추천",
-    "modelCurrent": "현재 모델",
-    "modelLegacy": "이전 모델",
     "maxTokens": "최대 토큰",
     "temperature": "온도 (0-1)",
     "shortcut": "키보드 단축키",
@@ -42,7 +39,6 @@
     "personasSection": "페르소나",
     "addPersona": "페르소나 추가",
     "personaName": "이름",
-    "personaDescription": "설명",
     "personaIcon": "아이콘",
     "personaSystemPrompt": "시스템 프롬프트",
     "savePersona": "페르소나 저장",
@@ -50,12 +46,10 @@
     "edit": "편집",
     "delete": "삭제",
     "deletePersonaConfirm": "이 페르소나를 삭제하시겠습니까?",
-    "personaSaved": "페르소나 저장됨!",
-    "managePersonas": "페르소나 관리"
+    "personaSaved": "페르소나 저장됨!"
   },
   "dialog": {
     "clearConversation": "대화 소각",
-    "clearConversationConfirm": "전체 대화를 지우시겠습니까?",
     "settings": "설정",
     "openSettings": "설정 열기",
     "close": "닫기",
@@ -79,8 +73,7 @@
     "placeholder": "부엉부엉 질문하세요...",
     "tokens": "~{{count}} 토큰",
     "clear": "지우기",
-    "send": "전송",
-    "sending": "전송 중..."
+    "send": "전송"
   },
   "context": {
     "enableContext": "컨텍스트 활성화",
@@ -106,7 +99,6 @@
     "openHistory": "기록 열기",
     "view": "보기",
     "continue": "계속",
-    "close": "닫기",
     "noOriginalContext": "페이지 컨텍스트 없음",
     "export": "내보내기",
     "import": "가져오기",
@@ -156,12 +148,5 @@
     "settings": "설정",
     "personas": "페르소나",
     "history": "기록"
-  },
-  "chat": {
-    "loading": "로딩 중...",
-    "notFound": "대화를 찾을 수 없음",
-    "emptyTitle": "대화 시작",
-    "emptyHint": "아래에 메시지를 입력하여 시작하세요",
-    "newConversation": "새 대화"
   }
 }

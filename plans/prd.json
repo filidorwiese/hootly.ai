@@ -1936,7 +1936,7 @@
       "List translation keys never referenced in code",
       "Remove confirmed unused keys from all language files"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "CLEANUP-4",

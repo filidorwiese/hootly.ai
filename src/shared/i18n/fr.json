@@ -14,9 +14,6 @@
     "openrouterApiKeyHint": "Obtenez votre clé API OpenRouter",
     "apiKeyHintLink": "ici",
     "model": "Modèle",
-    "modelRecommended": "Recommandé",
-    "modelCurrent": "Modèles actuels",
-    "modelLegacy": "Anciens modèles",
     "maxTokens": "Tokens maximum",
     "temperature": "Température (0-1)",
     "shortcut": "Raccourci clavier",
@@ -42,7 +39,6 @@
     "personasSection": "Personas",
     "addPersona": "Ajouter un persona",
     "personaName": "Nom",
-    "personaDescription": "Description",
     "personaIcon": "Icône",
     "personaSystemPrompt": "Prompt système",
     "savePersona": "Enregistrer le persona",
@@ -50,12 +46,10 @@
     "edit": "Modifier",
     "delete": "Supprimer",
     "deletePersonaConfirm": "Supprimer ce persona?",
-    "personaSaved": "Persona enregistré!",
-    "managePersonas": "Gérer les personas"
+    "personaSaved": "Persona enregistré!"
   },
   "dialog": {
     "clearConversation": "Brûler la conversation",
-    "clearConversationConfirm": "Effacer toute la conversation?",
     "settings": "Paramètres",
     "openSettings": "Ouvrir les paramètres",
     "close": "Fermer",
@@ -79,8 +73,7 @@
     "placeholder": "Hou-hou, une question...",
     "tokens": "~{{count}} tokens",
     "clear": "Effacer",
-    "send": "Envoyer",
-    "sending": "Envoi en cours..."
+    "send": "Envoyer"
   },
   "context": {
     "enableContext": "Activer le contexte",
@@ -106,7 +99,6 @@
     "openHistory": "Ouvrir l'historique",
     "view": "Voir",
     "continue": "Continuer",
-    "close": "Fermer",
     "noOriginalContext": "Pas de contexte de page",
     "export": "Exporter",
     "import": "Importer",
@@ -156,12 +148,5 @@
     "settings": "Paramètres",
     "personas": "Personas",
     "history": "Historique"
-  },
-  "chat": {
-    "loading": "Chargement...",
-    "notFound": "Conversation introuvable",
-    "emptyTitle": "Démarrer une conversation",
-    "emptyHint": "Tapez un message ci-dessous pour commencer",
-    "newConversation": "Nouvelle conversation"
   }
 }

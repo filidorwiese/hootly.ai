@@ -14,9 +14,6 @@
     "openrouterApiKeyHint": "Get your OpenRouter API key",
     "apiKeyHintLink": "here",
     "model": "Model",
-    "modelRecommended": "Recommended",
-    "modelCurrent": "Current Models",
-    "modelLegacy": "Legacy Models",
     "maxTokens": "Max Tokens",
     "temperature": "Temperature (0-1)",
     "shortcut": "Keyboard Shortcut",
@@ -42,7 +39,6 @@
     "personasSection": "Personas",
     "addPersona": "Add Persona",
     "personaName": "Name",
-    "personaDescription": "Description",
     "personaIcon": "Icon",
     "personaSystemPrompt": "System Prompt",
     "savePersona": "Save Persona",
@@ -50,12 +46,10 @@
     "edit": "Edit",
     "delete": "Delete",
     "deletePersonaConfirm": "Delete this persona?",
-    "personaSaved": "Persona saved!",
-    "managePersonas": "Manage Personas"
+    "personaSaved": "Persona saved!"
   },
   "dialog": {
     "clearConversation": "Burn conversation",
-    "clearConversationConfirm": "Clear entire conversation?",
     "settings": "Settings",
     "openSettings": "Open Settings",
     "close": "Close",
@@ -79,8 +73,7 @@
     "placeholder": "Hoot me a question...",
     "tokens": "~{{count}} tokens",
     "clear": "Clear",
-    "send": "Send",
-    "sending": "Sending..."
+    "send": "Send"
   },
   "context": {
     "enableContext": "Enable context",
@@ -106,7 +99,6 @@
     "openHistory": "Open history",
     "view": "View",
     "continue": "Continue",
-    "close": "Close",
     "noOriginalContext": "No page context",
     "export": "Export",
     "import": "Import",
@@ -156,12 +148,5 @@
     "settings": "Settings",
     "personas": "Personas",
     "history": "History"
-  },
-  "chat": {
-    "loading": "Loading...",
-    "notFound": "Conversation not found",
-    "emptyTitle": "Start a conversation",
-    "emptyHint": "Type a message below to begin chatting",
-    "newConversation": "New conversation"
   }
 }

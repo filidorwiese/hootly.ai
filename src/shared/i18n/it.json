@@ -14,9 +14,6 @@
     "openrouterApiKeyHint": "Ottieni la tua chiave API OpenRouter",
     "apiKeyHintLink": "qui",
     "model": "Modello",
-    "modelRecommended": "Consigliato",
-    "modelCurrent": "Modelli attuali",
-    "modelLegacy": "Modelli precedenti",
     "maxTokens": "Token massimi",
     "temperature": "Temperatura (0-1)",
     "shortcut": "Scorciatoia da tastiera",
@@ -42,7 +39,6 @@
     "personasSection": "Personas",
     "addPersona": "Aggiungi persona",
     "personaName": "Nome",
-    "personaDescription": "Descrizione",
     "personaIcon": "Icona",
     "personaSystemPrompt": "Prompt di sistema",
     "savePersona": "Salva persona",
@@ -50,12 +46,10 @@
     "edit": "Modifica",
     "delete": "Elimina",
     "deletePersonaConfirm": "Eliminare questa persona?",
-    "personaSaved": "Persona salvata!",
-    "managePersonas": "Gestisci personas"
+    "personaSaved": "Persona salvata!"
   },
   "dialog": {
     "clearConversation": "Brucia conversazione",
-    "clearConversationConfirm": "Cancellare l'intera conversazione?",
     "settings": "Impostazioni",
     "openSettings": "Apri impostazioni",
     "close": "Chiudi",
@@ -79,8 +73,7 @@
     "placeholder": "Gufa la tua domanda...",
     "tokens": "~{{count}} token",
     "clear": "Cancella",
-    "send": "Invia",
-    "sending": "Invio in corso..."
+    "send": "Invia"
   },
   "context": {
     "enableContext": "Attiva contesto",
@@ -106,7 +99,6 @@
     "openHistory": "Apri cronologia",
     "view": "Visualizza",
     "continue": "Continua",
-    "close": "Chiudi",
     "noOriginalContext": "Nessun contesto di pagina",
     "export": "Esporta",
     "import": "Importa",
@@ -156,12 +148,5 @@
     "settings": "Impostazioni",
     "personas": "Personas",
     "history": "Cronologia"
-  },
-  "chat": {
-    "loading": "Caricamento...",
-    "notFound": "Conversazione non trovata",
-    "emptyTitle": "Inizia una conversazione",
-    "emptyHint": "Digita un messaggio qui sotto per iniziare",
-    "newConversation": "Nuova conversazione"
   }
 }

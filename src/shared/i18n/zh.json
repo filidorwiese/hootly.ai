@@ -14,9 +14,6 @@
     "openrouterApiKeyHint": "获取您的 OpenRouter API 密钥",
     "apiKeyHintLink": "这里",
     "model": "模型",
-    "modelRecommended": "推荐",
-    "modelCurrent": "当前模型",
-    "modelLegacy": "旧版模型",
     "maxTokens": "最大令牌数",
     "temperature": "温度 (0-1)",
     "shortcut": "键盘快捷键",
@@ -42,7 +39,6 @@
     "personasSection": "角色",
     "addPersona": "添加角色",
     "personaName": "名称",
-    "personaDescription": "描述",
     "personaIcon": "图标",
     "personaSystemPrompt": "系统提示",
     "savePersona": "保存角色",
@@ -50,12 +46,10 @@
     "edit": "编辑",
     "delete": "删除",
     "deletePersonaConfirm": "删除此角色？",
-    "personaSaved": "角色已保存！",
-    "managePersonas": "管理角色"
+    "personaSaved": "角色已保存！"
   },
   "dialog": {
     "clearConversation": "烧毁对话",
-    "clearConversationConfirm": "清除整个对话？",
     "settings": "设置",
     "openSettings": "打开设置",
     "close": "关闭",
@@ -79,8 +73,7 @@
     "placeholder": "咕咕你的问题...",
     "tokens": "~{{count}} 令牌",
     "clear": "清除",
-    "send": "发送",
-    "sending": "发送中..."
+    "send": "发送"
   },
   "context": {
     "enableContext": "启用上下文",
@@ -106,7 +99,6 @@
     "openHistory": "打开历史",
     "view": "查看",
     "continue": "继续",
-    "close": "关闭",
     "noOriginalContext": "无页面上下文",
     "export": "导出",
     "import": "导入",
@@ -156,12 +148,5 @@
     "settings": "设置",
     "personas": "角色",
     "history": "历史"
-  },
-  "chat": {
-    "loading": "加载中...",
-    "notFound": "对话未找到",
-    "emptyTitle": "开始对话",
-    "emptyHint": "在下方输入消息开始聊天",
-    "newConversation": "新对话"
   }
 }

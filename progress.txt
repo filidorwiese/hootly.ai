@@ -3090,3 +3090,45 @@ NOTES FOR NEXT PERSON:
 - SVG-4: different viewBox sizes are intentional for varying detail levels
 
 ---
+
+2026-01-31 - CLEANUP-3: Prune unused i18n translation keys
+
+COMPLETED:
+- Analyzed all t('key') calls in codebase vs keys in en.json
+- Identified and removed 13 unused translation keys from all 10 language files:
+  - settings.modelRecommended, settings.modelCurrent, settings.modelLegacy (unused model groupings)
+  - settings.personaDescription (removed with P-7)
+  - settings.managePersonas (removed in UI-9)
+  - dialog.clearConversationConfirm (no confirmation dialog exists)
+  - input.sending (never used)
+  - history.close (never used)
+  - chat.* section (entire section never implemented - loading, notFound, emptyTitle, emptyHint, newConversation)
+- Added i18n-cleanup.test.ts with 5 tests verifying key consistency across languages
+- Typecheck passes, all 1011 tests pass
+
+FILES CHANGED:
+- src/shared/i18n/en.json (removed 13 keys)
+- src/shared/i18n/nl.json (removed 13 keys)
+- src/shared/i18n/de.json (removed 13 keys)
+- src/shared/i18n/fr.json (removed 13 keys)
+- src/shared/i18n/es.json (removed 13 keys)
+- src/shared/i18n/it.json (removed 13 keys)
+- src/shared/i18n/pt.json (removed 13 keys)
+- src/shared/i18n/zh.json (removed 13 keys)
+- src/shared/i18n/ja.json (removed 13 keys)
+- src/shared/i18n/ko.json (removed 13 keys)
+- src/__tests__/shared/i18n-cleanup.test.ts (new file - 5 tests)
+- plans/prd.json (marked CLEANUP-3 as passing)
+
+NOTES FOR NEXT PERSON:
+- Remaining incomplete items (5):
+  - WS-8 (screenshot) - manual task
+  - HP-27 - forest1.svg background (impractical - 5.8MB SVG)
+  - SVG-4 - standardize viewBox (intentional difference)
+  - CLEANUP-1 - identify unused exports in shared modules
+  - CLEANUP-2 - remove unused CSS styles
+  - CLEANUP-4 - remove unused icon exports
+- i18n keys are now consistent across all 10 language files
+- Test verifies key consistency to catch future orphaned keys
+
+---

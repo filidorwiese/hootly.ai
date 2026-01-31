@@ -14,9 +14,6 @@
     "openrouterApiKeyHint": "OpenRouter APIキーを取得",
     "apiKeyHintLink": "こちら",
     "model": "モデル",
-    "modelRecommended": "おすすめ",
-    "modelCurrent": "現行モデル",
-    "modelLegacy": "旧モデル",
     "maxTokens": "最大トークン数",
     "temperature": "温度 (0-1)",
     "shortcut": "キーボードショートカット",
@@ -42,7 +39,6 @@
     "personasSection": "ペルソナ",
     "addPersona": "ペルソナを追加",
     "personaName": "名前",
-    "personaDescription": "説明",
     "personaIcon": "アイコン",
     "personaSystemPrompt": "システムプロンプト",
     "savePersona": "ペルソナを保存",
@@ -50,12 +46,10 @@
     "edit": "編集",
     "delete": "削除",
     "deletePersonaConfirm": "このペルソナを削除しますか？",
-    "personaSaved": "ペルソナを保存しました！",
-    "managePersonas": "ペルソナを管理"
+    "personaSaved": "ペルソナを保存しました！"
   },
   "dialog": {
     "clearConversation": "会話を焼却",
-    "clearConversationConfirm": "会話全体をクリアしますか？",
     "settings": "設定",
     "openSettings": "設定を開く",
     "close": "閉じる",
@@ -79,8 +73,7 @@
     "placeholder": "ホーホー、質問をどうぞ...",
     "tokens": "~{{count}} トークン",
     "clear": "クリア",
-    "send": "送信",
-    "sending": "送信中..."
+    "send": "送信"
   },
   "context": {
     "enableContext": "コンテキストを有効化",
@@ -106,7 +99,6 @@
     "openHistory": "履歴を開く",
     "view": "表示",
     "continue": "続ける",
-    "close": "閉じる",
     "noOriginalContext": "ページコンテキストなし",
     "export": "エクスポート",
     "import": "インポート",
@@ -156,12 +148,5 @@
     "settings": "設定",
     "personas": "ペルソナ",
     "history": "履歴"
-  },
-  "chat": {
-    "loading": "読み込み中...",
-    "notFound": "会話が見つかりません",
-    "emptyTitle": "会話を始める",
-    "emptyHint": "下にメッセージを入力して開始",
-    "newConversation": "新しい会話"
   }
 }

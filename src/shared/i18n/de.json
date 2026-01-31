@@ -14,9 +14,6 @@
     "openrouterApiKeyHint": "Hol dir deinen OpenRouter API-Schlüssel",
     "apiKeyHintLink": "hier",
     "model": "Modell",
-    "modelRecommended": "Empfohlen",
-    "modelCurrent": "Aktuelle Modelle",
-    "modelLegacy": "Ältere Modelle",
     "maxTokens": "Max Tokens",
     "temperature": "Temperatur (0-1)",
     "shortcut": "Tastenkürzel",
@@ -42,7 +39,6 @@
     "personasSection": "Personas",
     "addPersona": "Persona hinzufügen",
     "personaName": "Name",
-    "personaDescription": "Beschreibung",
     "personaIcon": "Symbol",
     "personaSystemPrompt": "Systemprompt",
     "savePersona": "Persona speichern",
@@ -50,12 +46,10 @@
     "edit": "Bearbeiten",
     "delete": "Löschen",
     "deletePersonaConfirm": "Diese Persona löschen?",
-    "personaSaved": "Persona gespeichert!",
-    "managePersonas": "Personas verwalten"
+    "personaSaved": "Persona gespeichert!"
   },
   "dialog": {
     "clearConversation": "Gespräch verbrennen",
-    "clearConversationConfirm": "Gesamtes Gespräch löschen?",
     "settings": "Einstellungen",
     "openSettings": "Einstellungen öffnen",
     "close": "Schließen",
@@ -79,8 +73,7 @@
     "placeholder": "Schuhu mir eine Frage...",
     "tokens": "~{{count}} Tokens",
     "clear": "Löschen",
-    "send": "Senden",
-    "sending": "Wird gesendet..."
+    "send": "Senden"
   },
   "context": {
     "enableContext": "Kontext aktivieren",
@@ -106,7 +99,6 @@
     "openHistory": "Verlauf öffnen",
     "view": "Anzeigen",
     "continue": "Fortsetzen",
-    "close": "Schließen",
     "noOriginalContext": "Kein Seitenkontext",
     "export": "Exportieren",
     "import": "Importieren",
@@ -156,12 +148,5 @@
     "settings": "Einstellungen",
     "personas": "Personas",
     "history": "Verlauf"
-  },
-  "chat": {
-    "loading": "Laden...",
-    "notFound": "Gespräch nicht gefunden",
-    "emptyTitle": "Gespräch starten",
-    "emptyHint": "Geben Sie unten eine Nachricht ein, um zu beginnen",
-    "newConversation": "Neues Gespräch"
   }
 }
