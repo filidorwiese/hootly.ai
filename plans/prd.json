@@ -1786,7 +1786,7 @@
       "Verify scrollbar appears for long conversations",
       "Test scroll behavior works smoothly"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "HP-27",

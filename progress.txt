@@ -3040,3 +3040,32 @@ NOTES FOR NEXT PERSON:
 - TabHeader provides access to Personas tab, making link redundant
 
 ---
+
+2026-01-31 - HP-26: Add scrollbar and min-height to expanded history items
+
+COMPLETED:
+- Added max-height: 400px to .conversation-messages CSS
+- Added min-height: 100px to .conversation-messages CSS
+- Added overflow-y: auto for scrollbar when content overflows
+- Added custom scrollbar styling (webkit):
+  - 6px width scrollbar
+  - Rounded track and thumb
+  - Hover states for thumb
+- All 1006 tests pass, typecheck passes
+
+FILES CHANGED:
+- src/history/index.html (added CSS for scrollbar, max/min-height)
+- src/__tests__/history/expanded-messages-scroll.test.ts (new file - 3 tests)
+- plans/prd.json (marked HP-26 as passing)
+
+NOTES FOR NEXT PERSON:
+- Remaining incomplete items (7):
+  - WS-8 (screenshot) - manual task
+  - HP-27 - forest1.svg background on chat page
+  - SVG-3 - add xmlns to SVGs
+  - SVG-4 - standardize viewBox
+  - CLEANUP-1 through CLEANUP-4
+- Scrollbar appears automatically when conversation messages exceed 400px
+- Works in both light and dark mode (uses CSS variables)
+
+---

@@ -267,9 +267,26 @@
       margin-top: var(--spacing-4);
       padding-top: var(--spacing-4);
       border-top: 1px solid var(--color-border-light);
+      max-height: 400px;
+      min-height: 100px;
+      overflow-y: auto;
     }
     .conversation-item.expanded .conversation-messages {
       display: block;
+    }
+    .conversation-messages::-webkit-scrollbar {
+      width: 6px;
+    }
+    .conversation-messages::-webkit-scrollbar-track {
+      background: var(--color-bg-muted);
+      border-radius: var(--radius-full);
+    }
+    .conversation-messages::-webkit-scrollbar-thumb {
+      background: var(--color-border-strong);
+      border-radius: var(--radius-full);
+    }
+    .conversation-messages::-webkit-scrollbar-thumb:hover {
+      background: var(--color-text-tertiary);
     }
     .message {
       margin-bottom: var(--spacing-3);
