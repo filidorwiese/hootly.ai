@@ -1839,7 +1839,7 @@
       "Format as 'v1.0.0' or similar",
       "Style with small, muted text"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "TT-5",

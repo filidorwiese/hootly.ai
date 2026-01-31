@@ -2939,3 +2939,35 @@ NOTES FOR NEXT PERSON:
 - GlobeIcon is now available but not used anywhere yet
 
 ---
+2026-01-31 - UI-11: Display version number on settings page
+
+COMPLETED:
+- Added __APP_VERSION__ global define to vite.config.ts (both lib and main builds)
+- Created src/vite-env.d.ts for TypeScript declaration
+- Added version-info div with styling to settings HTML
+- Updated settings.ts to display version in format 'v0.5.0'
+- Styled with small, muted text centered below save button
+- Added 3 unit tests for version display
+
+FILES CHANGED:
+- vite.config.ts (import readFileSync, read pkg.json, added __APP_VERSION__ defines)
+- src/vite-env.d.ts (new file - TypeScript global declaration)
+- src/settings/index.html (added version-info CSS and div element)
+- src/settings/settings.ts (display version in versionInfo element)
+- src/__tests__/ui/version-display.test.ts (new file - 3 tests)
+- plans/prd.json (marked UI-11 as passing)
+
+NOTES FOR NEXT PERSON:
+- Remaining incomplete items (10):
+  - WS-8 (screenshot) - manual task
+  - HP-26 - scrollbar/min-height for expanded history
+  - HP-27 - forest1.svg background on chat page
+  - UI-9 - remove Manage Personas link
+  - TT-5 - change tooltip to 'Burn conversation'
+  - SVG-3 - add xmlns to SVGs
+  - SVG-4 - standardize viewBox
+  - CLEANUP-1 through CLEANUP-4
+- Version displays at bottom of settings page in muted text
+- Version is read from package.json at build time via Vite define
+
+---

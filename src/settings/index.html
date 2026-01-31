@@ -297,6 +297,14 @@
       accent-color: var(--color-accent-success);
     }
 
+    /* Version info */
+    .version-info {
+      margin-top: var(--spacing-8);
+      text-align: center;
+      font-size: var(--font-size-xs);
+      color: var(--color-text-tertiary);
+    }
+
     /* Dark mode variables */
     [data-theme="dark"] {
       /* Primary Colors */
@@ -545,6 +553,8 @@
   <button id="saveBtn" data-i18n="settings.save">Save Settings</button>
 
   <div id="status" class="status"></div>
+
+  <div id="versionInfo" class="version-info"></div>
   </div>
 
   <script type="module" src="./settings.ts"></script>

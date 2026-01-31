@@ -1,7 +1,9 @@
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
 import { resolve } from 'path';
-import { copyFileSync, mkdirSync, existsSync } from 'fs';
+import { copyFileSync, mkdirSync, existsSync, readFileSync } from 'fs';
+
+const pkg = JSON.parse(readFileSync('./package.json', 'utf-8'));
 
 const isChrome = process.env.TARGET === 'chrome';
 const outDir = isChrome ? 'dist/chrome' : 'dist/firefox';
@@ -15,6 +17,7 @@ export default defineConfig(({ mode }) => {
       plugins: [react()],
       define: {
         'process.env.NODE_ENV': JSON.stringify('production'),
+        '__APP_VERSION__': JSON.stringify(pkg.version),
       },
       build: {
         lib: {
@@ -38,6 +41,9 @@ export default defineConfig(({ mode }) => {
   }
 
   return {
+    define: {
+      '__APP_VERSION__': JSON.stringify(pkg.version),
+    },
     plugins: [
       react(),
       {

@@ -294,4 +294,10 @@ document.addEventListener('DOMContentLoaded', async () => {
   });
   // Re-set the value after adding custom options
   defaultPersonaSelect.value = settings.defaultPersonaId || 'general';
+
+  // Display version number
+  const versionInfo = document.getElementById('versionInfo');
+  if (versionInfo) {
+    versionInfo.textContent = `v${__APP_VERSION__}`;
+  }
 });
