@@ -3,6 +3,14 @@
  *
  * Flat design icons with colors matching the forest theme.
  * Replaces emoji icons with proper SVG icons.
+ *
+ * ViewBox Convention:
+ * - 80x80: Complex colorful icons from glyphs.fyi (FireIcon, HistoryIcon,
+ *   SettingsIcon, SendIcon, UserIcon) - multi-color with detailed paths
+ * - 24x24: Simple hand-crafted icons (CloseIcon, ClearIcon, SelectionIcon,
+ *   FullPageIcon, NoContextIcon, CopyIcon, RobotIcon, CheckIcon) - minimal strokes
+ *
+ * All icons accept a `size` prop that scales uniformly regardless of viewBox.
  */
 import React from 'react';
 

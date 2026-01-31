@@ -1900,7 +1900,7 @@
       "Consider normalizing if appropriate",
       "Add comment documenting the viewBox convention"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "CLEANUP-1",
