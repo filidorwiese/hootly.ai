@@ -1924,7 +1924,7 @@
       "List unused styles for review",
       "Remove confirmed dead styles"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "CLEANUP-3",

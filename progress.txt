@@ -3203,3 +3203,30 @@ NOTES FOR NEXT PERSON:
 - All other shared module exports are actively used
 
 ---
+2026-01-31 - CLEANUP-2: Remove unused CSS styles
+
+COMPLETED:
+- Scanned iframe.html - only contains minimal structural CSS, all actively used
+- Scanned settings/index.html - found 3 unused CSS class definitions:
+  - .section-header (with h2 variant) - 17 lines removed
+  - .btn-secondary (with :hover) - 14 lines removed
+  - .btn-danger (with :hover) - 12 lines removed
+- These classes were defined in <style> but never referenced in HTML
+- personas/index.html and history/index.html styles all actively used
+- Project uses CSS-in-JS (Emotion) for React components, no .css files to clean
+- CSS variables in styles.ts are part of design system, kept for consistency
+- Typecheck passes, all 1011 tests pass
+
+FILES CHANGED:
+- src/settings/index.html (removed 3 unused CSS classes, ~43 lines)
+- plans/prd.json (marked CLEANUP-2 as passing)
+
+NOTES FOR NEXT PERSON:
+- Remaining incomplete items (3):
+  - WS-8 (screenshot) - manual task requiring browser extension screenshot
+  - HP-27 - forest1.svg background on chat page (5.8MB SVG, impractical)
+  - SVG-4 - standardize viewBox sizing (intentional difference for detail levels)
+- All practical automated cleanup tasks are complete
+- WS-8 is the only actionable task remaining (requires manual screenshot)
+
+---
