@@ -18,7 +18,8 @@ for ((i=1; i<=$1; i++)); do
   Use this to leave a note for the next person working in the codebase. \
   6. Make a git commit of that feature. \
   ONLY WORK ON A SINGLE FEATURE. \
-  If, while implementing the feature, you notice the PRD is complete, output <promise>COMPLETE</promise>.")
+  If, while implementing the feature, you notice the PRD is complete, output <promise>COMPLETE</promise>. \
+  Finally output the amount of features still left to work on.")
 
   echo "$result"; echo
 

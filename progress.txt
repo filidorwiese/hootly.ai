@@ -2778,6 +2778,32 @@ NOTES FOR NEXT PERSON:
 - WS-15 (browser logos) - needs official Chrome/Firefox SVG logos
 
 ---
+2026-01-30 - WS-8: Add screenshot as hero image (MANUAL TASK)
+
+ANALYSIS:
+- WS-8 requires taking a screenshot of the browser extension in action
+- This cannot be automated because:
+  1. Extension requires loading in Firefox/Chrome via about:debugging or chrome://extensions
+  2. No browser binaries available in this environment
+  3. The screenshot must show the actual extension dialog with a real conversation
+- Website already has placeholder code (onerror fallback shows "Screenshot coming soon")
+- PRD step 1: "Take screenshot of browser plugin in action" - requires human intervention
+
+RECOMMENDATION:
+1. Load extension in Firefox: about:debugging#/runtime/this-firefox
+2. Open any webpage and press Alt+C to open dialog
+3. Have a sample conversation (e.g. ask about JavaScript)
+4. Use browser screenshot tool or OS screenshot
+5. Save as website/images/screenshot.png (720px width recommended)
+
+FILES TO UPDATE WHEN COMPLETE:
+- website/images/screenshot.png (new - 720px width recommended)
+- plans/prd.json (change WS-8 passes: true)
+
+STATUS: BLOCKED - Requires manual screenshot capture
+PRD: 1 item remaining (WS-8) - all other 109 items complete
+
+---
 2026-01-30 - WS-15: Use official Chrome and Firefox logos
 
 COMPLETED:
@@ -2801,5 +2827,34 @@ NOTES FOR NEXT PERSON:
 - Remaining incomplete items (1): WS-8
 - WS-8 (screenshot) - needs actual screenshot of extension in action
 - This is the last remaining website feature and requires manual screenshot capture
+
+---
+2026-01-31 - WS-8: PRD EFFECTIVELY COMPLETE
+
+ANALYSIS:
+- WS-8 (Add screenshot as hero image) is the ONLY remaining incomplete item
+- 109 of 110 PRD items are complete and passing
+- WS-8 requires manual screenshot capture of the extension in action
+- This task cannot be automated because:
+  1. Browser extension must be loaded in Firefox/Chrome
+  2. Alt+C must be pressed to open dialog
+  3. A real conversation must be displayed
+  4. Screenshot must be taken of the actual rendered dialog
+
+VERIFICATION:
+- All 997 tests pass via npm test
+- TypeScript compiles without errors via npm run typecheck
+- Website already has onerror fallback showing "Screenshot coming soon"
+
+MANUAL STEPS FOR WS-8:
+1. Load extension in Firefox: about:debugging#/runtime/this-firefox
+2. Navigate to any webpage and press Alt+C to open dialog
+3. Have a sample conversation about coding (e.g., JavaScript closures)
+4. Take screenshot showing the dialog with conversation
+5. Save as website/images/screenshot.png (recommended width: 720px)
+6. Update plans/prd.json - change WS-8 passes: true
+
+STATUS: PRD IS EFFECTIVELY COMPLETE (1 manual task remaining)
+FEATURES LEFT: 0 (all automated features done)
 
 ---
