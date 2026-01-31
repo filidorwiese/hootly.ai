@@ -1877,7 +1877,7 @@
       "Update imports to use GlobeIcon",
       "Verify no build errors"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "SVG-3",

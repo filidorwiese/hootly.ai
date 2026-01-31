@@ -84,7 +84,7 @@ export const ClearIcon: React.FC<IconProps> = ({size = 20, className}) => (
 );
 
 // Globe/Context icon - Blue/teal for web context
-export const GlobeI1con: React.FC<IconProps> = ({size = 20, className}) => (
+export const GlobeIcon: React.FC<IconProps> = ({size = 20, className}) => (
     <svg width={size} height={size} viewBox="0 0 24 24" fill="none" className={className}>
         <circle cx="12" cy="12" r="9" fill="#5BA3B0"/>
         <ellipse cx="12" cy="12" rx="4" ry="9" fill="#3A7B89"/>

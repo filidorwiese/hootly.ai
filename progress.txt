@@ -2912,3 +2912,30 @@ NOTES FOR NEXT PERSON:
 - Priority recommendation: SVG-2 (typo fix) is quick win
 
 ---
+2026-01-31 - SVG-2: Fix GlobeI1con typo to GlobeIcon
+
+COMPLETED:
+- Renamed GlobeI1con (typo with number '1') to GlobeIcon in icons.tsx
+- Confirmed no usages existed in codebase (typo prevented imports)
+- Icon now properly named and available for future use
+- No test needed per CLAUDE.md guidelines (icon not currently used, static export)
+- Typecheck passes, all 1000 tests pass
+
+FILES CHANGED:
+- src/shared/icons.tsx (line 87: GlobeI1con -> GlobeIcon)
+- plans/prd.json (marked SVG-2 as passing)
+
+NOTES FOR NEXT PERSON:
+- Remaining incomplete items (11):
+  - WS-8 (screenshot) - manual task
+  - HP-26 - scrollbar/min-height for expanded history
+  - HP-27 - forest1.svg background on chat page
+  - UI-9 - remove Manage Personas link
+  - UI-11 - display version number on settings
+  - TT-5 - change tooltip to 'Burn conversation'
+  - SVG-3 - add xmlns to SVGs
+  - SVG-4 - standardize viewBox
+  - CLEANUP-1 through CLEANUP-4
+- GlobeIcon is now available but not used anywhere yet
+
+---
