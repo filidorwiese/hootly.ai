@@ -1949,5 +1949,103 @@
       "Remove unused icon components"
     ],
     "passes": true
+  },
+  {
+    "id": "FAQ-8",
+    "category": "faq",
+    "description": "Add FAQ: What is BYOK",
+    "steps": [
+      "Add question: 'What is BYOK?'",
+      "Explain BYOK = Bring Your Own Key",
+      "Describe: you provide your own API key from AI provider",
+      "Mention benefits: full control, no markup, direct billing",
+      "Keep answer concise (2-3 sentences)"
+    ],
+    "passes": true
+  },
+  {
+    "id": "FAQ-7",
+    "category": "faq",
+    "description": "Add FAQ: Why is Hootly free / what is BYOK",
+    "steps": [
+      "Add question: 'Why is Hootly.ai free?'",
+      "Explain BYOK (Bring Your Own Key) model",
+      "Mention open-source, no middle-man, no subscription",
+      "Clarify only cost is direct API usage with LLM provider",
+      "Keep answer concise (2-3 sentences)"
+    ],
+    "passes": true
+  },
+  {
+    "id": "TAB-8",
+    "category": "tabbed-pages",
+    "description": "Refresh extension tab data when tab gains focus",
+    "steps": [
+      "Add visibilitychange event listener to settings/personas/history pages",
+      "On visibility change to 'visible', reload data from storage",
+      "Re-render component with fresh data",
+      "Verify changes made in dialog reflect immediately when switching to tab"
+    ],
+    "passes": false
+  },
+  {
+    "id": "TAB-9",
+    "category": "tabbed-pages",
+    "description": "Store active extension tab ID in background worker",
+    "steps": [
+      "Add extensionTabId variable to service-worker.ts",
+      "Add message handler to set/get extensionTabId",
+      "Clear extensionTabId when tab closes (chrome.tabs.onRemoved)",
+      "Export getter function for other scripts"
+    ],
+    "passes": false
+  },
+  {
+    "id": "TAB-10",
+    "category": "tabbed-pages",
+    "description": "Update dialog settings button to reuse extension tab",
+    "steps": [
+      "Query background for existing extensionTabId",
+      "If tab exists, focus tab and navigate to settings URL",
+      "If no tab, create new tab and store ID in background",
+      "Handle case where stored tab was closed externally"
+    ],
+    "passes": false
+  },
+  {
+    "id": "TAB-11",
+    "category": "tabbed-pages",
+    "description": "Update dialog history button to reuse extension tab",
+    "steps": [
+      "Query background for existing extensionTabId",
+      "If tab exists, focus tab and navigate to history URL",
+      "If no tab, create new tab and store ID in background",
+      "Verify switching from personas tab to history works"
+    ],
+    "passes": false
+  },
+  {
+    "id": "TAB-12",
+    "category": "tabbed-pages",
+    "description": "Update TabHeader navigation to use same-tab routing",
+    "steps": [
+      "Change tab click handlers from chrome.tabs.create to window.location",
+      "Preserve current tab when navigating between settings/personas/history",
+      "Update active tab state after navigation",
+      "Verify back/forward browser navigation works"
+    ],
+    "passes": false
+  },
+  {
+    "id": "TAB-13",
+    "category": "tabbed-pages",
+    "description": "Register extension tab on page load",
+    "steps": [
+      "On settings/personas/history page load, get own tab ID",
+      "Send message to background to register as extension tab",
+      "Handle race condition if multiple pages load simultaneously",
+      "Verify only one extension tab tracked at a time"
+    ],
+    "passes": false
   }
 ]

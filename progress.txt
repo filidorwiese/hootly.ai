@@ -3255,3 +3255,58 @@ NOTES FOR NEXT PERSON:
   - HP-27 would add 6MB to extension bundle, unacceptable for performance
 
 ---
+2026-01-31 - PRD COMPLETION REVIEW
+
+ANALYSIS:
+- Reviewed all remaining items in prd.json with "passes": false
+- Found 2 incomplete items:
+  1. WS-8: Add screenshot as hero image
+     - Requires manual screenshot of browser extension in action
+     - Cannot be automated - needs human to capture real extension UI
+  2. HP-27: Add forest1.svg as fullscreen fixed background on chat page
+     - forest1.svg is 6MB (documented as impractical in progress notes)
+     - Would bloat extension bundle unacceptably
+     - Deemed impractical, not a code task
+
+STATUS:
+- Typecheck: PASS
+- Tests: 1011 passed
+
+CONCLUSION:
+- Both remaining items are NOT suitable for automated implementation
+- WS-8 is a manual content creation task (screenshot)
+- HP-27 was intentionally deferred due to performance concerns
+- All practical automated features are COMPLETE
+
+NOTES FOR NEXT PERSON:
+- If WS-8 is needed, take a screenshot manually and save to website/images/screenshot.png
+- HP-27 should remain incomplete unless a smaller background asset is provided
+- Consider the PRD effectively complete for automated tasks
+
+---
+2026-02-01 - FAQ-7 & FAQ-8: Add BYOK explanation FAQs to website
+
+COMPLETED:
+- Added FAQ item "What is BYOK?" explaining Bring Your Own Key concept
+- Added FAQ item "Why is Hootly.ai free?" explaining BYOK business model
+- Both FAQs concise (2-3 sentences each) per PRD requirements
+- Typecheck passes, all 1011 tests pass
+
+FILES CHANGED:
+- website/index.html (added 2 FAQ items)
+- plans/prd.json (marked FAQ-7 and FAQ-8 as passing)
+
+PRD ITEMS COMPLETED:
+- FAQ-7: Why is Hootly free / what is BYOK
+- FAQ-8: What is BYOK
+
+NOTES FOR NEXT PERSON:
+- Remaining incomplete items (8):
+  - WS-8 (screenshot) - manual task
+  - HP-27 - forest1.svg background (6MB SVG, impractical)
+  - TAB-8 through TAB-13 - tab management features (data refresh, single extension tab)
+- TAB features (8-13) are the only practical remaining automated work
+- TAB-8 requires visibilitychange listener to refresh data when tab gains focus
+- TAB-9 through TAB-13 implement single extension tab behavior
+
+---
