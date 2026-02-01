@@ -1986,7 +1986,7 @@
       "Re-render component with fresh data",
       "Verify changes made in dialog reflect immediately when switching to tab"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "TAB-9",

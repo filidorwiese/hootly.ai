@@ -3310,3 +3310,35 @@ NOTES FOR NEXT PERSON:
 - TAB-9 through TAB-13 implement single extension tab behavior
 
 ---
+2026-02-01 - TAB-8: Refresh extension tab data when tab gains focus
+
+COMPLETED:
+- Added visibilitychange listener to settings.ts, personas.ts, history.ts
+- When tab becomes visible, data is reloaded from storage
+- Settings page: reloads all form fields, repopulates persona dropdown, refreshes models
+- Personas page: reloads settings, re-renders persona lists
+- History page: reloads conversations and settings, re-renders history list
+- Typecheck passes, all 1016 tests pass
+
+FILES CHANGED:
+- src/settings/settings.ts (added reloadSettings function, visibilitychange listener)
+- src/personas/personas.ts (added reloadData function, visibilitychange listener)
+- src/history/history.ts (added reloadData function, visibilitychange listener)
+- src/__tests__/tabbed-pages/tab8-visibility-refresh.test.ts (new test file)
+- plans/prd.json (marked TAB-8 as passing)
+
+PRD ITEMS COMPLETED:
+- TAB-8: Refresh extension tab data when tab gains focus
+
+NOTES FOR NEXT PERSON:
+- Remaining incomplete items (7):
+  - WS-8 (screenshot) - manual task
+  - HP-27 - forest1.svg background (6MB SVG, impractical)
+  - TAB-9 through TAB-13 - single extension tab management
+- TAB-9 stores extension tab ID in service worker
+- TAB-10/11 update dialog buttons to reuse extension tab
+- TAB-12 updates TabHeader navigation to use same-tab routing
+- TAB-13 registers extension tab on page load
+- These tab features prevent multiple settings/history tabs from opening
+
+---

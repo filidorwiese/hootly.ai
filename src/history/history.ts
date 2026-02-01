@@ -558,6 +558,13 @@ async function exportHistory(): Promise<void> {
   URL.revokeObjectURL(url);
 }
 
+async function reloadData(): Promise<void> {
+  currentSettings = await Storage.getSettings();
+  allPersonas = [...DEFAULT_PERSONAS, ...(currentSettings.customPersonas || [])];
+  allConversations = await Storage.getConversations();
+  renderHistoryList(allConversations);
+}
+
 async function init(): Promise<void> {
   // Initialize theme (must be before initLanguage for proper display)
   await initTheme();
@@ -587,6 +594,13 @@ async function init(): Promise<void> {
   // Load and render conversations
   allConversations = await Storage.getConversations();
   renderHistoryList(allConversations);
+
+  // Refresh data when tab gains focus
+  document.addEventListener('visibilitychange', () => {
+    if (document.visibilityState === 'visible') {
+      reloadData();
+    }
+  });
 
   // Search input handlers
   const searchInput = document.getElementById('searchInput') as HTMLInputElement;

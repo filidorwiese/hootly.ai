@@ -291,4 +291,52 @@ document.addEventListener('DOMContentLoaded', async () => {
   if (versionInfo) {
     versionInfo.textContent = `v${__APP_VERSION__}`;
   }
+
+  // Reload settings from storage and update form fields
+  async function reloadSettings(): Promise<void> {
+    const freshSettings = await Storage.getSettings();
+
+    providerSelect.value = freshSettings.provider;
+    claudeApiKeyInput.value = freshSettings.claudeApiKey;
+    openaiApiKeyInput.value = freshSettings.openaiApiKey;
+    geminiApiKeyInput.value = freshSettings.geminiApiKey;
+    openrouterApiKeyInput.value = freshSettings.openrouterApiKey;
+    maxTokensInput.value = freshSettings.maxTokens.toString();
+    temperatureInput.value = freshSettings.temperature.toString();
+    shortcutInput.value = freshSettings.shortcut;
+    showSelectionTooltipInput.checked = freshSettings.showSelectionTooltip !== false;
+    languageSelect.value = freshSettings.language;
+
+    const themeValue = freshSettings.theme || 'auto';
+    if (themeValue === 'light') themeLightRadio.checked = true;
+    else if (themeValue === 'dark') themeDarkRadio.checked = true;
+    else themeAutoRadio.checked = true;
+
+    showApiKeySection(freshSettings.provider);
+
+    // Repopulate default persona select
+    defaultPersonaSelect.innerHTML = '';
+    DEFAULT_PERSONAS.forEach(persona => {
+      const option = document.createElement('option');
+      option.value = persona.id;
+      option.textContent = `${persona.icon} ${persona.name}`;
+      defaultPersonaSelect.appendChild(option);
+    });
+    (freshSettings.customPersonas || []).forEach(persona => {
+      const option = document.createElement('option');
+      option.value = persona.id;
+      option.textContent = `${persona.icon} ${persona.name}`;
+      defaultPersonaSelect.appendChild(option);
+    });
+    defaultPersonaSelect.value = freshSettings.defaultPersonaId || 'general';
+
+    await loadModels();
+  }
+
+  // Refresh data when tab gains focus
+  document.addEventListener('visibilitychange', () => {
+    if (document.visibilityState === 'visible') {
+      reloadSettings();
+    }
+  });
 });

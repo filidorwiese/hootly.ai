@@ -290,6 +290,11 @@ function applyTranslations(): void {
   });
 }
 
+async function reloadData(): Promise<void> {
+  currentSettings = await Storage.getSettings();
+  renderPersonaLists();
+}
+
 async function init(): Promise<void> {
   await initTheme();
   await initLanguage();
@@ -301,6 +306,13 @@ async function init(): Promise<void> {
 
   applyTranslations();
   renderPersonaLists();
+
+  // Refresh data when tab gains focus
+  document.addEventListener('visibilitychange', () => {
+    if (document.visibilityState === 'visible') {
+      reloadData();
+    }
+  });
 
   document.getElementById('addPersonaBtn')!.addEventListener('click', () => {
     showModal();
