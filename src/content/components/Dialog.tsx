@@ -727,7 +727,6 @@ const standaloneDialogStyles = css`
   border: 1px solid var(--color-border-default);
   display: flex;
   flex-direction: column;
-  overflow: hidden;
 `;
 
 export default Dialog;

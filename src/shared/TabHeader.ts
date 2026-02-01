@@ -230,3 +230,23 @@ export function createTabHeaderElement(activeTab: TabId): HTMLElement {
   wrapper.innerHTML = generateTabHeaderHTML(activeTab);
   return wrapper.firstElementChild as HTMLElement;
 }
+
+/**
+ * Register this page as the active extension tab in the background worker.
+ * This enables single-tab behavior - when opening settings/personas/history from dialog,
+ * the existing extension tab is reused instead of opening a new one.
+ */
+export async function registerExtensionTab(): Promise<void> {
+  try {
+    const tab = await chrome.tabs.getCurrent();
+    if (tab?.id) {
+      await chrome.runtime.sendMessage({
+        type: 'setExtensionTabId',
+        payload: { tabId: tab.id },
+      });
+    }
+  } catch (error) {
+    // Silently fail - registration is non-critical
+    console.debug('[TabHeader] Could not register extension tab:', error);
+  }
+}

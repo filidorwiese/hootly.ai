@@ -3375,3 +3375,39 @@ NOTES FOR NEXT PERSON:
 - Tab ID auto-clears when tab is closed via chrome.tabs.onRemoved
 
 ---
+
+---
+2026-02-01 - TAB-12 & TAB-13: Extension tab registration and same-tab routing
+
+COMPLETED:
+- TAB-12 was already implemented (TabHeader uses window.location for navigation)
+- Added registerExtensionTab() function to TabHeader.ts
+- Calls chrome.tabs.getCurrent() to get tab ID and sends to background
+- Added registerExtensionTab() call to settings.ts, personas.ts, history.ts
+- Added 5 tests for registerExtensionTab behavior
+- Typecheck passes, all 1028 tests pass
+
+FILES CHANGED:
+- src/shared/TabHeader.ts (added registerExtensionTab function)
+- src/settings/settings.ts (import and call registerExtensionTab)
+- src/personas/personas.ts (import and call registerExtensionTab)
+- src/history/history.ts (import and call registerExtensionTab)
+- src/__tests__/shared/TabHeader.test.ts (5 new tests for TAB-13)
+- plans/prd.json (marked TAB-12 and TAB-13 as passing)
+
+PRD ITEMS COMPLETED:
+- TAB-12: Update TabHeader navigation to use same-tab routing (was already done)
+- TAB-13: Register extension tab on page load
+
+NOTES FOR NEXT PERSON:
+- Remaining incomplete items (4):
+  - WS-8 (screenshot) - manual task
+  - HP-27 - forest1.svg background (6MB SVG, impractical)
+  - TAB-10: Update dialog settings button to reuse extension tab
+  - TAB-11: Update dialog history button to reuse extension tab
+- TAB-13 provides the foundation for TAB-10/11
+- registerExtensionTab() is exported from TabHeader.ts
+- Extension pages now register themselves on load
+- Background has extensionTabId to track the active extension tab
+
+---

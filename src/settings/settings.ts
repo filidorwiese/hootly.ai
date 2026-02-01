@@ -2,7 +2,7 @@ import { Storage } from '../shared/storage';
 import { Settings, ModelConfig, LLMProvider, DEFAULT_PERSONAS } from '../shared/types';
 import { t, initLanguage, setLanguage } from '../shared/i18n';
 import { selectDefaultModel } from '../shared/models';
-import { injectTabHeader } from '../shared/TabHeader';
+import { injectTabHeader, registerExtensionTab } from '../shared/TabHeader';
 import { initTheme } from '../shared/theme';
 
 const API_KEY_SECTIONS: Record<LLMProvider, string> = {
@@ -104,6 +104,9 @@ document.addEventListener('DOMContentLoaded', async () => {
 
   // Inject TabHeader component
   injectTabHeader({ activeTab: 'settings' });
+
+  // Register this tab as the extension tab (TAB-13)
+  await registerExtensionTab();
 
   applyTranslations();
 

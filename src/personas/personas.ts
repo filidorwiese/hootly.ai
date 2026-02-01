@@ -2,7 +2,7 @@ import { Storage } from '../shared/storage';
 import type { Persona, Settings } from '../shared/types';
 import { DEFAULT_PERSONAS } from '../shared/types';
 import { t, initLanguage } from '../shared/i18n';
-import { injectTabHeader } from '../shared/TabHeader';
+import { injectTabHeader, registerExtensionTab } from '../shared/TabHeader';
 import { initTheme } from '../shared/theme';
 
 let currentSettings: Settings | null = null;
@@ -303,6 +303,9 @@ async function init(): Promise<void> {
 
   // Inject shared TabHeader with Personas tab active
   injectTabHeader({ activeTab: 'personas' });
+
+  // Register this tab as the extension tab (TAB-13)
+  await registerExtensionTab();
 
   applyTranslations();
   renderPersonaLists();

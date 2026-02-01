@@ -2,7 +2,7 @@ import { Storage } from '../shared/storage';
 import type { Conversation, Persona, Settings } from '../shared/types';
 import { DEFAULT_PERSONAS } from '../shared/types';
 import { t, initLanguage } from '../shared/i18n';
-import { injectTabHeader } from '../shared/TabHeader';
+import { injectTabHeader, registerExtensionTab } from '../shared/TabHeader';
 import { initTheme } from '../shared/theme';
 
 // SVG icons for history page
@@ -574,6 +574,9 @@ async function init(): Promise<void> {
 
   // Inject TabHeader component
   injectTabHeader({ activeTab: 'history' });
+
+  // Register this tab as the extension tab (TAB-13)
+  await registerExtensionTab();
 
   // Load settings and personas
   currentSettings = await Storage.getSettings();

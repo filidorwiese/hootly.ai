@@ -2034,7 +2034,7 @@
       "Update active tab state after navigation",
       "Verify back/forward browser navigation works"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "TAB-13",
@@ -2046,6 +2046,6 @@
       "Handle race condition if multiple pages load simultaneously",
       "Verify only one extension tab tracked at a time"
     ],
-    "passes": false
+    "passes": true
   }
 ]

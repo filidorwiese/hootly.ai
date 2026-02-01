@@ -6,13 +6,18 @@ import {
   initTabHeaderNav,
   injectTabHeader,
   createTabHeaderElement,
+  registerExtensionTab,
   TabId,
 } from '../../shared/TabHeader';
 
-// Mock chrome.runtime.getURL
+// Mock chrome APIs
 const mockChrome = {
   runtime: {
     getURL: vi.fn((path: string) => `chrome-extension://test-id/${path}`),
+    sendMessage: vi.fn(),
+  },
+  tabs: {
+    getCurrent: vi.fn(),
   },
 };
 
@@ -344,6 +349,57 @@ describe('TabHeader (TAB-1)', () => {
       // Logo is now an img element instead of inline SVG with colors
       expect(html).toContain('icons/icon.png');
       expect(html).toContain('tab-header-logo-img');
+    });
+  });
+
+  describe('registerExtensionTab (TAB-13)', () => {
+    beforeEach(() => {
+      vi.clearAllMocks();
+    });
+
+    it('calls chrome.tabs.getCurrent to get tab ID', async () => {
+      mockChrome.tabs.getCurrent.mockResolvedValue({ id: 123 });
+      mockChrome.runtime.sendMessage.mockResolvedValue({ success: true });
+
+      await registerExtensionTab();
+
+      expect(mockChrome.tabs.getCurrent).toHaveBeenCalled();
+    });
+
+    it('sends setExtensionTabId message to background with tab ID', async () => {
+      mockChrome.tabs.getCurrent.mockResolvedValue({ id: 456 });
+      mockChrome.runtime.sendMessage.mockResolvedValue({ success: true });
+
+      await registerExtensionTab();
+
+      expect(mockChrome.runtime.sendMessage).toHaveBeenCalledWith({
+        type: 'setExtensionTabId',
+        payload: { tabId: 456 },
+      });
+    });
+
+    it('does not send message if tab has no ID', async () => {
+      mockChrome.tabs.getCurrent.mockResolvedValue({});
+      mockChrome.runtime.sendMessage.mockResolvedValue({ success: true });
+
+      await registerExtensionTab();
+
+      expect(mockChrome.runtime.sendMessage).not.toHaveBeenCalled();
+    });
+
+    it('handles getCurrent returning undefined gracefully', async () => {
+      mockChrome.tabs.getCurrent.mockResolvedValue(undefined);
+
+      // Should not throw
+      await expect(registerExtensionTab()).resolves.not.toThrow();
+      expect(mockChrome.runtime.sendMessage).not.toHaveBeenCalled();
+    });
+
+    it('handles errors silently', async () => {
+      mockChrome.tabs.getCurrent.mockRejectedValue(new Error('Tab API error'));
+
+      // Should not throw
+      await expect(registerExtensionTab()).resolves.not.toThrow();
     });
   });
 });
