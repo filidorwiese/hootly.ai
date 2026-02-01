@@ -73,18 +73,47 @@ async function handleFetchModels(): Promise<{ success: boolean; models?: ModelCo
   }
 }
 
-// Open extension page or focus existing tab
+// Open extension page or focus/navigate existing extension tab
 function openOrFocusTab(page: string) {
   const targetUrl = chrome.runtime.getURL(page);
-  chrome.tabs.query({}, (tabs) => {
-    const existing = tabs.find((tab) => tab.url?.startsWith(targetUrl));
-    if (existing?.id) {
-      chrome.tabs.update(existing.id, { active: true });
-      if (existing.windowId) {
-        chrome.windows.update(existing.windowId, { focused: true });
+
+  // If we have a stored extension tab, try to use it
+  if (extensionTabId !== null) {
+    chrome.tabs.get(extensionTabId, (tab) => {
+      if (chrome.runtime.lastError || !tab) {
+        // Tab was closed externally, clear ID and create new
+        extensionTabId = null;
+        createExtensionTab(targetUrl);
+      } else {
+        // Navigate existing tab to target URL and focus it
+        chrome.tabs.update(extensionTabId!, { url: targetUrl, active: true });
+        if (tab.windowId) {
+          chrome.windows.update(tab.windowId, { focused: true });
+        }
       }
-    } else {
-      chrome.tabs.create({ url: targetUrl });
+    });
+  } else {
+    // No stored tab, search for existing or create new
+    chrome.tabs.query({}, (tabs) => {
+      const existing = tabs.find((t) => t.url?.includes(chrome.runtime.id));
+      if (existing?.id) {
+        extensionTabId = existing.id;
+        chrome.tabs.update(existing.id, { url: targetUrl, active: true });
+        if (existing.windowId) {
+          chrome.windows.update(existing.windowId, { focused: true });
+        }
+      } else {
+        createExtensionTab(targetUrl);
+      }
+    });
+  }
+}
+
+// Helper to create new extension tab and store its ID
+function createExtensionTab(url: string) {
+  chrome.tabs.create({ url }, (tab) => {
+    if (tab?.id) {
+      extensionTabId = tab.id;
     }
   });
 }

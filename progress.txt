@@ -3411,3 +3411,35 @@ NOTES FOR NEXT PERSON:
 - Background has extensionTabId to track the active extension tab
 
 ---
+
+2026-02-01 - TAB-10 & TAB-11: Dialog buttons reuse extension tab
+
+COMPLETED:
+- Updated openOrFocusTab() in service-worker.ts to use stored extensionTabId
+- If extensionTabId exists, navigates that tab to target URL instead of creating new tab
+- If stored tab was closed externally (chrome.runtime.lastError), clears ID and creates new tab
+- Falls back to searching all tabs by extension ID if no stored ID
+- Stores new tab ID when creating tabs via createExtensionTab helper
+- Added tabs.get and tabs.getCurrent mocks to chrome mock
+- Added 6 tests for new openOrFocusTab behavior
+- Typecheck passes, all 1031 tests pass
+
+FILES CHANGED:
+- src/background/service-worker.ts (refactored openOrFocusTab, added createExtensionTab helper)
+- src/__tests__/__mocks__/chrome.ts (added tabs.get, tabs.getCurrent mocks)
+- src/__tests__/background/service-worker.test.ts (updated tests for TAB-10/TAB-11 behavior)
+- plans/prd.json (marked TAB-10 and TAB-11 as passing)
+
+PRD ITEMS COMPLETED:
+- TAB-10: Update dialog settings button to reuse extension tab
+- TAB-11: Update dialog history button to reuse extension tab
+
+NOTES FOR NEXT PERSON:
+- Remaining incomplete items (2):
+  - WS-8 (screenshot) - manual task, requires taking actual screenshot
+  - HP-27 - forest1.svg background (6MB SVG, noted as impractical)
+- All tab management features (TAB-9 through TAB-13) are now complete
+- Extension pages register on load, dialog buttons reuse existing tab
+- Prevents multiple settings/history tabs from opening
+
+---

@@ -2010,7 +2010,7 @@
       "If no tab, create new tab and store ID in background",
       "Handle case where stored tab was closed externally"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "TAB-11",
@@ -2022,7 +2022,7 @@
       "If no tab, create new tab and store ID in background",
       "Verify switching from personas tab to history works"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "TAB-12",

@@ -68,6 +68,8 @@ export const chromeMock = {
     sendMessage: vi.fn(() => Promise.resolve()),
     create: vi.fn(() => Promise.resolve({ id: 2 })),
     update: vi.fn(() => Promise.resolve({ id: 1 })),
+    get: vi.fn(() => Promise.resolve({ id: 1, url: 'https://example.com', windowId: 1 })),
+    getCurrent: vi.fn(() => Promise.resolve({ id: 1, url: 'chrome-extension://mock-id/settings.html' })),
     onRemoved: {
       addListener: vi.fn(),
       removeListener: vi.fn(),
