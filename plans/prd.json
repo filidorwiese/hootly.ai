@@ -1998,7 +1998,7 @@
       "Clear extensionTabId when tab closes (chrome.tabs.onRemoved)",
       "Export getter function for other scripts"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "TAB-10",

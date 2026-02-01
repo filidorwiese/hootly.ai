@@ -6,6 +6,9 @@ import { getProvider, getApiKey } from '../shared/providers';
 // Track active streams for cancellation
 const activeStreams = new Map<number, any>();
 
+// Track extension tab ID (settings/personas/history pages)
+let extensionTabId: number | null = null;
+
 // Handle messages from content script
 chrome.runtime.onMessage.addListener((message: BackgroundMessage, sender, sendResponse) => {
   if (message.type === 'sendPrompt') {
@@ -41,6 +44,14 @@ chrome.runtime.onMessage.addListener((message: BackgroundMessage, sender, sendRe
   } else if (message.type === 'fetchModels') {
     handleFetchModels().then(sendResponse);
     return true; // Keep channel open for async response
+  } else if (message.type === 'setExtensionTabId') {
+    extensionTabId = message.payload.tabId;
+    sendResponse({ success: true, tabId: extensionTabId });
+  } else if (message.type === 'getExtensionTabId') {
+    sendResponse({ success: true, tabId: extensionTabId });
+  } else if (message.type === 'clearExtensionTabId') {
+    extensionTabId = null;
+    sendResponse({ success: true });
   }
 
   return true; // Keep message channel open for async response
@@ -285,6 +296,13 @@ function sendToTab(tabId: number, message: ContentMessage) {
     console.error('Failed to send message to tab:', error);
   });
 }
+
+// Clear extension tab ID when the tab is closed
+chrome.tabs.onRemoved.addListener((tabId) => {
+  if (tabId === extensionTabId) {
+    extensionTabId = null;
+  }
+});
 
 // console.log('[Hootly Background] Service worker initialized');
 

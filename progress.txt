@@ -3342,3 +3342,36 @@ NOTES FOR NEXT PERSON:
 - These tab features prevent multiple settings/history tabs from opening
 
 ---
+2026-02-01 - TAB-9: Store active extension tab ID in background worker
+
+COMPLETED:
+- Added extensionTabId variable to service-worker.ts
+- Added message handlers for setExtensionTabId, getExtensionTabId, clearExtensionTabId
+- Added chrome.tabs.onRemoved listener to clear tab ID when extension tab closes
+- Added new message types to BackgroundMessage in types.ts
+- Added onRemoved mock to chrome mock for testing
+- Typecheck passes, all 1023 tests pass
+
+FILES CHANGED:
+- src/background/service-worker.ts (extensionTabId var, handlers, onRemoved listener)
+- src/shared/types.ts (3 new BackgroundMessage types)
+- src/__tests__/__mocks__/chrome.ts (added tabs.onRemoved mock)
+- src/__tests__/background/service-worker.test.ts (7 new tests for TAB-9)
+- plans/prd.json (marked TAB-9 as passing)
+
+PRD ITEMS COMPLETED:
+- TAB-9: Store active extension tab ID in background worker
+
+NOTES FOR NEXT PERSON:
+- Remaining incomplete items (6):
+  - WS-8 (screenshot) - manual task
+  - HP-27 - forest1.svg background (6MB SVG, impractical)
+  - TAB-10: Update dialog settings button to reuse extension tab
+  - TAB-11: Update dialog history button to reuse extension tab
+  - TAB-12: Update TabHeader navigation to use same-tab routing
+  - TAB-13: Register extension tab on page load
+- TAB-9 provides foundation for TAB-10-13 single-tab management
+- Message types available: setExtensionTabId, getExtensionTabId, clearExtensionTabId
+- Tab ID auto-clears when tab is closed via chrome.tabs.onRemoved
+
+---

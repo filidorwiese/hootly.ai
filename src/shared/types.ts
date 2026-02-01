@@ -121,7 +121,10 @@ export type BackgroundMessage =
   | { type: 'openSettings' }
   | { type: 'openHistory' }
   | { type: 'fetchModels' }
-  | { type: 'continueConversation'; payload: { conversationId: string } };
+  | { type: 'continueConversation'; payload: { conversationId: string } }
+  | { type: 'setExtensionTabId'; payload: { tabId: number } }
+  | { type: 'getExtensionTabId' }
+  | { type: 'clearExtensionTabId' };
 
 export interface SendPromptPayload {
   prompt: string;

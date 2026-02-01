@@ -404,6 +404,106 @@ describe('toolbar and commands', () => {
   })
 })
 
+describe('extensionTabId management (TAB-9)', () => {
+  let extensionTabId: number | null = null
+  let tabRemovedCallback: ((tabId: number) => void) | null = null
+
+  // Simulate the extension tab ID state and handlers
+  const handlers = {
+    setExtensionTabId: (payload: { tabId: number }) => {
+      extensionTabId = payload.tabId
+      return { success: true, tabId: extensionTabId }
+    },
+    getExtensionTabId: () => {
+      return { success: true, tabId: extensionTabId }
+    },
+    clearExtensionTabId: () => {
+      extensionTabId = null
+      return { success: true }
+    },
+  }
+
+  beforeEach(() => {
+    extensionTabId = null
+    resetChromeMock()
+    vi.clearAllMocks()
+
+    // Capture the onRemoved listener
+    chromeMock.tabs.onRemoved.addListener.mockImplementation((callback: (tabId: number) => void) => {
+      tabRemovedCallback = callback
+    })
+
+    // Simulate adding the listener
+    chromeMock.tabs.onRemoved.addListener((tabId: number) => {
+      if (tabId === extensionTabId) {
+        extensionTabId = null
+      }
+    })
+  })
+
+  it('stores extension tab ID when setExtensionTabId called', () => {
+    const result = handlers.setExtensionTabId({ tabId: 123 })
+
+    expect(result.success).toBe(true)
+    expect(result.tabId).toBe(123)
+    expect(extensionTabId).toBe(123)
+  })
+
+  it('returns extension tab ID when getExtensionTabId called', () => {
+    extensionTabId = 456
+
+    const result = handlers.getExtensionTabId()
+
+    expect(result.success).toBe(true)
+    expect(result.tabId).toBe(456)
+  })
+
+  it('returns null when no extension tab registered', () => {
+    const result = handlers.getExtensionTabId()
+
+    expect(result.success).toBe(true)
+    expect(result.tabId).toBeNull()
+  })
+
+  it('clears extension tab ID when clearExtensionTabId called', () => {
+    extensionTabId = 789
+
+    const result = handlers.clearExtensionTabId()
+
+    expect(result.success).toBe(true)
+    expect(extensionTabId).toBeNull()
+  })
+
+  it('clears extension tab ID when matching tab is removed', () => {
+    extensionTabId = 100
+
+    // Simulate tab removal
+    if (tabRemovedCallback) {
+      tabRemovedCallback(100)
+    }
+
+    expect(extensionTabId).toBeNull()
+  })
+
+  it('does not clear extension tab ID when different tab is removed', () => {
+    extensionTabId = 200
+
+    // Simulate removal of a different tab
+    if (tabRemovedCallback) {
+      tabRemovedCallback(999)
+    }
+
+    expect(extensionTabId).toBe(200)
+  })
+
+  it('overwrites previous extension tab ID when new one is set', () => {
+    handlers.setExtensionTabId({ tabId: 111 })
+    handlers.setExtensionTabId({ tabId: 222 })
+
+    expect(extensionTabId).toBe(222)
+  })
+})
+
 describe('handleFetchModels', () => {
   beforeEach(() => {
     resetChromeMock()

@@ -68,6 +68,10 @@ export const chromeMock = {
     sendMessage: vi.fn(() => Promise.resolve()),
     create: vi.fn(() => Promise.resolve({ id: 2 })),
     update: vi.fn(() => Promise.resolve({ id: 1 })),
+    onRemoved: {
+      addListener: vi.fn(),
+      removeListener: vi.fn(),
+    },
   },
   windows: {
     update: vi.fn(() => Promise.resolve()),
