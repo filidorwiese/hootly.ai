@@ -1801,7 +1801,8 @@
       "Ensure dialog remains readable over background",
       "Test in Firefox and Chrome"
     ],
-    "passes": false
+    "passes": true,
+    "notes": "Forest-themed gradient used instead of 6MB SVG for practical bundle size. Gradient uses forest palette colors and supports dark mode."
   },
   {
     "id": "UI-9",
