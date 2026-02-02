@@ -40,24 +40,10 @@ async function init() {
   `;
   iframe.setAttribute('allowtransparency', 'true');
 
-  // Store page info to pass to iframe after load
-  const pageInfo = {
-    url: window.location.href,
-    title: document.title,
-    getSelection: () => window.getSelection()?.toString() || '',
-    getPageText: () => document.body.innerText || '',
-  };
-
   // Wait for iframe to load
   const iframeLoaded = new Promise<void>((resolve) => {
     iframe.onload = () => {
       // console.log('[Hootly] Iframe loaded');
-      // Expose chrome API and page info to iframe
-      const iframeWin = iframe.contentWindow as any;
-      if (iframeWin) {
-        iframeWin.chrome = chrome;
-        iframeWin.__HOOTLY_PAGE_INFO__ = pageInfo;
-      }
       resolve();
     };
   });

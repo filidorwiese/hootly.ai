@@ -240,8 +240,22 @@
     .version-info {
       margin-top: var(--spacing-8);
       text-align: center;
-      font-size: var(--font-size-xs);
+      font-size: var(--font-size-sm);
       color: var(--color-text-tertiary);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: var(--spacing-3);
+    }
+
+    .version-info a {
+      color: var(--color-text-tertiary);
+      text-decoration: none;
+    }
+
+    .version-info a:hover {
+      color: var(--color-text-secondary);
+      text-decoration: underline;
     }
 
     /* Dark mode variables */
@@ -494,7 +508,13 @@
 
   <div id="status" class="status"></div>
 
-  <div id="versionInfo" class="version-info"></div>
+  <div class="version-info">
+    <a href="https://hootly.ai" target="_blank">Website Hootly.ai</a>
+    <span class="separator">·</span>
+    <a href="https://hootly.ai/privacy.html" target="_blank">Privacy</a>
+    <span class="separator">·</span>
+    <span id="versionInfo"></span>
+  </div>
   </div>
 
   <script type="module" src="./settings.ts"></script>
