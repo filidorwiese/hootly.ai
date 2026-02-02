@@ -120,6 +120,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   const temperatureInput = document.getElementById('temperature') as HTMLInputElement;
   const shortcutInput = document.getElementById('shortcut') as HTMLInputElement;
   const showSelectionTooltipInput = document.getElementById('showSelectionTooltip') as HTMLInputElement;
+  const shareAnalyticsInput = document.getElementById('shareAnalytics') as HTMLInputElement;
   const languageSelect = document.getElementById('language') as HTMLSelectElement;
   const themeLightRadio = document.getElementById('themeLight') as HTMLInputElement;
   const themeDarkRadio = document.getElementById('themeDark') as HTMLInputElement;
@@ -153,6 +154,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   temperatureInput.value = settings.temperature.toString();
   shortcutInput.value = settings.shortcut;
   showSelectionTooltipInput.checked = settings.showSelectionTooltip !== false;
+  shareAnalyticsInput.checked = settings.shareAnalytics !== false;
   languageSelect.value = settings.language;
 
   // Set theme radio button
@@ -262,6 +264,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         temperature: parseFloat(temperatureInput.value),
         shortcut: shortcutInput.value.trim() || 'Alt+C',
         showSelectionTooltip: showSelectionTooltipInput.checked,
+        shareAnalytics: shareAnalyticsInput.checked,
         language: languageSelect.value as Settings['language'],
         theme: getSelectedTheme(),
         defaultPersonaId: defaultPersonaSelect.value,
@@ -308,6 +311,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     temperatureInput.value = freshSettings.temperature.toString();
     shortcutInput.value = freshSettings.shortcut;
     showSelectionTooltipInput.checked = freshSettings.showSelectionTooltip !== false;
+    shareAnalyticsInput.checked = freshSettings.shareAnalytics !== false;
     languageSelect.value = freshSettings.language;
 
     const themeValue = freshSettings.theme || 'auto';

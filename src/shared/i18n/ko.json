@@ -20,6 +20,8 @@
     "shortcutHint": "형식: 수정자+키 (예: Alt+C, Ctrl+Shift+K, Meta+Space)",
     "showSelectionTooltip": "선택 툴팁 표시",
     "showSelectionTooltipHint": "페이지에서 텍스트를 선택할 때 툴팁 표시",
+    "shareAnalytics": "익명 사용 데이터 공유",
+    "shareAnalyticsHint": "익명 사용 통계를 공유하여 Hootly 개선에 도움을 주세요",
     "language": "언어",
     "languageAuto": "자동 감지",
     "theme": "테마",

@@ -25,6 +25,7 @@ export interface Settings {
   defaultPersonaId: string;
   customPersonas: Persona[];
   showSelectionTooltip: boolean;
+  shareAnalytics: boolean;
 }
 
 // Re-export ModelConfig from models.ts for convenience
@@ -164,4 +165,5 @@ export const DEFAULT_SETTINGS: Settings = {
   defaultPersonaId: 'general',
   customPersonas: [],
   showSelectionTooltip: true,
+  shareAnalytics: true,
 };

@@ -10,6 +10,7 @@ import { getApiKey } from '../../shared/providers';
 import { t } from '../../shared/i18n';
 import { radii, spacing, fontSizes, fontWeights, transitions } from '../../shared/styles';
 import { FireIcon, HistoryIcon, SettingsIcon, CloseIcon } from '../../shared/icons';
+import { trackDialogOpen } from '../../shared/analytics';
 import InputArea from './InputArea';
 import Response from './Response';
 
@@ -120,6 +121,8 @@ const Dialog: React.FC<DialogProps> = ({ isOpen, onClose, mode = 'overlay', init
         if (apiKey) {
           fetchModels();
         }
+        // Track dialog open event for analytics
+        trackDialogOpen(settings.provider, settings.model || 'default');
       });
       // Request fresh page info from parent (for iframe mode)
       requestPageInfo().then(() => {

@@ -3603,3 +3603,53 @@ NOTES FOR NEXT PERSON:
 - Animation coordinates: 45px left, 110px top (desktop)
 
 ---
+
+---
+2026-02-02 - ANALYTICS-1 to ANALYTICS-8: Plausible analytics integration
+
+COMPLETED:
+- Added shareAnalytics boolean to Settings type (default: true, opt-out model)
+- Added analytics toggle checkbox to settings page with i18n support
+- Created src/shared/analytics.ts with Plausible Events API integration
+- Endpoint: https://plausible.oni.nl/api/event, domain: hootly.ai
+- Collects browser metadata: browser name, browser version, extension version
+- Track dialog_open event when dialog becomes visible
+- trackDialogOpen() includes provider and model in event properties
+- Added i18n translations for all 10 languages
+- Added 10 unit tests for analytics module
+- Typecheck passes, all 1045 tests pass
+
+FILES CHANGED:
+- src/shared/types.ts (shareAnalytics field in Settings, DEFAULT_SETTINGS)
+- src/settings/index.html (analytics toggle checkbox)
+- src/settings/settings.ts (shareAnalyticsInput handling, save, reload)
+- src/shared/analytics.ts (new file - Plausible analytics utility)
+- src/content/components/Dialog.tsx (trackDialogOpen import and call)
+- src/shared/i18n/en.json (shareAnalytics, shareAnalyticsHint)
+- src/shared/i18n/nl.json (Dutch translations)
+- src/shared/i18n/de.json (German translations)
+- src/shared/i18n/fr.json (French translations)
+- src/shared/i18n/es.json (Spanish translations)
+- src/shared/i18n/it.json (Italian translations)
+- src/shared/i18n/pt.json (Portuguese translations)
+- src/shared/i18n/zh.json (Chinese translations)
+- src/shared/i18n/ja.json (Japanese translations)
+- src/shared/i18n/ko.json (Korean translations)
+- src/__tests__/shared/analytics.test.ts (new file - 10 tests)
+- plans/prd.json (marked ANALYTICS-1 to ANALYTICS-8 as passing)
+
+PRD ITEMS COMPLETED:
+- ANALYTICS-1: Add shareAnalytics setting to storage
+- ANALYTICS-2: Add analytics toggle to settings page
+- ANALYTICS-3: Create Plausible analytics utility module
+- ANALYTICS-4: Collect browser and version metadata
+- ANALYTICS-5: Track dialog open events
+- ANALYTICS-8: Add i18n translations for analytics setting
+
+NOTES FOR NEXT PERSON:
+- All PRD items are now complete (all passes: true)
+- Analytics is opt-out (enabled by default)
+- trackEvent silently fails on error - never breaks the app
+- trackDialogOpen is fire-and-forget (no await needed)
+
+---

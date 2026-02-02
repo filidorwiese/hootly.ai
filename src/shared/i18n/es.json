@@ -20,6 +20,8 @@
     "shortcutHint": "Formato: Modificador+Tecla (ej: Alt+C, Ctrl+Shift+K, Meta+Espacio)",
     "showSelectionTooltip": "Mostrar tooltip de selección",
     "showSelectionTooltipHint": "Mostrar un tooltip cuando se selecciona texto en una página",
+    "shareAnalytics": "Compartir datos de uso anónimos",
+    "shareAnalyticsHint": "Ayuda a mejorar Hootly compartiendo estadísticas de uso anónimas",
     "language": "Idioma",
     "languageAuto": "Detección automática",
     "theme": "Tema",

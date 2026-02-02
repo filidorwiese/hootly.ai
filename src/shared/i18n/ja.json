@@ -20,6 +20,8 @@
     "shortcutHint": "形式：修飾キー+キー（例：Alt+C、Ctrl+Shift+K、Meta+Space）",
     "showSelectionTooltip": "選択ツールチップを表示",
     "showSelectionTooltipHint": "ページでテキストを選択した時にツールチップを表示",
+    "shareAnalytics": "匿名の使用データを共有",
+    "shareAnalyticsHint": "匿名の使用統計を共有してHootlyの改善にご協力ください",
     "language": "言語",
     "languageAuto": "自動検出",
     "theme": "テーマ",

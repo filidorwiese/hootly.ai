@@ -20,6 +20,8 @@
     "shortcutHint": "Format: Modifikator+Taste (z.B. Alt+C, Ctrl+Shift+K, Meta+Leertaste)",
     "showSelectionTooltip": "Auswahl-Tooltip anzeigen",
     "showSelectionTooltipHint": "Zeige einen Tooltip wenn Text auf einer Seite ausgewählt wird",
+    "shareAnalytics": "Anonyme Nutzungsdaten teilen",
+    "shareAnalyticsHint": "Helfen Sie Hootly zu verbessern, indem Sie anonyme Nutzungsstatistiken teilen",
     "language": "Sprache",
     "languageAuto": "Automatisch erkennen",
     "theme": "Design",

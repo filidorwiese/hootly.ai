@@ -2112,5 +2112,76 @@
       "Keep owl theme/personality in translations where culturally appropriate"
     ],
     "passes": true
+  },
+  {
+    "id": "ANALYTICS-1",
+    "category": "analytics",
+    "description": "Add shareAnalytics setting to storage",
+    "steps": [
+      "Add shareAnalytics boolean to Settings type in types.ts",
+      "Default to true (opt-out model)",
+      "Update storage wrapper if needed"
+    ],
+    "passes": true
+  },
+  {
+    "id": "ANALYTICS-2",
+    "category": "analytics",
+    "description": "Add analytics toggle to settings page",
+    "steps": [
+      "Add checkbox for 'Share anonymous usage data'",
+      "Position near other privacy-related settings",
+      "Add i18n translation keys for label and hint text",
+      "Save setting to storage on change"
+    ],
+    "passes": true
+  },
+  {
+    "id": "ANALYTICS-3",
+    "category": "analytics",
+    "description": "Create Plausible analytics utility module",
+    "steps": [
+      "Create src/shared/analytics.ts",
+      "Configure Plausible endpoint: https://plausible.oni.nl",
+      "Configure domain: hootly.ai",
+      "Create trackEvent function that checks shareAnalytics setting",
+      "Use Plausible Events API (POST to /api/event)"
+    ],
+    "passes": true
+  },
+  {
+    "id": "ANALYTICS-4",
+    "category": "analytics",
+    "description": "Collect browser and version metadata",
+    "steps": [
+      "Detect browser name (Firefox/Chrome/Edge)",
+      "Detect browser version",
+      "Detect extension version from manifest",
+      "Include as custom properties in analytics events"
+    ],
+    "passes": true
+  },
+  {
+    "id": "ANALYTICS-5",
+    "category": "analytics",
+    "description": "Track dialog open events",
+    "steps": [
+      "Import analytics module in iframe-app.tsx or App.tsx",
+      "Track 'dialog_open' event when dialog becomes visible",
+      "Include model provider in event properties",
+      "Include selected model in event properties"
+    ],
+    "passes": true
+  },
+  {
+    "id": "ANALYTICS-8",
+    "category": "analytics",
+    "description": "Add i18n translations for analytics setting",
+    "steps": [
+      "Add translation key for 'Share anonymous usage data' label",
+      "Add translation key for hint explaining what is collected",
+      "Translate to all 10 supported languages"
+    ],
+    "passes": true
   }
 ]

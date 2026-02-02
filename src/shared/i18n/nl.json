@@ -20,6 +20,8 @@
     "shortcutHint": "Formaat: Modifier+Toets (bijv. Alt+C, Ctrl+Shift+K, Meta+Spatie)",
     "showSelectionTooltip": "Selectie-tooltip tonen",
     "showSelectionTooltipHint": "Toon een tooltip wanneer tekst op een pagina is geselecteerd",
+    "shareAnalytics": "Anonieme gebruiksgegevens delen",
+    "shareAnalyticsHint": "Help Hootly verbeteren door anonieme gebruiksstatistieken te delen",
     "language": "Taal",
     "languageAuto": "Automatisch detecteren",
     "theme": "Thema",
