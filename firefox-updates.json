@@ -3,16 +3,8 @@
     "@hootly-ai": {
       "updates": [
         {
-          "version": "0.3.0",
-          "update_link": "https://hootly.ai/releases/hootly-firefox-0.3.0.zip"
-        },
-        {
-          "version": "0.3.1",
-          "update_link": "https://hootly.ai/releases/hootly-firefox-0.3.1.zip"
-        },
-        {
-          "version": "0.3.2",
-          "update_link": "https://hootly.ai/releases/hootly-firefox-0.3.2.zip"
+          "version": "0.6.0",
+          "update_link": "https://hootly.ai/releases/hootly-firefox-0.6.0.zip"
         }
       ]
     }

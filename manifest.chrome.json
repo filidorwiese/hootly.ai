@@ -2,7 +2,7 @@
   "manifest_version": 3,
   "name": "Hootly.ai",
   "version": "0.0.0",
-  "description": "Interact with Claude AI directly from any webpage",
+  "description": "Your AI Assistant, Right in Your Browser. Chat with Claude, GPT, Gemini, and more directly from any webpage. Bring your own API key and keep full control of your data.",
   "permissions": [
     "storage",
     "activeTab",
