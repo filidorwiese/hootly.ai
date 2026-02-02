@@ -2195,5 +2195,87 @@
       "Translate to all 10 supported languages"
     ],
     "passes": true
+  },
+  {
+    "id": "CTX-1",
+    "category": "context",
+    "description": "Persist context mode in content script memory across dialog close/reopen",
+    "steps": [
+      "Identify where context mode state is stored (likely in Dialog or InputArea)",
+      "Move context mode state to content script level (outside iframe)",
+      "Store context mode when dialog closes",
+      "Restore context mode when dialog reopens",
+      "Verify context toggle shows correct state after reopen"
+    ],
+    "passes": false
+  },
+  {
+    "id": "CTX-2",
+    "category": "context",
+    "description": "Add message type for context mode sync between content script and iframe",
+    "steps": [
+      "Define 'hootly-context-mode' message type",
+      "Send context mode from iframe to content script on change",
+      "Send stored context mode from content script to iframe on dialog open",
+      "Update message-handler types if needed"
+    ],
+    "passes": false
+  },
+  {
+    "id": "CTX-3",
+    "category": "context",
+    "description": "Update Dialog/InputArea to receive initial context mode",
+    "steps": [
+      "Accept initial context mode via props or message",
+      "Initialize context toggle state from received value",
+      "Fall back to default (disabled) if no value received"
+    ],
+    "passes": false
+  },
+  {
+    "id": "CTX-4",
+    "category": "context",
+    "description": "Add unit tests for context persistence",
+    "steps": [
+      "Test context mode persists after dialog close/reopen",
+      "Test context mode resets on page navigation",
+      "Test default context mode on first open"
+    ],
+    "passes": false
+  },
+  {
+    "id": "HP-28",
+    "category": "history-page",
+    "description": "Hide context toggle on chat page",
+    "steps": [
+      "Add prop to InputArea/Dialog to hide context toggle",
+      "Pass hideContext={true} from chat page",
+      "Conditionally render context toggle based on prop",
+      "Verify context toggle hidden on chat.html"
+    ],
+    "passes": false
+  },
+  {
+    "id": "HP-29",
+    "category": "history-page",
+    "description": "Update InputArea component to support hideContext prop",
+    "steps": [
+      "Add optional hideContext prop to InputArea component",
+      "Wrap context toggle in conditional render",
+      "Maintain layout when context toggle hidden",
+      "Update component types/interface"
+    ],
+    "passes": false
+  },
+  {
+    "id": "HP-30",
+    "category": "history-page",
+    "description": "Add unit tests for hidden context toggle on chat page",
+    "steps": [
+      "Test InputArea renders without context toggle when hideContext=true",
+      "Test InputArea renders with context toggle when hideContext=false",
+      "Test chat page passes hideContext prop correctly"
+    ],
+    "passes": false
   }
 ]
