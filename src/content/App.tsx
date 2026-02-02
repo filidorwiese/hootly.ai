@@ -18,21 +18,18 @@ const App: React.FC = () => {
   }, [isOpen]);
 
   useEffect(() => {
-    // console.log('[Hootly] App component mounted');
-
     // Listen for toggle message from parent (iframe) or same window
     const handleMessage = (event: MessageEvent) => {
-      // console.log('[Hootly] Window message received:', event.data);
       if (event.data.type === 'hootly-toggle') {
-        // console.log('[Hootly] Toggling dialog');
-        setIsOpen((prev) => {
-          // console.log('[Hootly] State updating from', prev, 'to', !prev);
-          return !prev;
-        });
+        setIsOpen((prev) => !prev);
       }
     };
 
     window.addEventListener('message', handleMessage);
+
+    // Signal to parent that app is ready to receive messages
+    window.parent.postMessage({ type: 'hootly-ready' }, '*');
+
     return () => window.removeEventListener('message', handleMessage);
   }, []);
 

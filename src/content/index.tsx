@@ -15,6 +15,11 @@ function parseShortcut(shortcut: string): { key: string; alt: boolean; ctrl: boo
 async function init() {
   // console.log('[Hootly] Content script starting...');
 
+  // Prevent duplicate injection
+  if (document.getElementById('hootly-frame')) {
+    return;
+  }
+
   // Ensure body exists
   if (!document.body) {
     // console.log('[Hootly] Body not ready, waiting...');
@@ -40,39 +45,64 @@ async function init() {
   `;
   iframe.setAttribute('allowtransparency', 'true');
 
-  // Wait for iframe to load
-  const iframeLoaded = new Promise<void>((resolve) => {
-    iframe.onload = () => {
-      // console.log('[Hootly] Iframe loaded');
-      resolve();
+  // Track state
+  let dialogOpen = false;
+  let isReady = false;
+  const pendingToggles: (() => void)[] = [];
+
+  // Forward toggle commands to iframe
+  const sendToggleToIframe = () => {
+    if (!isReady) {
+      // Queue the toggle for when iframe is ready
+      pendingToggles.push(() => sendToggleToIframe());
+      return;
+    }
+    dialogOpen = !dialogOpen;
+    iframe.style.pointerEvents = dialogOpen ? 'auto' : 'none';
+    if (dialogOpen) {
+      iframe.focus(); // Required for Firefox to allow focus inside iframe
+    }
+    iframe.contentWindow?.postMessage({ type: 'hootly-toggle' }, '*');
+  };
+
+  // Listen for toggle command from background - MUST be set up before waiting for iframe
+  chrome.runtime.onMessage.addListener((message) => {
+    if (message.type === 'toggleDialog') {
+      sendToggleToIframe();
+    }
+  });
+
+  // Wait for iframe to load and React app to mount
+  const iframeReady = new Promise<void>((resolve) => {
+    const handleReady = (event: MessageEvent) => {
+      if (event.data?.type === 'hootly-ready') {
+        window.removeEventListener('message', handleReady);
+        resolve();
+      }
     };
+    window.addEventListener('message', handleReady);
   });
 
   iframe.src = chrome.runtime.getURL('iframe.html');
   document.body.appendChild(iframe);
 
-  await iframeLoaded;
-  // console.log('[Hootly] Iframe created and ready');
+  await iframeReady;
+  isReady = true;
 
-  // Track dialog state to toggle iframe pointer-events
-  let dialogOpen = false;
+  // Auto-show dialog on first injection (user explicitly activated extension)
+  sendToggleToIframe();
 
-  // Forward toggle commands to iframe
-  const sendToggleToIframe = () => {
-    dialogOpen = !dialogOpen;
-    // console.log('[Hootly] Sending toggle to iframe, dialogOpen:', dialogOpen);
-    iframe.style.pointerEvents = dialogOpen ? 'auto' : 'none';
-    iframe.contentWindow?.postMessage({ type: 'hootly-toggle' }, '*');
-  };
+  // Process any additional toggles that were queued during iframe load
+  while (pendingToggles.length > 0) {
+    pendingToggles.shift()!();
+  }
 
   // Listen for messages from iframe
   window.addEventListener('message', (event) => {
     if (event.data?.type === 'hootly-dialog-closed') {
       dialogOpen = false;
       iframe.style.pointerEvents = 'none';
-      // console.log('[Hootly] Dialog closed, disabling iframe pointer events');
     }
-    // Respond to page info requests from iframe
     if (event.data?.type === 'hootly-get-page-info') {
       iframe.contentWindow?.postMessage({
         type: 'hootly-page-info',
@@ -95,28 +125,16 @@ async function init() {
     }, '*');
   });
 
-  // Listen for toggle command from background
-  chrome.runtime.onMessage.addListener((message) => {
-    // console.log('[Hootly] Received message:', message);
-    if (message.type === 'toggleDialog') {
-      sendToggleToIframe();
-    }
-  });
-
   // Setup keyboard shortcut listener
-  let currentShortcut = parseShortcut('Alt+C'); // default
+  let currentShortcut = parseShortcut('Alt+C');
 
-  // Load configured shortcut
   Storage.getSettings().then((settings) => {
     currentShortcut = parseShortcut(settings.shortcut);
-    // console.log('[Hootly] Keyboard shortcut configured:', settings.shortcut);
   });
 
-  // Listen for shortcut updates
   chrome.storage.onChanged.addListener((changes) => {
     if (changes.settings?.newValue?.shortcut) {
       currentShortcut = parseShortcut(changes.settings.newValue.shortcut);
-      // console.log('[Hootly] Keyboard shortcut updated:', changes.settings.newValue.shortcut);
     }
   });
 
@@ -132,12 +150,9 @@ async function init() {
 
     if (matchesModifiers && matchesKey) {
       event.preventDefault();
-      // console.log('[Hootly] Keyboard shortcut triggered');
       sendToggleToIframe();
     }
   });
-
-  // console.log('[Hootly] Content script initialized successfully');
 }
 
 // Start initialization

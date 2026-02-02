@@ -120,15 +120,40 @@ function createExtensionTab(url: string) {
   });
 }
 
-// Toggle dialog helper
-function toggleDialogInActiveTab() {
-  chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
-    if (tabs[0]?.id) {
-      chrome.tabs.sendMessage(tabs[0].id, { type: 'toggleDialog' })
-        .catch((err) => console.error('[Hootly Background] Error sending message:', err));
+// Toggle dialog helper - injects content script on-demand if needed
+async function toggleDialogInActiveTab() {
+  const tabs = await chrome.tabs.query({ active: true, currentWindow: true });
+  const tab = tabs[0];
+  if (!tab?.id || !tab.url) return;
+
+  // Skip non-injectable pages
+  if (tab.url.startsWith('chrome://') ||
+      tab.url.startsWith('chrome-extension://') ||
+      tab.url.startsWith('about:') ||
+      tab.url.startsWith('moz-extension://')) {
+    return;
+  }
+
+  const tabId = tab.id;
+
+  try {
+    // Try to send toggle message to existing content script
+    await chrome.tabs.sendMessage(tabId, { type: 'toggleDialog' });
+  } catch {
+    // Content script not injected yet - inject it now
+    try {
+      await chrome.scripting.executeScript({
+        target: { tabId },
+        files: ['content.js'],
+      });
+      // Content script auto-shows on first injection via sendToggleToIframe()
+      // No additional toggle needed here
+    } catch (err) {
+      console.error('[Hootly Background] Failed to inject content script:', err);
     }
-  });
+  }
 }
+
 
 // Handle toolbar icon click
 chrome.action.onClicked.addListener(() => {

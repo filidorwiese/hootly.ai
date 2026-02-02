@@ -88,6 +88,9 @@ export const chromeMock = {
       addListener: vi.fn(),
     },
   },
+  scripting: {
+    executeScript: vi.fn(() => Promise.resolve([{ result: undefined }])),
+  },
 }
 
 export function resetChromeMock() {
