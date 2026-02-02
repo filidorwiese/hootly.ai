@@ -4,7 +4,7 @@
 
   const EXAMPLE_PROMPTS = [
     'Summarize this page',
-    'Translate to Japanese',
+    'Translate this page to Japanese',
     'Respond professionally to this email',
     'Explain this code',
     'Find key points in this article',

@@ -37,7 +37,6 @@ async function init() {
     z-index: 2147483647 !important;
     background: transparent !important;
     pointer-events: none !important;
-    color-scheme: light !important;
   `;
   iframe.setAttribute('allowtransparency', 'true');
 

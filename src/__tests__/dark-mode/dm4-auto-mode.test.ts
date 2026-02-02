@@ -113,9 +113,16 @@ describe('DM-4: Auto mode with system preference', () => {
       expect(document.documentElement.getAttribute('data-theme')).toBe('dark');
     });
 
-    it('should set data-theme attribute to auto', () => {
+    it('should resolve auto to effective theme (light when system prefers light)', () => {
+      mockMediaQuery.matches = false; // system prefers light
       applyTheme('auto');
-      expect(document.documentElement.getAttribute('data-theme')).toBe('auto');
+      expect(document.documentElement.getAttribute('data-theme')).toBe('light');
+    });
+
+    it('should resolve auto to effective theme (dark when system prefers dark)', () => {
+      mockMediaQuery.matches = true; // system prefers dark
+      applyTheme('auto');
+      expect(document.documentElement.getAttribute('data-theme')).toBe('dark');
     });
   });
 
@@ -131,10 +138,11 @@ describe('DM-4: Auto mode with system preference', () => {
       expect(document.documentElement.getAttribute('data-theme')).toBe('dark');
     });
 
-    it('should default to auto if theme not in storage', async () => {
+    it('should default to auto (resolved to light) if theme not in storage', async () => {
       (Storage.getSettings as ReturnType<typeof vi.fn>).mockResolvedValue({});
+      mockMediaQuery.matches = false; // system prefers light
       await initTheme();
-      expect(document.documentElement.getAttribute('data-theme')).toBe('auto');
+      expect(document.documentElement.getAttribute('data-theme')).toBe('light');
     });
 
     it('should listen for system preference changes', async () => {
@@ -166,20 +174,22 @@ describe('DM-4: Auto mode with system preference', () => {
   describe('System preference changes', () => {
     it('should update theme when system preference changes', async () => {
       (Storage.getSettings as ReturnType<typeof vi.fn>).mockResolvedValue({ theme: 'auto' });
+      mockMediaQuery.matches = false; // start with light
       await initTheme();
+      expect(document.documentElement.getAttribute('data-theme')).toBe('light');
 
       // Get the change handler
       const changeHandler = mockMediaQuery.addEventListener.mock.calls[0][1];
 
-      // Simulate system preference change
+      // Simulate system preference change to dark
       mockMediaQuery.matches = true;
       changeHandler({ matches: true });
 
       // Wait for async operations
       await new Promise((resolve) => setTimeout(resolve, 0));
 
-      // Theme should stay as 'auto' (CSS handles the actual color switch)
-      expect(document.documentElement.getAttribute('data-theme')).toBe('auto');
+      // Theme should now be 'dark' (JS resolves auto to effective theme)
+      expect(document.documentElement.getAttribute('data-theme')).toBe('dark');
     });
 
     it('should not update when theme is not auto', async () => {
@@ -256,11 +266,12 @@ describe('DM-4: Auto mode with system preference', () => {
       expect(document.documentElement.getAttribute('data-theme')).toBe('light');
     });
 
-    it('should update theme from explicit to auto', async () => {
+    it('should update theme from explicit to auto (resolves to system preference)', async () => {
       (Storage.getSettings as ReturnType<typeof vi.fn>).mockResolvedValue({ theme: 'dark' });
       await initTheme();
 
-      // Simulate storage change
+      // Simulate storage change to auto with system preferring light
+      mockMediaQuery.matches = false;
       const listener = storageChangeListeners[0];
       listener(
         {
@@ -271,7 +282,7 @@ describe('DM-4: Auto mode with system preference', () => {
         'local'
       );
 
-      expect(document.documentElement.getAttribute('data-theme')).toBe('auto');
+      expect(document.documentElement.getAttribute('data-theme')).toBe('light');
     });
 
     it('should ignore non-local storage changes', async () => {
@@ -366,10 +377,12 @@ describe('DM-4: Auto mode with system preference', () => {
       expect(document.documentElement.matches('[data-theme="dark"]')).toBe(true);
     });
 
-    it('should work with data-theme="auto" attribute', () => {
+    it('should resolve auto to effective theme for CSS selectors', () => {
+      mockMediaQuery.matches = false; // system prefers light
       applyTheme('auto');
-      // CSS [data-theme="auto"] selector should match (for media query)
-      expect(document.documentElement.matches('[data-theme="auto"]')).toBe(true);
+      // Auto is resolved to 'light', so [data-theme="light"] should match
+      expect(document.documentElement.matches('[data-theme="light"]')).toBe(true);
+      expect(document.documentElement.matches('[data-theme="auto"]')).toBe(false);
     });
   });
 

@@ -26,11 +26,16 @@ export const getEffectiveTheme = (themeSetting: Theme): 'light' | 'dark' => {
 
 /**
  * Apply theme to document by setting data-theme attribute
+ * For 'auto' mode, we use JS to detect system preference rather than
+ * relying on CSS media queries (which can fail in iframes)
  * @param themeSetting - The theme setting ('light', 'dark', or 'auto')
  */
 export const applyTheme = (themeSetting: Theme): void => {
   if (typeof document !== 'undefined') {
-    document.documentElement.setAttribute('data-theme', themeSetting);
+    // For auto mode, resolve to actual light/dark based on system preference
+    // This is more reliable than CSS media queries, especially in iframes
+    const effectiveTheme = getEffectiveTheme(themeSetting);
+    document.documentElement.setAttribute('data-theme', effectiveTheme);
   }
 };
 
