@@ -48,9 +48,9 @@ describe('HP-18/HP-23: Chat page with Dialog component', () => {
       expect(chatHtmlContent).toContain('<title>Hootly.ai Chat</title>');
     });
 
-    it('should load Inter font', () => {
-      expect(chatHtmlContent).toContain('fonts.googleapis.com');
-      expect(chatHtmlContent).toContain('Inter');
+    it('should load Inter font locally', () => {
+      expect(chatHtmlContent).toContain('fonts/inter.css');
+      expect(chatHtmlContent).not.toContain('fonts.googleapis.com');
     });
 
     it('should have chat-root mount point', () => {

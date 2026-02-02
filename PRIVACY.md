@@ -61,7 +61,7 @@ When you use the "include page context" feature, selected text or page content i
 
 ## Third-Party Services
 
-The extension loads fonts from Google Fonts (fonts.googleapis.com). No other third-party services are used.
+The extension does not load any external resources.
 
 ## Open Source
 
