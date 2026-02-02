@@ -1,6 +1,12 @@
 # Hootly.ai
 
+![Hootly.ai Screenshot](public/promo/promo-screenshot.png)
+
 AI assistant for any webpage. Bring your own API key from Claude, OpenAI, Gemini, or OpenRouter. Free, private, no middleman.
+
+## Prerequisites
+
+- Node.js 18+
 
 ## Quick Start
 
@@ -26,9 +32,11 @@ npm run build
 - **Context modes**: Text selection or full page
 - **Personas**: Pre-built and custom AI personalities
 - **History**: View and continue past conversations
+- **Dark mode**: Auto, light, or dark theme
 - **10 languages**: EN, NL, DE, FR, ES, IT, PT, ZH, JA, KO
 - **Keyboard shortcuts**: `Alt+C` (toggle), `Esc` (close/stop)
 - **Draggable/resizable** dialog with saved position
+- **Privacy-focused**: On-demand injection, minimal permissions
 
 ## Commands
 
@@ -44,7 +52,7 @@ npm run build
 
 ```
 src/
-├── background/       # Service worker (API calls)
+├── background/       # Service worker (API calls, on-demand injection)
 ├── content/          # Content script + React dialog
 ├── settings/         # Settings page
 ├── personas/         # Personas management page
@@ -57,11 +65,24 @@ src/
 
 React, TypeScript, Vite, Emotion CSS, Vitest
 
-## License
+## Release Process
 
-MIT
+1. Make necessary code changes and commit
+2. Bump version in package.json
+3. Git commit, tag + push
+4. Run `npm run release` to build zip-files for upload to addon-stores
+5. For source-code upload, create a release zip on https://github.com/filidorwiese/hootly.ai/releases
+
+### Firefox Addons
+Submit a new version on https://addons.mozilla.org/nl/developers/addons
+
+### Chrome Web Store
+Submit a new version on https://chrome.google.com/webstore/devconsole/
+
 
 ## Links
 
 - [Report issues](https://github.com/filidorwiese/hootly.ai/issues)
 - [Development guidelines](CLAUDE.md)
+- [Privacy policy & License](PRIVACY.md)
+

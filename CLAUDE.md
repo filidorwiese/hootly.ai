@@ -87,9 +87,9 @@ Tests live in `src/__tests__/` mirroring the source structure:
 Vite configured for 4 separate entry points:
 
 1. **Content Script** (`src/content/index.tsx`)
-   - Injected into all pages
+   - Injected on-demand when user activates extension (not on all pages)
    - Creates transparent iframe for style isolation
-   - Forwards keyboard shortcuts and messages to iframe
+   - Forwards toggle commands and messages to iframe
    - Exposes page info (URL, title, selection, text) to iframe via postMessage
 
 2. **Iframe App** (`src/content/iframe-app.tsx`)
@@ -98,9 +98,10 @@ Vite configured for 4 separate entry points:
    - Communicates with content script via postMessage
 
 3. **Background Worker** (`src/background/service-worker.ts`)
-   - Handles Anthropic API calls (bypasses CORS)
+   - Handles API calls to all providers (bypasses CORS)
    - Streams responses back to content script
    - Listens for keyboard command via `chrome.commands`
+   - Injects content script on-demand via `chrome.scripting.executeScript`
 
 4. **Settings Page** (`src/settings/index.html` + `settings.ts`)
    - Standalone page for configuration
@@ -124,11 +125,17 @@ Host Page
 ### Message Passing Flow
 
 ```
-User presses Alt+C
+User presses Alt+C (or clicks toolbar icon)
   ↓
-content script (keydown listener)
+chrome.commands.onCommand (background worker)
   ↓
-postMessage to iframe ('hootly-toggle')
+If content script not injected: chrome.scripting.executeScript
+  ↓
+Content script creates iframe, waits for 'hootly-ready'
+  ↓
+App.tsx sends 'hootly-ready' after mounting
+  ↓
+Content script sends 'hootly-toggle' to iframe
   ↓
 App.tsx toggles dialog visibility
   ↓
@@ -201,7 +208,7 @@ t('input.tokens', { count: 100 })  // With interpolation
 - **`src/shared/utils.ts`**: Context extraction, page info via postMessage
 - **`src/shared/i18n/`**: Translation system
 - **`src/content/iframe.html`**: Iframe document template
-- **`manifest.json`**: Firefox extension config
+- **`manifest.firefox.json`**: Firefox extension config
 - **`manifest.chrome.json`**: Chrome extension config
 
 ## Development Workflow
@@ -228,3 +235,8 @@ t('input.tokens', { count: 100 })  // With interpolation
 ### Bundle Size
 - ~1.2MB for iframe-app.js (highlight.js includes all languages)
 - Can be optimized by importing only common languages
+
+### Permissions
+- `activeTab` + `scripting`: On-demand content script injection (no `<all_urls>`)
+- `storage`: Local settings and conversation history
+- `host_permissions`: Only API endpoints (anthropic, openai, googleapis, openrouter)
