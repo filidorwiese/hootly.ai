@@ -3546,3 +3546,30 @@ NOTES FOR NEXT PERSON:
 - FAQ-9 is a simple website FAQ addition
 
 ---
+
+---
+2026-02-02 - FAQ-9: Add FAQ about OpenRouter API key
+
+COMPLETED:
+- Added FAQ entry for OpenRouter API key to website/index.html
+- Question: 'How do I get an OpenRouter API key?'
+- Answer includes link to openrouter.ai, mentions multi-model access
+- Placed after Gemini FAQ (follows existing pattern)
+- No test added (per CLAUDE.md: don't test file content checks)
+- Typecheck passes, all 1034 tests pass
+
+FILES CHANGED:
+- website/index.html (added OpenRouter FAQ item)
+- plans/prd.json (marked FAQ-9 as passing)
+
+PRD ITEMS COMPLETED:
+- FAQ-9: Add FAQ about OpenRouter API key
+
+NOTES FOR NEXT PERSON:
+- Remaining incomplete items (2):
+  - WS-21: Create typing animation component for screenshot
+  - WS-22: Implement rotating example prompts
+- Both are website visual polish features
+- WS-21 and WS-22 could be combined into single implementation
+
+---

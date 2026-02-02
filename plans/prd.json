@@ -2059,7 +2059,7 @@
       "Mention OpenRouter provides access to multiple AI models",
       "Keep answer concise (2-3 sentences max)"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "WS-21",
