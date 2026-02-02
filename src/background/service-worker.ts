@@ -42,7 +42,9 @@ chrome.runtime.onMessage.addListener((message: BackgroundMessage, sender, sendRe
     });
     sendResponse({ success: true });
   } else if (message.type === 'fetchModels') {
-    handleFetchModels().then(sendResponse);
+    handleFetchModels()
+      .then(sendResponse)
+      .catch((error) => sendResponse({ success: false, error: error?.message || 'Unknown error' }));
     return true; // Keep channel open for async response
   } else if (message.type === 'setExtensionTabId') {
     extensionTabId = message.payload.tabId;
