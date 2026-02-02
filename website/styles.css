@@ -218,6 +218,7 @@ main {
     max-width: 600px;
     margin-left: auto;
     margin-right: auto;
+    text-shadow: 0 1px 2px rgba(255, 255, 255, 0.6);
 }
 
 /* Download buttons */
@@ -237,7 +238,7 @@ main {
     border-radius: var(--radius-lg);
     text-decoration: none;
     font-weight: var(--font-weight-medium);
-    transition: background-color var(--transition-default), border-color var(--transition-default);
+    transition: background-color var(--transition-default), border-color var(--transition-default), transform var(--transition-default);
     border: 2px solid transparent;
 }
 
@@ -249,7 +250,8 @@ main {
 
 .download-btn-firefox:hover {
     background-color: var(--color-accent-success-hover);
-    border-color: var(--color-accent-success-hover);
+    border-color: var(--color-primary-500);
+    color: var(--color-text-inverse);
 }
 
 .download-btn-chrome {
@@ -361,7 +363,7 @@ main {
 .feature h2 {
     font-size: var(--font-size-lg);
     font-weight: var(--font-weight-semibold);
-    color: var(--color-primary-500);
+    color: var(--color-primary-600);
     margin-bottom: var(--spacing-2);
 }
 
@@ -381,7 +383,7 @@ main {
 .faq h2 {
     font-size: var(--font-size-3xl);
     font-weight: var(--font-weight-semibold);
-    color: var(--color-primary-500);
+    color: var(--color-primary-50);
     text-align: center;
     margin-bottom: var(--spacing-8);
 }
