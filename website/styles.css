@@ -308,11 +308,11 @@ main {
 .typing-overlay {
     position: absolute;
     left: 45px;
-    top: 110px;
+    top: 90px;
     font-family: var(--font-family);
     font-size: var(--font-size-lg);
     font-weight: var(--font-weight-medium);
-    color: var(--color-text-primary);
+    color: var(--color-primary-500);
     white-space: nowrap;
     pointer-events: none;
     z-index: 10;
