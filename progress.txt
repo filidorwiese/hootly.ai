@@ -3653,3 +3653,30 @@ NOTES FOR NEXT PERSON:
 - trackDialogOpen is fire-and-forget (no await needed)
 
 ---
+---
+2026-02-02 - ANALYTICS-6: Track message send events
+
+COMPLETED:
+- Added trackMessageSent(provider, model) function to analytics.ts
+- Updated Dialog.tsx to import and call trackMessageSent after successful message send
+- No message content included in event (privacy requirement)
+- Only provider and model metadata tracked
+- Added 1 unit test for trackMessageSent behavior
+- Typecheck passes, all 1046 tests pass
+
+FILES CHANGED:
+- src/shared/analytics.ts (added trackMessageSent function)
+- src/content/components/Dialog.tsx (import and call trackMessageSent)
+- src/__tests__/shared/analytics.test.ts (added test for trackMessageSent)
+- plans/prd.json (marked ANALYTICS-6 as passing)
+
+PRD ITEMS COMPLETED:
+- ANALYTICS-6: Track message send events
+
+NOTES FOR NEXT PERSON:
+- All PRD items now complete (all passes: true)
+- WS-8 (screenshot) remains a manual task but code infrastructure is ready
+- Analytics tracks: dialog_open and message_sent events
+- No message content ever sent to analytics (privacy)
+
+---

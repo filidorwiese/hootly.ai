@@ -10,7 +10,7 @@ import { getApiKey } from '../../shared/providers';
 import { t } from '../../shared/i18n';
 import { radii, spacing, fontSizes, fontWeights, transitions } from '../../shared/styles';
 import { FireIcon, HistoryIcon, SettingsIcon, CloseIcon } from '../../shared/icons';
-import { trackDialogOpen } from '../../shared/analytics';
+import { trackDialogOpen, trackMessageSent } from '../../shared/analytics';
 import InputArea from './InputArea';
 import Response from './Response';
 
@@ -439,6 +439,9 @@ const Dialog: React.FC<DialogProps> = ({ isOpen, onClose, mode = 'overlay', init
           settings: { ...settings, model: currentModel, systemPrompt: combinedSystemPrompt },
         },
       });
+
+      // Track message send event (no content for privacy)
+      trackMessageSent(currentProvider, currentModel);
     } catch (err) {
       setIsLoading(false);
       setError(err instanceof Error ? err.message : t('dialog.sendFailed'));

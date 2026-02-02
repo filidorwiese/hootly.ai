@@ -2174,6 +2174,18 @@
     "passes": true
   },
   {
+    "id": "ANALYTICS-6",
+    "category": "analytics",
+    "description": "Track message send events",
+    "steps": [
+      "Track 'message_sent' event when user sends a message",
+      "Include model provider in event properties",
+      "Include model name in event properties",
+      "Do NOT include message content (privacy)"
+    ],
+    "passes": true
+  },
+  {
     "id": "ANALYTICS-8",
     "category": "analytics",
     "description": "Add i18n translations for analytics setting",

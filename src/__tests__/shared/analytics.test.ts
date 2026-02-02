@@ -1,5 +1,5 @@
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
-import { trackEvent, trackDialogOpen, detectBrowser, detectBrowserVersion, getExtensionVersion } from '../../shared/analytics';
+import { trackEvent, trackDialogOpen, trackMessageSent, detectBrowser, detectBrowserVersion, getExtensionVersion } from '../../shared/analytics';
 import { resetChromeMock, setMockStorage } from '../__mocks__/chrome';
 
 describe('Analytics', () => {
@@ -84,6 +84,25 @@ describe('Analytics', () => {
       expect(body.name).toBe('dialog_open');
       expect(body.props.provider).toBe('claude');
       expect(body.props.model).toBe('claude-3-opus');
+    });
+  });
+
+  describe('trackMessageSent', () => {
+    it('sends message_sent event with provider and model (no content)', async () => {
+      setMockStorage({
+        hootly_settings: { shareAnalytics: true },
+      });
+
+      trackMessageSent('openai', 'gpt-4');
+      await vi.waitFor(() => expect(fetchSpy).toHaveBeenCalled());
+
+      const body = JSON.parse(fetchSpy.mock.calls[0][1]?.body as string);
+      expect(body.name).toBe('message_sent');
+      expect(body.props.provider).toBe('openai');
+      expect(body.props.model).toBe('gpt-4');
+      // Verify no content is sent (privacy requirement)
+      expect(body.props.content).toBeUndefined();
+      expect(body.props.message).toBeUndefined();
     });
   });
 
