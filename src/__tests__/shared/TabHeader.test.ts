@@ -396,10 +396,13 @@ describe('TabHeader (TAB-1)', () => {
     });
 
     it('handles errors silently', async () => {
+      const debugSpy = vi.spyOn(console, 'debug').mockImplementation(() => {});
       mockChrome.tabs.getCurrent.mockRejectedValue(new Error('Tab API error'));
 
       // Should not throw
       await expect(registerExtensionTab()).resolves.not.toThrow();
+      expect(debugSpy).toHaveBeenCalled();
+      debugSpy.mockRestore();
     });
   });
 });
