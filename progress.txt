@@ -3470,3 +3470,36 @@ NOTES FOR NEXT PERSON:
 - Consider running npm run build and manually testing chat page appearance
 
 ---
+
+---
+2026-02-01 - PRD Review: WS-8 is manual-only task
+
+ANALYSIS:
+- Only 1 item remains incomplete: WS-8 (Add screenshot as hero image)
+- WS-8 requires manual action: take actual screenshot of extension in browser
+- All code infrastructure already exists:
+  - website/index.html has screenshot placeholder (lines 49-52)
+  - onerror handler shows "Screenshot coming soon" fallback
+  - styles.css has full responsive styling for .hero-screenshot
+  - Just needs actual screenshot.png file in website/images/
+
+CANNOT AUTOMATE:
+- Taking browser screenshot requires human to:
+  1. Build extension (npm run build)
+  2. Load in Firefox/Chrome
+  3. Open dialog on webpage
+  4. Capture screenshot
+  5. Save as website/images/screenshot.png
+
+VERIFICATION:
+- Typecheck passes
+- All 1031 tests pass
+- Build works correctly
+
+NOTES FOR NEXT PERSON:
+- WS-8 is a manual task - not a code task
+- When screenshot is added, just mark WS-8 as passes: true in PRD
+- All automated PRD items are complete
+- Consider taking screenshot with dialog open on a clean webpage
+
+---

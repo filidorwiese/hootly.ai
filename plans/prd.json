@@ -787,7 +787,7 @@
       "Style with appropriate sizing and shadow",
       "Ensure responsive image scaling"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "WS-9",

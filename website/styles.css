@@ -290,13 +290,8 @@ main {
 /* Screenshot placeholder */
 .hero-screenshot-placeholder {
     position: relative;
-    max-width: 700px;
     margin: 0 auto;
-    background-color: var(--color-bg-muted);
-    border: 2px solid var(--color-border-default);
-    border-radius: var(--radius-2xl);
     overflow: hidden;
-    min-height: 400px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -307,16 +302,6 @@ main {
     height: auto;
     display: block;
     border-radius: var(--radius-lg);
-}
-
-.screenshot-placeholder-text {
-    color: var(--color-text-tertiary);
-    font-size: var(--font-size-base);
-    display: none;
-}
-
-.hero-screenshot-placeholder.no-image .screenshot-placeholder-text {
-    display: block;
 }
 
 /* Features section - Compact horizontal grid layout */
@@ -543,11 +528,6 @@ button:focus {
         padding: var(--spacing-4);
     }
 
-    .hero-screenshot-placeholder {
-        min-height: 200px;
-        border-radius: var(--radius-lg);
-    }
-
     .features {
         padding: var(--spacing-6) 0;
         grid-template-columns: 1fr;
@@ -636,10 +616,6 @@ button:focus {
         padding: var(--spacing-3) var(--spacing-5);
     }
 
-    .hero-screenshot-placeholder {
-        min-height: 300px;
-    }
-
     .features {
         padding: var(--spacing-8) 0;
         grid-template-columns: repeat(2, 1fr);
@@ -684,10 +660,6 @@ button:focus {
 
     .hero-tagline {
         font-size: var(--font-size-lg);
-    }
-
-    .hero-screenshot-placeholder {
-        min-height: 400px;
     }
 
     .features {
