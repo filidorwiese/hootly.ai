@@ -8,7 +8,7 @@ fi
 for ((i=1; i<=$1; i++)); do
   echo "Iteration $i"
   echo "---------------------------"
-  result=$(~/.local/bin/claude --permission-mode acceptEdits "@plans/prd.json @progress.txt \
+  result=$(~/.local/bin/claude --permission-mode acceptEdits "@plans/prd.json @plans/progress.txt \
   1. Find the highest-priority feature to work on and work only on that feature.\
   This should the one YOU decide has the highest priority - not necessarily the first one listed in the PRD. \
   2. Write unit-tests and/or e2e-tests using vitest for the feature, but don't overdo it, only high-value test, keep the total amount of tests to a minimum. \
