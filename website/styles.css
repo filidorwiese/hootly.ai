@@ -304,6 +304,26 @@ main {
     border-radius: var(--radius-lg);
 }
 
+/* Typing animation overlay */
+.typing-overlay {
+    position: absolute;
+    left: 45px;
+    top: 110px;
+    font-family: var(--font-family);
+    font-size: var(--font-size-lg);
+    font-weight: var(--font-weight-medium);
+    color: var(--color-text-primary);
+    white-space: nowrap;
+    pointer-events: none;
+    z-index: 10;
+}
+
+.typing-cursor {
+    font-weight: var(--font-weight-normal);
+    color: var(--color-primary-400);
+    transition: opacity 0.1s ease;
+}
+
 /* Features section - Compact horizontal grid layout */
 .features {
     padding: var(--spacing-12) 0;
@@ -584,6 +604,12 @@ button:focus {
         padding: 0 var(--spacing-4) var(--spacing-3);
         font-size: var(--font-size-sm);
     }
+
+    .typing-overlay {
+        left: 20px;
+        top: 50px;
+        font-size: var(--font-size-sm);
+    }
 }
 
 /* Tablet (max-width: 768px) - between small mobile and desktop */
@@ -641,6 +667,12 @@ button:focus {
 
     .faq h2 {
         font-size: var(--font-size-2xl);
+    }
+
+    .typing-overlay {
+        left: 30px;
+        top: 75px;
+        font-size: var(--font-size-base);
     }
 }
 

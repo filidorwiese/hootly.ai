@@ -2072,7 +2072,7 @@
       "Add blinking cursor effect during typing",
       "Clear text before typing next prompt"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "WS-22",
@@ -2085,7 +2085,7 @@
       "Add 5 second delay between prompts",
       "Loop animation indefinitely"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "INTRO-4",

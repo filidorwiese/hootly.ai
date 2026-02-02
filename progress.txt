@@ -3573,3 +3573,33 @@ NOTES FOR NEXT PERSON:
 - WS-21 and WS-22 could be combined into single implementation
 
 ---
+
+---
+2026-02-02 - WS-21 & WS-22: Typing animation for website screenshot
+
+COMPLETED:
+- Created typing-animation.js for typewriter effect on screenshot
+- 10 example prompts showcasing extension uses
+- Prompts randomized on page load, 5s delay between prompts
+- Blinking cursor effect during typing
+- Responsive positioning for mobile/tablet/desktop
+- Animation only starts after screenshot loads
+- Added typing-overlay div in index.html
+- Added CSS styles for overlay and cursor
+
+FILES CHANGED:
+- website/typing-animation.js (new file - typing animation logic)
+- website/index.html (added typing-overlay div, script tag)
+- website/styles.css (typing overlay + cursor styles, responsive)
+- plans/prd.json (marked WS-21 and WS-22 as passing)
+
+PRD ITEMS COMPLETED:
+- WS-21: Create typing animation component for screenshot
+- WS-22: Implement rotating example prompts with typing animation
+
+NOTES FOR NEXT PERSON:
+- All PRD items now complete (passes: true)
+- If screenshot position changes, adjust typing-overlay CSS (left/top)
+- Animation coordinates: 45px left, 110px top (desktop)
+
+---
