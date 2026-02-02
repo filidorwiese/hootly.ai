@@ -59,7 +59,10 @@
     "noApiKey": "Geen API-sleutel geconfigureerd. Klik op het instellingen-icoon om je Anthropic API-sleutel toe te voegen.",
     "noModelSelected": "Geen model geselecteerd. Open Instellingen om te configureren.",
     "modelNotFound": "Geselecteerd model niet meer beschikbaar. Open Instellingen om een nieuw model te selecteren.",
-    "sendFailed": "Bericht verzenden mislukt"
+    "sendFailed": "Bericht verzenden mislukt",
+    "welcomeHeading": "Oehoe oehoe! 🦉",
+    "welcomeMessage": "Ik sta klaar om te helpen, maar eerst moet je een LLM API-sleutel configureren in de instellingen.",
+    "welcomeOpenSettings": "Open Instellingen"
   },
   "response": {
     "error": "Fout",

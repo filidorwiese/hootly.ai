@@ -59,7 +59,10 @@
     "noApiKey": "Nenhuma chave API configurada. Clique no ícone de configurações para adicionar sua chave API Anthropic.",
     "noModelSelected": "Nenhum modelo selecionado. Abra Configurações para configurar.",
     "modelNotFound": "O modelo selecionado não está mais disponível. Abra Configurações para selecionar um novo modelo.",
-    "sendFailed": "Falha ao enviar mensagem"
+    "sendFailed": "Falha ao enviar mensagem",
+    "welcomeHeading": "Uhu uhu! 🦉",
+    "welcomeMessage": "Estou pronto para ajudar, mas primeiro você precisa configurar uma chave API de LLM nas configurações.",
+    "welcomeOpenSettings": "Abrir configurações"
   },
   "response": {
     "error": "Erro",

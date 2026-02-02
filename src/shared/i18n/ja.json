@@ -59,7 +59,10 @@
     "noApiKey": "APIキーが設定されていません。設定アイコンをクリックしてAnthropic APIキーを追加してください。",
     "noModelSelected": "モデルが選択されていません。設定を開いて構成してください。",
     "modelNotFound": "選択したモデルは利用できなくなりました。設定を開いて新しいモデルを選択してください。",
-    "sendFailed": "メッセージの送信に失敗しました"
+    "sendFailed": "メッセージの送信に失敗しました",
+    "welcomeHeading": "ホーホー！🦉",
+    "welcomeMessage": "お手伝いする準備はできていますが、まず設定でLLM APIキーを設定してください。",
+    "welcomeOpenSettings": "設定を開く"
   },
   "response": {
     "error": "エラー",

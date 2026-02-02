@@ -47,6 +47,7 @@ const Dialog: React.FC<DialogProps> = ({ isOpen, onClose, mode = 'overlay', init
   const [currentPersonaId, setCurrentPersonaId] = useState<string>('general');
   const [models, setModels] = useState<ModelConfig[]>([]);
   const [isLoadingModels, setIsLoadingModels] = useState(false);
+  const [hasApiKey, setHasApiKey] = useState<boolean | null>(null); // null = loading
 
   // Generate title from first user message (truncate to ~50 chars)
   const generateTitle = (message: string): string => {
@@ -113,8 +114,9 @@ const Dialog: React.FC<DialogProps> = ({ isOpen, onClose, mode = 'overlay', init
         if (settings.retentionDays > 0) {
           Storage.clearOldConversations(settings.retentionDays);
         }
-        // Fetch models if API key is set
+        // Check if API key is set for current provider
         const apiKey = getApiKey(settings);
+        setHasApiKey(Boolean(apiKey && apiKey.trim()));
         if (apiKey) {
           fetchModels();
         }
@@ -158,21 +160,31 @@ const Dialog: React.FC<DialogProps> = ({ isOpen, onClose, mode = 'overlay', init
     }
   }, [isOpen]);
 
-  // Listen for provider changes and clear conversation
+  // Listen for provider/settings changes
   useEffect(() => {
     const handleStorageChange = (changes: { [key: string]: chrome.storage.StorageChange }) => {
-      if (changes.settings?.newValue?.provider !== changes.settings?.oldValue?.provider) {
-        const newProvider = changes.settings?.newValue?.provider;
-        if (newProvider && newProvider !== currentProvider) {
-          setCurrentProvider(newProvider);
-          setCurrentModel(changes.settings?.newValue?.model || '');
-          setModels([]); // Clear models when provider changes
-          setConversationHistory([]);
-          setCurrentConversationId(null);
-          setResponse('');
-          setError(null);
-          // Refetch models for new provider
-          fetchModels();
+      if (changes.settings?.newValue) {
+        const newSettings = changes.settings.newValue;
+        const oldSettings = changes.settings.oldValue;
+
+        // Update API key status
+        const apiKey = getApiKey(newSettings);
+        setHasApiKey(Boolean(apiKey && apiKey.trim()));
+
+        // Handle provider change
+        if (newSettings.provider !== oldSettings?.provider) {
+          const newProvider = newSettings.provider;
+          if (newProvider && newProvider !== currentProvider) {
+            setCurrentProvider(newProvider);
+            setCurrentModel(newSettings.model || '');
+            setModels([]); // Clear models when provider changes
+            setConversationHistory([]);
+            setCurrentConversationId(null);
+            setResponse('');
+            setError(null);
+            // Refetch models for new provider
+            fetchModels();
+          }
         }
       }
     };
@@ -489,6 +501,20 @@ const Dialog: React.FC<DialogProps> = ({ isOpen, onClose, mode = 'overlay', init
 
       {/* Content */}
       <div className={contentWrapperStyles}>
+        {/* Welcome intro when no API key configured */}
+        {hasApiKey === false && conversationHistory.length === 0 && !response && !isLoading && (
+          <div className={welcomeIntroStyles}>
+            <div className={welcomeHeadingStyles}>{t('dialog.welcomeHeading')}</div>
+            <p className={welcomeMessageStyles}>{t('dialog.welcomeMessage')}</p>
+            <button
+              className={welcomeButtonStyles}
+              onClick={() => chrome.runtime.sendMessage({ type: 'openSettings' })}
+            >
+              {t('dialog.welcomeOpenSettings')}
+            </button>
+          </div>
+        )}
+
         {/* Response Area - only shown when there's content */}
         {(conversationHistory.length > 0 || response || isLoading || error) && (
           <Response
@@ -704,6 +730,49 @@ const cancelHintStyles = css`
   strong {
     color: var(--color-primary-500);
     font-weight: ${fontWeights.semibold};
+  }
+`;
+
+const welcomeIntroStyles = css`
+  text-align: center;
+  padding: ${spacing[6]} ${spacing[4]};
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: ${spacing[3]};
+`;
+
+const welcomeHeadingStyles = css`
+  font-size: ${fontSizes['2xl']};
+  font-weight: ${fontWeights.semibold};
+  color: var(--color-text-primary);
+`;
+
+const welcomeMessageStyles = css`
+  font-size: ${fontSizes.md};
+  color: var(--color-text-secondary);
+  margin: 0;
+  max-width: 320px;
+  line-height: 1.5;
+`;
+
+const welcomeButtonStyles = css`
+  background: var(--color-primary-500);
+  color: white;
+  border: none;
+  border-radius: ${radii.lg};
+  padding: ${spacing[2]} ${spacing[4]};
+  font-size: ${fontSizes.md};
+  font-weight: ${fontWeights.medium};
+  cursor: pointer;
+  transition: background ${transitions.default};
+
+  &:hover {
+    background: var(--color-primary-600);
+  }
+
+  &:active {
+    background: var(--color-primary-700);
   }
 `;
 

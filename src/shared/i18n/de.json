@@ -59,7 +59,10 @@
     "noApiKey": "Kein API-Schlüssel konfiguriert. Klicke auf das Einstellungen-Symbol, um deinen Anthropic API-Schlüssel hinzuzufügen.",
     "noModelSelected": "Kein Modell ausgewählt. Öffne Einstellungen zum Konfigurieren.",
     "modelNotFound": "Ausgewähltes Modell nicht mehr verfügbar. Öffne Einstellungen, um ein neues Modell auszuwählen.",
-    "sendFailed": "Nachricht konnte nicht gesendet werden"
+    "sendFailed": "Nachricht konnte nicht gesendet werden",
+    "welcomeHeading": "Schuhu schuhu! 🦉",
+    "welcomeMessage": "Ich bin bereit zu helfen, aber zuerst musst du einen LLM API-Schlüssel in den Einstellungen konfigurieren.",
+    "welcomeOpenSettings": "Einstellungen öffnen"
   },
   "response": {
     "error": "Fehler",

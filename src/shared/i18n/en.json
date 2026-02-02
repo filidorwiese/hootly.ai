@@ -59,7 +59,10 @@
     "noApiKey": "No API key configured. Click the settings icon to add your Anthropic API key.",
     "noModelSelected": "No model selected. Open Settings to configure.",
     "modelNotFound": "Selected model no longer available. Open Settings to select a new model.",
-    "sendFailed": "Failed to send message"
+    "sendFailed": "Failed to send message",
+    "welcomeHeading": "Hoot hoot! 🦉",
+    "welcomeMessage": "I'm ready to help, but first you'll need to configure an LLM API key in settings.",
+    "welcomeOpenSettings": "Open Settings"
   },
   "response": {
     "error": "Error",

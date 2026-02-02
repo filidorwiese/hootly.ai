@@ -2048,5 +2048,69 @@
       "Verify only one extension tab tracked at a time"
     ],
     "passes": true
+  },
+  {
+    "id": "FAQ-9",
+    "category": "faq",
+    "description": "Add FAQ: How to create OpenRouter API key",
+    "steps": [
+      "Add question: 'How do I get an OpenRouter API key?'",
+      "Answer: Go to openrouter.ai, create account, generate API key",
+      "Mention OpenRouter provides access to multiple AI models",
+      "Keep answer concise (2-3 sentences max)"
+    ],
+    "passes": false
+  },
+  {
+    "id": "WS-21",
+    "category": "website",
+    "description": "Create typing animation component for screenshot",
+    "steps": [
+      "Create JavaScript function for typewriter effect",
+      "Position text overlay at left: 45px, top: 110px relative to screenshot",
+      "Style text with large, readable font matching extension theme",
+      "Add blinking cursor effect during typing",
+      "Clear text before typing next prompt"
+    ],
+    "passes": false
+  },
+  {
+    "id": "WS-22",
+    "category": "website",
+    "description": "Implement rotating example prompts with typing animation",
+    "steps": [
+      "Define 10 example prompts showcasing innovative extension uses",
+      "Examples: 'Summarize this page', 'Translate to Japanese', 'Respond professionally to this email', 'Explain this code', 'Find key points in this article', 'Rewrite in simpler terms', 'Generate reply to this comment', 'Extract contact info from this page', 'Compare prices on this page', 'Draft a summary for my notes'",
+      "Randomize prompt order on page load",
+      "Add 5 second delay between prompts",
+      "Loop animation indefinitely"
+    ],
+    "passes": false
+  },
+  {
+    "id": "INTRO-4",
+    "category": "intro-text",
+    "description": "Show owl-themed intro when no API key configured",
+    "steps": [
+      "Detect when no API key is set in storage",
+      "Display friendly owl-themed welcome message in dialog",
+      "Example: 'Hoot hoot! 🦉 I'm ready to help, but first...'",
+      "Explain user needs to configure an LLM API key in settings",
+      "Add button/link to open settings page directly",
+      "Hide intro once API key is configured"
+    ],
+    "passes": true
+  },
+  {
+    "id": "INTRO-5",
+    "category": "intro-text",
+    "description": "Add i18n translations for no-key intro message",
+    "steps": [
+      "Add translation keys for intro heading and message",
+      "Add translation for 'Open Settings' button text",
+      "Translate to all 10 supported languages",
+      "Keep owl theme/personality in translations where culturally appropriate"
+    ],
+    "passes": true
   }
 ]

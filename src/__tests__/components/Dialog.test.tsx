@@ -4,7 +4,7 @@ import { render, screen, fireEvent, waitFor, act } from '@testing-library/react'
 import Dialog from '../../content/components/Dialog'
 import { setLanguage } from '../../shared/i18n'
 import { setMockStorage, chromeMock } from '../__mocks__/chrome'
-import { configuredSettings } from '../fixtures/settings'
+import { configuredSettings, defaultSettings } from '../fixtures/settings'
 
 // Mock react-rnd to simplify testing
 vi.mock('react-rnd', () => ({
@@ -557,5 +557,52 @@ describe('Dialog mode prop (HP-22)', () => {
       { type: 'hootly-dialog-closed' },
       '*'
     )
+  })
+})
+
+describe('Welcome intro when no API key (INTRO-4)', () => {
+  beforeEach(() => {
+    setLanguage('en')
+    vi.clearAllMocks()
+  })
+
+  afterEach(() => {
+    vi.restoreAllMocks()
+  })
+
+  it('shows welcome intro when no API key configured', async () => {
+    setMockStorage({
+      hootly_settings: defaultSettings, // No API key set
+    })
+
+    await renderDialog({ isOpen: true, onClose: () => {} })
+
+    expect(screen.getByText('Hoot hoot! 🦉')).toBeInTheDocument()
+    expect(screen.getByText(/I'm ready to help/)).toBeInTheDocument()
+    expect(screen.getByRole('button', { name: 'Open Settings' })).toBeInTheDocument()
+  })
+
+  it('hides welcome intro when API key is configured', async () => {
+    setMockStorage({
+      hootly_settings: configuredSettings, // Has API key
+    })
+
+    await renderDialog({ isOpen: true, onClose: () => {} })
+
+    expect(screen.queryByText('Hoot hoot! 🦉')).not.toBeInTheDocument()
+  })
+
+  it('opens settings when Open Settings button clicked', async () => {
+    setMockStorage({
+      hootly_settings: defaultSettings,
+    })
+
+    await renderDialog({ isOpen: true, onClose: () => {} })
+
+    await act(async () => {
+      fireEvent.click(screen.getByRole('button', { name: 'Open Settings' }))
+    })
+
+    expect(chromeMock.runtime.sendMessage).toHaveBeenCalledWith({ type: 'openSettings' })
   })
 })

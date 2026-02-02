@@ -3503,3 +3503,46 @@ NOTES FOR NEXT PERSON:
 - Consider taking screenshot with dialog open on a clean webpage
 
 ---
+
+---
+2026-02-02 - INTRO-4 & INTRO-5: Owl-themed intro when no API key
+
+COMPLETED:
+- Added hasApiKey state to Dialog.tsx to track API key availability
+- Shows friendly welcome intro when no API key configured
+- Displays owl-themed heading "Hoot hoot! 🦉" with message
+- "Open Settings" button opens settings page directly
+- Intro hidden once API key is configured or conversation exists
+- Updates dynamically when settings change (storage listener)
+- Added i18n translations for all 10 languages with culturally appropriate owl sounds
+- Added 3 tests for welcome intro behavior
+- Typecheck passes, all 1034 tests pass
+
+FILES CHANGED:
+- src/content/components/Dialog.tsx (hasApiKey state, welcome intro JSX, CSS styles)
+- src/shared/i18n/en.json (welcomeHeading, welcomeMessage, welcomeOpenSettings)
+- src/shared/i18n/nl.json (Dutch translations)
+- src/shared/i18n/de.json (German translations)
+- src/shared/i18n/fr.json (French translations)
+- src/shared/i18n/es.json (Spanish translations)
+- src/shared/i18n/it.json (Italian translations)
+- src/shared/i18n/pt.json (Portuguese translations)
+- src/shared/i18n/zh.json (Chinese translations)
+- src/shared/i18n/ja.json (Japanese translations)
+- src/shared/i18n/ko.json (Korean translations)
+- src/__tests__/components/Dialog.test.tsx (3 new tests for INTRO-4)
+- plans/prd.json (marked INTRO-4 and INTRO-5 as passing)
+
+PRD ITEMS COMPLETED:
+- INTRO-4: Show owl-themed intro when no API key configured
+- INTRO-5: Add i18n translations for no-key intro message
+
+NOTES FOR NEXT PERSON:
+- Remaining incomplete items (3):
+  - FAQ-9: Add FAQ about OpenRouter API key
+  - WS-21: Create typing animation component for screenshot
+  - WS-22: Implement rotating example prompts
+- WS-21 and WS-22 are website features for demo animation
+- FAQ-9 is a simple website FAQ addition
+
+---

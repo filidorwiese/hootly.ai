@@ -59,7 +59,10 @@
     "noApiKey": "未配置 API 密钥。点击设置图标添加您的 Anthropic API 密钥。",
     "noModelSelected": "未选择模型。打开设置进行配置。",
     "modelNotFound": "所选模型不再可用。打开设置选择新模型。",
-    "sendFailed": "发送消息失败"
+    "sendFailed": "发送消息失败",
+    "welcomeHeading": "咕咕！🦉",
+    "welcomeMessage": "我已准备好帮助您，但首先您需要在设置中配置一个 LLM API 密钥。",
+    "welcomeOpenSettings": "打开设置"
   },
   "response": {
     "error": "错误",
