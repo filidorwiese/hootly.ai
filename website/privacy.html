@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Privacy Policy - Hootly.ai</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap">
+  <link rel="icon" type="image/png" href="images/icon-48.png">
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      line-height: 1.7;
+      color: #2D3A30;
+      background: #FAFBF9;
+    }
+
+    .container {
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 40px 20px;
+    }
+
+    header {
+      margin-bottom: 40px;
+    }
+
+    .back-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      color: #3A5A40;
+      text-decoration: none;
+      font-size: 14px;
+      margin-bottom: 20px;
+    }
+
+    .back-link:hover { text-decoration: underline; }
+
+    h1 {
+      font-size: 32px;
+      font-weight: 700;
+      color: #2D3A30;
+      margin-bottom: 8px;
+    }
+
+    .subtitle {
+      color: #6B7A6E;
+      font-size: 14px;
+    }
+
+    h2 {
+      font-size: 20px;
+      font-weight: 600;
+      color: #3A5A40;
+      margin-top: 32px;
+      margin-bottom: 12px;
+    }
+
+    p, li {
+      color: #2D3A30;
+      margin-bottom: 12px;
+    }
+
+    ul {
+      margin-left: 24px;
+      margin-bottom: 16px;
+    }
+
+    .highlight-box {
+      background: #E8F0EA;
+      border-left: 4px solid #3A5A40;
+      padding: 16px 20px;
+      margin: 20px 0;
+      border-radius: 0 8px 8px 0;
+    }
+
+    .highlight-box p {
+      margin: 0;
+      font-weight: 500;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 16px 0;
+    }
+
+    th, td {
+      text-align: left;
+      padding: 12px;
+      border-bottom: 1px solid #D4DCD6;
+    }
+
+    th {
+      background: #F5F7F4;
+      font-weight: 600;
+      color: #3A5A40;
+    }
+
+    code {
+      background: #F5F7F4;
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-size: 13px;
+    }
+
+    a {
+      color: #3A5A40;
+    }
+
+    footer {
+      margin-top: 48px;
+      padding-top: 24px;
+      border-top: 1px solid #D4DCD6;
+      text-align: center;
+      color: #6B7A6E;
+      font-size: 13px;
+    }
+
+    .no-collect {
+      list-style: none;
+      margin-left: 0;
+    }
+
+    .no-collect li {
+      padding-left: 28px;
+      position: relative;
+    }
+
+    .no-collect li::before {
+      content: "❌";
+      position: absolute;
+      left: 0;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <a href="index.html" class="back-link">← Back to Hootly.ai</a>
+      <h1>Privacy Policy</h1>
+      <p class="subtitle">Last updated: February 2026</p>
+    </header>
+
+    <main>
+      <div class="highlight-box">
+        <p>Hootly.ai is designed with privacy as a core principle. Your conversations and API keys stay on your device. We only collect anonymous, aggregated usage analytics (which you can disable).</p>
+      </div>
+
+      <h2>Data Collection</h2>
+      <p><strong>We collect minimal, anonymous usage data</strong> to improve the extension:</p>
+      <ul>
+        <li>✅ Anonymous usage analytics via <a href="https://plausible.io" target="_blank">Plausible</a> (privacy-focused, no cookies)</li>
+        <li>❌ No personal information</li>
+        <li>❌ No tracking cookies</li>
+        <li>❌ No third-party tracking scripts</li>
+      </ul>
+
+      <h3>Analytics Details</h3>
+      <p>We use <a href="https://plausible.io" target="_blank">Plausible Analytics</a>, which:</p>
+      <ul>
+        <li>Does not use cookies</li>
+        <li>Does not collect personal data</li>
+        <li>Does not track across sites</li>
+        <li>Is GDPR, CCPA, and PECR compliant</li>
+        <li><strong>Can be disabled in extension settings</strong></li>
+      </ul>
+      <p>Analytics help us understand which features are used and identify issues. No conversation content, API keys, or personal data is ever collected.</p>
+
+      <h2>Data Storage</h2>
+      <p>All data is stored <strong>locally in your browser</strong> using the browser's built-in storage API:</p>
+      <ul>
+        <li>API keys</li>
+        <li>Conversation history</li>
+        <li>Settings and preferences</li>
+        <li>Custom personas</li>
+      </ul>
+      <p>This data never leaves your device except when making API calls to your chosen LLM provider.</p>
+
+      <h2>API Communications</h2>
+      <p>When you send a message, Hootly.ai communicates <strong>directly</strong> with your selected AI provider:</p>
+
+      <table>
+        <thead>
+          <tr>
+            <th>Provider</th>
+            <th>Endpoint</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Claude (Anthropic)</td>
+            <td>api.anthropic.com</td>
+          </tr>
+          <tr>
+            <td>OpenAI</td>
+            <td>api.openai.com</td>
+          </tr>
+          <tr>
+            <td>Google Gemini</td>
+            <td>generativelanguage.googleapis.com</td>
+          </tr>
+          <tr>
+            <td>OpenRouter</td>
+            <td>openrouter.ai</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <p>Your API key and messages are sent directly to these providers. We do not proxy, log, or intercept this traffic. Please review each provider's privacy policy for how they handle your data.</p>
+
+      <h2>Page Context</h2>
+      <p>When you use the "include page context" feature, selected text or page content is:</p>
+      <ol>
+        <li>Read from the current webpage</li>
+        <li>Sent directly to your chosen AI provider</li>
+        <li>Never stored or transmitted elsewhere</li>
+      </ol>
+
+      <h2>Third-Party Services</h2>
+      <p>The extension loads fonts from Google Fonts (<code>fonts.googleapis.com</code>). No other third-party services are used.</p>
+
+      <h2>Open Source</h2>
+      <p>Hootly.ai is open source under AGPL-3.0. You can audit the code at:<br>
+      <a href="https://github.com/filidorwiese/hootly.ai" target="_blank">github.com/filidorwiese/hootly.ai</a></p>
+
+      <h2>Changes</h2>
+      <p>If this policy changes, we will update the "Last updated" date. Significant changes will be noted in the changelog.</p>
+
+      <h2>Contact</h2>
+      <p>Questions? Open an issue on <a href="https://github.com/filidorwiese/hootly.ai/issues" target="_blank">GitHub</a>.</p>
+    </main>
+
+    <footer>
+      <p>© 2026 Hootly.ai · <a href="index.html">Home</a></p>
+    </footer>
+  </div>
+</body>
+</html>
