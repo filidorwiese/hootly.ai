@@ -176,23 +176,18 @@
   },
   "prompts": {
     "translatePage": {
-      "name": "翻译此页面",
       "text": "将此页面翻译成[语言]"
     },
     "summarizePage": {
-      "name": "总结此页面",
       "text": "用几段话总结此页面"
     },
     "changeTone": {
-      "name": "更改语气",
       "text": "将此文本的语气更改为[语气]"
     },
     "explainSimple": {
-      "name": "简单解释",
       "text": "用5岁小孩能听懂的方式解释这个"
     },
     "keyPoints": {
-      "name": "找出要点",
       "text": "找出此文本的要点并列出"
     }
   }

@@ -269,7 +269,6 @@ describe('Storage', () => {
     it('adds new custom prompt', async () => {
       const newPrompt: SavedPrompt = {
         id: 'new-prompt',
-        name: 'New Prompt',
         text: 'New prompt text',
         isBuiltIn: false,
       }
@@ -284,7 +283,6 @@ describe('Storage', () => {
     it('updates existing custom prompt', async () => {
       const original: SavedPrompt = {
         id: 'existing',
-        name: 'Original',
         text: 'Original text',
         isBuiltIn: false,
         createdAt: 1000,
@@ -293,19 +291,17 @@ describe('Storage', () => {
         hootly_settings: { ...DEFAULT_SETTINGS, customPrompts: [original] },
       })
 
-      const updated = { ...original, name: 'Updated', text: 'Updated text' }
+      const updated = { ...original, text: 'Updated text' }
       await Storage.savePrompt(updated)
 
       const prompts = await Storage.getPrompts()
       const saved = prompts.find(p => p.id === 'existing')
-      expect(saved?.name).toBe('Updated')
       expect(saved?.text).toBe('Updated text')
     })
 
     it('throws when trying to modify built-in prompt', async () => {
       const builtIn: SavedPrompt = {
         id: 'translate-page',
-        name: 'Modified',
         text: 'Modified text',
         isBuiltIn: true,
       }
@@ -315,8 +311,8 @@ describe('Storage', () => {
 
   describe('deletePrompt', () => {
     it('removes custom prompt by id', async () => {
-      const prompt1: SavedPrompt = { id: 'p1', name: 'P1', text: 'T1', isBuiltIn: false }
-      const prompt2: SavedPrompt = { id: 'p2', name: 'P2', text: 'T2', isBuiltIn: false }
+      const prompt1: SavedPrompt = { id: 'p1', text: 'T1', isBuiltIn: false }
+      const prompt2: SavedPrompt = { id: 'p2', text: 'T2', isBuiltIn: false }
       setMockStorage({
         hootly_settings: { ...DEFAULT_SETTINGS, customPrompts: [prompt1, prompt2] },
       })
@@ -333,13 +329,12 @@ describe('Storage', () => {
     it('finds built-in prompt by id', async () => {
       const prompt = await Storage.getPromptById('translate-page')
       expect(prompt).toBeDefined()
-      expect(prompt?.name).toBe('Translate this page')
+      expect(prompt?.text).toBe('Translate this page into [language]')
     })
 
     it('finds custom prompt by id', async () => {
       const customPrompt: SavedPrompt = {
         id: 'custom-find',
-        name: 'Custom Find',
         text: 'Find text',
         isBuiltIn: false,
       }
@@ -348,7 +343,7 @@ describe('Storage', () => {
       })
 
       const prompt = await Storage.getPromptById('custom-find')
-      expect(prompt?.name).toBe('Custom Find')
+      expect(prompt?.text).toBe('Find text')
     })
 
     it('returns undefined for non-existent id', async () => {

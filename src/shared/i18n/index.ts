@@ -102,12 +102,6 @@ const promptI18nKeys: Record<string, string> = {
   'key-points': 'keyPoints',
 };
 
-export function getLocalizedPromptName(promptId: string): string | null {
-  const i18nKey = promptI18nKeys[promptId];
-  if (!i18nKey) return null;
-  return t(`prompts.${i18nKey}.name`);
-}
-
 export function getLocalizedPromptText(promptId: string): string | null {
   const i18nKey = promptI18nKeys[promptId];
   if (!i18nKey) return null;

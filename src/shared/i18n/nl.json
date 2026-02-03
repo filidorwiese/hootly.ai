@@ -176,23 +176,18 @@
   },
   "prompts": {
     "translatePage": {
-      "name": "Vertaal deze pagina",
       "text": "Vertaal deze pagina naar het [taal]"
     },
     "summarizePage": {
-      "name": "Vat deze pagina samen",
       "text": "Vat deze pagina samen in een paar alinea's"
     },
     "changeTone": {
-      "name": "Toon wijzigen",
       "text": "Wijzig de toon van deze tekst naar [toon]"
     },
     "explainSimple": {
-      "name": "Eenvoudig uitleggen",
       "text": "Leg dit uit alsof ik 5 jaar oud ben"
     },
     "keyPoints": {
-      "name": "Kernpunten vinden",
       "text": "Vind de kernpunten in deze tekst en lijst ze op"
     }
   }

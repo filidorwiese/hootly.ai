@@ -1,5 +1,5 @@
 import { describe, it, expect, beforeEach } from 'vitest'
-import { t, setLanguage, getLanguage, initLanguage, getLocalizedPersonaName, getLocalizedPersonaDescription, getLocalizedPromptName, getLocalizedPromptText } from '../../shared/i18n'
+import { t, setLanguage, getLanguage, initLanguage, getLocalizedPersonaName, getLocalizedPersonaDescription, getLocalizedPromptText } from '../../shared/i18n'
 import { setMockStorage } from '../__mocks__/chrome'
 
 describe('i18n', () => {
@@ -284,27 +284,6 @@ describe('PRO-3: Prompt localization', () => {
     setLanguage('en')
   })
 
-  describe('getLocalizedPromptName', () => {
-    it('returns localized name for built-in prompts', () => {
-      expect(getLocalizedPromptName('translate-page')).toBe('Translate this page')
-      expect(getLocalizedPromptName('summarize-page')).toBe('Summarize this page')
-      expect(getLocalizedPromptName('change-tone')).toBe('Change tone')
-      expect(getLocalizedPromptName('explain-simple')).toBe('Explain simply')
-      expect(getLocalizedPromptName('key-points')).toBe('Find key points')
-    })
-
-    it('returns null for unknown prompt IDs', () => {
-      expect(getLocalizedPromptName('unknown-id')).toBeNull()
-      expect(getLocalizedPromptName('custom-123')).toBeNull()
-    })
-
-    it('returns translated name when language changes', () => {
-      setLanguage('de')
-      expect(getLocalizedPromptName('translate-page')).toBe('Diese Seite übersetzen')
-      expect(getLocalizedPromptName('summarize-page')).toBe('Diese Seite zusammenfassen')
-    })
-  })
-
   describe('getLocalizedPromptText', () => {
     it('returns localized text for built-in prompts', () => {
       expect(getLocalizedPromptText('translate-page')).toBe('Translate this page into [language]')
@@ -323,17 +302,6 @@ describe('PRO-3: Prompt localization', () => {
   })
 
   describe('prompt translations exist in all languages', () => {
-    it('all prompts have names in all languages', () => {
-      for (const lang of languages) {
-        setLanguage(lang)
-        for (const id of promptIds) {
-          const name = getLocalizedPromptName(id)
-          expect(name).not.toBeNull()
-          expect(name!.length).toBeGreaterThan(0)
-        }
-      }
-    })
-
     it('all prompts have text in all languages', () => {
       for (const lang of languages) {
         setLanguage(lang)
@@ -343,19 +311,6 @@ describe('PRO-3: Prompt localization', () => {
           expect(text!.length).toBeGreaterThan(0)
         }
       }
-    })
-  })
-
-  describe('language switch updates prompt text', () => {
-    it('prompt name changes when language switches', () => {
-      setLanguage('en')
-      expect(getLocalizedPromptName('summarize-page')).toBe('Summarize this page')
-
-      setLanguage('zh')
-      expect(getLocalizedPromptName('summarize-page')).toBe('总结此页面')
-
-      setLanguage('ja')
-      expect(getLocalizedPromptName('summarize-page')).toBe('このページを要約')
     })
   })
 })

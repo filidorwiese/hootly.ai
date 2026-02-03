@@ -176,23 +176,18 @@
   },
   "prompts": {
     "translatePage": {
-      "name": "Traducir esta página",
       "text": "Traduce esta página al [idioma]"
     },
     "summarizePage": {
-      "name": "Resumir esta página",
       "text": "Resume esta página en unos pocos párrafos"
     },
     "changeTone": {
-      "name": "Cambiar tono",
       "text": "Cambia el tono de este texto a [tono]"
     },
     "explainSimple": {
-      "name": "Explicar simple",
       "text": "Explícame esto como si tuviera 5 años"
     },
     "keyPoints": {
-      "name": "Encontrar puntos clave",
       "text": "Encuentra los puntos clave de este texto y enuméralos"
     }
   }

@@ -176,23 +176,18 @@
   },
   "prompts": {
     "translatePage": {
-      "name": "Diese Seite übersetzen",
       "text": "Übersetze diese Seite ins [Sprache]"
     },
     "summarizePage": {
-      "name": "Diese Seite zusammenfassen",
       "text": "Fasse diese Seite in wenigen Absätzen zusammen"
     },
     "changeTone": {
-      "name": "Tonfall ändern",
       "text": "Ändere den Tonfall dieses Textes zu [Tonfall]"
     },
     "explainSimple": {
-      "name": "Einfach erklären",
       "text": "Erkläre das, als wäre ich 5 Jahre alt"
     },
     "keyPoints": {
-      "name": "Kernpunkte finden",
       "text": "Finde die Kernpunkte in diesem Text und liste sie auf"
     }
   }
