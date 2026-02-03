@@ -18,6 +18,7 @@ const PromptSelector: React.FC<PromptSelectorProps> = ({
 }) => {
   const [searchQuery, setSearchQuery] = useState('');
   const [highlightedIndex, setHighlightedIndex] = useState(0);
+  const [openAbove, setOpenAbove] = useState(false);
   const searchInputRef = useRef<HTMLInputElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
   const listRef = useRef<HTMLDivElement>(null);
@@ -39,9 +40,17 @@ const PromptSelector: React.FC<PromptSelectorProps> = ({
     return text.includes(searchQuery.toLowerCase());
   });
 
-  // Auto-focus search input on mount
+  // Calculate position and auto-focus on mount
   useEffect(() => {
     searchInputRef.current?.focus();
+
+    // Check if there's enough room below
+    if (containerRef.current) {
+      const rect = containerRef.current.getBoundingClientRect();
+      const dropdownHeight = 450; // max-height 400px + search input ~50px
+      const spaceBelow = window.innerHeight - rect.top;
+      setOpenAbove(spaceBelow < dropdownHeight);
+    }
   }, []);
 
   // Reset highlight when filter changes
@@ -112,7 +121,7 @@ const PromptSelector: React.FC<PromptSelectorProps> = ({
   };
 
   return (
-    <div className={containerStyles} ref={containerRef} onKeyDown={handleKeyDown}>
+    <div className={`${containerStyles} ${openAbove ? containerAboveStyles : containerBelowStyles}`} ref={containerRef} onKeyDown={handleKeyDown}>
       <input
         ref={searchInputRef}
         type="text"
@@ -145,7 +154,6 @@ const PromptSelector: React.FC<PromptSelectorProps> = ({
 
 const containerStyles = css`
   position: absolute;
-  bottom: calc(100% + ${spacing[2]});
   left: 0;
   right: 0;
   background: var(--color-bg-base);
@@ -155,6 +163,14 @@ const containerStyles = css`
   overflow: hidden;
   display: flex;
   flex-direction: column;
+`;
+
+const containerBelowStyles = css`
+  top: calc(100% + ${spacing[2]});
+`;
+
+const containerAboveStyles = css`
+  bottom: calc(100% + ${spacing[2]});
 `;
 
 const searchInputStyles = css`
