@@ -108,10 +108,15 @@ describe('PP-11: Show full description/systemprompt for built-in personas', () =
     });
 
     it('does not render prompt div when persona has empty systemPrompt', () => {
-      const generalPersona = DEFAULT_PERSONAS.find(p => p.id === 'general');
-      expect(generalPersona?.systemPrompt).toBe('');
+      const emptyPromptPersona = {
+        id: 'test-empty',
+        name: 'Empty Prompt',
+        systemPrompt: '',
+        icon: '🧪',
+        isBuiltIn: true,
+      };
 
-      const html = renderPersonaItem(generalPersona!, false, true);
+      const html = renderPersonaItem(emptyPromptPersona, false, true);
       document.body.innerHTML = html;
 
       const promptEl = document.querySelector('.persona-prompt');
@@ -307,6 +312,20 @@ describe('Integration: personas.ts renderPersonaItem behavior', () => {
       // Full prompt without truncation
       expect(prompt?.textContent).not.toContain('...');
       expect(prompt?.innerHTML).toBe(escapeHtml(persona.systemPrompt));
+    });
+  });
+});
+
+describe('PER-2: Built-in persona description quality', () => {
+  it('all built-in personas have non-empty descriptions', () => {
+    DEFAULT_PERSONAS.forEach(persona => {
+      expect(persona.systemPrompt.length).toBeGreaterThan(0);
+    });
+  });
+
+  it('all descriptions are under 500 characters', () => {
+    DEFAULT_PERSONAS.forEach(persona => {
+      expect(persona.systemPrompt.length).toBeLessThan(500);
     });
   });
 });
