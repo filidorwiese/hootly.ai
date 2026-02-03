@@ -310,7 +310,7 @@ main {
 .typing-overlay {
     position: absolute;
     left: 45px;
-    top: 90px;
+    top: 46%;
     font-family: var(--font-family);
     font-size: var(--font-size-lg);
     font-weight: var(--font-weight-medium);
@@ -525,7 +525,7 @@ button:focus {
     }
 
     .hero {
-        padding: var(--spacing-8) 0;
+        padding: var(--spacing-16) 0;
     }
 
     .hero h1 {
@@ -609,7 +609,7 @@ button:focus {
 
     .typing-overlay {
         left: 20px;
-        top: 50px;
+        top: 43%;
         font-size: var(--font-size-sm);
     }
 }
@@ -625,7 +625,7 @@ button:focus {
     }
 
     .hero {
-        padding: var(--spacing-10) 0;
+        padding: var(--spacing-16) 0;
     }
 
     .hero h1 {
@@ -673,7 +673,8 @@ button:focus {
 
     .typing-overlay {
         left: 30px;
-        top: 75px;
+        top: 45%;
+
         font-size: var(--font-size-base);
     }
 }
