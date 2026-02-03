@@ -219,7 +219,6 @@ const textareaStyles = css`
   transition: border-color ${transitions.default};
 
   &:focus {
-    border-color: var(--color-border-focus);
   }
 
   &:disabled {

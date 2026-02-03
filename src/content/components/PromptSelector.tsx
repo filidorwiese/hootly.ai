@@ -167,7 +167,7 @@ const containerStyles = css`
 `;
 
 const containerBelowStyles = css`
-  top: 0;
+  top: 1px;
 `;
 
 const containerAboveStyles = css`
