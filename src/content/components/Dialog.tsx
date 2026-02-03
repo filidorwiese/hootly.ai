@@ -61,6 +61,7 @@ const Dialog: React.FC<DialogProps> = ({
   const [isLoadingModels, setIsLoadingModels] = useState(false);
   const [hasApiKey, setHasApiKey] = useState<boolean | null>(null); // null = loading
   const [customPrompts, setCustomPrompts] = useState<SavedPrompt[]>([]);
+  const [slashModeActive, setSlashModeActive] = useState(false);
 
   // Generate title from first user message (truncate to ~50 chars)
   const generateTitle = (message: string): string => {
@@ -262,29 +263,31 @@ const Dialog: React.FC<DialogProps> = ({
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
-  // Handle Esc: cancel generation if loading, otherwise close dialog
+  // Handle Esc: cancel generation if loading, otherwise close dialog (unless prompt selector is open)
   useEffect(() => {
     if (!isOpen) return;
 
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === 'Escape') {
-        e.preventDefault();
-        e.stopPropagation();
         if (isLoading) {
+          e.preventDefault();
+          e.stopPropagation();
           // Stop generation
           setIsLoading(false);
           chrome.runtime.sendMessage({ type: 'cancelStream' });
-          // console.log('[Hootly] Generation cancelled by user');
-        } else {
-          // Close dialog
+        } else if (!slashModeActive) {
+          e.preventDefault();
+          e.stopPropagation();
+          // Close dialog only if prompt selector is not open
           onClose();
         }
+        // If slashModeActive, let the event propagate to PromptSelector
       }
     };
 
     document.addEventListener('keydown', handleKeyDown, true);
     return () => document.removeEventListener('keydown', handleKeyDown, true);
-  }, [isOpen, isLoading, onClose]);
+  }, [isOpen, isLoading, slashModeActive, onClose]);
 
   // Save position when changed
   const handleDragStop = (_e: any, d: { x: number; y: number }) => {
@@ -614,6 +617,7 @@ const Dialog: React.FC<DialogProps> = ({
               isLoadingModels={isLoadingModels}
               hideContext={mode === 'standalone'}
               customPrompts={customPrompts}
+              onSlashModeChange={setSlashModeActive}
             />
           ) : (
             <div className={cancelHintStyles} dangerouslySetInnerHTML={{ __html: t('dialog.cancelHint') }} />
