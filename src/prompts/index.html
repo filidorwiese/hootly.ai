@@ -312,6 +312,17 @@
       border-color: var(--color-border-focus);
     }
 
+    .char-counter {
+      font-size: var(--font-size-sm);
+      color: var(--color-text-tertiary);
+      text-align: right;
+      margin-top: var(--spacing-1);
+    }
+
+    .char-counter.warning {
+      color: var(--color-accent-error);
+    }
+
     .modal-actions {
       display: flex;
       gap: var(--spacing-3);
@@ -489,7 +500,8 @@
       <input type="hidden" id="editingPromptId" value="">
       <div class="form-group">
         <label for="promptText" data-i18n="prompts.promptText">Prompt Text</label>
-        <textarea id="promptText" placeholder="Enter your prompt text..."></textarea>
+        <textarea id="promptText" placeholder="Enter your prompt text..." maxlength="10000"></textarea>
+        <div class="char-counter" id="promptCharCounter">0 / 10000</div>
       </div>
       <div class="modal-actions">
         <button class="btn btn-secondary" id="cancelPromptBtn" data-i18n="settings.cancel">Cancel</button>

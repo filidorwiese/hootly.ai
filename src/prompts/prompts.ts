@@ -8,6 +8,8 @@ import { initTheme } from '../shared/theme';
 let currentSettings: Settings | null = null;
 let deleteTargetId: string | null = null;
 
+const PROMPT_MAX_LENGTH = 10000;
+
 function escapeHtml(text: string): string {
   const div = document.createElement('div');
   div.textContent = text;
@@ -83,11 +85,25 @@ function attachActionListeners(): void {
   });
 }
 
+function updateCharCounter(): void {
+  const textarea = document.getElementById('promptText') as HTMLTextAreaElement;
+  const counter = document.getElementById('promptCharCounter')!;
+  const saveBtn = document.getElementById('savePromptBtn') as HTMLButtonElement;
+  const length = textarea.value.length;
+
+  counter.textContent = `${length} / ${PROMPT_MAX_LENGTH}`;
+
+  const isAtLimit = length >= PROMPT_MAX_LENGTH;
+  counter.classList.toggle('warning', isAtLimit);
+  saveBtn.disabled = isAtLimit && length > PROMPT_MAX_LENGTH;
+}
+
 function showModal(isEdit: boolean = false): void {
   const modal = document.getElementById('promptModal')!;
   const title = document.getElementById('modalTitle')!;
   title.textContent = t(isEdit ? 'prompts.editPrompt' : 'prompts.addPrompt');
   modal.classList.add('visible');
+  updateCharCounter();
 }
 
 function hideModal(): void {
@@ -194,6 +210,9 @@ async function init(): Promise<void> {
   // Modal buttons
   document.getElementById('cancelPromptBtn')!.addEventListener('click', hideModal);
   document.getElementById('savePromptBtn')!.addEventListener('click', savePrompt);
+
+  // Character counter
+  document.getElementById('promptText')!.addEventListener('input', updateCharCounter);
 
   // Confirm dialog buttons
   document.getElementById('cancelDelete')!.addEventListener('click', hideDeleteConfirm);
