@@ -1,11 +1,12 @@
-import React, { useRef, useEffect } from 'react';
+import React, { useRef, useEffect, useState, useCallback } from 'react';
 import { css } from '@emotion/css';
 import ContextToggle from './ContextToggle';
 import PersonaSelector from './PersonaSelector';
 import ModelSelector from './ModelSelector';
+import PromptSelector from './PromptSelector';
 import { t } from '../../shared/i18n';
 import { SendIcon, ClearIcon } from '../../shared/icons';
-import type { LLMProvider, Persona } from '../../shared/types';
+import type { LLMProvider, Persona, SavedPrompt } from '../../shared/types';
 import type { ModelConfig } from '../../shared/models';
 import { radii, fontSizes, transitions, spacing } from '../../shared/styles';
 
@@ -27,15 +28,19 @@ interface InputAreaProps {
   onSelectModel?: (modelId: string) => void;
   isLoadingModels?: boolean;
   hideContext?: boolean;
+  onSlashModeChange?: (isActive: boolean) => void;
+  customPrompts?: SavedPrompt[];
 }
 
 const InputArea: React.FC<InputAreaProps> = ({
   value, onChange, onSubmit, disabled,
   contextEnabled, contextMode, selectionLength, onContextToggle, modelId, provider,
   personas, selectedPersonaId, onSelectPersona,
-  models, onSelectModel, isLoadingModels, hideContext
+  models, onSelectModel, isLoadingModels, hideContext, onSlashModeChange,
+  customPrompts = []
 }) => {
   const textareaRef = useRef<HTMLTextAreaElement>(null);
+  const [slashMode, setSlashMode] = useState(false);
 
   // Auto-focus textarea on mount
   useEffect(() => {
@@ -56,16 +61,74 @@ const InputArea: React.FC<InputAreaProps> = ({
     }
   }, [value]);
 
+  // Detect slash mode: value starts with '/'
+  useEffect(() => {
+    const isSlashActive = value.startsWith('/');
+    if (isSlashActive !== slashMode) {
+      setSlashMode(isSlashActive);
+      onSlashModeChange?.(isSlashActive);
+    }
+  }, [value, slashMode, onSlashModeChange]);
+
+  const closeSlashMode = useCallback(() => {
+    setSlashMode(false);
+    onSlashModeChange?.(false);
+  }, [onSlashModeChange]);
+
+  const handlePromptSelect = useCallback((text: string) => {
+    onChange(text);
+    closeSlashMode();
+    // Focus textarea and move cursor to end
+    setTimeout(() => {
+      if (textareaRef.current) {
+        textareaRef.current.focus();
+        textareaRef.current.setSelectionRange(text.length, text.length);
+      }
+    }, 0);
+  }, [onChange, closeSlashMode]);
+
+  const handlePromptSelectorClose = useCallback(() => {
+    onChange('');
+    closeSlashMode();
+    textareaRef.current?.focus();
+  }, [onChange, closeSlashMode]);
+
   const handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
+    // Backspace while in slash mode with only '/' - close selector and clear
+    if (e.key === 'Backspace' && slashMode && value === '/') {
+      e.preventDefault();
+      onChange('');
+      closeSlashMode();
+      return;
+    }
+
     if (e.key === 'Enter' && !e.shiftKey) {
+      // Don't submit if slash mode is active (let PromptSelector handle it)
+      if (slashMode) {
+        return;
+      }
       e.preventDefault();
       onSubmit();
+    }
+
+    // Escape closes slash mode
+    if (e.key === 'Escape' && slashMode) {
+      e.preventDefault();
+      onChange('');
+      closeSlashMode();
     }
   };
 
   return (
     <div className={containerStyles}>
       <div className={textareaWrapperStyles}>
+        {slashMode && (
+          <PromptSelector
+            customPrompts={customPrompts}
+            onSelectPrompt={handlePromptSelect}
+            onClose={handlePromptSelectorClose}
+          />
+        )}
         <textarea
           ref={textareaRef}
           value={value}
@@ -75,7 +138,7 @@ const InputArea: React.FC<InputAreaProps> = ({
           disabled={disabled}
           className={textareaStyles}
         />
-        {value && !disabled && (
+        {value && !disabled && !slashMode && (
           <>
             <button
                 onClick={onSubmit}

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Rnd } from 'react-rnd';
 import { css } from '@emotion/css';
 import { Storage } from '../../shared/storage';
-import type { DialogPosition, Message, ContentMessage, LLMProvider, Persona, Conversation } from '../../shared/types';
+import type { DialogPosition, Message, ContentMessage, LLMProvider, Persona, Conversation, SavedPrompt } from '../../shared/types';
 import type { ModelConfig } from '../../shared/models';
 import { DEFAULT_PERSONAS } from '../../shared/types';
 import { extractSelection, extractPageText, getPageUrl, getPageTitle, requestPageInfo } from '../../shared/utils';
@@ -60,6 +60,7 @@ const Dialog: React.FC<DialogProps> = ({
   const [models, setModels] = useState<ModelConfig[]>([]);
   const [isLoadingModels, setIsLoadingModels] = useState(false);
   const [hasApiKey, setHasApiKey] = useState<boolean | null>(null); // null = loading
+  const [customPrompts, setCustomPrompts] = useState<SavedPrompt[]>([]);
 
   // Generate title from first user message (truncate to ~50 chars)
   const generateTitle = (message: string): string => {
@@ -129,6 +130,7 @@ const Dialog: React.FC<DialogProps> = ({
         setCurrentProvider(settings.provider || 'claude');
         const allPersonas = [...DEFAULT_PERSONAS, ...(settings.customPersonas || [])];
         setPersonas(allPersonas);
+        setCustomPrompts(settings.customPrompts || []);
         if (!currentConversationId) {
           setCurrentPersonaId(settings.defaultPersonaId || 'general');
         }
@@ -588,6 +590,7 @@ const Dialog: React.FC<DialogProps> = ({
               onSelectModel={handleModelSelect}
               isLoadingModels={isLoadingModels}
               hideContext={mode === 'standalone'}
+              customPrompts={customPrompts}
             />
           ) : (
             <div className={cancelHintStyles} dangerouslySetInnerHTML={{ __html: t('dialog.cancelHint') }} />
