@@ -121,6 +121,29 @@ const Dialog: React.FC<DialogProps> = ({
     }
   };
 
+  // Reload settings (personas, prompts, etc) - used on tab focus
+  const reloadSettings = async () => {
+    const settings = await Storage.getSettings();
+    setCurrentModel(settings.model || '');
+    setCurrentProvider(settings.provider || 'claude');
+    const allPersonas = [...DEFAULT_PERSONAS, ...(settings.customPersonas || [])];
+    setPersonas(allPersonas);
+    setCustomPrompts(settings.customPrompts || []);
+    const apiKey = getApiKey(settings);
+    setHasApiKey(Boolean(apiKey && apiKey.trim()));
+  };
+
+  // Reload settings when tab becomes visible (picks up changes from other tabs)
+  useEffect(() => {
+    const handleVisibilityChange = () => {
+      if (document.visibilityState === 'visible' && isOpen) {
+        reloadSettings();
+      }
+    };
+    document.addEventListener('visibilitychange', handleVisibilityChange);
+    return () => document.removeEventListener('visibilitychange', handleVisibilityChange);
+  }, [isOpen]);
+
   // Capture text selection and restore context mode when dialog opens
   useEffect(() => {
     if (isOpen) {
