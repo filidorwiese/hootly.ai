@@ -172,9 +172,15 @@
   "tabs": {
     "settings": "Einstellungen",
     "personas": "Personas",
+    "prompts": "Vorlagen",
     "history": "Verlauf"
   },
   "prompts": {
+    "title": "Vorlagen",
+    "intro": "Speichere häufig verwendete Vorlagen für schnellen Zugriff. Tippe / in der Chat-Eingabe, um deine Vorlagen zu durchsuchen.",
+    "builtIn": "Integriert",
+    "custom": "Benutzerdefiniert",
+    "noCustom": "Noch keine benutzerdefinierten Vorlagen",
     "translatePage": {
       "text": "Übersetze diese Seite ins [Sprache]"
     },

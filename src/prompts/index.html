@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hootly.ai Prompts</title>
+  <link rel="stylesheet" href="fonts/inter.css">
+  <style>
+    /* Flat Design Color System */
+    :root {
+      /* Primary - Forest Green spectrum */
+      --color-primary-50: #E8F0EA;
+      --color-primary-100: #D1E1D6;
+      --color-primary-200: #A3C4AC;
+      --color-primary-300: #75A683;
+      --color-primary-400: #4A7C54;
+      --color-primary-500: #3A5A40;
+      --color-primary-600: #2D4733;
+      --color-primary-700: #203326;
+
+      /* Backgrounds */
+      --color-bg-base: #FAFBF9;
+      --color-bg-elevated: #FFFFFF;
+      --color-bg-muted: #F5F7F4;
+      --color-bg-subtle: #EEF1EC;
+
+      /* Surfaces */
+      --color-surface-default: #FFFFFF;
+      --color-surface-hover: #F5F7F4;
+      --color-surface-active: #EEF1EC;
+      --color-surface-disabled: #F0F2EF;
+
+      /* Borders */
+      --color-border-light: #E4E8E2;
+      --color-border-default: #D4DCD6;
+      --color-border-strong: #B8C4BC;
+      --color-border-focus: #4A7C54;
+
+      /* Text */
+      --color-text-primary: #2D3A30;
+      --color-text-secondary: #6B7A6E;
+      --color-text-tertiary: #8A9A8C;
+      --color-text-inverse: #FFFFFF;
+      --color-text-link: #3A5A40;
+      --color-text-link-hover: #2D4733;
+
+      /* Accent */
+      --color-accent-success: #4A7C54;
+      --color-accent-success-hover: #3A6A44;
+      --color-accent-error: #C45A5A;
+      --color-accent-error-hover: #A54444;
+
+      /* Spacing */
+      --spacing-1: 4px;
+      --spacing-2: 8px;
+      --spacing-3: 12px;
+      --spacing-4: 16px;
+      --spacing-5: 20px;
+      --spacing-6: 24px;
+      --spacing-8: 32px;
+      --spacing-10: 40px;
+
+      /* Border Radius */
+      --radius-sm: 4px;
+      --radius-md: 6px;
+      --radius-lg: 8px;
+      --radius-xl: 10px;
+      --radius-2xl: 12px;
+
+      /* Font Sizes */
+      --font-size-xs: 10px;
+      --font-size-sm: 12px;
+      --font-size-md: 13px;
+      --font-size-base: 14px;
+      --font-size-lg: 15px;
+      --font-size-xl: 16px;
+      --font-size-2xl: 18px;
+
+      /* Transitions */
+      --transition-fast: 0.1s ease;
+      --transition-default: 0.15s ease;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      margin: 0;
+      padding: 0;
+      background: var(--color-bg-base);
+      color: var(--color-text-primary);
+      line-height: 1.6;
+    }
+
+    .prompts-content {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: var(--spacing-6) var(--spacing-5);
+    }
+
+    .page-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: var(--spacing-6);
+    }
+
+    .page-title {
+      margin: 0;
+      font-size: var(--font-size-2xl);
+      font-weight: 600;
+      color: var(--color-text-primary);
+    }
+
+    .intro-text {
+      color: var(--color-text-secondary);
+      font-size: var(--font-size-base);
+      margin-top: 0;
+      margin-bottom: var(--spacing-6);
+      line-height: 1.5;
+    }
+
+    .prompt-section {
+      margin-bottom: var(--spacing-8);
+    }
+
+    .section-header {
+      font-size: var(--font-size-md);
+      font-weight: 600;
+      color: var(--color-text-secondary);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: var(--spacing-3);
+      padding-left: var(--spacing-1);
+    }
+
+    .prompt-item {
+      background: var(--color-surface-default);
+      border: 1px solid var(--color-border-light);
+      border-radius: var(--radius-xl);
+      padding: var(--spacing-4);
+      margin-bottom: var(--spacing-3);
+      transition: border-color var(--transition-default);
+    }
+
+    .prompt-item:hover {
+      border-color: var(--color-border-strong);
+    }
+
+    .prompt-item.builtin {
+      background: var(--color-bg-muted);
+    }
+
+    .prompt-text {
+      font-size: var(--font-size-base);
+      color: var(--color-text-primary);
+      line-height: 1.5;
+      white-space: pre-wrap;
+      word-break: break-word;
+    }
+
+    .prompt-text-preview {
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+
+    .empty-state {
+      text-align: center;
+      padding: var(--spacing-10) var(--spacing-5);
+      color: var(--color-text-tertiary);
+      background: var(--color-surface-default);
+      border: 1px dashed var(--color-border-light);
+      border-radius: var(--radius-xl);
+    }
+
+    .empty-state-icon {
+      font-size: 48px;
+      margin-bottom: var(--spacing-3);
+    }
+
+    .empty-state-text {
+      font-size: var(--font-size-base);
+    }
+
+    /* Dark mode */
+    [data-theme="dark"] {
+      --color-primary-50: #0A100D;
+      --color-primary-100: #142019;
+      --color-primary-200: #203326;
+      --color-primary-300: #2D4733;
+      --color-primary-400: #3A5A40;
+      --color-primary-500: #4A7C54;
+      --color-primary-600: #75A683;
+      --color-primary-700: #A3C4AC;
+      --color-bg-base: #121812;
+      --color-bg-elevated: #1A221A;
+      --color-bg-muted: #1E261E;
+      --color-bg-subtle: #242E24;
+      --color-surface-default: #1A221A;
+      --color-surface-hover: #242E24;
+      --color-surface-active: #2A352A;
+      --color-surface-disabled: #1E261E;
+      --color-border-light: #2A352A;
+      --color-border-default: #3A4A3A;
+      --color-border-strong: #4A5A4A;
+      --color-border-focus: #75A683;
+      --color-text-primary: #E8F0EA;
+      --color-text-secondary: #B8C4BC;
+      --color-text-tertiary: #8A9A8C;
+      --color-text-inverse: #121812;
+      --color-text-link: #75A683;
+      --color-text-link-hover: #A3C4AC;
+      --color-accent-success: #75A683;
+      --color-accent-success-hover: #8BB897;
+      --color-accent-error: #D87070;
+      --color-accent-error-hover: #E68888;
+    }
+
+    /* Auto mode: system preference detection */
+    @media (prefers-color-scheme: dark) {
+      [data-theme="auto"] {
+        --color-primary-50: #0A100D;
+        --color-primary-100: #142019;
+        --color-primary-200: #203326;
+        --color-primary-300: #2D4733;
+        --color-primary-400: #3A5A40;
+        --color-primary-500: #4A7C54;
+        --color-primary-600: #75A683;
+        --color-primary-700: #A3C4AC;
+        --color-bg-base: #121812;
+        --color-bg-elevated: #1A221A;
+        --color-bg-muted: #1E261E;
+        --color-bg-subtle: #242E24;
+        --color-surface-default: #1A221A;
+        --color-surface-hover: #242E24;
+        --color-surface-active: #2A352A;
+        --color-surface-disabled: #1E261E;
+        --color-border-light: #2A352A;
+        --color-border-default: #3A4A3A;
+        --color-border-strong: #4A5A4A;
+        --color-border-focus: #75A683;
+        --color-text-primary: #E8F0EA;
+        --color-text-secondary: #B8C4BC;
+        --color-text-tertiary: #8A9A8C;
+        --color-text-inverse: #121812;
+        --color-text-link: #75A683;
+        --color-text-link-hover: #A3C4AC;
+        --color-accent-success: #75A683;
+        --color-accent-success-hover: #8BB897;
+        --color-accent-error: #D87070;
+        --color-accent-error-hover: #E68888;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="prompts-content">
+    <div class="page-header">
+      <h1 class="page-title" data-i18n="prompts.title">Prompts</h1>
+    </div>
+
+    <p class="intro-text" data-i18n="prompts.intro">Save frequently used prompts for quick access. Type / in the chat input to browse your prompts.</p>
+
+    <div class="prompt-section" id="builtinSection">
+      <div class="section-header" data-i18n="prompts.builtIn">Built-in</div>
+      <div id="builtinList"></div>
+    </div>
+
+    <div class="prompt-section" id="customSection">
+      <div class="section-header" data-i18n="prompts.custom">Custom</div>
+      <div id="customList"></div>
+      <div id="customEmptyState" class="empty-state" style="display: none;">
+        <div class="empty-state-icon">📝</div>
+        <div class="empty-state-text" data-i18n="prompts.noCustom">No custom prompts yet</div>
+      </div>
+    </div>
+  </div>
+
+  <script type="module" src="./prompts.ts"></script>
+</body>
+</html>

@@ -172,9 +172,15 @@
   "tabs": {
     "settings": "Instellingen",
     "personas": "Persona's",
+    "prompts": "Prompts",
     "history": "Geschiedenis"
   },
   "prompts": {
+    "title": "Prompts",
+    "intro": "Bewaar veelgebruikte prompts voor snelle toegang. Typ / in de chat-invoer om door je prompts te bladeren.",
+    "builtIn": "Ingebouwd",
+    "custom": "Aangepast",
+    "noCustom": "Nog geen aangepaste prompts",
     "translatePage": {
       "text": "Vertaal deze pagina naar het [taal]"
     },

@@ -172,9 +172,15 @@
   "tabs": {
     "settings": "설정",
     "personas": "페르소나",
+    "prompts": "템플릿",
     "history": "기록"
   },
   "prompts": {
+    "title": "템플릿",
+    "intro": "자주 사용하는 프롬프트를 저장하여 빠르게 접근하세요. 채팅 입력창에서 /를 입력하여 템플릿을 찾아보세요.",
+    "builtIn": "기본 제공",
+    "custom": "사용자 정의",
+    "noCustom": "아직 사용자 정의 템플릿이 없습니다",
     "translatePage": {
       "text": "이 페이지를 [언어]로 번역해 주세요"
     },

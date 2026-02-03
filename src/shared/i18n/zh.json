@@ -172,9 +172,15 @@
   "tabs": {
     "settings": "设置",
     "personas": "角色",
+    "prompts": "提示词",
     "history": "历史"
   },
   "prompts": {
+    "title": "提示词",
+    "intro": "保存常用提示词以便快速访问。在聊天输入框中输入 / 浏览您的提示词。",
+    "builtIn": "内置",
+    "custom": "自定义",
+    "noCustom": "暂无自定义提示词",
     "translatePage": {
       "text": "将此页面翻译成[语言]"
     },

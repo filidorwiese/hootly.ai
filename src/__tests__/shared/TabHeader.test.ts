@@ -139,8 +139,8 @@ describe('TabHeader (TAB-1)', () => {
     it('includes SVG icons for each tab', () => {
       const html = generateTabHeaderHTML('settings');
       const svgCount = (html.match(/<svg/g) || []).length;
-      // 3 tab icons (logo is now img, not SVG - TAB-6)
-      expect(svgCount).toBe(3);
+      // 4 tab icons (logo is now img, not SVG - TAB-6)
+      expect(svgCount).toBe(4);
     });
   });
 
@@ -177,7 +177,7 @@ describe('TabHeader (TAB-1)', () => {
       initTabHeaderNav('settings');
 
       const tabBtns = document.querySelectorAll('.tab-btn');
-      expect(tabBtns.length).toBe(3);
+      expect(tabBtns.length).toBe(4);
       expect(addEventListenerSpy).toHaveBeenCalled();
 
       addEventListenerSpy.mockRestore();
@@ -264,7 +264,7 @@ describe('TabHeader (TAB-1)', () => {
     it('contains all tab buttons', () => {
       const element = createTabHeaderElement('settings');
       const buttons = element.querySelectorAll('.tab-btn');
-      expect(buttons.length).toBe(3);
+      expect(buttons.length).toBe(4);
     });
 
     it('marks correct tab as active', () => {

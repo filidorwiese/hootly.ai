@@ -52,6 +52,7 @@
         "iframe-app.js",
         "history.html",
         "personas.html",
+        "prompts.html",
         "popup.html",
         "chat.html"
       ],

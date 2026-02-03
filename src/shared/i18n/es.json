@@ -172,9 +172,15 @@
   "tabs": {
     "settings": "Configuración",
     "personas": "Personas",
+    "prompts": "Plantillas",
     "history": "Historial"
   },
   "prompts": {
+    "title": "Plantillas",
+    "intro": "Guarda prompts frecuentes para acceso rápido. Escribe / en el chat para buscar tus plantillas.",
+    "builtIn": "Integradas",
+    "custom": "Personalizadas",
+    "noCustom": "Aún no hay plantillas personalizadas",
     "translatePage": {
       "text": "Traduce esta página al [idioma]"
     },

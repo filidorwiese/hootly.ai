@@ -172,9 +172,15 @@
   "tabs": {
     "settings": "Configurações",
     "personas": "Personas",
+    "prompts": "Modelos",
     "history": "Histórico"
   },
   "prompts": {
+    "title": "Modelos",
+    "intro": "Salve prompts frequentes para acesso rápido. Digite / no chat para navegar pelos seus modelos.",
+    "builtIn": "Integrados",
+    "custom": "Personalizados",
+    "noCustom": "Nenhum modelo personalizado ainda",
     "translatePage": {
       "text": "Traduza esta página para [idioma]"
     },

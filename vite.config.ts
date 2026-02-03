@@ -73,6 +73,11 @@ export default defineConfig(({ mode }) => {
           if (existsSync(personasPath)) {
             copyFileSync(personasPath, personasAltPath);
           }
+          const promptsPath = `${outDir}/src/prompts/index.html`;
+          const promptsAltPath = `${outDir}/prompts.html`;
+          if (existsSync(promptsPath)) {
+            copyFileSync(promptsPath, promptsAltPath);
+          }
           const popupPath = `${outDir}/src/popup/index.html`;
           const popupAltPath = `${outDir}/popup.html`;
           if (existsSync(popupPath)) {
@@ -92,6 +97,7 @@ export default defineConfig(({ mode }) => {
           settings: resolve(__dirname, 'src/settings/index.html'),
           history: resolve(__dirname, 'src/history/index.html'),
           personas: resolve(__dirname, 'src/personas/index.html'),
+          prompts: resolve(__dirname, 'src/prompts/index.html'),
           popup: resolve(__dirname, 'src/popup/index.html'),
           chat: resolve(__dirname, 'src/chat/index.html'),
         },

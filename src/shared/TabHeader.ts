@@ -3,7 +3,7 @@
  * Provides consistent navigation with Hootly logo and tab buttons.
  */
 
-export type TabId = 'settings' | 'personas' | 'history';
+export type TabId = 'settings' | 'personas' | 'prompts' | 'history';
 
 export interface TabHeaderOptions {
   activeTab: TabId;
@@ -29,6 +29,12 @@ const PERSONAS_ICON = `
 <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
   <circle cx="12" cy="8" r="4" fill="currentColor" opacity="0.7"/>
   <path d="M4 20c0-4 4-6 8-6s8 2 8 6" fill="currentColor"/>
+</svg>
+`;
+
+const PROMPTS_ICON = `
+<svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+  <path d="M4 6h16M4 12h16M4 18h10" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
 </svg>
 `;
 
@@ -130,6 +136,7 @@ export function generateTabHeaderHTML(activeTab: TabId): string {
   const tabs: Array<{ id: TabId; label: string; icon: string; i18nKey: string }> = [
     { id: 'settings', label: 'Settings', icon: SETTINGS_ICON, i18nKey: 'tabs.settings' },
     { id: 'personas', label: 'Personas', icon: PERSONAS_ICON, i18nKey: 'tabs.personas' },
+    { id: 'prompts', label: 'Prompts', icon: PROMPTS_ICON, i18nKey: 'tabs.prompts' },
     { id: 'history', label: 'History', icon: HISTORY_ICON, i18nKey: 'tabs.history' },
   ];
 
@@ -166,6 +173,7 @@ export function getTabUrl(tabId: TabId): string {
   const urls: Record<TabId, string> = {
     settings: chrome.runtime.getURL('settings.html'),
     personas: chrome.runtime.getURL('personas.html'),
+    prompts: chrome.runtime.getURL('prompts.html'),
     history: chrome.runtime.getURL('history.html'),
   };
   return urls[tabId];

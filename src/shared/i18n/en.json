@@ -172,9 +172,15 @@
   "tabs": {
     "settings": "Settings",
     "personas": "Personas",
+    "prompts": "Prompts",
     "history": "History"
   },
   "prompts": {
+    "title": "Prompts",
+    "intro": "Save frequently used prompts for quick access. Type / in the chat input to browse your prompts.",
+    "builtIn": "Built-in",
+    "custom": "Custom",
+    "noCustom": "No custom prompts yet",
     "translatePage": {
       "text": "Translate this page into [language]"
     },

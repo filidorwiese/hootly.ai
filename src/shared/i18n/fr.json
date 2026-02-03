@@ -172,9 +172,15 @@
   "tabs": {
     "settings": "Paramètres",
     "personas": "Personas",
+    "prompts": "Modèles",
     "history": "Historique"
   },
   "prompts": {
+    "title": "Modèles",
+    "intro": "Enregistrez les prompts fréquemment utilisés pour un accès rapide. Tapez / dans le chat pour parcourir vos modèles.",
+    "builtIn": "Intégrés",
+    "custom": "Personnalisés",
+    "noCustom": "Pas encore de modèles personnalisés",
     "translatePage": {
       "text": "Traduis cette page en [langue]"
     },
