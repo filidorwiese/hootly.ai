@@ -54,6 +54,10 @@ chrome.runtime.onMessage.addListener((message: BackgroundMessage, sender, sendRe
   } else if (message.type === 'clearExtensionTabId') {
     extensionTabId = null;
     sendResponse({ success: true });
+  } else if (message.type === 'toggleDialogFromTooltip') {
+    // Selection tooltip clicked - inject main extension
+    toggleDialogInActiveTab();
+    sendResponse({ success: true });
   }
 
   return true; // Keep message channel open for async response

@@ -125,7 +125,8 @@ export type BackgroundMessage =
   | { type: 'continueConversation'; payload: { conversationId: string } }
   | { type: 'setExtensionTabId'; payload: { tabId: number } }
   | { type: 'getExtensionTabId' }
-  | { type: 'clearExtensionTabId' };
+  | { type: 'clearExtensionTabId' }
+  | { type: 'toggleDialogFromTooltip' };
 
 export interface SendPromptPayload {
   prompt: string;
