@@ -21,9 +21,20 @@ interface DialogProps {
   mode?: 'overlay' | 'standalone';
   /** Initial conversation to load (for chat page) */
   initialConversationId?: string | null;
+  /** Initial context enabled state (persisted across dialog close/reopen) */
+  initialContextEnabled?: boolean;
+  /** Initial context mode (persisted across dialog close/reopen) */
+  initialContextMode?: 'none' | 'selection' | 'fullpage';
 }
 
-const Dialog: React.FC<DialogProps> = ({ isOpen, onClose, mode = 'overlay', initialConversationId = null }) => {
+const Dialog: React.FC<DialogProps> = ({
+  isOpen,
+  onClose,
+  mode = 'overlay',
+  initialConversationId = null,
+  initialContextEnabled = false,
+  initialContextMode = 'none',
+}) => {
   // Initialize position: centered horizontally, 60px from top
   const [position, setPosition] = useState(() => {
     const centerX = Math.max(0, (window.innerWidth - 800) / 2);
@@ -84,6 +95,16 @@ const Dialog: React.FC<DialogProps> = ({ isOpen, onClose, mode = 'overlay', init
     await Storage.setCurrentConversation(conversation);
   };
 
+  // Notify content script of context mode changes (only in overlay mode)
+  const notifyContextModeChange = (enabled: boolean, contextModeValue: 'none' | 'selection' | 'fullpage') => {
+    if (mode === 'overlay') {
+      window.parent.postMessage({
+        type: 'hootly-context-mode',
+        payload: { contextEnabled: enabled, contextMode: contextModeValue }
+      }, '*');
+    }
+  };
+
   // Fetch available models from background
   const fetchModels = async () => {
     setIsLoadingModels(true);
@@ -99,7 +120,7 @@ const Dialog: React.FC<DialogProps> = ({ isOpen, onClose, mode = 'overlay', init
     }
   };
 
-  // Capture text selection and auto-enable context when dialog opens
+  // Capture text selection and restore context mode when dialog opens
   useEffect(() => {
     if (isOpen) {
       // Load current model, provider, and personas
@@ -129,21 +150,29 @@ const Dialog: React.FC<DialogProps> = ({ isOpen, onClose, mode = 'overlay', init
         const selectionText = extractSelection();
         if (selectionText && selectionText.length > 0) {
           setCapturedSelection(selectionText);
-          setContextEnabled(true);
-          setContextMode('selection');
-          // console.log('[Hootly] Auto-enabled context with selection:', selectionText.length, 'chars');
+          // If we have stored context mode, use it; otherwise auto-enable selection
+          if (initialContextEnabled && initialContextMode !== 'none') {
+            setContextEnabled(initialContextEnabled);
+            setContextMode(initialContextMode);
+          } else {
+            setContextEnabled(true);
+            setContextMode('selection');
+          }
         } else {
           setCapturedSelection(null);
-          setContextMode('none');
+          // Restore stored context mode, but skip 'selection' if no selection exists
+          if (initialContextEnabled && initialContextMode === 'fullpage') {
+            setContextEnabled(true);
+            setContextMode('fullpage');
+          } else {
+            setContextEnabled(initialContextEnabled);
+            setContextMode(initialContextMode === 'selection' ? 'none' : initialContextMode);
+          }
         }
       });
-    } else {
-      // Reset when dialog closes
-      setCapturedSelection(null);
-      setContextMode('none');
-      setContextEnabled(false);
     }
-  }, [isOpen]);
+    // Note: We no longer reset context on close - it's persisted in content script
+  }, [isOpen, initialContextEnabled, initialContextMode]);
 
   // Load saved width on mount, but always reset position when opening
   useEffect(() => {
@@ -295,25 +324,32 @@ const Dialog: React.FC<DialogProps> = ({ isOpen, onClose, mode = 'overlay', init
   }, [currentConversationId, currentPersonaId, currentModel]);
 
   const handleContextToggle = () => {
+    let newEnabled = contextEnabled;
+    let newMode: 'none' | 'selection' | 'fullpage' = contextMode;
+
     if (!contextEnabled) {
       // Enable context
       if (capturedSelection) {
-        setContextMode('selection');
+        newMode = 'selection';
       } else {
-        setContextMode('fullpage');
+        newMode = 'fullpage';
       }
-      setContextEnabled(true);
+      newEnabled = true;
     } else {
       // Cycle through modes or disable
       if (contextMode === 'selection') {
         // Switch to fullpage
-        setContextMode('fullpage');
+        newMode = 'fullpage';
       } else if (contextMode === 'fullpage') {
         // Disable context
-        setContextEnabled(false);
-        setContextMode('none');
+        newEnabled = false;
+        newMode = 'none';
       }
     }
+
+    setContextEnabled(newEnabled);
+    setContextMode(newMode);
+    notifyContextModeChange(newEnabled, newMode);
   };
 
   const handleClearConversation = async () => {

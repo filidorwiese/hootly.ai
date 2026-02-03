@@ -560,6 +560,72 @@ describe('Dialog mode prop (HP-22)', () => {
   })
 })
 
+describe('Context mode persistence (CTX-1/2/3)', () => {
+  beforeEach(() => {
+    setLanguage('en')
+    setMockStorage({
+      hootly_settings: configuredSettings,
+    })
+    vi.clearAllMocks()
+  })
+
+  afterEach(() => {
+    vi.restoreAllMocks()
+  })
+
+  it('accepts initial context mode props', async () => {
+    await act(async () => {
+      render(
+        <Dialog
+          isOpen={true}
+          onClose={() => {}}
+          initialContextEnabled={true}
+          initialContextMode="fullpage"
+        />
+      )
+      await new Promise(resolve => setTimeout(resolve, 0))
+    })
+
+    // Should show "Full page" context badge when initialized with fullpage mode
+    expect(screen.getByText('Full page')).toBeInTheDocument()
+  })
+
+  it('notifies parent of context mode changes', async () => {
+    const postMessageSpy = vi.spyOn(window.parent, 'postMessage')
+
+    await act(async () => {
+      render(<Dialog isOpen={true} onClose={() => {}} />)
+      await new Promise(resolve => setTimeout(resolve, 0))
+    })
+
+    // Click context toggle to enable (starts disabled)
+    const toggleButton = screen.getByTitle('Add current website as context to chat')
+    await act(async () => {
+      fireEvent.click(toggleButton)
+    })
+
+    expect(postMessageSpy).toHaveBeenCalledWith(
+      expect.objectContaining({
+        type: 'hootly-context-mode',
+        payload: expect.objectContaining({
+          contextEnabled: true,
+        })
+      }),
+      '*'
+    )
+  })
+
+  it('defaults to disabled context when no initial values provided', async () => {
+    await act(async () => {
+      render(<Dialog isOpen={true} onClose={() => {}} />)
+      await new Promise(resolve => setTimeout(resolve, 0))
+    })
+
+    // Should show "No context" badge
+    expect(screen.getByText('No context')).toBeInTheDocument()
+  })
+})
+
 describe('Welcome intro when no API key (INTRO-4)', () => {
   beforeEach(() => {
     setLanguage('en')

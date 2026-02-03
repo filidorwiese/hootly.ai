@@ -50,6 +50,10 @@ async function init() {
   let isReady = false;
   const pendingToggles: (() => void)[] = [];
 
+  // Persist context mode across dialog close/reopen
+  let storedContextEnabled = false;
+  let storedContextMode: 'none' | 'selection' | 'fullpage' = 'none';
+
   // Forward toggle commands to iframe
   const sendToggleToIframe = () => {
     if (!isReady) {
@@ -62,7 +66,14 @@ async function init() {
     if (dialogOpen) {
       iframe.focus(); // Required for Firefox to allow focus inside iframe
     }
-    iframe.contentWindow?.postMessage({ type: 'hootly-toggle' }, '*');
+    // Send toggle with stored context state
+    iframe.contentWindow?.postMessage({
+      type: 'hootly-toggle',
+      payload: {
+        contextEnabled: storedContextEnabled,
+        contextMode: storedContextMode,
+      }
+    }, '*');
   };
 
   // Listen for toggle command from background - MUST be set up before waiting for iframe
@@ -113,6 +124,11 @@ async function init() {
           pageText: document.body.innerText || '',
         }
       }, '*');
+    }
+    // Store context mode when it changes in iframe
+    if (event.data?.type === 'hootly-context-mode') {
+      storedContextEnabled = event.data.payload.contextEnabled;
+      storedContextMode = event.data.payload.contextMode;
     }
   });
 

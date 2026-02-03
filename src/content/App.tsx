@@ -11,6 +11,8 @@ function getBrowserLanguage(): string {
 const App: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [langKey, setLangKey] = useState(0);
+  const [initialContextEnabled, setInitialContextEnabled] = useState(false);
+  const [initialContextMode, setInitialContextMode] = useState<'none' | 'selection' | 'fullpage'>('none');
 
   // Log state changes
   useEffect(() => {
@@ -21,6 +23,11 @@ const App: React.FC = () => {
     // Listen for toggle message from parent (iframe) or same window
     const handleMessage = (event: MessageEvent) => {
       if (event.data.type === 'hootly-toggle') {
+        // Receive stored context mode from content script
+        if (event.data.payload) {
+          setInitialContextEnabled(event.data.payload.contextEnabled ?? false);
+          setInitialContextMode(event.data.payload.contextMode ?? 'none');
+        }
         setIsOpen((prev) => !prev);
       }
     };
@@ -58,7 +65,13 @@ const App: React.FC = () => {
   return (
     <>
       <SelectionTooltip key={`tooltip-${langKey}`} onOpenWithSelection={handleOpenWithSelection} />
-      <Dialog key={`dialog-${langKey}`} isOpen={isOpen} onClose={() => setIsOpen(false)} />
+      <Dialog
+        key={`dialog-${langKey}`}
+        isOpen={isOpen}
+        onClose={() => setIsOpen(false)}
+        initialContextEnabled={initialContextEnabled}
+        initialContextMode={initialContextMode}
+      />
     </>
   );
 };
