@@ -178,6 +178,28 @@ describe('InputArea', () => {
 
       expect(screen.getByText('Full page')).toBeInTheDocument()
     })
+
+    it('hides context toggle when hideContext is true', () => {
+      render(
+        <InputArea
+          {...defaultProps}
+          hideContext={true}
+        />
+      )
+
+      expect(screen.queryByTitle('Add current website as context to chat')).not.toBeInTheDocument()
+    })
+
+    it('shows context toggle when hideContext is false', () => {
+      render(
+        <InputArea
+          {...defaultProps}
+          hideContext={false}
+        />
+      )
+
+      expect(screen.getByTitle('Add current website as context to chat')).toBeInTheDocument()
+    })
   })
 
   describe('persona selector in footer (UI-4)', () => {

@@ -26,13 +26,14 @@ interface InputAreaProps {
   models?: ModelConfig[];
   onSelectModel?: (modelId: string) => void;
   isLoadingModels?: boolean;
+  hideContext?: boolean;
 }
 
 const InputArea: React.FC<InputAreaProps> = ({
   value, onChange, onSubmit, disabled,
   contextEnabled, contextMode, selectionLength, onContextToggle, modelId, provider,
   personas, selectedPersonaId, onSelectPersona,
-  models, onSelectModel, isLoadingModels
+  models, onSelectModel, isLoadingModels, hideContext
 }) => {
   const textareaRef = useRef<HTMLTextAreaElement>(null);
 
@@ -97,12 +98,14 @@ const InputArea: React.FC<InputAreaProps> = ({
       </div>
       <div className={footerStyles}>
         <div className={footerLeftStyles}>
-          <ContextToggle
-            enabled={contextEnabled}
-            mode={contextMode}
-            selectionLength={selectionLength}
-            onToggle={onContextToggle}
-          />
+          {!hideContext && (
+            <ContextToggle
+              enabled={contextEnabled}
+              mode={contextMode}
+              selectionLength={selectionLength}
+              onToggle={onContextToggle}
+            />
+          )}
           {personas && selectedPersonaId && onSelectPersona && (
             <PersonaSelector
               personas={personas}

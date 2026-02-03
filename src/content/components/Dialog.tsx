@@ -551,6 +551,7 @@ const Dialog: React.FC<DialogProps> = ({ isOpen, onClose, mode = 'overlay', init
               models={models}
               onSelectModel={handleModelSelect}
               isLoadingModels={isLoadingModels}
+              hideContext={mode === 'standalone'}
             />
           ) : (
             <div className={cancelHintStyles} dangerouslySetInnerHTML={{ __html: t('dialog.cancelHint') }} />
