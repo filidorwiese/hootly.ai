@@ -93,6 +93,7 @@ const PromptSelector: React.FC<PromptSelectorProps> = ({
         break;
       case 'Escape':
         e.preventDefault();
+        e.stopPropagation();
         onClose();
         break;
       case 'Backspace':
@@ -128,7 +129,7 @@ const PromptSelector: React.FC<PromptSelectorProps> = ({
         value={searchQuery}
         onChange={(e) => setSearchQuery(e.target.value)}
         placeholder="Search prompts..."
-        className={searchInputStyles}
+        className={`${searchInputStyles} ${openAbove ? searchInputAboveStyles : ''}`}
       />
       <div className={listStyles} ref={listRef}>
         {filteredPrompts.length === 0 ? (
@@ -166,11 +167,12 @@ const containerStyles = css`
 `;
 
 const containerBelowStyles = css`
-  top: calc(100% + ${spacing[2]});
+  top: 0;
 `;
 
 const containerAboveStyles = css`
-  bottom: calc(100% + ${spacing[2]});
+  bottom: 0;
+  flex-direction: column-reverse;
 `;
 
 const searchInputStyles = css`
@@ -186,6 +188,11 @@ const searchInputStyles = css`
   &::placeholder {
     color: var(--color-text-tertiary);
   }
+`;
+
+const searchInputAboveStyles = css`
+  border-bottom: none;
+  border-top: 1px solid var(--color-border-light);
 `;
 
 const listStyles = css`
