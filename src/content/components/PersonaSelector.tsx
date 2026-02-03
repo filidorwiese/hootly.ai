@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { css } from '@emotion/css';
 import type { Persona } from '../../shared/types';
-import { t } from '../../shared/i18n';
+import { t, getLocalizedPersonaName } from '../../shared/i18n';
 import { radii, fontSizes, fontWeights, transitions, spacing } from '../../shared/styles';
 
 interface PersonaSelectorProps {
@@ -50,23 +50,30 @@ const PersonaSelector: React.FC<PersonaSelectorProps> = ({
         title={t('persona.changePersona')}
       >
         <span className={iconStyles}>{selectedPersona.icon}</span>
-        <span className={nameStyles}>{selectedPersona.name}</span>
+        <span className={nameStyles}>
+          {selectedPersona.isBuiltIn
+            ? getLocalizedPersonaName(selectedPersona.id) || selectedPersona.name
+            : selectedPersona.name}
+        </span>
         <span className={chevronStyles}>{isOpen ? '▲' : '▼'}</span>
       </button>
 
       {isOpen && (
         <div className={dropdownStyles}>
-          {builtInPersonas.map((persona) => (
-            <button
-              key={persona.id}
-              className={`${optionStyles} ${persona.id === selectedPersonaId ? selectedOptionStyles : ''}`}
-              onClick={() => handleSelect(persona)}
-              title={persona.name}
-            >
-              <span className={optionIconStyles}>{persona.icon}</span>
-              <span className={optionNameStyles}>{persona.name}</span>
-            </button>
-          ))}
+          {builtInPersonas.map((persona) => {
+            const localizedName = getLocalizedPersonaName(persona.id) || persona.name;
+            return (
+              <button
+                key={persona.id}
+                className={`${optionStyles} ${persona.id === selectedPersonaId ? selectedOptionStyles : ''}`}
+                onClick={() => handleSelect(persona)}
+                title={localizedName}
+              >
+                <span className={optionIconStyles}>{persona.icon}</span>
+                <span className={optionNameStyles}>{localizedName}</span>
+              </button>
+            );
+          })}
 
           {customPersonas.length > 0 && (
             <>

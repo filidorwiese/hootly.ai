@@ -1,5 +1,5 @@
 import { describe, it, expect, beforeEach } from 'vitest'
-import { t, setLanguage, getLanguage, initLanguage } from '../../shared/i18n'
+import { t, setLanguage, getLanguage, initLanguage, getLocalizedPersonaName, getLocalizedPersonaDescription } from '../../shared/i18n'
 import { setMockStorage } from '../__mocks__/chrome'
 
 describe('i18n', () => {
@@ -122,5 +122,49 @@ describe('translation completeness', () => {
       const value = t(key)
       expect(value).not.toBe(key) // Not returning the key itself
     }
+  })
+})
+
+describe('PER-3: Persona localization', () => {
+  beforeEach(() => {
+    setLanguage('en')
+  })
+
+  describe('getLocalizedPersonaName', () => {
+    it('returns localized name for built-in personas', () => {
+      expect(getLocalizedPersonaName('general')).toBe('General')
+      expect(getLocalizedPersonaName('code-helper')).toBe('Code Helper')
+      expect(getLocalizedPersonaName('writer')).toBe('Writer')
+    })
+
+    it('returns null for unknown persona IDs', () => {
+      expect(getLocalizedPersonaName('unknown-id')).toBeNull()
+      expect(getLocalizedPersonaName('custom-123')).toBeNull()
+    })
+
+    it('returns translated name when language changes', () => {
+      setLanguage('de')
+      expect(getLocalizedPersonaName('general')).toBe('Allgemein')
+      expect(getLocalizedPersonaName('writer')).toBe('Schriftsteller')
+    })
+  })
+
+  describe('getLocalizedPersonaDescription', () => {
+    it('returns localized description for built-in personas', () => {
+      const desc = getLocalizedPersonaDescription('general')
+      expect(desc).toContain('helpful')
+      expect(desc).toContain('assistant')
+    })
+
+    it('returns null for unknown persona IDs', () => {
+      expect(getLocalizedPersonaDescription('unknown-id')).toBeNull()
+    })
+
+    it('returns translated description when language changes', () => {
+      setLanguage('fr')
+      const desc = getLocalizedPersonaDescription('general')
+      expect(desc).toContain('assistant')
+      expect(desc).toContain('serviable')
+    })
   })
 })

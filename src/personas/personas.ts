@@ -1,7 +1,7 @@
 import { Storage } from '../shared/storage';
 import type { Persona, Settings } from '../shared/types';
 import { DEFAULT_PERSONAS } from '../shared/types';
-import { t, initLanguage } from '../shared/i18n';
+import { t, initLanguage, getLocalizedPersonaName, getLocalizedPersonaDescription } from '../shared/i18n';
 import { injectTabHeader, registerExtensionTab } from '../shared/TabHeader';
 import { initTheme } from '../shared/theme';
 
@@ -31,9 +31,18 @@ const DELETE_ICON = `<svg width="14" height="14" viewBox="0 0 24 24" fill="none"
 
 function renderPersonaItem(persona: Persona, isDefault: boolean, isBuiltIn: boolean): string {
   const defaultBadge = isDefault ? `<span class="default-badge" data-i18n="personas.default">Default</span>` : '';
-  const fullPrompt = persona.systemPrompt ? escapeHtml(persona.systemPrompt) : '';
-  const promptPreview = persona.systemPrompt && persona.systemPrompt.length > 150
-    ? escapeHtml(persona.systemPrompt.slice(0, 150)) + '...'
+
+  // Use localized name and description for built-in personas
+  const displayName = isBuiltIn
+    ? getLocalizedPersonaName(persona.id) || persona.name
+    : persona.name;
+  const displayPrompt = isBuiltIn
+    ? getLocalizedPersonaDescription(persona.id) || persona.systemPrompt
+    : persona.systemPrompt;
+
+  const fullPrompt = displayPrompt ? escapeHtml(displayPrompt) : '';
+  const promptPreview = displayPrompt && displayPrompt.length > 150
+    ? escapeHtml(displayPrompt.slice(0, 150)) + '...'
     : fullPrompt;
 
   // Built-in personas always show full prompt; custom personas show preview (full when expanded)
@@ -63,7 +72,7 @@ function renderPersonaItem(persona: Persona, isDefault: boolean, isBuiltIn: bool
         <span class="persona-icon">${persona.icon}</span>
         <div class="persona-info">
           <div class="persona-name">
-            ${escapeHtml(persona.name)}
+            ${escapeHtml(displayName)}
             ${defaultBadge}
           </div>
         </div>

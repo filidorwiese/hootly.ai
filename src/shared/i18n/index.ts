@@ -72,4 +72,25 @@ export function t(key: TranslationKey, params?: Record<string, string | number>)
   return value;
 }
 
+// Map persona IDs to i18n keys
+const personaI18nKeys: Record<string, string> = {
+  general: 'general',
+  'code-helper': 'codeHelper',
+  writer: 'writer',
+  researcher: 'researcher',
+  translator: 'translator',
+};
+
+export function getLocalizedPersonaName(personaId: string): string | null {
+  const i18nKey = personaI18nKeys[personaId];
+  if (!i18nKey) return null;
+  return t(`personas.${i18nKey}.name`);
+}
+
+export function getLocalizedPersonaDescription(personaId: string): string | null {
+  const i18nKey = personaI18nKeys[personaId];
+  if (!i18nKey) return null;
+  return t(`personas.${i18nKey}.description`);
+}
+
 export default t;
