@@ -173,5 +173,27 @@
     "settings": "Paramètres",
     "personas": "Personas",
     "history": "Historique"
+  },
+  "prompts": {
+    "translatePage": {
+      "name": "Traduire cette page",
+      "text": "Traduis cette page en [langue]"
+    },
+    "summarizePage": {
+      "name": "Résumer cette page",
+      "text": "Résume cette page en quelques paragraphes"
+    },
+    "changeTone": {
+      "name": "Changer le ton",
+      "text": "Change le ton de ce texte en [ton]"
+    },
+    "explainSimple": {
+      "name": "Expliquer simplement",
+      "text": "Explique ça comme si j'avais 5 ans"
+    },
+    "keyPoints": {
+      "name": "Trouver les points clés",
+      "text": "Trouve les points clés de ce texte et liste-les"
+    }
   }
 }

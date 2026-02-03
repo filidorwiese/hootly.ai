@@ -173,5 +173,27 @@
     "settings": "Settings",
     "personas": "Personas",
     "history": "History"
+  },
+  "prompts": {
+    "translatePage": {
+      "name": "Translate this page",
+      "text": "Translate this page into [language]"
+    },
+    "summarizePage": {
+      "name": "Summarize this page",
+      "text": "Summarize this page in a few paragraphs"
+    },
+    "changeTone": {
+      "name": "Change tone",
+      "text": "Change the tone of this text to [tone]"
+    },
+    "explainSimple": {
+      "name": "Explain simply",
+      "text": "Explain this like I'm 5 years old"
+    },
+    "keyPoints": {
+      "name": "Find key points",
+      "text": "Find the key points in this text and list them"
+    }
   }
 }

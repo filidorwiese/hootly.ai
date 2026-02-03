@@ -93,4 +93,25 @@ export function getLocalizedPersonaDescription(personaId: string): string | null
   return t(`personas.${i18nKey}.description`);
 }
 
+// Map prompt IDs to i18n keys
+const promptI18nKeys: Record<string, string> = {
+  'translate-page': 'translatePage',
+  'summarize-page': 'summarizePage',
+  'change-tone': 'changeTone',
+  'explain-simple': 'explainSimple',
+  'key-points': 'keyPoints',
+};
+
+export function getLocalizedPromptName(promptId: string): string | null {
+  const i18nKey = promptI18nKeys[promptId];
+  if (!i18nKey) return null;
+  return t(`prompts.${i18nKey}.name`);
+}
+
+export function getLocalizedPromptText(promptId: string): string | null {
+  const i18nKey = promptI18nKeys[promptId];
+  if (!i18nKey) return null;
+  return t(`prompts.${i18nKey}.text`);
+}
+
 export default t;

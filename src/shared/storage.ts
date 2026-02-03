@@ -1,5 +1,5 @@
-import type { Settings, Conversation, DialogPosition, Persona } from './types';
-import { DEFAULT_SETTINGS, DEFAULT_PERSONAS } from './types';
+import type { Settings, Conversation, DialogPosition, Persona, SavedPrompt } from './types';
+import { DEFAULT_SETTINGS, DEFAULT_PERSONAS, DEFAULT_PROMPTS } from './types';
 
 const STORAGE_KEYS = {
   SETTINGS: 'hootly_settings',
@@ -77,5 +77,38 @@ export class Storage {
   static async getPersonaById(id: string): Promise<Persona | undefined> {
     const personas = await this.getPersonas();
     return personas.find((p) => p.id === id);
+  }
+
+  static async getPrompts(): Promise<SavedPrompt[]> {
+    const settings = await this.getSettings();
+    return [...DEFAULT_PROMPTS, ...(settings.customPrompts || [])];
+  }
+
+  static async getPromptById(id: string): Promise<SavedPrompt | undefined> {
+    const prompts = await this.getPrompts();
+    return prompts.find((p) => p.id === id);
+  }
+
+  static async savePrompt(prompt: SavedPrompt): Promise<void> {
+    if (prompt.isBuiltIn) {
+      throw new Error('Cannot modify built-in prompts');
+    }
+    const settings = await this.getSettings();
+    const customPrompts = settings.customPrompts || [];
+    const index = customPrompts.findIndex((p) => p.id === prompt.id);
+
+    if (index >= 0) {
+      customPrompts[index] = prompt;
+    } else {
+      customPrompts.push({ ...prompt, createdAt: Date.now() });
+    }
+
+    await this.saveSettings({ customPrompts });
+  }
+
+  static async deletePrompt(id: string): Promise<void> {
+    const settings = await this.getSettings();
+    const customPrompts = (settings.customPrompts || []).filter((p) => p.id !== id);
+    await this.saveSettings({ customPrompts });
   }
 }

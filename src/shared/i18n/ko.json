@@ -173,5 +173,27 @@
     "settings": "설정",
     "personas": "페르소나",
     "history": "기록"
+  },
+  "prompts": {
+    "translatePage": {
+      "name": "이 페이지 번역",
+      "text": "이 페이지를 [언어]로 번역해 주세요"
+    },
+    "summarizePage": {
+      "name": "이 페이지 요약",
+      "text": "이 페이지를 몇 단락으로 요약해 주세요"
+    },
+    "changeTone": {
+      "name": "어조 변경",
+      "text": "이 텍스트의 어조를 [어조]로 변경해 주세요"
+    },
+    "explainSimple": {
+      "name": "쉽게 설명",
+      "text": "5살 아이에게 설명하듯이 설명해 주세요"
+    },
+    "keyPoints": {
+      "name": "핵심 포인트 찾기",
+      "text": "이 텍스트에서 핵심 포인트를 찾아 나열해 주세요"
+    }
   }
 }

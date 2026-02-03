@@ -1,6 +1,6 @@
 import { describe, it, expect, beforeEach } from 'vitest'
 import { Storage } from '../../shared/storage'
-import { DEFAULT_SETTINGS } from '../../shared/types'
+import { DEFAULT_SETTINGS, DEFAULT_PROMPTS, SavedPrompt } from '../../shared/types'
 import { resetChromeMock, setMockStorage, getMockStorage } from '../__mocks__/chrome'
 import {
   createConversation,
@@ -238,6 +238,122 @@ describe('Storage', () => {
 
       const conversations = await Storage.getConversations()
       expect(conversations).toHaveLength(0)
+    })
+  })
+
+  describe('getPrompts', () => {
+    it('returns built-in prompts when no custom prompts', async () => {
+      const prompts = await Storage.getPrompts()
+      expect(prompts).toHaveLength(DEFAULT_PROMPTS.length)
+      expect(prompts.every(p => p.isBuiltIn)).toBe(true)
+    })
+
+    it('returns built-in + custom prompts', async () => {
+      const customPrompt: SavedPrompt = {
+        id: 'custom-1',
+        name: 'Custom',
+        text: 'Custom prompt text',
+        isBuiltIn: false,
+      }
+      setMockStorage({
+        hootly_settings: { ...DEFAULT_SETTINGS, customPrompts: [customPrompt] },
+      })
+
+      const prompts = await Storage.getPrompts()
+      expect(prompts).toHaveLength(DEFAULT_PROMPTS.length + 1)
+      expect(prompts.find(p => p.id === 'custom-1')).toBeDefined()
+    })
+  })
+
+  describe('savePrompt', () => {
+    it('adds new custom prompt', async () => {
+      const newPrompt: SavedPrompt = {
+        id: 'new-prompt',
+        name: 'New Prompt',
+        text: 'New prompt text',
+        isBuiltIn: false,
+      }
+      await Storage.savePrompt(newPrompt)
+
+      const prompts = await Storage.getPrompts()
+      const saved = prompts.find(p => p.id === 'new-prompt')
+      expect(saved).toBeDefined()
+      expect(saved?.createdAt).toBeDefined()
+    })
+
+    it('updates existing custom prompt', async () => {
+      const original: SavedPrompt = {
+        id: 'existing',
+        name: 'Original',
+        text: 'Original text',
+        isBuiltIn: false,
+        createdAt: 1000,
+      }
+      setMockStorage({
+        hootly_settings: { ...DEFAULT_SETTINGS, customPrompts: [original] },
+      })
+
+      const updated = { ...original, name: 'Updated', text: 'Updated text' }
+      await Storage.savePrompt(updated)
+
+      const prompts = await Storage.getPrompts()
+      const saved = prompts.find(p => p.id === 'existing')
+      expect(saved?.name).toBe('Updated')
+      expect(saved?.text).toBe('Updated text')
+    })
+
+    it('throws when trying to modify built-in prompt', async () => {
+      const builtIn: SavedPrompt = {
+        id: 'translate-page',
+        name: 'Modified',
+        text: 'Modified text',
+        isBuiltIn: true,
+      }
+      await expect(Storage.savePrompt(builtIn)).rejects.toThrow('Cannot modify built-in prompts')
+    })
+  })
+
+  describe('deletePrompt', () => {
+    it('removes custom prompt by id', async () => {
+      const prompt1: SavedPrompt = { id: 'p1', name: 'P1', text: 'T1', isBuiltIn: false }
+      const prompt2: SavedPrompt = { id: 'p2', name: 'P2', text: 'T2', isBuiltIn: false }
+      setMockStorage({
+        hootly_settings: { ...DEFAULT_SETTINGS, customPrompts: [prompt1, prompt2] },
+      })
+
+      await Storage.deletePrompt('p1')
+
+      const prompts = await Storage.getPrompts()
+      expect(prompts.find(p => p.id === 'p1')).toBeUndefined()
+      expect(prompts.find(p => p.id === 'p2')).toBeDefined()
+    })
+  })
+
+  describe('getPromptById', () => {
+    it('finds built-in prompt by id', async () => {
+      const prompt = await Storage.getPromptById('translate-page')
+      expect(prompt).toBeDefined()
+      expect(prompt?.name).toBe('Translate this page')
+    })
+
+    it('finds custom prompt by id', async () => {
+      const customPrompt: SavedPrompt = {
+        id: 'custom-find',
+        name: 'Custom Find',
+        text: 'Find text',
+        isBuiltIn: false,
+      }
+      setMockStorage({
+        hootly_settings: { ...DEFAULT_SETTINGS, customPrompts: [customPrompt] },
+      })
+
+      const prompt = await Storage.getPromptById('custom-find')
+      expect(prompt?.name).toBe('Custom Find')
+    })
+
+    it('returns undefined for non-existent id', async () => {
+      const prompt = await Storage.getPromptById('nonexistent')
+      expect(prompt).toBeUndefined()
     })
   })
 })

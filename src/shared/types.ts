@@ -24,6 +24,7 @@ export interface Settings {
   language: 'auto' | 'en' | 'nl' | 'de' | 'fr' | 'es' | 'it' | 'pt' | 'zh' | 'ja' | 'ko';
   defaultPersonaId: string;
   customPersonas: Persona[];
+  customPrompts: SavedPrompt[];
   showSelectionTooltip: boolean;
   shareAnalytics: boolean;
 }
@@ -49,6 +50,47 @@ export interface Persona {
   isBuiltIn: boolean;
   createdAt?: number;
 }
+
+export interface SavedPrompt {
+  id: string;
+  name: string;
+  text: string;
+  isBuiltIn: boolean;
+  createdAt?: number;
+}
+
+export const DEFAULT_PROMPTS: SavedPrompt[] = [
+  {
+    id: 'translate-page',
+    name: 'Translate this page',
+    text: 'Translate this page into [language]',
+    isBuiltIn: true,
+  },
+  {
+    id: 'summarize-page',
+    name: 'Summarize this page',
+    text: 'Summarize this page in a few paragraphs',
+    isBuiltIn: true,
+  },
+  {
+    id: 'change-tone',
+    name: 'Change tone',
+    text: 'Change the tone of this text to [tone]',
+    isBuiltIn: true,
+  },
+  {
+    id: 'explain-simple',
+    name: 'Explain simply',
+    text: "Explain this like I'm 5 years old",
+    isBuiltIn: true,
+  },
+  {
+    id: 'key-points',
+    name: 'Find key points',
+    text: 'Find the key points in this text and list them',
+    isBuiltIn: true,
+  },
+];
 
 export const DEFAULT_PERSONAS: Persona[] = [
   {
@@ -170,6 +212,7 @@ export const DEFAULT_SETTINGS: Settings = {
   language: 'auto',
   defaultPersonaId: 'general',
   customPersonas: [],
+  customPrompts: [],
   showSelectionTooltip: true,
   shareAnalytics: true,
 };
