@@ -168,3 +168,110 @@ describe('PER-3: Persona localization', () => {
     })
   })
 })
+
+describe('PER-4: Multilingual persona testing', () => {
+  const personaIds = ['general', 'code-helper', 'writer', 'researcher', 'translator']
+  const languages = ['en', 'nl', 'de', 'fr', 'es', 'it', 'pt', 'zh', 'ja', 'ko']
+
+  beforeEach(() => {
+    setLanguage('en')
+  })
+
+  describe('personas display correctly in English', () => {
+    it('all built-in personas have English names', () => {
+      setLanguage('en')
+      expect(getLocalizedPersonaName('general')).toBe('General')
+      expect(getLocalizedPersonaName('code-helper')).toBe('Code Helper')
+      expect(getLocalizedPersonaName('writer')).toBe('Writer')
+      expect(getLocalizedPersonaName('researcher')).toBe('Researcher')
+      expect(getLocalizedPersonaName('translator')).toBe('Translator')
+    })
+
+    it('all built-in personas have non-empty English descriptions', () => {
+      setLanguage('en')
+      for (const id of personaIds) {
+        const desc = getLocalizedPersonaDescription(id)
+        expect(desc).not.toBeNull()
+        expect(desc!.length).toBeGreaterThan(100)
+      }
+    })
+  })
+
+  describe('personas display correctly in other languages', () => {
+    it('German: all personas have translated names and descriptions', () => {
+      setLanguage('de')
+      expect(getLocalizedPersonaName('general')).toBe('Allgemein')
+      expect(getLocalizedPersonaName('code-helper')).toBe('Code-Helfer')
+      expect(getLocalizedPersonaName('writer')).toBe('Schriftsteller')
+
+      const desc = getLocalizedPersonaDescription('general')
+      expect(desc).toContain('hilfreicher')
+    })
+
+    it('French: all personas have translated names and descriptions', () => {
+      setLanguage('fr')
+      expect(getLocalizedPersonaName('general')).toBe('Général')
+      expect(getLocalizedPersonaName('code-helper')).toBe('Assistant Code')
+      expect(getLocalizedPersonaName('writer')).toBe('Rédacteur')
+
+      const desc = getLocalizedPersonaDescription('general')
+      expect(desc).toContain('serviable')
+    })
+
+    it('Chinese: all personas have translated names and descriptions', () => {
+      setLanguage('zh')
+      expect(getLocalizedPersonaName('general')).toBe('通用')
+      expect(getLocalizedPersonaName('code-helper')).toBe('编程助手')
+      expect(getLocalizedPersonaName('writer')).toBe('写作助手')
+
+      const desc = getLocalizedPersonaDescription('general')
+      expect(desc).toContain('助手')
+    })
+  })
+
+  describe('character counts stay under 500 in all languages', () => {
+    it('all persona descriptions are under 500 characters in all languages', () => {
+      for (const lang of languages) {
+        setLanguage(lang)
+        for (const id of personaIds) {
+          const desc = getLocalizedPersonaDescription(id)
+          expect(desc).not.toBeNull()
+          expect(desc!.length).toBeLessThan(500)
+        }
+      }
+    })
+  })
+
+  describe('language switch updates persona text', () => {
+    it('persona name changes when language switches', () => {
+      setLanguage('en')
+      expect(getLocalizedPersonaName('general')).toBe('General')
+
+      setLanguage('de')
+      expect(getLocalizedPersonaName('general')).toBe('Allgemein')
+
+      setLanguage('ja')
+      expect(getLocalizedPersonaName('general')).toBe('汎用')
+
+      setLanguage('en')
+      expect(getLocalizedPersonaName('general')).toBe('General')
+    })
+
+    it('persona description changes when language switches', () => {
+      setLanguage('en')
+      const enDesc = getLocalizedPersonaDescription('writer')
+      expect(enDesc).toContain('writer')
+
+      setLanguage('es')
+      const esDesc = getLocalizedPersonaDescription('writer')
+      expect(esDesc).toContain('escritor')
+      expect(esDesc).not.toBe(enDesc)
+
+      setLanguage('ko')
+      const koDesc = getLocalizedPersonaDescription('writer')
+      expect(koDesc).toContain('작가')
+      expect(koDesc).not.toBe(enDesc)
+      expect(koDesc).not.toBe(esDesc)
+    })
+  })
+})
