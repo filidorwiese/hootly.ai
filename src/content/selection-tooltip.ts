@@ -134,29 +134,34 @@ function handleSelectionChange(): void {
   }
 }
 
+const STORAGE_KEY = 'hootly_settings';
+
 async function loadSettings(): Promise<void> {
   try {
-    const result = await chrome.storage.local.get('settings');
-    if (result.settings) {
-      state.enabled = result.settings.showSelectionTooltip !== false;
-      state.shortcut = result.settings.shortcut || 'Alt+C';
+    const result = await chrome.storage.local.get(STORAGE_KEY);
+    const settings = result[STORAGE_KEY];
+    if (settings) {
+      state.enabled = settings.showSelectionTooltip !== false;
+      state.shortcut = settings.shortcut || 'Alt+C';
     }
   } catch {
     // Use defaults on error
   }
 }
 
-function init(): void {
+async function init(): Promise<void> {
   // Skip non-injectable pages
   if (!document.body) return;
 
-  loadSettings();
+  // Load settings BEFORE attaching listeners (prevents showing tooltip when disabled)
+  await loadSettings();
 
   // Listen for settings changes
   chrome.storage.onChanged.addListener((changes) => {
-    if (changes.settings?.newValue) {
-      state.enabled = changes.settings.newValue.showSelectionTooltip !== false;
-      state.shortcut = changes.settings.newValue.shortcut || 'Alt+C';
+    if (changes[STORAGE_KEY]?.newValue) {
+      const settings = changes[STORAGE_KEY].newValue;
+      state.enabled = settings.showSelectionTooltip !== false;
+      state.shortcut = settings.shortcut || 'Alt+C';
       // Hide if disabled
       if (!state.enabled) {
         hideTooltip();

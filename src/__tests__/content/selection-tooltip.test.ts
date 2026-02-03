@@ -1,4 +1,6 @@
 import { describe, it, expect, beforeEach, vi } from 'vitest';
+import { readFileSync } from 'fs';
+import { join } from 'path';
 
 // Mock chrome APIs
 const mockStorage = {
@@ -94,6 +96,43 @@ describe('selection-tooltip', () => {
       expect(mockRuntime.sendMessage).toHaveBeenCalledWith({
         type: 'toggleDialogFromTooltip',
       });
+    });
+  });
+
+  describe('TT-4: showSelectionTooltip setting must be respected', () => {
+    let tooltipSource: string;
+
+    beforeEach(() => {
+      tooltipSource = readFileSync(
+        join(__dirname, '../../content/selection-tooltip.ts'),
+        'utf-8'
+      );
+    });
+
+    it('uses correct storage key (hootly_settings)', () => {
+      // Bug was: used 'settings' instead of 'hootly_settings'
+      expect(tooltipSource).toContain("STORAGE_KEY = 'hootly_settings'");
+      expect(tooltipSource).toContain('chrome.storage.local.get(STORAGE_KEY)');
+      expect(tooltipSource).toContain('changes[STORAGE_KEY]');
+    });
+
+    it('init() must await loadSettings() before attaching selection listeners', () => {
+      expect(tooltipSource).toContain('async function init()');
+      expect(tooltipSource).toContain('await loadSettings()');
+    });
+
+    it('selection listener must be attached AFTER loadSettings awaited', () => {
+      const awaitLoadSettingsIndex = tooltipSource.indexOf('await loadSettings()');
+      const selectionChangeIndex = tooltipSource.indexOf("addEventListener('selectionchange'");
+
+      expect(awaitLoadSettingsIndex).toBeGreaterThan(-1);
+      expect(selectionChangeIndex).toBeGreaterThan(-1);
+      expect(awaitLoadSettingsIndex).toBeLessThan(selectionChangeIndex);
+    });
+
+    it('storage.onChanged listener reacts to showSelectionTooltip changes', () => {
+      expect(tooltipSource).toContain('chrome.storage.onChanged.addListener');
+      expect(tooltipSource).toContain('showSelectionTooltip');
     });
   });
 });
