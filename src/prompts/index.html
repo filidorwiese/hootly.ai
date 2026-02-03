@@ -186,6 +186,204 @@
       font-size: var(--font-size-base);
     }
 
+    .add-btn {
+      background: var(--color-primary-500);
+      color: var(--color-text-inverse);
+      border: 1px solid var(--color-primary-500);
+      padding: var(--spacing-2) var(--spacing-4);
+      border-radius: var(--radius-md);
+      font-size: var(--font-size-base);
+      font-weight: 500;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: var(--spacing-2);
+      transition: background var(--transition-default), border-color var(--transition-default);
+    }
+
+    .add-btn:hover {
+      background: var(--color-primary-600);
+      border-color: var(--color-primary-600);
+    }
+
+    .prompt-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: var(--spacing-3);
+    }
+
+    .prompt-actions {
+      display: flex;
+      gap: var(--spacing-2);
+      flex-shrink: 0;
+    }
+
+    .action-btn {
+      background: transparent;
+      border: 1px solid transparent;
+      padding: var(--spacing-2) var(--spacing-3);
+      border-radius: var(--radius-md);
+      font-size: var(--font-size-sm);
+      cursor: pointer;
+      color: var(--color-text-secondary);
+      transition: background var(--transition-default), color var(--transition-default), border-color var(--transition-default);
+    }
+
+    .action-btn:hover {
+      background: var(--color-surface-hover);
+      color: var(--color-text-link);
+      border-color: var(--color-border-light);
+    }
+
+    .action-btn.delete:hover {
+      background: var(--color-bg-elevated);
+      color: var(--color-accent-error);
+      border-color: var(--color-accent-error);
+    }
+
+    /* Modal */
+    .modal-overlay {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(45, 58, 48, 0.6);
+      z-index: 1000;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .modal-overlay.visible {
+      display: flex;
+    }
+
+    .modal {
+      background: var(--color-bg-elevated);
+      border: 1px solid var(--color-border-default);
+      border-radius: var(--radius-2xl);
+      padding: var(--spacing-6);
+      width: 100%;
+      max-width: 500px;
+      max-height: 90vh;
+      overflow-y: auto;
+    }
+
+    .modal h2 {
+      margin: 0 0 var(--spacing-5) 0;
+      font-size: var(--font-size-2xl);
+      color: var(--color-text-primary);
+    }
+
+    .form-group {
+      margin-bottom: var(--spacing-4);
+    }
+
+    .form-group label {
+      display: block;
+      font-size: var(--font-size-md);
+      font-weight: 500;
+      color: var(--color-text-primary);
+      margin-bottom: var(--spacing-2);
+    }
+
+    .form-group textarea {
+      width: 100%;
+      padding: var(--spacing-3);
+      border: 1px solid var(--color-border-default);
+      border-radius: var(--radius-md);
+      font-size: var(--font-size-base);
+      font-family: 'Inter', sans-serif;
+      color: var(--color-text-primary);
+      background: var(--color-surface-default);
+      transition: border-color var(--transition-default);
+      min-height: 120px;
+      resize: vertical;
+    }
+
+    .form-group textarea:hover {
+      border-color: var(--color-border-strong);
+    }
+
+    .form-group textarea:focus {
+      outline: none;
+      border-color: var(--color-border-focus);
+    }
+
+    .modal-actions {
+      display: flex;
+      gap: var(--spacing-3);
+      justify-content: flex-end;
+      margin-top: var(--spacing-5);
+    }
+
+    .btn {
+      padding: var(--spacing-3) var(--spacing-5);
+      border-radius: var(--radius-md);
+      font-size: var(--font-size-base);
+      font-weight: 500;
+      cursor: pointer;
+      border: 1px solid transparent;
+      transition: background var(--transition-default), border-color var(--transition-default);
+    }
+
+    .btn-primary {
+      background: var(--color-primary-500);
+      color: var(--color-text-inverse);
+      border-color: var(--color-primary-500);
+    }
+
+    .btn-primary:hover {
+      background: var(--color-primary-600);
+      border-color: var(--color-primary-600);
+    }
+
+    .btn-secondary {
+      background: var(--color-surface-default);
+      color: var(--color-text-primary);
+      border-color: var(--color-border-default);
+    }
+
+    .btn-secondary:hover {
+      background: var(--color-surface-hover);
+      border-color: var(--color-border-strong);
+    }
+
+    .btn-danger {
+      background: var(--color-accent-error);
+      color: var(--color-text-inverse);
+      border-color: var(--color-accent-error);
+    }
+
+    .btn-danger:hover {
+      background: var(--color-accent-error-hover);
+      border-color: var(--color-accent-error-hover);
+    }
+
+    /* Confirm dialog */
+    .confirm-box {
+      background: var(--color-bg-elevated);
+      border: 1px solid var(--color-border-default);
+      border-radius: var(--radius-2xl);
+      padding: var(--spacing-6);
+      max-width: 400px;
+      text-align: center;
+    }
+
+    .confirm-box p {
+      margin: 0 0 var(--spacing-5) 0;
+      font-size: var(--font-size-lg);
+      color: var(--color-text-primary);
+    }
+
+    .confirm-buttons {
+      display: flex;
+      gap: var(--spacing-3);
+      justify-content: center;
+    }
+
     /* Dark mode */
     [data-theme="dark"] {
       --color-primary-50: #0A100D;
@@ -261,6 +459,10 @@
   <div class="prompts-content">
     <div class="page-header">
       <h1 class="page-title" data-i18n="prompts.title">Prompts</h1>
+      <button class="add-btn" id="addPromptBtn">
+        <span>+</span>
+        <span data-i18n="prompts.addPrompt">Add Prompt</span>
+      </button>
     </div>
 
     <p class="intro-text" data-i18n="prompts.intro">Save frequently used prompts for quick access. Type / in the chat input to browse your prompts.</p>
@@ -276,6 +478,33 @@
       <div id="customEmptyState" class="empty-state" style="display: none;">
         <div class="empty-state-icon">📝</div>
         <div class="empty-state-text" data-i18n="prompts.noCustom">No custom prompts yet</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Add/Edit Modal -->
+  <div id="promptModal" class="modal-overlay">
+    <div class="modal">
+      <h2 id="modalTitle" data-i18n="prompts.addPrompt">Add Prompt</h2>
+      <input type="hidden" id="editingPromptId" value="">
+      <div class="form-group">
+        <label for="promptText" data-i18n="prompts.promptText">Prompt Text</label>
+        <textarea id="promptText" placeholder="Enter your prompt text..."></textarea>
+      </div>
+      <div class="modal-actions">
+        <button class="btn btn-secondary" id="cancelPromptBtn" data-i18n="settings.cancel">Cancel</button>
+        <button class="btn btn-primary" id="savePromptBtn" data-i18n="prompts.savePrompt">Save</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Delete Confirm Dialog -->
+  <div id="confirmDialog" class="modal-overlay">
+    <div class="confirm-box">
+      <p data-i18n="prompts.deletePromptConfirm">Delete this prompt?</p>
+      <div class="confirm-buttons">
+        <button class="btn btn-secondary" id="cancelDelete" data-i18n="settings.cancel">Cancel</button>
+        <button class="btn btn-danger" id="confirmDelete" data-i18n="settings.delete">Delete</button>
       </div>
     </div>
   </div>

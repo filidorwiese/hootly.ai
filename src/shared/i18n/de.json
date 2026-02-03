@@ -181,6 +181,12 @@
     "builtIn": "Integriert",
     "custom": "Benutzerdefiniert",
     "noCustom": "Noch keine benutzerdefinierten Vorlagen",
+    "addPrompt": "Vorlage hinzufügen",
+    "editPrompt": "Vorlage bearbeiten",
+    "promptText": "Vorlagentext",
+    "savePrompt": "Speichern",
+    "deletePromptConfirm": "Diese Vorlage löschen?",
+    "promptSaved": "Vorlage gespeichert!",
     "translatePage": {
       "text": "Übersetze diese Seite ins [Sprache]"
     },

@@ -181,6 +181,12 @@
     "builtIn": "Built-in",
     "custom": "Custom",
     "noCustom": "No custom prompts yet",
+    "addPrompt": "Add Prompt",
+    "editPrompt": "Edit Prompt",
+    "promptText": "Prompt Text",
+    "savePrompt": "Save",
+    "deletePromptConfirm": "Delete this prompt?",
+    "promptSaved": "Prompt saved!",
     "translatePage": {
       "text": "Translate this page into [language]"
     },

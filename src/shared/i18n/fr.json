@@ -181,6 +181,12 @@
     "builtIn": "Intégrés",
     "custom": "Personnalisés",
     "noCustom": "Pas encore de modèles personnalisés",
+    "addPrompt": "Ajouter un modèle",
+    "editPrompt": "Modifier le modèle",
+    "promptText": "Texte du modèle",
+    "savePrompt": "Enregistrer",
+    "deletePromptConfirm": "Supprimer ce modèle ?",
+    "promptSaved": "Modèle enregistré !",
     "translatePage": {
       "text": "Traduis cette page en [langue]"
     },

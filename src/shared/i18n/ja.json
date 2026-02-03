@@ -181,6 +181,12 @@
     "builtIn": "組み込み",
     "custom": "カスタム",
     "noCustom": "カスタムテンプレートはまだありません",
+    "addPrompt": "テンプレートを追加",
+    "editPrompt": "テンプレートを編集",
+    "promptText": "テンプレートテキスト",
+    "savePrompt": "保存",
+    "deletePromptConfirm": "このテンプレートを削除しますか？",
+    "promptSaved": "テンプレートを保存しました！",
     "translatePage": {
       "text": "このページを[言語]に翻訳してください"
     },

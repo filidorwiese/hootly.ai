@@ -181,6 +181,12 @@
     "builtIn": "Ingebouwd",
     "custom": "Aangepast",
     "noCustom": "Nog geen aangepaste prompts",
+    "addPrompt": "Prompt toevoegen",
+    "editPrompt": "Prompt bewerken",
+    "promptText": "Prompt tekst",
+    "savePrompt": "Opslaan",
+    "deletePromptConfirm": "Deze prompt verwijderen?",
+    "promptSaved": "Prompt opgeslagen!",
     "translatePage": {
       "text": "Vertaal deze pagina naar het [taal]"
     },

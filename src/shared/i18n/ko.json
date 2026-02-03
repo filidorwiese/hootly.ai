@@ -181,6 +181,12 @@
     "builtIn": "기본 제공",
     "custom": "사용자 정의",
     "noCustom": "아직 사용자 정의 템플릿이 없습니다",
+    "addPrompt": "템플릿 추가",
+    "editPrompt": "템플릿 편집",
+    "promptText": "템플릿 텍스트",
+    "savePrompt": "저장",
+    "deletePromptConfirm": "이 템플릿을 삭제하시겠습니까?",
+    "promptSaved": "템플릿이 저장되었습니다!",
     "translatePage": {
       "text": "이 페이지를 [언어]로 번역해 주세요"
     },

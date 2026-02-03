@@ -181,6 +181,12 @@
     "builtIn": "Integradas",
     "custom": "Personalizadas",
     "noCustom": "Aún no hay plantillas personalizadas",
+    "addPrompt": "Añadir plantilla",
+    "editPrompt": "Editar plantilla",
+    "promptText": "Texto de la plantilla",
+    "savePrompt": "Guardar",
+    "deletePromptConfirm": "¿Eliminar esta plantilla?",
+    "promptSaved": "¡Plantilla guardada!",
     "translatePage": {
       "text": "Traduce esta página al [idioma]"
     },
