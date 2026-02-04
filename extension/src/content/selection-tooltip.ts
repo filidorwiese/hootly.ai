@@ -14,7 +14,7 @@ interface TooltipState {
 
 const state: TooltipState = {
   enabled: true,
-  shortcut: 'Alt+C',
+  shortcut: '',  // Empty until loaded from browser
   visible: false,
 };
 
@@ -97,7 +97,8 @@ function createTooltip(): HTMLElement {
 }
 
 function showTooltip(): void {
-  if (!state.enabled || state.visible) return;
+  // Don't show if disabled, already visible, or no shortcut configured
+  if (!state.enabled || state.visible || !state.shortcut) return;
 
   const tooltip = createTooltip();
   // Update shortcut text in case it changed
@@ -138,12 +139,19 @@ const STORAGE_KEY = 'hootly_settings';
 
 async function loadSettings(): Promise<void> {
   try {
+    // Load enabled state from storage
     const result = await chrome.storage.local.get(STORAGE_KEY);
     const settings = result[STORAGE_KEY];
     if (settings) {
       state.enabled = settings.showSelectionTooltip !== false;
-      state.shortcut = settings.shortcut || 'Alt+C';
     }
+
+    // Query actual shortcut from background script
+    chrome.runtime.sendMessage({ type: 'getShortcut' }, (response) => {
+      if (response?.success && response.shortcut) {
+        state.shortcut = response.shortcut;
+      }
+    });
   } catch {
     // Use defaults on error
   }
@@ -156,12 +164,11 @@ async function init(): Promise<void> {
   // Load settings BEFORE attaching listeners (prevents showing tooltip when disabled)
   await loadSettings();
 
-  // Listen for settings changes
+  // Listen for settings changes (only showSelectionTooltip, shortcut comes from browser commands)
   chrome.storage.onChanged.addListener((changes) => {
     if (changes[STORAGE_KEY]?.newValue) {
       const settings = changes[STORAGE_KEY].newValue;
       state.enabled = settings.showSelectionTooltip !== false;
-      state.shortcut = settings.shortcut || 'Alt+C';
       // Hide if disabled
       if (!state.enabled) {
         hideTooltip();

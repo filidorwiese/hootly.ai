@@ -371,23 +371,42 @@ document.addEventListener('DOMContentLoaded', async () => {
     versionInfo.textContent = `v${__APP_VERSION__}`;
   }
 
-  // Check Chrome browser shortcut configuration (Chrome only, not Firefox)
-  const chromeShortcutWarning = document.getElementById('chromeShortcutWarning');
+  // Keyboard shortcut display (both browsers)
+  const shortcutValue = document.getElementById('shortcutValue');
   const openShortcutsBtn = document.getElementById('openShortcutsBtn');
 
-  if (!isFirefox && chromeShortcutWarning && openShortcutsBtn) {
-    // Check if toggle-dialog shortcut is configured
-    chrome.commands.getAll().then((commands) => {
-      const toggleCommand = commands.find(cmd => cmd.name === 'toggle-dialog');
-      if (!toggleCommand?.shortcut) {
-        chromeShortcutWarning.style.display = 'block';
-      }
-    });
+  // Function to refresh shortcut display
+  function refreshShortcutDisplay() {
+    if (!shortcutValue) return;
+    if (chrome.commands?.getAll) {
+      const commandName = isFirefox ? 'toggle-dialog' : '_execute_action';
+      chrome.commands.getAll().then((commands) => {
+        const toggleCommand = commands.find(cmd => cmd.name === commandName);
+        shortcutValue.textContent = toggleCommand?.shortcut || 'Not set';
+        shortcutValue.style.color = toggleCommand?.shortcut ? 'inherit' : 'var(--color-accent-error)';
+      });
+    } else {
+      shortcutValue.textContent = 'Not set';
+      shortcutValue.style.color = 'var(--color-accent-error)';
+    }
+  }
 
-    // Open Chrome shortcuts page
-    openShortcutsBtn.addEventListener('click', () => {
-      chrome.tabs.create({ url: 'chrome://extensions/shortcuts' });
-    });
+  if (shortcutValue && openShortcutsBtn) {
+    // Initial load
+    refreshShortcutDisplay();
+
+    // Open browser shortcuts page
+    if (isFirefox) {
+      openShortcutsBtn.textContent = 'Go to about:addons → ⚙️ → Manage Extension Shortcuts';
+      openShortcutsBtn.style.cursor = 'default';
+      openShortcutsBtn.style.background = 'var(--color-bg-muted)';
+      openShortcutsBtn.style.color = 'var(--color-text-secondary)';
+      openShortcutsBtn.style.border = '1px solid var(--color-border-default)';
+    } else {
+      openShortcutsBtn.addEventListener('click', () => {
+        chrome.tabs.create({ url: 'chrome://extensions/shortcuts' });
+      });
+    }
   }
 
   // Reload settings from storage and update form fields
@@ -443,6 +462,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   document.addEventListener('visibilitychange', () => {
     if (document.visibilityState === 'visible') {
       reloadSettings();
+      refreshShortcutDisplay();
     }
   });
 });

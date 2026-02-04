@@ -427,20 +427,15 @@
     <input type="number" id="temperature" value="1.0" min="0" max="1" step="0.1">
   </div>
 
-  <div class="setting">
-    <label for="shortcut" data-i18n="settings.shortcut">Keyboard Shortcut</label>
-    <input type="text" id="shortcut" placeholder="Alt+C">
-    <small style="margin-top: 5px; display: block;" data-i18n="settings.shortcutHint">
-      Format: Modifier+Key (e.g., Alt+C, Ctrl+Shift+K, Meta+Space)
-    </small>
-    <div id="chromeShortcutWarning" style="display: none; margin-top: 12px; padding: 12px; background: var(--color-status-error-bg); border-radius: var(--radius-md); border: 1px solid var(--color-accent-error);">
-      <div style="color: var(--color-status-error-text); font-size: var(--font-size-sm); margin-bottom: 8px;">
-        <strong>Chrome requires manual shortcut setup.</strong> The keyboard shortcut is not configured in your browser.
-      </div>
-      <button type="button" id="openShortcutsBtn" style="padding: 6px 12px; font-size: var(--font-size-sm); background: var(--color-accent-error); color: white; border: none; border-radius: var(--radius-sm); cursor: pointer;">
-        Configure Browser Shortcut
-      </button>
+  <div class="setting" id="shortcutSection">
+    <label data-i18n="settings.shortcut">Keyboard Shortcut</label>
+    <div id="shortcutDisplay" style="padding: 8px 12px; background: var(--color-bg-muted); border-radius: var(--radius-md); margin-bottom: 8px; font-size: var(--font-size-base);">
+      <span id="shortcutValue" style="font-weight: 500;">Loading...</span>
     </div>
+    <button type="button" id="openShortcutsBtn" style="padding: 6px 12px; font-size: var(--font-size-sm);">
+      Configure in Browser Settings
+    </button>
+    <input type="hidden" id="shortcut" value="Alt+C">
   </div>
 
   <div class="setting">

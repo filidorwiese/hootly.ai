@@ -4,25 +4,31 @@ import { Storage } from '../../shared/storage';
 
 interface SelectionTooltipProps {
   onOpenWithSelection: () => void;
+  isDialogOpen: boolean;
 }
 
-const SelectionTooltip: React.FC<SelectionTooltipProps> = ({ onOpenWithSelection }) => {
+const SelectionTooltip: React.FC<SelectionTooltipProps> = ({ onOpenWithSelection, isDialogOpen }) => {
   const [isVisible, setIsVisible] = useState(false);
-  const [shortcut, setShortcut] = useState('Alt+C');
+  const [shortcut, setShortcut] = useState('');  // Empty until loaded
   const [isEnabled, setIsEnabled] = useState<boolean | null>(null); // null = loading
 
   useEffect(() => {
-    // Load settings
-    Storage.getSettings().then((settings) => {
-      setShortcut(settings.shortcut);
+    // Load settings and shortcut
+    const loadShortcut = async () => {
+      const settings = await Storage.getSettings();
       setIsEnabled(settings.showSelectionTooltip !== false);
-    });
 
-    // Listen for settings updates
+      // Query actual shortcut from background script
+      chrome.runtime.sendMessage({ type: 'getShortcut' }, (response) => {
+        if (response?.success && response.shortcut) {
+          setShortcut(response.shortcut);
+        }
+      });
+    };
+    loadShortcut();
+
+    // Listen for settings updates (only showSelectionTooltip matters now)
     const handleStorageChange = (changes: { [key: string]: chrome.storage.StorageChange }) => {
-      if (changes.settings?.newValue?.shortcut !== undefined) {
-        setShortcut(changes.settings.newValue.shortcut);
-      }
       if (changes.settings?.newValue?.showSelectionTooltip !== undefined) {
         setIsEnabled(changes.settings.newValue.showSelectionTooltip);
       }
@@ -44,8 +50,8 @@ const SelectionTooltip: React.FC<SelectionTooltipProps> = ({ onOpenWithSelection
     };
   }, []);
 
-  // Don't render while loading settings or when disabled or no selection
-  if (isEnabled === null || !isEnabled || !isVisible) return null;
+  // Don't render while loading, when disabled, no selection, dialog open, or no shortcut
+  if (isEnabled === null || !isEnabled || !isVisible || isDialogOpen || !shortcut) return null;
 
   return (
     <div className={tooltipStyles} onClick={onOpenWithSelection}>

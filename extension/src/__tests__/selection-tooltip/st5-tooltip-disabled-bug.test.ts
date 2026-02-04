@@ -73,8 +73,13 @@ describe('ST-5: Bug fix - Tooltip appears even when disabled in settings', () =>
     })
 
     it('should only render after settings are confirmed loaded and enabled', () => {
-      // The render condition should check all three: loading complete, enabled, and visible
-      expect(tooltipCode).toMatch(/if\s*\(\s*isEnabled === null\s*\|\|\s*!isEnabled\s*\|\|\s*!isVisible\s*\)\s*return\s*null/)
+      // The render condition should check: loading complete, enabled, visible, dialog closed, shortcut set
+      expect(tooltipCode).toContain('isEnabled === null')
+      expect(tooltipCode).toContain('!isEnabled')
+      expect(tooltipCode).toContain('!isVisible')
+      expect(tooltipCode).toContain('isDialogOpen')
+      expect(tooltipCode).toContain('!shortcut')
+      expect(tooltipCode).toContain('return null')
     })
   })
 

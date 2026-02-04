@@ -3,6 +3,8 @@ import type { ModelConfig } from '../shared/models';
 import { Storage } from '../shared/storage';
 import { getProvider, getApiKey } from '../shared/providers';
 
+declare const browser: typeof chrome | undefined;
+
 // Track active streams for cancellation
 const activeStreams = new Map<number, any>();
 
@@ -58,6 +60,19 @@ chrome.runtime.onMessage.addListener((message: BackgroundMessage, sender, sendRe
     // Selection tooltip clicked - inject main extension
     toggleDialogInActiveTab();
     sendResponse({ success: true });
+  } else if (message.type === 'getShortcut') {
+    // Return the actual keyboard shortcut from browser commands
+    if (chrome.commands?.getAll) {
+      const isFirefox = typeof browser !== 'undefined';
+      const commandName = isFirefox ? 'toggle-dialog' : '_execute_action';
+      chrome.commands.getAll().then((commands) => {
+        const toggleCommand = commands.find(cmd => cmd.name === commandName);
+        sendResponse({ success: true, shortcut: toggleCommand?.shortcut || null });
+      });
+      return true; // Keep channel open for async response
+    } else {
+      sendResponse({ success: true, shortcut: null });
+    }
   }
 
   return true; // Keep message channel open for async response
@@ -172,18 +187,22 @@ chrome.action.onClicked.addListener(() => {
   toggleDialogInActiveTab();
 });
 
-// Handle keyboard command
-chrome.commands.onCommand.addListener((command) => {
-  console.log('[Hootly Background] Command received:', command);
-  if (command === 'toggle-dialog') {
-    toggleDialogInActiveTab();
-  }
-});
+// Handle keyboard command (Firefox uses toggle-dialog command, Chrome uses _execute_action via onClicked)
+if (chrome.commands?.onCommand) {
+  chrome.commands.onCommand.addListener((command) => {
+    console.log('[Hootly Background] Command received:', command);
+    if (command === 'toggle-dialog') {
+      toggleDialogInActiveTab();
+    }
+  });
+}
 
 // Log registered commands on startup
-chrome.commands.getAll().then((commands) => {
-  console.log('[Hootly Background] Registered commands:', commands);
-});
+if (chrome.commands?.getAll) {
+  chrome.commands.getAll().then((commands) => {
+    console.log('[Hootly Background] Registered commands:', commands);
+  });
+}
 
 async function handleSendPrompt(
   payload: { prompt: string; context?: any; conversationHistory: any[]; settings: any },

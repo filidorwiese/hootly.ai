@@ -29,7 +29,7 @@
       "suggested_key": {
         "default": "Alt+C"
       },
-      "description": "Toggle Hootly.ai dialog (fallback - configure in settings)"
+      "description": "Toggle Hootly.ai dialog"
     }
   },
   "icons": {

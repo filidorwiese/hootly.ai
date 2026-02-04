@@ -66,7 +66,7 @@ const App: React.FC = () => {
 
   return (
     <>
-      <SelectionTooltip key={`tooltip-${langKey}`} onOpenWithSelection={handleOpenWithSelection} />
+      <SelectionTooltip key={`tooltip-${langKey}`} onOpenWithSelection={handleOpenWithSelection} isDialogOpen={isOpen} />
       <Dialog
         key={`dialog-${langKey}`}
         isOpen={isOpen}

@@ -172,7 +172,8 @@ export type BackgroundMessage =
   | { type: 'setExtensionTabId'; payload: { tabId: number } }
   | { type: 'getExtensionTabId' }
   | { type: 'clearExtensionTabId' }
-  | { type: 'toggleDialogFromTooltip' };
+  | { type: 'toggleDialogFromTooltip' }
+  | { type: 'getShortcut' };
 
 export interface SendPromptPayload {
   prompt: string;
