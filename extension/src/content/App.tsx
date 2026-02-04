@@ -12,7 +12,8 @@ const App: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [langKey, setLangKey] = useState(0);
   const [initialContextEnabled, setInitialContextEnabled] = useState(false);
-  const [initialContextMode, setInitialContextMode] = useState<'none' | 'selection' | 'fullpage'>('none');
+  const [initialContextMode, setInitialContextMode] = useState<'none' | 'selection' | 'fullpage' | 'clipboard'>('none');
+  const [initialClipboardText, setInitialClipboardText] = useState<string | null>(null);
 
   // Log state changes
   useEffect(() => {
@@ -23,10 +24,11 @@ const App: React.FC = () => {
     // Listen for toggle message from parent (iframe) or same window
     const handleMessage = (event: MessageEvent) => {
       if (event.data.type === 'hootly-toggle') {
-        // Receive stored context mode from content script
+        // Receive stored context mode and clipboard from content script
         if (event.data.payload) {
           setInitialContextEnabled(event.data.payload.contextEnabled ?? false);
           setInitialContextMode(event.data.payload.contextMode ?? 'none');
+          setInitialClipboardText(event.data.payload.clipboardText ?? null);
         }
         setIsOpen((prev) => !prev);
       }
@@ -71,6 +73,7 @@ const App: React.FC = () => {
         onClose={() => setIsOpen(false)}
         initialContextEnabled={initialContextEnabled}
         initialContextMode={initialContextMode}
+        initialClipboardText={initialClipboardText}
       />
     </>
   );

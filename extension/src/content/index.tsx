@@ -56,7 +56,7 @@ async function init() {
   let storedContextMode: 'none' | 'selection' | 'fullpage' | 'clipboard' = 'none';
 
   // Forward toggle commands to iframe
-  const sendToggleToIframe = () => {
+  const sendToggleToIframe = async () => {
     if (!isReady) {
       // Queue the toggle for when iframe is ready
       pendingToggles.push(() => sendToggleToIframe());
@@ -64,15 +64,29 @@ async function init() {
     }
     dialogOpen = !dialogOpen;
     iframe.style.pointerEvents = dialogOpen ? 'auto' : 'none';
+
+    // Read clipboard while user activation is still valid (before async operations)
+    let clipboardText: string | null = null;
     if (dialogOpen) {
       iframe.focus(); // Required for Firefox to allow focus inside iframe
+      try {
+        const text = await navigator.clipboard.readText();
+        // Validate: >32 chars and contains space (to filter out passwords)
+        if (text && text.length > 32 && text.includes(' ')) {
+          clipboardText = text;
+        }
+      } catch {
+        // Clipboard access denied or empty
+      }
     }
-    // Send toggle with stored context state
+
+    // Send toggle with stored context state and clipboard
     iframe.contentWindow?.postMessage({
       type: 'hootly-toggle',
       payload: {
         contextEnabled: storedContextEnabled,
         contextMode: storedContextMode,
+        clipboardText,
       }
     }, '*');
   };

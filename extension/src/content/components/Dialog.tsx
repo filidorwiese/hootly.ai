@@ -25,6 +25,8 @@ interface DialogProps {
   initialContextEnabled?: boolean;
   /** Initial context mode (persisted across dialog close/reopen) */
   initialContextMode?: 'none' | 'selection' | 'fullpage' | 'clipboard';
+  /** Initial clipboard text (read by content script with user activation) */
+  initialClipboardText?: string | null;
 }
 
 const Dialog: React.FC<DialogProps> = ({
@@ -34,6 +36,7 @@ const Dialog: React.FC<DialogProps> = ({
   initialConversationId = null,
   initialContextEnabled = false,
   initialContextMode = 'none',
+  initialClipboardText = null,
 }) => {
   // Initialize position: centered horizontally, 60px from top
   const [position, setPosition] = useState(() => {
@@ -171,27 +174,19 @@ const Dialog: React.FC<DialogProps> = ({
         // Track dialog open event for analytics
         trackDialogOpen(settings.provider, settings.model || 'default');
       });
-      // Read clipboard immediately while user activation is valid, in parallel with page info
-      const clipboardPromise = navigator.clipboard.readText()
-        .then((text) => text && text.length > 32 && text.includes(' ') ? text : null)
-        .catch(() => null);
-
       // Request fresh page info from parent (for iframe mode)
-      const pageInfoPromise = requestPageInfo();
-
-      // Wait for both to complete
-      Promise.all([clipboardPromise, pageInfoPromise]).then(([clipboardText]) => {
+      requestPageInfo().then(() => {
         const selectionText = extractSelection();
 
-        // Update captured values
-        setCapturedClipboard(clipboardText);
+        // Update captured values - clipboard is passed from content script
+        setCapturedClipboard(initialClipboardText);
         setCapturedSelection(selectionText && selectionText.length > 0 ? selectionText : null);
 
         // Set context mode based on priority: selection > clipboard > fullpage
         if (selectionText && selectionText.length > 0) {
           setContextEnabled(true);
           setContextMode('selection');
-        } else if (clipboardText) {
+        } else if (initialClipboardText) {
           setContextEnabled(true);
           setContextMode('clipboard');
         } else {
@@ -201,7 +196,7 @@ const Dialog: React.FC<DialogProps> = ({
       });
     }
     // Note: We no longer reset context on close - it's persisted in content script
-  }, [isOpen, initialContextEnabled, initialContextMode]);
+  }, [isOpen, initialContextEnabled, initialContextMode, initialClipboardText]);
 
   // Load saved width on mount, but always reset position when opening
   useEffect(() => {
