@@ -433,6 +433,14 @@
     <small style="margin-top: 5px; display: block;" data-i18n="settings.shortcutHint">
       Format: Modifier+Key (e.g., Alt+C, Ctrl+Shift+K, Meta+Space)
     </small>
+    <div id="chromeShortcutWarning" style="display: none; margin-top: 12px; padding: 12px; background: var(--color-status-error-bg); border-radius: var(--radius-md); border: 1px solid var(--color-accent-error);">
+      <div style="color: var(--color-status-error-text); font-size: var(--font-size-sm); margin-bottom: 8px;">
+        <strong>Chrome requires manual shortcut setup.</strong> The keyboard shortcut is not configured in your browser.
+      </div>
+      <button type="button" id="openShortcutsBtn" style="padding: 6px 12px; font-size: var(--font-size-sm); background: var(--color-accent-error); color: white; border: none; border-radius: var(--radius-sm); cursor: pointer;">
+        Configure Browser Shortcut
+      </button>
+    </div>
   </div>
 
   <div class="setting">

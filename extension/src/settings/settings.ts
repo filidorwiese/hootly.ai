@@ -371,6 +371,25 @@ document.addEventListener('DOMContentLoaded', async () => {
     versionInfo.textContent = `v${__APP_VERSION__}`;
   }
 
+  // Check Chrome browser shortcut configuration (Chrome only, not Firefox)
+  const chromeShortcutWarning = document.getElementById('chromeShortcutWarning');
+  const openShortcutsBtn = document.getElementById('openShortcutsBtn');
+
+  if (!isFirefox && chromeShortcutWarning && openShortcutsBtn) {
+    // Check if toggle-dialog shortcut is configured
+    chrome.commands.getAll().then((commands) => {
+      const toggleCommand = commands.find(cmd => cmd.name === 'toggle-dialog');
+      if (!toggleCommand?.shortcut) {
+        chromeShortcutWarning.style.display = 'block';
+      }
+    });
+
+    // Open Chrome shortcuts page
+    openShortcutsBtn.addEventListener('click', () => {
+      chrome.tabs.create({ url: 'chrome://extensions/shortcuts' });
+    });
+  }
+
   // Reload settings from storage and update form fields
   async function reloadSettings(): Promise<void> {
     const freshSettings = await Storage.getSettings();

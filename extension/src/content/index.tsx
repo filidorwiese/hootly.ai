@@ -92,10 +92,12 @@ async function init() {
   };
 
   // Listen for toggle command from background - MUST be set up before waiting for iframe
-  chrome.runtime.onMessage.addListener((message) => {
+  chrome.runtime.onMessage.addListener((message, _sender, sendResponse) => {
     if (message.type === 'toggleDialog') {
       sendToggleToIframe();
+      sendResponse({ received: true });
     }
+    return true; // Keep channel open for async
   });
 
   // Wait for iframe to load and React app to mount

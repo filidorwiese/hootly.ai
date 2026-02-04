@@ -126,8 +126,10 @@ function createExtensionTab(url: string) {
 
 // Toggle dialog helper - injects content script on-demand if needed
 async function toggleDialogInActiveTab() {
+  console.log('[Hootly Background] toggleDialogInActiveTab called');
   const tabs = await chrome.tabs.query({ active: true, currentWindow: true });
   const tab = tabs[0];
+  console.log('[Hootly Background] Active tab:', tab?.url);
   if (!tab?.id || !tab.url) return;
 
   // Skip non-injectable pages
@@ -135,6 +137,7 @@ async function toggleDialogInActiveTab() {
       tab.url.startsWith('chrome-extension://') ||
       tab.url.startsWith('about:') ||
       tab.url.startsWith('moz-extension://')) {
+    console.log('[Hootly Background] Skipping non-injectable page');
     return;
   }
 
@@ -142,14 +145,18 @@ async function toggleDialogInActiveTab() {
 
   try {
     // Try to send toggle message to existing content script
+    console.log('[Hootly Background] Sending toggle message to tab', tabId);
     await chrome.tabs.sendMessage(tabId, { type: 'toggleDialog' });
-  } catch {
+    console.log('[Hootly Background] Message sent successfully');
+  } catch (err) {
     // Content script not injected yet - inject it now
+    console.log('[Hootly Background] Message failed, injecting content script:', err);
     try {
       await chrome.scripting.executeScript({
         target: { tabId },
         files: ['content.js'],
       });
+      console.log('[Hootly Background] Content script injected');
       // Content script auto-shows on first injection via sendToggleToIframe()
       // No additional toggle needed here
     } catch (err) {
@@ -161,14 +168,21 @@ async function toggleDialogInActiveTab() {
 
 // Handle toolbar icon click
 chrome.action.onClicked.addListener(() => {
+  console.log('[Hootly Background] Toolbar icon clicked');
   toggleDialogInActiveTab();
 });
 
 // Handle keyboard command
 chrome.commands.onCommand.addListener((command) => {
+  console.log('[Hootly Background] Command received:', command);
   if (command === 'toggle-dialog') {
     toggleDialogInActiveTab();
   }
+});
+
+// Log registered commands on startup
+chrome.commands.getAll().then((commands) => {
+  console.log('[Hootly Background] Registered commands:', commands);
 });
 
 async function handleSendPrompt(
