@@ -1,12 +1,13 @@
-import React, { useRef, useEffect, useState, useCallback } from 'react';
+import React, { useRef, useEffect, useCallback, useMemo } from 'react';
 import { css } from '@emotion/css';
 import ContextToggle from './ContextToggle';
 import PersonaSelector from './PersonaSelector';
 import ModelSelector from './ModelSelector';
-import PromptSelector from './PromptSelector';
 import { t } from '../../shared/i18n';
+import { getLocalizedPromptText } from '../../shared/i18n';
 import { SendIcon, ClearIcon } from '../../shared/icons';
 import type { LLMProvider, Persona, SavedPrompt } from '../../shared/types';
+import { DEFAULT_PROMPTS } from '../../shared/types';
 import type { ModelConfig } from '../../shared/models';
 import { radii, fontSizes, transitions, spacing } from '../../shared/styles';
 
@@ -16,8 +17,9 @@ interface InputAreaProps {
   onSubmit: () => void;
   disabled?: boolean;
   contextEnabled: boolean;
-  contextMode: 'none' | 'selection' | 'fullpage';
+  contextMode: 'none' | 'selection' | 'fullpage' | 'clipboard';
   selectionLength?: number;
+  clipboardLength?: number;
   onContextToggle: () => void;
   modelId?: string;
   provider?: LLMProvider;
@@ -28,19 +30,17 @@ interface InputAreaProps {
   onSelectModel?: (modelId: string) => void;
   isLoadingModels?: boolean;
   hideContext?: boolean;
-  onSlashModeChange?: (isActive: boolean) => void;
   customPrompts?: SavedPrompt[];
 }
 
 const InputArea: React.FC<InputAreaProps> = ({
   value, onChange, onSubmit, disabled,
-  contextEnabled, contextMode, selectionLength, onContextToggle, modelId, provider,
+  contextEnabled, contextMode, selectionLength, clipboardLength, onContextToggle, modelId, provider,
   personas, selectedPersonaId, onSelectPersona,
-  models, onSelectModel, isLoadingModels, hideContext, onSlashModeChange,
+  models, onSelectModel, isLoadingModels, hideContext,
   customPrompts = []
 }) => {
   const textareaRef = useRef<HTMLTextAreaElement>(null);
-  const [slashMode, setSlashMode] = useState(false);
 
   // Auto-focus textarea on mount
   useEffect(() => {
@@ -61,74 +61,52 @@ const InputArea: React.FC<InputAreaProps> = ({
     }
   }, [value]);
 
-  // Detect slash mode: value starts with '/'
-  useEffect(() => {
-    const isSlashActive = value.startsWith('/');
-    if (isSlashActive !== slashMode) {
-      setSlashMode(isSlashActive);
-      onSlashModeChange?.(isSlashActive);
+  // Get localized prompt text
+  const getPromptText = useCallback((prompt: SavedPrompt): string => {
+    if (prompt.isBuiltIn) {
+      return getLocalizedPromptText(prompt.id) || prompt.text;
     }
-  }, [value, slashMode, onSlashModeChange]);
+    return prompt.text;
+  }, []);
 
-  const closeSlashMode = useCallback(() => {
-    setSlashMode(false);
-    onSlashModeChange?.(false);
-  }, [onSlashModeChange]);
+  // Find autocomplete match
+  const autocompleteMatch = useMemo(() => {
+    if (!value.trim()) return null;
 
-  const handlePromptSelect = useCallback((text: string) => {
-    onChange(text);
-    closeSlashMode();
-    // Focus textarea and move cursor to end
-    setTimeout(() => {
-      if (textareaRef.current) {
-        textareaRef.current.focus();
-        textareaRef.current.setSelectionRange(text.length, text.length);
+    const allPrompts = [...DEFAULT_PROMPTS, ...customPrompts];
+    const lowerValue = value.toLowerCase();
+
+    for (const prompt of allPrompts) {
+      const promptText = getPromptText(prompt);
+      if (promptText.toLowerCase().startsWith(lowerValue) && promptText.toLowerCase() !== lowerValue) {
+        return promptText;
       }
-    }, 0);
-  }, [onChange, closeSlashMode]);
-
-  const handlePromptSelectorClose = useCallback(() => {
-    onChange('');
-    closeSlashMode();
-    textareaRef.current?.focus();
-  }, [onChange, closeSlashMode]);
+    }
+    return null;
+  }, [value, customPrompts, getPromptText]);
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
-    // Backspace while in slash mode with only '/' - close selector and clear
-    if (e.key === 'Backspace' && slashMode && value === '/') {
+    // Tab to accept autocomplete
+    if (e.key === 'Tab' && autocompleteMatch) {
       e.preventDefault();
-      onChange('');
-      closeSlashMode();
+      onChange(autocompleteMatch);
+      setTimeout(() => {
+        if (textareaRef.current) {
+          textareaRef.current.setSelectionRange(autocompleteMatch.length, autocompleteMatch.length);
+        }
+      }, 0);
       return;
     }
 
     if (e.key === 'Enter' && !e.shiftKey) {
-      // Don't submit if slash mode is active (let PromptSelector handle it)
-      if (slashMode) {
-        return;
-      }
       e.preventDefault();
       onSubmit();
-    }
-
-    // Escape closes slash mode
-    if (e.key === 'Escape' && slashMode) {
-      e.preventDefault();
-      onChange('');
-      closeSlashMode();
     }
   };
 
   return (
     <div className={containerStyles}>
       <div className={textareaWrapperStyles}>
-        {slashMode && (
-          <PromptSelector
-            customPrompts={customPrompts}
-            onSelectPrompt={handlePromptSelect}
-            onClose={handlePromptSelectorClose}
-          />
-        )}
         <textarea
           ref={textareaRef}
           value={value}
@@ -138,7 +116,13 @@ const InputArea: React.FC<InputAreaProps> = ({
           disabled={disabled}
           className={textareaStyles}
         />
-        {value && !disabled && !slashMode && (
+        {autocompleteMatch && (
+          <div className={ghostTextStyles}>
+            <span className={ghostTextHiddenStyles}>{value}</span>
+            <span className={ghostTextVisibleStyles}>{autocompleteMatch.slice(value.length)}</span>
+          </div>
+        )}
+        {value && !disabled && (
           <>
             <button
                 onClick={onSubmit}
@@ -166,6 +150,7 @@ const InputArea: React.FC<InputAreaProps> = ({
               enabled={contextEnabled}
               mode={contextMode}
               selectionLength={selectionLength}
+              clipboardLength={clipboardLength}
               onToggle={onContextToggle}
             />
           )}
@@ -294,6 +279,29 @@ const footerLeftStyles = css`
   display: flex;
   align-items: center;
   gap: 8px;
+`;
+
+const ghostTextStyles = css`
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 70px;
+  padding: ${spacing[3]};
+  font-size: ${fontSizes.md};
+  font-family: 'Inter', sans-serif;
+  line-height: 1.55;
+  pointer-events: none;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+  overflow: hidden;
+`;
+
+const ghostTextHiddenStyles = css`
+  visibility: hidden;
+`;
+
+const ghostTextVisibleStyles = css`
+  color: var(--color-text-tertiary);
 `;
 
 export default InputArea;
