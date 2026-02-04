@@ -3,7 +3,7 @@ import react from '@vitejs/plugin-react';
 import { resolve } from 'path';
 import { copyFileSync, mkdirSync, existsSync, readFileSync } from 'fs';
 
-const pkg = JSON.parse(readFileSync('./package.json', 'utf-8'));
+const pkg = JSON.parse(readFileSync('../package.json', 'utf-8'));
 
 const isChrome = process.env.TARGET === 'chrome';
 const outDir = isChrome ? 'dist/chrome' : 'dist/firefox';
