@@ -241,6 +241,58 @@ describe('Storage', () => {
     })
   })
 
+  describe('getPersonas', () => {
+    it('returns built-in personas when no custom personas', async () => {
+      const personas = await Storage.getPersonas()
+      expect(personas.length).toBeGreaterThan(0)
+      expect(personas.every(p => p.id && p.name && p.icon)).toBe(true)
+    })
+
+    it('returns built-in + custom personas', async () => {
+      const customPersona = {
+        id: 'custom-persona',
+        name: 'Custom',
+        icon: '🎨',
+        systemPrompt: 'You are a custom assistant',
+      }
+      setMockStorage({
+        hootly_settings: { ...DEFAULT_SETTINGS, customPersonas: [customPersona] },
+      })
+
+      const personas = await Storage.getPersonas()
+      expect(personas.find(p => p.id === 'custom-persona')).toBeDefined()
+      expect(personas.find(p => p.id === 'general')).toBeDefined() // built-in
+    })
+  })
+
+  describe('getPersonaById', () => {
+    it('finds built-in persona by id', async () => {
+      const persona = await Storage.getPersonaById('general')
+      expect(persona).toBeDefined()
+      expect(persona?.name).toBe('General')
+    })
+
+    it('finds custom persona by id', async () => {
+      const customPersona = {
+        id: 'my-persona',
+        name: 'My Persona',
+        icon: '🚀',
+        systemPrompt: 'Custom prompt',
+      }
+      setMockStorage({
+        hootly_settings: { ...DEFAULT_SETTINGS, customPersonas: [customPersona] },
+      })
+
+      const persona = await Storage.getPersonaById('my-persona')
+      expect(persona?.name).toBe('My Persona')
+    })
+
+    it('returns undefined for non-existent id', async () => {
+      const persona = await Storage.getPersonaById('nonexistent')
+      expect(persona).toBeUndefined()
+    })
+  })
+
   describe('getPrompts', () => {
     it('returns built-in prompts when no custom prompts', async () => {
       const prompts = await Storage.getPrompts()
