@@ -5,6 +5,48 @@ import { selectDefaultModel } from '../shared/models';
 import { injectTabHeader, registerExtensionTab } from '../shared/TabHeader';
 import { initTheme } from '../shared/theme';
 
+// Type declaration for Firefox browser API
+declare const browser: typeof chrome & {
+  permissions: typeof chrome.permissions & {
+    onAdded?: chrome.events.Event<(permissions: chrome.permissions.Permissions) => void>;
+    onRemoved?: chrome.events.Event<(permissions: chrome.permissions.Permissions) => void>;
+    request(permissions: any): Promise<boolean>;
+    remove(permissions: any): Promise<boolean>;
+    getAll(): Promise<any>;
+  };
+};
+
+// Firefox data collection permission helpers
+const isFirefox = typeof browser !== 'undefined' && browser?.permissions !== undefined;
+
+async function hasFirefoxDataCollectionPermission(): Promise<boolean> {
+  if (!isFirefox) return false;
+  try {
+    const all = await browser.permissions.getAll();
+    return (all as any).data_collection?.includes('technicalAndInteraction') ?? false;
+  } catch {
+    return false;
+  }
+}
+
+async function requestFirefoxDataCollectionPermission(): Promise<boolean> {
+  if (!isFirefox) return false;
+  try {
+    return await browser.permissions.request({ data_collection: ['technicalAndInteraction'] } as any);
+  } catch {
+    return false;
+  }
+}
+
+async function removeFirefoxDataCollectionPermission(): Promise<boolean> {
+  if (!isFirefox) return false;
+  try {
+    return await browser.permissions.remove({ data_collection: ['technicalAndInteraction'] } as any);
+  } catch {
+    return false;
+  }
+}
+
 const API_KEY_SECTIONS: Record<LLMProvider, string> = {
   claude: 'claudeApiKeySection',
   openai: 'openaiApiKeySection',
@@ -154,8 +196,15 @@ document.addEventListener('DOMContentLoaded', async () => {
   temperatureInput.value = settings.temperature.toString();
   shortcutInput.value = settings.shortcut;
   showSelectionTooltipInput.checked = settings.showSelectionTooltip !== false;
-  shareAnalyticsInput.checked = settings.shareAnalytics !== false;
   languageSelect.value = settings.language;
+
+  // Sync analytics checkbox with Firefox data collection permission
+  if (isFirefox) {
+    const hasPermission = await hasFirefoxDataCollectionPermission();
+    shareAnalyticsInput.checked = hasPermission;
+  } else {
+    shareAnalyticsInput.checked = settings.shareAnalytics !== false;
+  }
 
   // Set theme radio button
   const themeValue = settings.theme || 'auto';
@@ -227,6 +276,30 @@ document.addEventListener('DOMContentLoaded', async () => {
   setupApiKeyListener(openaiApiKeyInput, 'openaiApiKey');
   setupApiKeyListener(geminiApiKeyInput, 'geminiApiKey');
   setupApiKeyListener(openrouterApiKeyInput, 'openrouterApiKey');
+
+  // Analytics checkbox handler - sync with Firefox data collection permission
+  shareAnalyticsInput.addEventListener('change', async () => {
+    if (isFirefox) {
+      if (shareAnalyticsInput.checked) {
+        const granted = await requestFirefoxDataCollectionPermission();
+        shareAnalyticsInput.checked = granted;
+      } else {
+        await removeFirefoxDataCollectionPermission();
+      }
+    }
+  });
+
+  // Listen for Firefox permission changes from Add-ons Manager
+  if (isFirefox && browser.permissions?.onAdded && browser.permissions?.onRemoved) {
+    browser.permissions.onAdded.addListener(async () => {
+      const hasPermission = await hasFirefoxDataCollectionPermission();
+      shareAnalyticsInput.checked = hasPermission;
+    });
+    browser.permissions.onRemoved.addListener(async () => {
+      const hasPermission = await hasFirefoxDataCollectionPermission();
+      shareAnalyticsInput.checked = hasPermission;
+    });
+  }
 
   // Language change handler - update UI immediately
   languageSelect.addEventListener('change', () => {
@@ -311,8 +384,15 @@ document.addEventListener('DOMContentLoaded', async () => {
     temperatureInput.value = freshSettings.temperature.toString();
     shortcutInput.value = freshSettings.shortcut;
     showSelectionTooltipInput.checked = freshSettings.showSelectionTooltip !== false;
-    shareAnalyticsInput.checked = freshSettings.shareAnalytics !== false;
     languageSelect.value = freshSettings.language;
+
+    // Sync analytics checkbox with Firefox permission
+    if (isFirefox) {
+      const hasPermission = await hasFirefoxDataCollectionPermission();
+      shareAnalyticsInput.checked = hasPermission;
+    } else {
+      shareAnalyticsInput.checked = freshSettings.shareAnalytics !== false;
+    }
 
     const themeValue = freshSettings.theme || 'auto';
     if (themeValue === 'light') themeLightRadio.checked = true;
