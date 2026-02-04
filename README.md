@@ -1,6 +1,6 @@
 # Hootly.ai
 
-![Hootly.ai Screenshot](public/promo/promo-screenshot.png)
+![Hootly.ai Screenshot](extension/public/promo/promo-screenshot.png)
 
 AI assistant for any webpage. Bring your own API key from Claude, OpenAI, Gemini, or OpenRouter. Free, private, no middleman.
 
@@ -11,13 +11,14 @@ AI assistant for any webpage. Bring your own API key from Claude, OpenAI, Gemini
 ## Quick Start
 
 ```bash
+cd extension
 npm install
 npm run build
 ```
 
-**Firefox**: `about:debugging#/runtime/this-firefox` → Load Temporary Add-on → select `dist/firefox/manifest.json`
+**Firefox**: `about:debugging#/runtime/this-firefox` → Load Temporary Add-on → select `extension/dist/firefox/manifest.json`
 
-**Chrome**: `chrome://extensions` → Enable Developer mode → Load unpacked → select `dist/chrome/`
+**Chrome**: `chrome://extensions` → Enable Developer mode → Load unpacked → select `extension/dist/chrome/`
 
 ## Setup
 
@@ -29,7 +30,7 @@ npm run build
 ## Features
 
 - **Multiple providers**: Claude, OpenAI, Gemini, OpenRouter
-- **Context modes**: Text selection or full page
+- **Context modes**: Text selection, full page, or clipboard
 - **Personas**: Pre-built and custom AI personalities
 - **History**: View and continue past conversations
 - **Dark mode**: Auto, light, or dark theme
@@ -38,7 +39,21 @@ npm run build
 - **Draggable/resizable** dialog with saved position
 - **Privacy-focused**: On-demand injection, minimal permissions
 
-## Commands
+## Monorepo Structure
+
+```
+hootly.ai/
+├── extension/        # Browser extension (Firefox + Chrome)
+│   ├── src/          # Extension source code
+│   ├── dist/         # Build output
+│   └── package.json  # Extension dependencies
+├── website/          # Marketing website
+└── package.json      # Root package (version tracking)
+```
+
+## Extension Commands
+
+Run from `extension/` directory:
 
 | Command | Description |
 |---------|-------------|
@@ -48,19 +63,6 @@ npm run build
 | `npm test` | Run tests |
 | `npm run release` | Create release zips |
 
-## Project Structure
-
-```
-src/
-├── background/       # Service worker (API calls, on-demand injection)
-├── content/          # Content script + React dialog
-├── settings/         # Settings page
-├── personas/         # Personas management page
-├── history/          # History page
-├── chat/             # Standalone chat page
-└── shared/           # Utils, storage, i18n, models
-```
-
 ## Tech Stack
 
 React, TypeScript, Vite, Emotion CSS, Vitest
@@ -68,9 +70,9 @@ React, TypeScript, Vite, Emotion CSS, Vitest
 ## Release Process
 
 1. Make necessary code changes and commit
-2. Bump version in package.json
+2. Bump version in `extension/package.json`
 3. Git commit, tag + push
-4. Run `npm run release` to build zip-files for upload to addon-stores
+4. Run `npm run release` from `extension/` to build zip-files for upload to addon-stores
 5. For source-code upload, create a release zip on https://github.com/filidorwiese/hootly.ai/releases
 
 ### Firefox Addons
