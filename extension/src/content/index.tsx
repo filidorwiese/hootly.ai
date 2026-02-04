@@ -52,8 +52,10 @@ async function init() {
     iframe.style.pointerEvents = dialogOpen ? 'auto' : 'none';
 
     // Read clipboard while user activation is still valid (before async operations)
+    // Skip if there's a text selection (avoids Firefox paste dialog, and selection takes priority)
     let clipboardText: string | null = null;
-    if (dialogOpen) {
+    const hasSelection = (window.getSelection()?.toString().trim().length || 0) > 0;
+    if (dialogOpen && !hasSelection) {
       iframe.focus(); // Required for Firefox to allow focus inside iframe
       try {
         const text = await navigator.clipboard.readText();
@@ -64,6 +66,8 @@ async function init() {
       } catch {
         // Clipboard access denied or empty
       }
+    } else if (dialogOpen) {
+      iframe.focus();
     }
 
     // Send toggle with stored context state and clipboard
