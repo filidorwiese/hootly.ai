@@ -397,11 +397,16 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     // Open browser shortcuts page
     if (isFirefox) {
-      openShortcutsBtn.textContent = 'Go to about:addons → ⚙️ → Manage Extension Shortcuts';
-      openShortcutsBtn.style.cursor = 'default';
-      openShortcutsBtn.style.background = 'var(--color-bg-muted)';
-      openShortcutsBtn.style.color = 'var(--color-text-secondary)';
-      openShortcutsBtn.style.border = '1px solid var(--color-border-default)';
+      // Firefox doesn't allow opening about:addons programmatically
+      // Replace button with instructions + copy button
+      const hint = document.createElement('div');
+      hint.style.cssText = 'margin-top: 8px; font-size: var(--font-size-sm); color: var(--color-text-secondary);';
+      hint.innerHTML = `
+        To change: type <code style="background: var(--color-bg-subtle); padding: 2px 6px; border-radius: 3px;">about:addons</code>
+        in address bar, then ⚙️ → Manage Extension Shortcuts
+      `;
+      openShortcutsBtn.style.display = 'none';
+      openShortcutsBtn.parentNode?.appendChild(hint);
     } else {
       openShortcutsBtn.addEventListener('click', () => {
         chrome.tabs.create({ url: 'chrome://extensions/shortcuts' });
