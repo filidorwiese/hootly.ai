@@ -1,5 +1,5 @@
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest'
-import { selectDefaultModel, modelExists, fetchModels, type ModelConfig } from '../../shared/models'
+import { selectDefaultModel, fetchModels, type ModelConfig } from '../../shared/models'
 
 describe('selectDefaultModel', () => {
   it('returns null for empty model list', () => {
@@ -48,32 +48,6 @@ describe('selectDefaultModel', () => {
       { id: 'claude-3-haiku-20240307', name: 'Claude 3 Haiku', description: '' },
     ]
     expect(selectDefaultModel(models)).toBe('claude-3-opus-20240229')
-  })
-})
-
-describe('modelExists', () => {
-  const models: ModelConfig[] = [
-    { id: 'claude-3-opus-20240229', name: 'Claude 3 Opus', description: '' },
-    { id: 'claude-3-5-sonnet-20241022', name: 'Claude 3.5 Sonnet', description: '' },
-  ]
-
-  it('returns true for existing model', () => {
-    expect(modelExists(models, 'claude-3-opus-20240229')).toBe(true)
-    expect(modelExists(models, 'claude-3-5-sonnet-20241022')).toBe(true)
-  })
-
-  it('returns false for non-existing model', () => {
-    expect(modelExists(models, 'claude-3-haiku-20240307')).toBe(false)
-    expect(modelExists(models, 'gpt-4')).toBe(false)
-  })
-
-  it('returns false for empty list', () => {
-    expect(modelExists([], 'claude-3-opus-20240229')).toBe(false)
-  })
-
-  it('requires exact match', () => {
-    expect(modelExists(models, 'claude-3-opus')).toBe(false)
-    expect(modelExists(models, 'CLAUDE-3-OPUS-20240229')).toBe(false)
   })
 })
 

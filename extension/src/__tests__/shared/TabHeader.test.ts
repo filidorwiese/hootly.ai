@@ -5,7 +5,6 @@ import {
   getTabUrl,
   initTabHeaderNav,
   injectTabHeader,
-  createTabHeaderElement,
   registerExtensionTab,
   TabId,
 } from '../../shared/TabHeader';
@@ -247,30 +246,6 @@ describe('TabHeader (TAB-1)', () => {
 
       const activeTab = document.querySelector('.tab-btn.active');
       expect(activeTab?.getAttribute('data-tab')).toBe('history');
-    });
-  });
-
-  describe('createTabHeaderElement', () => {
-    it('returns HTMLElement', () => {
-      const element = createTabHeaderElement('settings');
-      expect(element).toBeInstanceOf(HTMLElement);
-    });
-
-    it('returns element with tab-header class', () => {
-      const element = createTabHeaderElement('settings');
-      expect(element.classList.contains('tab-header')).toBe(true);
-    });
-
-    it('contains all tab buttons', () => {
-      const element = createTabHeaderElement('settings');
-      const buttons = element.querySelectorAll('.tab-btn');
-      expect(buttons.length).toBe(4);
-    });
-
-    it('marks correct tab as active', () => {
-      const element = createTabHeaderElement('personas');
-      const activeBtn = element.querySelector('.tab-btn.active');
-      expect(activeBtn?.getAttribute('data-tab')).toBe('personas');
     });
   });
 

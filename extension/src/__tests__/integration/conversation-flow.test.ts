@@ -1,6 +1,6 @@
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest'
 import { Storage } from '../../shared/storage'
-import { estimateTokens, generateId } from '../../shared/utils'
+import { generateId } from '../../shared/utils'
 import { getProvider, getApiKey } from '../../shared/providers'
 import type { Message, Conversation, Settings } from '../../shared/types'
 import { DEFAULT_SETTINGS } from '../../shared/types'
@@ -116,39 +116,6 @@ describe('Conversation Flow Integration', () => {
       settings = await Storage.getSettings()
       expect(getApiKey(settings)).toBe('sk-openai')
       expect(getProvider(settings.provider).name).toBe('OpenAI')
-    })
-  })
-
-  describe('Token estimation flow', () => {
-    it('estimates tokens for conversation', () => {
-      const messages: Message[] = [
-        { role: 'user', content: 'What is JavaScript?', timestamp: Date.now() },
-        {
-          role: 'assistant',
-          content: 'JavaScript is a programming language commonly used for web development.',
-          timestamp: Date.now(),
-        },
-        { role: 'user', content: 'Can you show me an example?', timestamp: Date.now() },
-      ]
-
-      const totalChars = messages.reduce((sum, m) => sum + m.content.length, 0)
-      const estimatedTokens = estimateTokens(messages.map(m => m.content).join(''))
-
-      expect(estimatedTokens).toBeGreaterThan(0)
-      expect(estimatedTokens).toBe(Math.ceil(totalChars / 3.5))
-    })
-
-    it('includes context in token estimation', () => {
-      const prompt = 'Summarize this:'
-      const context = 'A'.repeat(1000) // 1000 char context
-
-      const promptTokens = estimateTokens(prompt)
-      const contextTokens = estimateTokens(context)
-      const totalTokens = estimateTokens(prompt + context)
-
-      // Due to rounding (Math.ceil), total may differ by 1 from sum of parts
-      expect(totalTokens).toBeGreaterThanOrEqual(promptTokens + contextTokens - 1)
-      expect(totalTokens).toBeLessThanOrEqual(promptTokens + contextTokens + 1)
     })
   })
 

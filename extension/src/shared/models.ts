@@ -80,10 +80,3 @@ export function selectDefaultModel(models: ModelConfig[]): string | null {
   // Fallback to first model
   return models[0].id;
 }
-
-/**
- * Check if a model ID exists in the models list
- */
-export function modelExists(models: ModelConfig[], modelId: string): boolean {
-  return models.some((m) => m.id === modelId);
-}

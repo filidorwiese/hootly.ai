@@ -108,34 +108,3 @@ export const initTheme = async (): Promise<() => void> => {
     cleanupFns.forEach((fn) => fn());
   };
 };
-
-/**
- * Check if system prefers dark mode
- * @returns true if system prefers dark mode
- */
-export const systemPrefersDark = (): boolean => {
-  if (typeof window !== 'undefined' && window.matchMedia) {
-    return window.matchMedia('(prefers-color-scheme: dark)').matches;
-  }
-  return false;
-};
-
-/**
- * Get current theme setting from storage
- * @returns Promise resolving to current theme setting
- */
-export const getCurrentTheme = async (): Promise<Theme> => {
-  const settings = await Storage.getSettings();
-  return settings.theme || 'auto';
-};
-
-/**
- * Set theme and save to storage
- * @param theme - Theme to set
- */
-export const setTheme = async (theme: Theme): Promise<void> => {
-  const settings = await Storage.getSettings();
-  settings.theme = theme;
-  await Storage.saveSettings(settings);
-  applyTheme(theme);
-};

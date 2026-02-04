@@ -5,6 +5,7 @@
 AI assistant for any webpage. Bring your own API key from Claude, OpenAI, Gemini, or OpenRouter. Free, private, no middleman.
 
 Download for Firefox: https://addons.mozilla.org/nl/firefox/addon/hootly-ai/
+
 Download for Chrome: https://chromewebstore.google.com/detail/hootlyai/amnifhjiliognmbndcbhibpecdoeadfh
 
 ## Prerequisites

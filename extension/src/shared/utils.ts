@@ -1,5 +1,3 @@
-import type { PageContext } from './types';
-
 // Cached page info from parent
 let cachedPageInfo: {
   url: string;
@@ -59,14 +57,6 @@ function getPageInfo() {
 }
 
 /**
- * Estimate token count from character count
- * Conservative estimate: 1 token ≈ 3.5 characters
- */
-export function estimateTokens(text: string): number {
-  return Math.ceil(text.length / 3.5);
-}
-
-/**
  * Extract clean text from page, respecting settings
  */
 export function extractPageText(options: {
@@ -114,67 +104,8 @@ export function getPageTitle(): string {
 }
 
 /**
- * Extract page metadata
- */
-export function extractMetadata(): PageContext['metadata'] {
-  // In iframe mode, we don't have access to parent's meta tags
-  const pageInfo = getPageInfo();
-  if (pageInfo) {
-    return { description: undefined, keywords: undefined };
-  }
-
-  const description = document.querySelector('meta[name="description"]')?.getAttribute('content');
-  const keywords = document.querySelector('meta[name="keywords"]')?.getAttribute('content');
-
-  return {
-    description: description || undefined,
-    keywords: keywords || undefined,
-  };
-}
-
-/**
- * Build full page context
- */
-export function buildPageContext(options: {
-  includeScripts: boolean;
-  includeStyles: boolean;
-  includeAltText: boolean;
-  maxLength: number;
-}): PageContext {
-  const selection = extractSelection();
-
-  return {
-    url: getPageUrl(),
-    title: getPageTitle(),
-    selection: selection || undefined,
-    fullPage: selection ? undefined : extractPageText(options),
-    metadata: extractMetadata(),
-  };
-}
-
-/**
  * Generate unique ID
  */
 export function generateId(): string {
   return `${Date.now()}-${Math.random().toString(36).substr(2, 9)}`;
-}
-
-/**
- * Format date for display
- */
-export function formatDate(timestamp: number): string {
-  const date = new Date(timestamp);
-  const now = new Date();
-  const diff = now.getTime() - date.getTime();
-  const days = Math.floor(diff / (24 * 60 * 60 * 1000));
-
-  if (days === 0) {
-    return date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
-  } else if (days === 1) {
-    return 'Yesterday';
-  } else if (days < 7) {
-    return `${days} days ago`;
-  } else {
-    return date.toLocaleDateString();
-  }
 }

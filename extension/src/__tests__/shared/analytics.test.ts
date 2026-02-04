@@ -1,5 +1,5 @@
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
-import { trackEvent, trackDialogOpen, trackMessageSent, detectBrowser, detectBrowserVersion, getExtensionVersion } from '../../shared/analytics';
+import { trackEvent, trackDialogOpen, trackMessageSent } from '../../shared/analytics';
 import { resetChromeMock, setMockStorage } from '../__mocks__/chrome';
 
 describe('Analytics', () => {
@@ -103,36 +103,6 @@ describe('Analytics', () => {
       // Verify no content is sent (privacy requirement)
       expect(body.props.content).toBeUndefined();
       expect(body.props.message).toBeUndefined();
-    });
-  });
-
-  describe('detectBrowser', () => {
-    it('detects Chrome browser', () => {
-      vi.stubGlobal('navigator', { userAgent: 'Mozilla/5.0 Chrome/120.0.0.0' });
-      expect(detectBrowser()).toBe('Chrome');
-    });
-
-    it('detects Firefox browser', () => {
-      vi.stubGlobal('navigator', { userAgent: 'Mozilla/5.0 Firefox/121.0' });
-      expect(detectBrowser()).toBe('Firefox');
-    });
-
-    it('detects Edge browser', () => {
-      vi.stubGlobal('navigator', { userAgent: 'Mozilla/5.0 Edg/120.0.0.0' });
-      expect(detectBrowser()).toBe('Edge');
-    });
-  });
-
-  describe('detectBrowserVersion', () => {
-    it('extracts version number from user agent', () => {
-      vi.stubGlobal('navigator', { userAgent: 'Mozilla/5.0 Chrome/120.0.0.0' });
-      expect(detectBrowserVersion()).toBe('120.0');
-    });
-  });
-
-  describe('getExtensionVersion', () => {
-    it('returns __APP_VERSION__ when defined', () => {
-      expect(getExtensionVersion()).toBe('1.0.0');
     });
   });
 });

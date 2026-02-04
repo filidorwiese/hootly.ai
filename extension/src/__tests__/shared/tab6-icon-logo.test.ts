@@ -7,7 +7,6 @@ import {
   getTabHeaderStyles,
   generateTabHeaderHTML,
   injectTabHeader,
-  createTabHeaderElement,
 } from '../../shared/TabHeader';
 
 // Mock chrome.runtime.getURL
@@ -103,20 +102,6 @@ describe('TAB-6: Use icon.png as logo in TabHeader', () => {
       injectTabHeader({ activeTab: 'settings' });
       const logoImg = document.querySelector('.tab-header-logo-img') as HTMLImageElement;
       expect(logoImg.src).toBe('chrome-extension://mock-id/icons/icon.png');
-    });
-  });
-
-  describe('createTabHeaderElement', () => {
-    it('should create element with logo image', () => {
-      const element = createTabHeaderElement('settings');
-      const logoImg = element.querySelector('.tab-header-logo-img');
-      expect(logoImg).toBeTruthy();
-    });
-
-    it('should not contain SVG in logo', () => {
-      const element = createTabHeaderElement('settings');
-      const logoSvg = element.querySelector('.tab-header-logo svg');
-      expect(logoSvg).toBeNull();
     });
   });
 

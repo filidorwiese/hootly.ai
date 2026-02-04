@@ -231,15 +231,6 @@ export function injectTabHeader(options: TabHeaderOptions): void {
 }
 
 /**
- * Create a standalone TabHeader element (for testing or custom placement)
- */
-export function createTabHeaderElement(activeTab: TabId): HTMLElement {
-  const wrapper = document.createElement('div');
-  wrapper.innerHTML = generateTabHeaderHTML(activeTab);
-  return wrapper.firstElementChild as HTMLElement;
-}
-
-/**
  * Register this page as the active extension tab in the background worker.
  * This enables single-tab behavior - when opening settings/personas/history from dialog,
  * the existing extension tab is reused instead of opening a new one.

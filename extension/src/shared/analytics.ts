@@ -76,5 +76,3 @@ export function trackDialogOpen(provider: string, model: string): void {
 export function trackMessageSent(provider: string, model: string): void {
   trackEvent('message_sent', { provider, model });
 }
-
-export { detectBrowser, detectBrowserVersion, getExtensionVersion };

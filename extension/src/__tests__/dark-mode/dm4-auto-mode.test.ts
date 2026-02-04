@@ -13,9 +13,6 @@ import {
   getEffectiveTheme,
   applyTheme,
   initTheme,
-  systemPrefersDark,
-  getCurrentTheme,
-  setTheme,
 } from '../../shared/theme';
 import { Storage } from '../../shared/storage';
 
@@ -321,46 +318,6 @@ describe('DM-4: Auto mode with system preference', () => {
 
       // Should still be light
       expect(document.documentElement.getAttribute('data-theme')).toBe('light');
-    });
-  });
-
-  describe('systemPrefersDark', () => {
-    it('should return false when system prefers light', () => {
-      mockMediaQuery.matches = false;
-      expect(systemPrefersDark()).toBe(false);
-    });
-
-    it('should return true when system prefers dark', () => {
-      mockMediaQuery.matches = true;
-      expect(systemPrefersDark()).toBe(true);
-    });
-  });
-
-  describe('getCurrentTheme', () => {
-    it('should return theme from storage', async () => {
-      (Storage.getSettings as ReturnType<typeof vi.fn>).mockResolvedValue({ theme: 'dark' });
-      const theme = await getCurrentTheme();
-      expect(theme).toBe('dark');
-    });
-
-    it('should default to auto if not set', async () => {
-      (Storage.getSettings as ReturnType<typeof vi.fn>).mockResolvedValue({});
-      const theme = await getCurrentTheme();
-      expect(theme).toBe('auto');
-    });
-  });
-
-  describe('setTheme', () => {
-    it('should save theme to storage', async () => {
-      (Storage.getSettings as ReturnType<typeof vi.fn>).mockResolvedValue({ theme: 'light' });
-      await setTheme('dark');
-      expect(Storage.saveSettings).toHaveBeenCalledWith(expect.objectContaining({ theme: 'dark' }));
-    });
-
-    it('should apply theme immediately', async () => {
-      (Storage.getSettings as ReturnType<typeof vi.fn>).mockResolvedValue({ theme: 'light' });
-      await setTheme('dark');
-      expect(document.documentElement.getAttribute('data-theme')).toBe('dark');
     });
   });
 
