@@ -4,6 +4,9 @@
 
 AI assistant for any webpage. Bring your own API key from Claude, OpenAI, Gemini, or OpenRouter. Free, private, no middleman.
 
+Download for Firefox: https://addons.mozilla.org/nl/firefox/addon/hootly-ai/
+Download for Chrome: https://chromewebstore.google.com/detail/hootlyai/amnifhjiliognmbndcbhibpecdoeadfh
+
 ## Prerequisites
 
 - Node.js 18+
@@ -66,21 +69,6 @@ Run from `extension/` directory:
 ## Tech Stack
 
 React, TypeScript, Vite, Emotion CSS, Vitest
-
-## Release Process
-
-1. Make necessary code changes and commit
-2. Bump version in `extension/package.json`
-3. Git commit, tag + push
-4. Run `npm run release` from `extension/` to build zip-files for upload to addon-stores
-5. For source-code upload, create a release zip on https://github.com/filidorwiese/hootly.ai/releases
-
-### Firefox Addons
-Submit a new version on https://addons.mozilla.org/nl/developers/addons
-
-### Chrome Web Store
-Submit a new version on https://chrome.google.com/webstore/devconsole/
-
 
 ## Links
 

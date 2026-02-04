@@ -1,3 +1,5 @@
+declare const browser: typeof chrome | undefined;
+
 async function init() {
   // console.log('[Hootly] Content script starting...');
 
@@ -52,10 +54,12 @@ async function init() {
     iframe.style.pointerEvents = dialogOpen ? 'auto' : 'none';
 
     // Read clipboard while user activation is still valid (before async operations)
+    // Only in Firefox - Chrome shows a permission prompt which is disruptive
     // Skip if there's a text selection (avoids Firefox paste dialog, and selection takes priority)
     let clipboardText: string | null = null;
+    const isFirefox = typeof browser !== 'undefined';
     const hasSelection = (window.getSelection()?.toString().trim().length || 0) > 0;
-    if (dialogOpen && !hasSelection) {
+    if (dialogOpen && isFirefox && !hasSelection) {
       iframe.focus(); // Required for Firefox to allow focus inside iframe
       try {
         const text = await navigator.clipboard.readText();
