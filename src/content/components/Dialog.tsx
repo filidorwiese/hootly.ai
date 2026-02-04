@@ -173,7 +173,7 @@ const Dialog: React.FC<DialogProps> = ({
       });
       // Read clipboard immediately while user activation is valid, in parallel with page info
       const clipboardPromise = navigator.clipboard.readText()
-        .then((text) => text && text.length > 20 ? text : null)
+        .then((text) => text && text.length > 32 && text.includes(' ') ? text : null)
         .catch(() => null);
 
       // Request fresh page info from parent (for iframe mode)
@@ -365,11 +365,11 @@ const Dialog: React.FC<DialogProps> = ({
       }
       newEnabled = true;
     } else {
-      // Cycle: selection → fullpage → clipboard (if >20 chars) → none
+      // Cycle: selection → fullpage → clipboard (if valid) → none
       if (contextMode === 'selection') {
         newMode = 'fullpage';
       } else if (contextMode === 'fullpage') {
-        if (capturedClipboard && capturedClipboard.length > 20) {
+        if (capturedClipboard && capturedClipboard.length > 32 && capturedClipboard.includes(' ')) {
           newMode = 'clipboard';
         } else {
           newEnabled = false;

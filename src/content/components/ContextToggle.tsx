@@ -24,7 +24,7 @@ const ContextToggle: React.FC<ContextToggleProps> = ({ enabled, mode, selectionL
     badgeType = 'selection';
     IconComponent = SelectionIcon;
   } else if (enabled && mode === 'fullpage') {
-    buttonTitle = clipboardLength && clipboardLength > 20 ? t('context.switchToClipboard') : t('context.disableContext');
+    buttonTitle = clipboardLength && clipboardLength > 32 ? t('context.switchToClipboard') : t('context.disableContext');
     badgeText = t('context.fullPage');
     badgeType = 'full';
     IconComponent = FullPageIcon;
