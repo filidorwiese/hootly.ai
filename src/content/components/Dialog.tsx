@@ -171,34 +171,30 @@ const Dialog: React.FC<DialogProps> = ({
         // Track dialog open event for analytics
         trackDialogOpen(settings.provider, settings.model || 'default');
       });
+      // Read clipboard immediately while user activation is valid, in parallel with page info
+      const clipboardPromise = navigator.clipboard.readText()
+        .then((text) => text && text.length > 20 ? text : null)
+        .catch(() => null);
+
       // Request fresh page info from parent (for iframe mode)
-      requestPageInfo().then(async () => {
+      const pageInfoPromise = requestPageInfo();
+
+      // Wait for both to complete
+      Promise.all([clipboardPromise, pageInfoPromise]).then(([clipboardText]) => {
         const selectionText = extractSelection();
 
-        // Capture clipboard content
-        let clipboardText: string | null = null;
-        try {
-          clipboardText = await navigator.clipboard.readText();
-          if (clipboardText && clipboardText.length > 20) {
-            setCapturedClipboard(clipboardText);
-          } else {
-            setCapturedClipboard(null);
-            clipboardText = null;
-          }
-        } catch {
-          setCapturedClipboard(null);
-        }
+        // Update captured values
+        setCapturedClipboard(clipboardText);
+        setCapturedSelection(selectionText && selectionText.length > 0 ? selectionText : null);
 
+        // Set context mode based on priority: selection > clipboard > fullpage
         if (selectionText && selectionText.length > 0) {
-          setCapturedSelection(selectionText);
           setContextEnabled(true);
           setContextMode('selection');
-        } else if (clipboardText && clipboardText.length > 20) {
-          setCapturedSelection(null);
+        } else if (clipboardText) {
           setContextEnabled(true);
           setContextMode('clipboard');
         } else {
-          setCapturedSelection(null);
           setContextEnabled(true);
           setContextMode('fullpage');
         }

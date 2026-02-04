@@ -44,6 +44,7 @@ async function init() {
     pointer-events: none !important;
   `;
   iframe.setAttribute('allowtransparency', 'true');
+  iframe.setAttribute('allow', 'clipboard-read');
 
   // Track state
   let dialogOpen = false;
@@ -52,7 +53,7 @@ async function init() {
 
   // Persist context mode across dialog close/reopen
   let storedContextEnabled = false;
-  let storedContextMode: 'none' | 'selection' | 'fullpage' = 'none';
+  let storedContextMode: 'none' | 'selection' | 'fullpage' | 'clipboard' = 'none';
 
   // Forward toggle commands to iframe
   const sendToggleToIframe = () => {
