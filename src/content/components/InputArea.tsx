@@ -283,7 +283,7 @@ const footerLeftStyles = css`
 
 const ghostTextStyles = css`
   position: absolute;
-  top: 1px;
+  top: 2px;
   left: 1px;
   right: 71px;
   padding: ${spacing[3]};
