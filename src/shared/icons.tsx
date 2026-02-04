@@ -182,3 +182,13 @@ export const CheckIcon: React.FC<IconProps> = ({size = 20, className}) => (
         />
     </svg>
 );
+
+// Clipboard icon - For clipboard context mode
+export const ClipboardIcon: React.FC<IconProps> = ({size = 20, className}) => (
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" className={className}>
+        <rect x="5" y="4" width="14" height="17" rx="2" fill="#E8F0EA" stroke="#4A7C54" strokeWidth="1.5"/>
+        <path d="M9 4V3a1 1 0 011-1h4a1 1 0 011 1v1" stroke="#4A7C54" strokeWidth="1.5"/>
+        <rect x="9" y="2" width="6" height="3" rx="1" fill="#A3C4AC"/>
+        <path d="M8 9h8M8 13h8M8 17h4" stroke="#4A7C54" strokeWidth="1.5" strokeLinecap="round"/>
+    </svg>
+);

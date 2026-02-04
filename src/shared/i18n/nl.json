@@ -83,10 +83,12 @@
   "context": {
     "enableContext": "Context inschakelen",
     "switchToFullPage": "Klik om naar volledige pagina te wisselen",
+    "switchToClipboard": "Klik om naar klembord te wisselen",
     "disableContext": "Klik om context uit te schakelen",
     "clickToEnable": "Voeg huidige website als context toe aan chat",
     "selection": "Selectie ({{chars}} tekens)",
     "fullPage": "Volledige pagina",
+    "clipboard": "Klembord ({{chars}} tekens)",
     "noContext": "Geen context"
   },
   "history": {

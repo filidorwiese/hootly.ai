@@ -83,10 +83,12 @@
   "context": {
     "enableContext": "컨텍스트 활성화",
     "switchToFullPage": "클릭하여 전체 페이지로 전환",
+    "switchToClipboard": "클릭하여 클립보드로 전환",
     "disableContext": "클릭하여 컨텍스트 비활성화",
     "clickToEnable": "현재 웹사이트를 채팅 컨텍스트로 추가",
     "selection": "선택 ({{chars}}자)",
     "fullPage": "전체 페이지",
+    "clipboard": "클립보드 ({{chars}}자)",
     "noContext": "컨텍스트 없음"
   },
   "history": {

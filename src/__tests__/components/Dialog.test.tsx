@@ -193,14 +193,15 @@ describe('Dialog', () => {
     it('renders context toggle in input area', async () => {
       await renderDialog({ isOpen: true, onClose: () => {} })
 
-      // Context toggle now uses SVG icon instead of emoji
-      expect(screen.getByTitle('Add current website as context to chat')).toBeInTheDocument()
+      // Context toggle now uses SVG icon - defaults to fullpage (click disables)
+      expect(screen.getByTitle('Click to disable context')).toBeInTheDocument()
     })
 
-    it('shows "No context" initially', async () => {
+    it('shows "Full page" by default', async () => {
       await renderDialog({ isOpen: true, onClose: () => {} })
 
-      expect(screen.getByText('No context')).toBeInTheDocument()
+      // Now defaults to fullpage context (not disabled)
+      expect(screen.getByText('Full page')).toBeInTheDocument()
     })
   })
 
@@ -216,7 +217,8 @@ describe('Dialog', () => {
       expect(header.textContent).toContain('Hootly')
 
       // Persona selector and context toggle should both exist (in footer)
-      const contextToggle = screen.getByTitle('Add current website as context to chat')
+      // Context toggle defaults to fullpage now
+      const contextToggle = screen.getByTitle('Click to disable context')
       const personaSelector = screen.getByText('General')
 
       expect(contextToggle).toBeInTheDocument()
@@ -598,8 +600,8 @@ describe('Context mode persistence (CTX-1/2/3)', () => {
       await new Promise(resolve => setTimeout(resolve, 0))
     })
 
-    // Click context toggle to enable (starts disabled)
-    const toggleButton = screen.getByTitle('Add current website as context to chat')
+    // Click context toggle to disable (now starts enabled with fullpage)
+    const toggleButton = screen.getByTitle('Click to disable context')
     await act(async () => {
       fireEvent.click(toggleButton)
     })
@@ -608,21 +610,21 @@ describe('Context mode persistence (CTX-1/2/3)', () => {
       expect.objectContaining({
         type: 'hootly-context-mode',
         payload: expect.objectContaining({
-          contextEnabled: true,
+          contextEnabled: false,
         })
       }),
       '*'
     )
   })
 
-  it('defaults to disabled context when no initial values provided', async () => {
+  it('defaults to fullpage context when no selection available', async () => {
     await act(async () => {
       render(<Dialog isOpen={true} onClose={() => {}} />)
       await new Promise(resolve => setTimeout(resolve, 0))
     })
 
-    // Should show "No context" badge
-    expect(screen.getByText('No context')).toBeInTheDocument()
+    // Should show "Full page" badge by default (selection → clipboard → fullpage priority)
+    expect(screen.getByText('Full page')).toBeInTheDocument()
   })
 })
 

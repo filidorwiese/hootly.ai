@@ -24,7 +24,7 @@ interface DialogProps {
   /** Initial context enabled state (persisted across dialog close/reopen) */
   initialContextEnabled?: boolean;
   /** Initial context mode (persisted across dialog close/reopen) */
-  initialContextMode?: 'none' | 'selection' | 'fullpage';
+  initialContextMode?: 'none' | 'selection' | 'fullpage' | 'clipboard';
 }
 
 const Dialog: React.FC<DialogProps> = ({
@@ -46,8 +46,9 @@ const Dialog: React.FC<DialogProps> = ({
   }));
   const [inputValue, setInputValue] = useState('');
   const [contextEnabled, setContextEnabled] = useState(false);
-  const [contextMode, setContextMode] = useState<'none' | 'selection' | 'fullpage'>('none');
+  const [contextMode, setContextMode] = useState<'none' | 'selection' | 'fullpage' | 'clipboard'>('none');
   const [capturedSelection, setCapturedSelection] = useState<string | null>(null);
+  const [capturedClipboard, setCapturedClipboard] = useState<string | null>(null);
   const [response, setResponse] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -61,7 +62,6 @@ const Dialog: React.FC<DialogProps> = ({
   const [isLoadingModels, setIsLoadingModels] = useState(false);
   const [hasApiKey, setHasApiKey] = useState<boolean | null>(null); // null = loading
   const [customPrompts, setCustomPrompts] = useState<SavedPrompt[]>([]);
-  const [slashModeActive, setSlashModeActive] = useState(false);
 
   // Generate title from first user message (truncate to ~50 chars)
   const generateTitle = (message: string): string => {
@@ -98,7 +98,7 @@ const Dialog: React.FC<DialogProps> = ({
   };
 
   // Notify content script of context mode changes (only in overlay mode)
-  const notifyContextModeChange = (enabled: boolean, contextModeValue: 'none' | 'selection' | 'fullpage') => {
+  const notifyContextModeChange = (enabled: boolean, contextModeValue: 'none' | 'selection' | 'fullpage' | 'clipboard') => {
     if (mode === 'overlay') {
       window.parent.postMessage({
         type: 'hootly-context-mode',
@@ -172,28 +172,35 @@ const Dialog: React.FC<DialogProps> = ({
         trackDialogOpen(settings.provider, settings.model || 'default');
       });
       // Request fresh page info from parent (for iframe mode)
-      requestPageInfo().then(() => {
+      requestPageInfo().then(async () => {
         const selectionText = extractSelection();
+
+        // Capture clipboard content
+        let clipboardText: string | null = null;
+        try {
+          clipboardText = await navigator.clipboard.readText();
+          if (clipboardText && clipboardText.length > 20) {
+            setCapturedClipboard(clipboardText);
+          } else {
+            setCapturedClipboard(null);
+            clipboardText = null;
+          }
+        } catch {
+          setCapturedClipboard(null);
+        }
+
         if (selectionText && selectionText.length > 0) {
           setCapturedSelection(selectionText);
-          // If we have stored context mode, use it; otherwise auto-enable selection
-          if (initialContextEnabled && initialContextMode !== 'none') {
-            setContextEnabled(initialContextEnabled);
-            setContextMode(initialContextMode);
-          } else {
-            setContextEnabled(true);
-            setContextMode('selection');
-          }
+          setContextEnabled(true);
+          setContextMode('selection');
+        } else if (clipboardText && clipboardText.length > 20) {
+          setCapturedSelection(null);
+          setContextEnabled(true);
+          setContextMode('clipboard');
         } else {
           setCapturedSelection(null);
-          // Restore stored context mode, but skip 'selection' if no selection exists
-          if (initialContextEnabled && initialContextMode === 'fullpage') {
-            setContextEnabled(true);
-            setContextMode('fullpage');
-          } else {
-            setContextEnabled(initialContextEnabled);
-            setContextMode(initialContextMode === 'selection' ? 'none' : initialContextMode);
-          }
+          setContextEnabled(true);
+          setContextMode('fullpage');
         }
       });
     }
@@ -263,7 +270,7 @@ const Dialog: React.FC<DialogProps> = ({
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
-  // Handle Esc: cancel generation if loading, otherwise close dialog (unless prompt selector is open)
+  // Handle Esc: cancel generation if loading, otherwise close dialog
   useEffect(() => {
     if (!isOpen) return;
 
@@ -275,19 +282,17 @@ const Dialog: React.FC<DialogProps> = ({
           // Stop generation
           setIsLoading(false);
           chrome.runtime.sendMessage({ type: 'cancelStream' });
-        } else if (!slashModeActive) {
+        } else {
           e.preventDefault();
           e.stopPropagation();
-          // Close dialog only if prompt selector is not open
           onClose();
         }
-        // If slashModeActive, let the event propagate to PromptSelector
       }
     };
 
     document.addEventListener('keydown', handleKeyDown, true);
     return () => document.removeEventListener('keydown', handleKeyDown, true);
-  }, [isOpen, isLoading, slashModeActive, onClose]);
+  }, [isOpen, isLoading, onClose]);
 
   // Save position when changed
   const handleDragStop = (_e: any, d: { x: number; y: number }) => {
@@ -353,10 +358,10 @@ const Dialog: React.FC<DialogProps> = ({
 
   const handleContextToggle = () => {
     let newEnabled = contextEnabled;
-    let newMode: 'none' | 'selection' | 'fullpage' = contextMode;
+    let newMode: 'none' | 'selection' | 'fullpage' | 'clipboard' = contextMode;
 
     if (!contextEnabled) {
-      // Enable context
+      // Enable context - start with selection if available
       if (capturedSelection) {
         newMode = 'selection';
       } else {
@@ -364,12 +369,17 @@ const Dialog: React.FC<DialogProps> = ({
       }
       newEnabled = true;
     } else {
-      // Cycle through modes or disable
+      // Cycle: selection → fullpage → clipboard (if >20 chars) → none
       if (contextMode === 'selection') {
-        // Switch to fullpage
         newMode = 'fullpage';
       } else if (contextMode === 'fullpage') {
-        // Disable context
+        if (capturedClipboard && capturedClipboard.length > 20) {
+          newMode = 'clipboard';
+        } else {
+          newEnabled = false;
+          newMode = 'none';
+        }
+      } else if (contextMode === 'clipboard') {
         newEnabled = false;
         newMode = 'none';
       }
@@ -454,6 +464,14 @@ const Dialog: React.FC<DialogProps> = ({
             url: getPageUrl(),
             title: getPageTitle(),
             selection: capturedSelection,
+            metadata: undefined,
+          };
+        } else if (contextMode === 'clipboard' && capturedClipboard) {
+          // Use clipboard content
+          context = {
+            url: getPageUrl(),
+            title: getPageTitle(),
+            selection: capturedClipboard,
             metadata: undefined,
           };
         } else if (contextMode === 'fullpage') {
@@ -606,6 +624,7 @@ const Dialog: React.FC<DialogProps> = ({
               contextEnabled={contextEnabled}
               contextMode={contextMode}
               selectionLength={capturedSelection?.length}
+              clipboardLength={capturedClipboard?.length}
               onContextToggle={handleContextToggle}
               modelId={currentModel}
               provider={currentProvider}
@@ -617,7 +636,6 @@ const Dialog: React.FC<DialogProps> = ({
               isLoadingModels={isLoadingModels}
               hideContext={mode === 'standalone'}
               customPrompts={customPrompts}
-              onSlashModeChange={setSlashModeActive}
             />
           ) : (
             <div className={cancelHintStyles} dangerouslySetInnerHTML={{ __html: t('dialog.cancelHint') }} />

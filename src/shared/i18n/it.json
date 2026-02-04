@@ -83,10 +83,12 @@
   "context": {
     "enableContext": "Attiva contesto",
     "switchToFullPage": "Clicca per passare alla pagina intera",
+    "switchToClipboard": "Clicca per passare agli appunti",
     "disableContext": "Clicca per disattivare il contesto",
     "clickToEnable": "Aggiungi sito web attuale come contesto alla chat",
     "selection": "Selezione ({{chars}} caratteri)",
     "fullPage": "Pagina intera",
+    "clipboard": "Appunti ({{chars}} caratteri)",
     "noContext": "Nessun contesto"
   },
   "history": {

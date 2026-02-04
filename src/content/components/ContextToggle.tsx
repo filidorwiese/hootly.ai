@@ -2,19 +2,20 @@ import React from 'react';
 import { css } from '@emotion/css';
 import { t } from '../../shared/i18n';
 import { radii, fontSizes, fontWeights, transitions, spacing } from '../../shared/styles';
-import { SelectionIcon, FullPageIcon, NoContextIcon } from '../../shared/icons';
+import { SelectionIcon, FullPageIcon, NoContextIcon, ClipboardIcon } from '../../shared/icons';
 
 interface ContextToggleProps {
   enabled: boolean;
-  mode: 'none' | 'selection' | 'fullpage';
+  mode: 'none' | 'selection' | 'fullpage' | 'clipboard';
   selectionLength?: number;
+  clipboardLength?: number;
   onToggle: () => void;
 }
 
-const ContextToggle: React.FC<ContextToggleProps> = ({ enabled, mode, selectionLength, onToggle }) => {
+const ContextToggle: React.FC<ContextToggleProps> = ({ enabled, mode, selectionLength, clipboardLength, onToggle }) => {
   let buttonTitle = t('context.enableContext');
   let badgeText = t('context.noContext');
-  let badgeType: 'selection' | 'full' | 'off' = 'off';
+  let badgeType: 'selection' | 'full' | 'clipboard' | 'off' = 'off';
   let IconComponent = NoContextIcon;
 
   if (enabled && mode === 'selection' && selectionLength) {
@@ -23,10 +24,15 @@ const ContextToggle: React.FC<ContextToggleProps> = ({ enabled, mode, selectionL
     badgeType = 'selection';
     IconComponent = SelectionIcon;
   } else if (enabled && mode === 'fullpage') {
-    buttonTitle = t('context.disableContext');
+    buttonTitle = clipboardLength && clipboardLength > 20 ? t('context.switchToClipboard') : t('context.disableContext');
     badgeText = t('context.fullPage');
     badgeType = 'full';
     IconComponent = FullPageIcon;
+  } else if (enabled && mode === 'clipboard' && clipboardLength) {
+    buttonTitle = t('context.disableContext');
+    badgeText = t('context.clipboard', { chars: clipboardLength });
+    badgeType = 'clipboard';
+    IconComponent = ClipboardIcon;
   } else {
     buttonTitle = t('context.clickToEnable');
     badgeText = t('context.noContext');
@@ -88,7 +94,7 @@ const labelStyles = css`
   font-size: ${fontSizes.sm};
 `;
 
-const badgeStyles = (type: 'selection' | 'full' | 'off') => css`
+const badgeStyles = (type: 'selection' | 'full' | 'clipboard' | 'off') => css`
   display: inline-block;
   padding: ${spacing[1]} ${spacing[2]};
   border-radius: ${radii.md};
@@ -107,6 +113,12 @@ const badgeStyles = (type: 'selection' | 'full' | 'off') => css`
     background: var(--color-status-success-bg);
     color: var(--color-status-success-text);
     border-color: var(--color-status-success-border);
+  `}
+
+  ${type === 'clipboard' && `
+    background: var(--color-status-warning-bg);
+    color: var(--color-status-warning-text);
+    border-color: var(--color-status-warning-border);
   `}
 
   ${type === 'off' && `

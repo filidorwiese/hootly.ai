@@ -83,10 +83,12 @@
   "context": {
     "enableContext": "Enable context",
     "switchToFullPage": "Click to switch to full page context",
+    "switchToClipboard": "Click to switch to clipboard context",
     "disableContext": "Click to disable context",
     "clickToEnable": "Add current website as context to chat",
     "selection": "Selection ({{chars}} chars)",
     "fullPage": "Full page",
+    "clipboard": "Clipboard ({{chars}} chars)",
     "noContext": "No context"
   },
   "history": {

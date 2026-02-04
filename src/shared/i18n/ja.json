@@ -83,10 +83,12 @@
   "context": {
     "enableContext": "コンテキストを有効化",
     "switchToFullPage": "クリックでページ全体に切り替え",
+    "switchToClipboard": "クリックでクリップボードに切り替え",
     "disableContext": "クリックでコンテキストを無効化",
     "clickToEnable": "現在のウェブサイトをチャットのコンテキストとして追加",
     "selection": "選択範囲（{{chars}}文字）",
     "fullPage": "ページ全体",
+    "clipboard": "クリップボード（{{chars}}文字）",
     "noContext": "コンテキストなし"
   },
   "history": {

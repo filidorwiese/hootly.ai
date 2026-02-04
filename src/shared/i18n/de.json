@@ -83,10 +83,12 @@
   "context": {
     "enableContext": "Kontext aktivieren",
     "switchToFullPage": "Klicken um zur ganzen Seite zu wechseln",
+    "switchToClipboard": "Klicken um zur Zwischenablage zu wechseln",
     "disableContext": "Klicken um Kontext zu deaktivieren",
     "clickToEnable": "Aktuelle Website als Kontext zum Chat hinzufügen",
     "selection": "Auswahl ({{chars}} Zeichen)",
     "fullPage": "Ganze Seite",
+    "clipboard": "Zwischenablage ({{chars}} Zeichen)",
     "noContext": "Kein Kontext"
   },
   "history": {
