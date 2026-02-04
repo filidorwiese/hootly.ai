@@ -1,7 +1,7 @@
 import { readFileSync, writeFileSync } from 'fs';
 import { resolve } from 'path';
 
-const packageJson = JSON.parse(readFileSync('package.json', 'utf-8'));
+const packageJson = JSON.parse(readFileSync('../package.json', 'utf-8'));
 const version = packageJson.version;
 
 console.log(`Updating manifest versions to ${version}...`);

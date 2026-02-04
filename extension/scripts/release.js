@@ -2,7 +2,7 @@ import { execSync } from 'child_process';
 import { createWriteStream, readFileSync } from 'fs';
 import archiver from 'archiver';
 
-const packageJson = JSON.parse(readFileSync('package.json', 'utf-8'));
+const packageJson = JSON.parse(readFileSync('../package.json', 'utf-8'));
 const version = packageJson.version;
 const outDir = 'dist/';
 
