@@ -51,8 +51,8 @@ describe('Saved Prompts Feature', () => {
   });
 
   describe('PRO-2: Built-in prompts', () => {
-    it('should have 5 built-in prompts', () => {
-      expect(DEFAULT_PROMPTS).toHaveLength(5);
+    it('should have 6 built-in prompts', () => {
+      expect(DEFAULT_PROMPTS).toHaveLength(6);
     });
 
     it('should have translate-page prompt', () => {
@@ -78,6 +78,11 @@ describe('Saved Prompts Feature', () => {
 
     it('should have key-points prompt', () => {
       const prompt = DEFAULT_PROMPTS.find((p) => p.id === 'key-points');
+      expect(prompt).toBeDefined();
+    });
+
+    it('should have check-spelling prompt', () => {
+      const prompt = DEFAULT_PROMPTS.find((p) => p.id === 'check-spelling');
       expect(prompt).toBeDefined();
     });
   });
@@ -131,8 +136,8 @@ describe('Saved Prompts Feature', () => {
       ];
       const allPrompts = [...DEFAULT_PROMPTS, ...customPrompts];
 
-      expect(allPrompts.length).toBe(6);
-      expect(allPrompts.filter((p) => p.isBuiltIn).length).toBe(5);
+      expect(allPrompts.length).toBe(7);
+      expect(allPrompts.filter((p) => p.isBuiltIn).length).toBe(6);
       expect(allPrompts.filter((p) => !p.isBuiltIn).length).toBe(1);
     });
 

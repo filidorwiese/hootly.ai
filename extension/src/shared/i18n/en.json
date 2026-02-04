@@ -190,19 +190,22 @@
     "deletePromptConfirm": "Delete this prompt?",
     "promptSaved": "Prompt saved!",
     "translatePage": {
-      "text": "Translate this page into [language]"
+      "text": "Translate this text into "
     },
     "summarizePage": {
-      "text": "Summarize this page in a few paragraphs"
+      "text": "Summarize this text in a few paragraphs"
     },
     "changeTone": {
-      "text": "Change the tone of this text to [tone]"
+      "text": "Change the tone of this text to "
     },
     "explainSimple": {
       "text": "Explain this like I'm 5 years old"
     },
     "keyPoints": {
       "text": "Find the key points in this text and list them"
+    },
+    "checkSpelling": {
+      "text": "Check this text for spelling and grammar mistakes"
     }
   }
 }

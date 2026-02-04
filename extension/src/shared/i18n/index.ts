@@ -100,6 +100,7 @@ const promptI18nKeys: Record<string, string> = {
   'change-tone': 'changeTone',
   'explain-simple': 'explainSimple',
   'key-points': 'keyPoints',
+  'check-spelling': 'checkSpelling',
 };
 
 export function getLocalizedPromptText(promptId: string): string | null {

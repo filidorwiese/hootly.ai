@@ -190,19 +190,22 @@
     "deletePromptConfirm": "Diese Vorlage löschen?",
     "promptSaved": "Vorlage gespeichert!",
     "translatePage": {
-      "text": "Übersetze diese Seite ins [Sprache]"
+      "text": "Übersetze diesen Text ins "
     },
     "summarizePage": {
-      "text": "Fasse diese Seite in wenigen Absätzen zusammen"
+      "text": "Fasse diesen Text in wenigen Absätzen zusammen"
     },
     "changeTone": {
-      "text": "Ändere den Tonfall dieses Textes zu [Tonfall]"
+      "text": "Ändere den Tonfall dieses Textes zu "
     },
     "explainSimple": {
       "text": "Erkläre das, als wäre ich 5 Jahre alt"
     },
     "keyPoints": {
       "text": "Finde die Kernpunkte in diesem Text und liste sie auf"
+    },
+    "checkSpelling": {
+      "text": "Überprüfe diesen Text auf Rechtschreib- und Grammatikfehler"
     }
   }
 }

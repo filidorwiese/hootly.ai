@@ -190,19 +190,22 @@
     "deletePromptConfirm": "Supprimer ce modèle ?",
     "promptSaved": "Modèle enregistré !",
     "translatePage": {
-      "text": "Traduis cette page en [langue]"
+      "text": "Traduis ce texte en "
     },
     "summarizePage": {
-      "text": "Résume cette page en quelques paragraphes"
+      "text": "Résume ce texte en quelques paragraphes"
     },
     "changeTone": {
-      "text": "Change le ton de ce texte en [ton]"
+      "text": "Change le ton de ce texte en "
     },
     "explainSimple": {
       "text": "Explique ça comme si j'avais 5 ans"
     },
     "keyPoints": {
       "text": "Trouve les points clés de ce texte et liste-les"
+    },
+    "checkSpelling": {
+      "text": "Vérifie ce texte pour les fautes d'orthographe et de grammaire"
     }
   }
 }

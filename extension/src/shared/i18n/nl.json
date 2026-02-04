@@ -190,19 +190,22 @@
     "deletePromptConfirm": "Deze prompt verwijderen?",
     "promptSaved": "Prompt opgeslagen!",
     "translatePage": {
-      "text": "Vertaal deze pagina naar het [taal]"
+      "text": "Vertaal deze tekst naar het "
     },
     "summarizePage": {
-      "text": "Vat deze pagina samen in een paar alinea's"
+      "text": "Vat deze tekst samen in een paar alinea's"
     },
     "changeTone": {
-      "text": "Wijzig de toon van deze tekst naar [toon]"
+      "text": "Wijzig de toon van deze tekst naar "
     },
     "explainSimple": {
       "text": "Leg dit uit alsof ik 5 jaar oud ben"
     },
     "keyPoints": {
       "text": "Vind de kernpunten in deze tekst en lijst ze op"
+    },
+    "checkSpelling": {
+      "text": "Controleer deze tekst op spel- en grammaticafouten"
     }
   }
 }

@@ -61,17 +61,17 @@ export interface SavedPrompt {
 export const DEFAULT_PROMPTS: SavedPrompt[] = [
   {
     id: 'translate-page',
-    text: 'Translate this page into [language]',
+    text: 'Translate this text into ',
     isBuiltIn: true,
   },
   {
     id: 'summarize-page',
-    text: 'Summarize this page in a few paragraphs',
+    text: 'Summarize this text in a few paragraphs',
     isBuiltIn: true,
   },
   {
     id: 'change-tone',
-    text: 'Change the tone of this text to [tone]',
+    text: 'Change the tone of this text to ',
     isBuiltIn: true,
   },
   {
@@ -82,6 +82,11 @@ export const DEFAULT_PROMPTS: SavedPrompt[] = [
   {
     id: 'key-points',
     text: 'Find the key points in this text and list them',
+    isBuiltIn: true,
+  },
+  {
+    id: 'check-spelling',
+    text: 'Check this text for spelling and grammar mistakes',
     isBuiltIn: true,
   },
 ];

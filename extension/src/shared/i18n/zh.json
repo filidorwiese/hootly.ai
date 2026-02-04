@@ -190,19 +190,22 @@
     "deletePromptConfirm": "删除此提示词？",
     "promptSaved": "提示词已保存！",
     "translatePage": {
-      "text": "将此页面翻译成[语言]"
+      "text": "将此文本翻译成"
     },
     "summarizePage": {
-      "text": "用几段话总结此页面"
+      "text": "用几段话总结此文本"
     },
     "changeTone": {
-      "text": "将此文本的语气更改为[语气]"
+      "text": "将此文本的语气更改为"
     },
     "explainSimple": {
       "text": "用5岁小孩能听懂的方式解释这个"
     },
     "keyPoints": {
       "text": "找出此文本的要点并列出"
+    },
+    "checkSpelling": {
+      "text": "检查此文本的拼写和语法错误"
     }
   }
 }

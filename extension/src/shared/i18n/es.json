@@ -190,19 +190,22 @@
     "deletePromptConfirm": "¿Eliminar esta plantilla?",
     "promptSaved": "¡Plantilla guardada!",
     "translatePage": {
-      "text": "Traduce esta página al [idioma]"
+      "text": "Traduce este texto al "
     },
     "summarizePage": {
-      "text": "Resume esta página en unos pocos párrafos"
+      "text": "Resume este texto en unos pocos párrafos"
     },
     "changeTone": {
-      "text": "Cambia el tono de este texto a [tono]"
+      "text": "Cambia el tono de este texto a "
     },
     "explainSimple": {
       "text": "Explícame esto como si tuviera 5 años"
     },
     "keyPoints": {
       "text": "Encuentra los puntos clave de este texto y enuméralos"
+    },
+    "checkSpelling": {
+      "text": "Revisa este texto en busca de errores ortográficos y gramaticales"
     }
   }
 }

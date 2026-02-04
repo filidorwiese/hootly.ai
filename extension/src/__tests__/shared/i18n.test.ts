@@ -286,7 +286,7 @@ describe('PRO-3: Prompt localization', () => {
 
   describe('getLocalizedPromptText', () => {
     it('returns localized text for built-in prompts', () => {
-      expect(getLocalizedPromptText('translate-page')).toBe('Translate this page into [language]')
+      expect(getLocalizedPromptText('translate-page')).toBe('Translate this text into ')
       expect(getLocalizedPromptText('explain-simple')).toBe("Explain this like I'm 5 years old")
     })
 
@@ -296,7 +296,7 @@ describe('PRO-3: Prompt localization', () => {
 
     it('returns translated text when language changes', () => {
       setLanguage('fr')
-      expect(getLocalizedPromptText('translate-page')).toBe('Traduis cette page en [langue]')
+      expect(getLocalizedPromptText('translate-page')).toBe('Traduis ce texte en ')
       expect(getLocalizedPromptText('explain-simple')).toBe("Explique ça comme si j'avais 5 ans")
     })
   })

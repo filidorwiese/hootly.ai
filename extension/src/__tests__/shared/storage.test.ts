@@ -329,7 +329,7 @@ describe('Storage', () => {
     it('finds built-in prompt by id', async () => {
       const prompt = await Storage.getPromptById('translate-page')
       expect(prompt).toBeDefined()
-      expect(prompt?.text).toBe('Translate this page into [language]')
+      expect(prompt?.text).toBe('Translate this text into ')
     })
 
     it('finds custom prompt by id', async () => {

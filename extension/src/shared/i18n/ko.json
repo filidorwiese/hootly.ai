@@ -190,19 +190,22 @@
     "deletePromptConfirm": "이 템플릿을 삭제하시겠습니까?",
     "promptSaved": "템플릿이 저장되었습니다!",
     "translatePage": {
-      "text": "이 페이지를 [언어]로 번역해 주세요"
+      "text": "이 텍스트를 번역해 주세요: "
     },
     "summarizePage": {
-      "text": "이 페이지를 몇 단락으로 요약해 주세요"
+      "text": "이 텍스트를 몇 단락으로 요약해 주세요"
     },
     "changeTone": {
-      "text": "이 텍스트의 어조를 [어조]로 변경해 주세요"
+      "text": "이 텍스트의 어조를 변경해 주세요: "
     },
     "explainSimple": {
       "text": "5살 아이에게 설명하듯이 설명해 주세요"
     },
     "keyPoints": {
       "text": "이 텍스트에서 핵심 포인트를 찾아 나열해 주세요"
+    },
+    "checkSpelling": {
+      "text": "이 텍스트의 맞춤법 및 문법 오류를 확인해 주세요"
     }
   }
 }
