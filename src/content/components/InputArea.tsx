@@ -54,7 +54,7 @@ const InputArea: React.FC<InputAreaProps> = ({
     if (textareaRef.current) {
       textareaRef.current.style.height = 'auto';
       const scrollHeight = textareaRef.current.scrollHeight;
-      const lineHeight = 24; // approximate
+      const lineHeight = 23; // 15px font * 1.5 line-height
       const minHeight = lineHeight * 2;
       const maxHeight = lineHeight * 6;
       textareaRef.current.style.height = `${Math.min(Math.max(scrollHeight, minHeight), maxHeight)}px`;
@@ -193,10 +193,10 @@ const textareaStyles = css`
   padding: ${spacing[3]} 70px ${spacing[3]} ${spacing[3]};
   border: 1px solid var(--color-border-default);
   border-radius: ${radii.xl};
-  font-size: ${fontSizes.md};
+  font-size: ${fontSizes.lg};
   font-family: 'Inter', sans-serif;
   resize: none;
-  line-height: 1.55;
+  line-height: 1.5;
   box-sizing: border-box;
   outline: none;
   background: var(--color-surface-default);
@@ -283,13 +283,13 @@ const footerLeftStyles = css`
 
 const ghostTextStyles = css`
   position: absolute;
-  top: 0;
-  left: 0;
-  right: 70px;
+  top: 1px;
+  left: 1px;
+  right: 71px;
   padding: ${spacing[3]};
-  font-size: ${fontSizes.md};
+  font-size: ${fontSizes.lg};
   font-family: 'Inter', sans-serif;
-  line-height: 1.55;
+  line-height: 1.5;
   pointer-events: none;
   white-space: pre-wrap;
   word-wrap: break-word;
