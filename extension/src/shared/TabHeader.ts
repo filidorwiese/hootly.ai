@@ -11,10 +11,10 @@ export interface TabHeaderOptions {
 }
 
 /**
- * Get the URL for the extension icon.png
+ * Get the URL for the extension icon.svg
  */
 function getLogoUrl(): string {
-  return chrome.runtime.getURL('icons/icon.png');
+  return chrome.runtime.getURL('icons/icon.svg');
 }
 
 // Tab icons

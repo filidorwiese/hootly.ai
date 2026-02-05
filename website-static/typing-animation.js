@@ -7,7 +7,7 @@
     'Translate this page to Japanese',
     'Respond professionally to this email',
     'Explain this code',
-    'Find key points in this article',
+    'Find key points in these terms and services',
     'Rewrite in simpler terms',
     'Generate reply to this comment',
     'Extract contact info from this page',

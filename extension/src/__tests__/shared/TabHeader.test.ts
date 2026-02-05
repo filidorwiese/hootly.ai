@@ -250,10 +250,10 @@ describe('TabHeader (TAB-1)', () => {
   });
 
   describe('Logo image (TAB-6)', () => {
-    it('uses icon.png via chrome.runtime.getURL', () => {
+    it('uses icon.svg via chrome.runtime.getURL', () => {
       generateTabHeaderHTML('settings');
       // getLogoUrl should call chrome.runtime.getURL
-      expect(chrome.runtime.getURL).toHaveBeenCalledWith('icons/icon.png');
+      expect(chrome.runtime.getURL).toHaveBeenCalledWith('icons/icon.svg');
     });
 
     it('has img element with proper class and alt text', () => {
@@ -319,10 +319,10 @@ describe('TabHeader (TAB-1)', () => {
       expect(styles).toContain('--color-primary-500');
     });
 
-    it('logo is loaded from icon.png (TAB-6)', () => {
+    it('logo is loaded from icon.svg (TAB-6)', () => {
       const html = generateTabHeaderHTML('settings');
       // Logo is now an img element instead of inline SVG with colors
-      expect(html).toContain('icons/icon.png');
+      expect(html).toContain('icons/icon.svg');
       expect(html).toContain('tab-header-logo-img');
     });
   });

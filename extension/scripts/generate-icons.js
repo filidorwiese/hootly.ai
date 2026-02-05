@@ -5,7 +5,7 @@ import { mkdirSync } from 'fs';
 const isChrome = process.env.TARGET === 'chrome';
 const outDir = isChrome ? 'dist/chrome' : 'dist/firefox';
 
-const png = readFileSync('public/icons/icon.png');
+const png = readFileSync('public/icons/icon.svg');
 
 mkdirSync(`${outDir}/icons`, { recursive: true });
 

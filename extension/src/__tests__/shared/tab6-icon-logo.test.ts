@@ -1,6 +1,6 @@
 /**
- * TAB-6: Use icon.png as logo in TabHeader
- * Tests that the TabHeader uses the extension's icon.png instead of inline SVG
+ * TAB-6: Use icon.svg as logo in TabHeader
+ * Tests that the TabHeader uses the extension's icon.svg instead of inline SVG
  */
 import { describe, it, expect, beforeEach, vi } from 'vitest';
 import {
@@ -17,7 +17,7 @@ vi.stubGlobal('chrome', {
   },
 });
 
-describe('TAB-6: Use icon.png as logo in TabHeader', () => {
+describe('TAB-6: Use icon.svg as logo in TabHeader', () => {
   beforeEach(() => {
     document.body.innerHTML = '';
     document.head.innerHTML = '';
@@ -31,14 +31,14 @@ describe('TAB-6: Use icon.png as logo in TabHeader', () => {
       expect(html).toContain('tab-header-logo-img');
     });
 
-    it('should reference icon.png via chrome.runtime.getURL', () => {
+    it('should reference icon.svg via chrome.runtime.getURL', () => {
       generateTabHeaderHTML('settings');
-      expect(mockGetURL).toHaveBeenCalledWith('icons/icon.png');
+      expect(mockGetURL).toHaveBeenCalledWith('icons/icon.svg');
     });
 
     it('should set appropriate src attribute for logo image', () => {
       const html = generateTabHeaderHTML('settings');
-      expect(html).toContain('src="chrome-extension://mock-id/icons/icon.png"');
+      expect(html).toContain('src="chrome-extension://mock-id/icons/icon.svg"');
     });
 
     it('should include alt text for accessibility', () => {
@@ -101,7 +101,7 @@ describe('TAB-6: Use icon.png as logo in TabHeader', () => {
     it('should have correct src on injected logo', () => {
       injectTabHeader({ activeTab: 'settings' });
       const logoImg = document.querySelector('.tab-header-logo-img') as HTMLImageElement;
-      expect(logoImg.src).toBe('chrome-extension://mock-id/icons/icon.png');
+      expect(logoImg.src).toBe('chrome-extension://mock-id/icons/icon.svg');
     });
   });
 
@@ -136,7 +136,7 @@ describe('TAB-6: Use icon.png as logo in TabHeader', () => {
         injectTabHeader({ activeTab: tab });
         const logoImg = document.querySelector('.tab-header-logo-img') as HTMLImageElement;
         expect(logoImg).toBeTruthy();
-        expect(logoImg.src).toContain('icons/icon.png');
+        expect(logoImg.src).toContain('icons/icon.svg');
       });
     });
   });
